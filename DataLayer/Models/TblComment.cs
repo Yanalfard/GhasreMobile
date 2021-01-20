@@ -12,6 +12,7 @@ namespace DataLayer.Models
             InverseParent = new HashSet<TblComment>();
             TblBlogCommentRel = new HashSet<TblBlogCommentRel>();
             TblProductCommentRel = new HashSet<TblProductCommentRel>();
+            TblTopicCommentRel = new HashSet<TblTopicCommentRel>();
         }
 
         [Key]
@@ -36,5 +37,7 @@ namespace DataLayer.Models
         public virtual ICollection<TblBlogCommentRel> TblBlogCommentRel { get; set; }
         [InverseProperty("Comment")]
         public virtual ICollection<TblProductCommentRel> TblProductCommentRel { get; set; }
+        [InverseProperty("Comment")]
+        public virtual ICollection<TblTopicCommentRel> TblTopicCommentRel { get; set; }
     }
 }

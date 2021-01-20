@@ -9,11 +9,15 @@ namespace DataLayer.Models
     {
         public TblClient()
         {
+            TblAlertWhenReady = new HashSet<TblAlertWhenReady>();
+            TblBookMark = new HashSet<TblBookMark>();
             TblComment = new HashSet<TblComment>();
+            TblNotification = new HashSet<TblNotification>();
             TblOnlineOrder = new HashSet<TblOnlineOrder>();
             TblOrderDetail = new HashSet<TblOrderDetail>();
             TblRate = new HashSet<TblRate>();
             TblTicket = new HashSet<TblTicket>();
+            TblTopic = new HashSet<TblTopic>();
         }
 
         [Key]
@@ -29,12 +33,19 @@ namespace DataLayer.Models
         [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }
         public int RoleId { get; set; }
+        public long Balance { get; set; }
 
         [ForeignKey(nameof(RoleId))]
         [InverseProperty(nameof(TblRole.TblClient))]
         public virtual TblRole Role { get; set; }
         [InverseProperty("Client")]
+        public virtual ICollection<TblAlertWhenReady> TblAlertWhenReady { get; set; }
+        [InverseProperty("Client")]
+        public virtual ICollection<TblBookMark> TblBookMark { get; set; }
+        [InverseProperty("Client")]
         public virtual ICollection<TblComment> TblComment { get; set; }
+        [InverseProperty("Client")]
+        public virtual ICollection<TblNotification> TblNotification { get; set; }
         [InverseProperty("Client")]
         public virtual ICollection<TblOnlineOrder> TblOnlineOrder { get; set; }
         [InverseProperty("Client")]
@@ -43,5 +54,7 @@ namespace DataLayer.Models
         public virtual ICollection<TblRate> TblRate { get; set; }
         [InverseProperty("Client")]
         public virtual ICollection<TblTicket> TblTicket { get; set; }
+        [InverseProperty("Client")]
+        public virtual ICollection<TblTopic> TblTopic { get; set; }
     }
 }

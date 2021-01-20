@@ -9,6 +9,8 @@ namespace DataLayer.Models
     {
         public TblProduct()
         {
+            TblAlertWhenReady = new HashSet<TblAlertWhenReady>();
+            TblBookMark = new HashSet<TblBookMark>();
             TblColor = new HashSet<TblColor>();
             TblOrderDetail = new HashSet<TblOrderDetail>();
             TblProductCommentRel = new HashSet<TblProductCommentRel>();
@@ -40,6 +42,10 @@ namespace DataLayer.Models
         [ForeignKey(nameof(CatagoryId))]
         [InverseProperty(nameof(TblCatagory.TblProduct))]
         public virtual TblCatagory Catagory { get; set; }
+        [InverseProperty("Product")]
+        public virtual ICollection<TblAlertWhenReady> TblAlertWhenReady { get; set; }
+        [InverseProperty("Product")]
+        public virtual ICollection<TblBookMark> TblBookMark { get; set; }
         [InverseProperty("Product")]
         public virtual ICollection<TblColor> TblColor { get; set; }
         [InverseProperty("Product")]

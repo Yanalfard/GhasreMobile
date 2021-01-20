@@ -16,7 +16,11 @@ namespace DataLayer.Models
         public int ImageId { get; set; }
         [Required]
         public string Image { get; set; }
+        public int? AlbumId { get; set; }
 
+        [ForeignKey(nameof(AlbumId))]
+        [InverseProperty(nameof(TblAlbum.TblImage))]
+        public virtual TblAlbum Album { get; set; }
         [InverseProperty("Image")]
         public virtual ICollection<TblProductImageRel> TblProductImageRel { get; set; }
     }

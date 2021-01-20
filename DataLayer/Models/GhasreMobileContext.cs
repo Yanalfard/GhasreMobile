@@ -16,17 +16,24 @@ namespace DataLayer.Models
         }
 
         public virtual DbSet<TblAd> TblAd { get; set; }
+        public virtual DbSet<TblAlbum> TblAlbum { get; set; }
+        public virtual DbSet<TblAlertWhenReady> TblAlertWhenReady { get; set; }
+        public virtual DbSet<TblBankAccounts> TblBankAccounts { get; set; }
+        public virtual DbSet<TblBannerAndSlide> TblBannerAndSlide { get; set; }
         public virtual DbSet<TblBlog> TblBlog { get; set; }
         public virtual DbSet<TblBlogCommentRel> TblBlogCommentRel { get; set; }
         public virtual DbSet<TblBlogKeywordRel> TblBlogKeywordRel { get; set; }
+        public virtual DbSet<TblBookMark> TblBookMark { get; set; }
         public virtual DbSet<TblCatagory> TblCatagory { get; set; }
         public virtual DbSet<TblClient> TblClient { get; set; }
         public virtual DbSet<TblColor> TblColor { get; set; }
         public virtual DbSet<TblComment> TblComment { get; set; }
         public virtual DbSet<TblConfig> TblConfig { get; set; }
+        public virtual DbSet<TblDelivery> TblDelivery { get; set; }
         public virtual DbSet<TblDiscount> TblDiscount { get; set; }
         public virtual DbSet<TblImage> TblImage { get; set; }
         public virtual DbSet<TblKeyword> TblKeyword { get; set; }
+        public virtual DbSet<TblNotification> TblNotification { get; set; }
         public virtual DbSet<TblOnlineOrder> TblOnlineOrder { get; set; }
         public virtual DbSet<TblOrder> TblOrder { get; set; }
         public virtual DbSet<TblOrderDetail> TblOrderDetail { get; set; }
@@ -37,9 +44,12 @@ namespace DataLayer.Models
         public virtual DbSet<TblProductPropertyRel> TblProductPropertyRel { get; set; }
         public virtual DbSet<TblProperty> TblProperty { get; set; }
         public virtual DbSet<TblRate> TblRate { get; set; }
+        public virtual DbSet<TblRegularQuestion> TblRegularQuestion { get; set; }
         public virtual DbSet<TblRole> TblRole { get; set; }
         public virtual DbSet<TblStore> TblStore { get; set; }
         public virtual DbSet<TblTicket> TblTicket { get; set; }
+        public virtual DbSet<TblTopic> TblTopic { get; set; }
+        public virtual DbSet<TblTopicCommentRel> TblTopicCommentRel { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -52,6 +62,19 @@ namespace DataLayer.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<TblAlertWhenReady>(entity =>
+            {
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.TblAlertWhenReady)
+                    .HasForeignKey(d => d.ClientId)
+                    .HasConstraintName("FK_TblAlertWhenReady_TblClient");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.TblAlertWhenReady)
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK_TblAlertWhenReady_TblProduct");
+            });
+
             modelBuilder.Entity<TblBlogCommentRel>(entity =>
             {
                 entity.HasOne(d => d.Blog)
@@ -76,6 +99,19 @@ namespace DataLayer.Models
                     .WithMany(p => p.TblBlogKeywordRel)
                     .HasForeignKey(d => d.KeywordId)
                     .HasConstraintName("FK_TblBlogKeywordRel_TblKeyword");
+            });
+
+            modelBuilder.Entity<TblBookMark>(entity =>
+            {
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.TblBookMark)
+                    .HasForeignKey(d => d.ClientId)
+                    .HasConstraintName("FK_TblBookMark_TblClient");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.TblBookMark)
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK_TblBookMark_TblProduct");
             });
 
             modelBuilder.Entity<TblCatagory>(entity =>
@@ -127,10 +163,26 @@ namespace DataLayer.Models
                     .HasConstraintName("FK_TblComment_TblComment");
             });
 
+            modelBuilder.Entity<TblImage>(entity =>
+            {
+                entity.HasOne(d => d.Album)
+                    .WithMany(p => p.TblImage)
+                    .HasForeignKey(d => d.AlbumId)
+                    .HasConstraintName("FK_TblImage_TblAlbum");
+            });
+
             modelBuilder.Entity<TblKeyword>(entity =>
             {
                 entity.HasKey(e => e.KeywordId)
                     .HasName("PK_TblKeywords");
+            });
+
+            modelBuilder.Entity<TblNotification>(entity =>
+            {
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.TblNotification)
+                    .HasForeignKey(d => d.ClientId)
+                    .HasConstraintName("FK_TblNotification_TblClient");
             });
 
             modelBuilder.Entity<TblOnlineOrder>(entity =>
@@ -152,6 +204,10 @@ namespace DataLayer.Models
                     .HasName("PK_TblOrder_1");
 
                 entity.Property(e => e.IsPayed).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.SendStatus).HasComment("0 is via post; 1 is via client comes and pics it up himselfe");
+
+                entity.Property(e => e.Status).HasComment("0 is making; 1 is on its way; 2 is done;");
 
                 entity.HasOne(d => d.Discount)
                     .WithMany(p => p.TblOrder)
@@ -289,6 +345,30 @@ namespace DataLayer.Models
                     .HasForeignKey(d => d.ClientId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_TblTicket_TblClient");
+            });
+
+            modelBuilder.Entity<TblTopic>(entity =>
+            {
+                entity.Property(e => e.DateCreated).HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.TblTopic)
+                    .HasForeignKey(d => d.ClientId)
+                    .HasConstraintName("FK_TblTopic_TblClient");
+            });
+
+            modelBuilder.Entity<TblTopicCommentRel>(entity =>
+            {
+                entity.HasOne(d => d.Comment)
+                    .WithMany(p => p.TblTopicCommentRel)
+                    .HasForeignKey(d => d.CommentId)
+                    .HasConstraintName("FK_TblTopicCommentRel_TblComment");
+
+                entity.HasOne(d => d.Topic)
+                    .WithMany(p => p.TblTopicCommentRel)
+                    .HasForeignKey(d => d.TopicId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TblTopicCommentRel_TblTopic");
             });
 
             OnModelCreatingPartial(modelBuilder);

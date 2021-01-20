@@ -23,6 +23,8 @@ namespace DataLayer.Models
         [Required]
         [StringLength(20)]
         public string PostalCode { get; set; }
+        public int Status { get; set; }
+        public int SendStatus { get; set; }
 
         [ForeignKey(nameof(DiscountId))]
         [InverseProperty(nameof(TblDiscount.TblOrder))]
