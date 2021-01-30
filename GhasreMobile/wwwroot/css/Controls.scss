@@ -1,0 +1,663 @@
+﻿@import '_colors.scss';
+@import '_layout.scss';
+@import '_starRating.scss';
+
+button, .btn, a, a:hover .js-upload, input[type=file] {
+    cursor: pointer;
+    outline: none;
+    text-decoration: none !important;
+}
+
+.btn {
+    display: inline-block;
+    min-height: 27px;
+    @include border-def-radius;
+    border: 0;
+    padding: 4px 15px;
+    min-width: 100px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: padding-box;
+    @include trans(.3s);
+
+    span {
+        white-space: nowrap;
+    }
+}
+
+@mixin btn-click-glow {
+    $intensinty: 0.32;
+    -moz-box-shadow: 0 0 9px transparentize($primary,1 - $intensinty);
+    -webkit-box-shadow: 0 0 9px transparentize($primary,1 -$intensinty);
+    box-shadow: 0 0 9px transparentize($primary,1 -$intensinty);
+}
+
+@mixin btn-static-shadow {
+    -moz-box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+}
+
+@mixin component-border {
+    border: 1px #ddd solid;
+}
+
+//-
+
+a.btn {
+    line-height: 27px;
+}
+
+a.btn.btn-primary:hover {
+    color: white;
+}
+
+.link-text {
+    color: $Text;
+    @include trans(.2s);
+}
+
+.link-text:hover {
+    color: $primary;
+}
+
+.link-text:active {
+    color: $primary-light;
+}
+
+
+//-
+
+.btn-icon {
+    border: 0;
+    background-color: transparent;
+    min-height: 20px;
+    min-width: 20px;
+    padding: 8px;
+    @include trans(.2s);
+    color: #555;
+}
+
+.btn-icon:hover {
+    background-color: transparentize(#000,.94);
+    color: #444;
+}
+
+.btn-icon:active {
+    background-color: transparentize(#000,.88);
+    @include trans(.0s);
+}
+
+//-
+
+.btn-primary {
+    border: 0;
+    background-color: $primary;
+    color: white;
+    @include btn-static-shadow;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: $primary-light;
+}
+
+.btn-primary:active {
+    background-color: $primary-dark;
+    @include btn-click-glow;
+    transition: background-color ease .2s;
+}
+
+//-
+
+.btn-secondary {
+    @include component-border;
+    background-color: transparent;
+    color: lighten($Text,12%);
+    @include btn-static-shadow;
+}
+
+.btn-dashed {
+    border: 1px #ddd dashed;
+    background-color: transparent;
+    color: $Text;
+    @include btn-static-shadow;
+}
+
+.btn-secondary:hover, .btn-secondary:focus, .btn-dashed:hover, .btn-dashed:focus {
+    border-color: $primary;
+    color: $primary-light;
+}
+
+.btn-secondary:active, .btn-dashed:active {
+    border-color: $primary-dark;
+    color: $primary-dark;
+    @include btn-click-glow;
+    transition: background-color ease .2s;
+}
+
+//-
+
+.btn-text {
+    background: rgba(0,0,0,.00);
+    color: $Text;
+}
+
+.btn-text:hover, .btn-text:focus {
+    background: rgba(0,0,0,.04);
+}
+
+.btn-text:active {
+    background: transparentize($primary-dark,.96);
+}
+
+//-
+
+.btn-link {
+    background: rgba(0,0,0,.0);
+    color: $link;
+}
+
+.btn-link:hover, .btn-link:focus {
+    text-shadow: 0 0 5px transparentize($primary-dark,.64);
+}
+
+.btn-link:active {
+    background: #E6F7FF;
+}
+
+//-
+
+.text {
+    color: $Text;
+}
+
+.text-2 {
+    color: $Text-2
+}
+
+.text-3 {
+    color: $Text-3
+}
+
+.text-4 {
+    color: $Text-4
+}
+
+//-
+
+input:not(input[type=checkbox]):not(input[type=radio]) {
+    font-size: 13px;
+    min-height: 27px;
+}
+
+/*#region Form */
+
+.entry {
+    background: transparent;
+    padding: 4px 11px;
+    direction: rtl;
+    @include component-border;
+    @include border-def-radius;
+    @include placeholder(#ddd);
+    @include trans(.3s);
+}
+
+.entry:hover, .entry:focus {
+    border: 1px $primary solid;
+}
+
+.entry:focus {
+    @include btn-click-glow;
+}
+
+.entry:disabled, .entry[disabled] {
+    background: #F5F5F5;
+    color: #BFBFBF;
+    cursor: not-allowed;
+}
+
+.entry-invis {
+    background: transparent;
+    padding: 4px 11px;
+    direction: rtl;
+    border: 0;
+    color: $Text;
+}
+
+.fg-col {
+    margin-bottom: 24px;
+    @include column;
+
+    .fg-label {
+        font-size: 16px;
+        color: $Text;
+        margin-bottom: 8px;
+    }
+
+    .text-danger {
+        margin-top: 8px;
+        color: #DA4B1E;
+        font-size: 14px;
+    }
+
+    .radio {
+        display: flex;
+        margin: 6px 0 6px auto;
+    }
+
+    textarea {
+        resize: vertical;
+        transition-property: border-color;
+        margin-bottom: 0;
+        min-height: 28px;
+        height: 72px;
+    }
+
+    input[type=color] {
+        padding: 0 2px;
+        width: 48px;
+        border: dashed 1px #aaa;
+        height: 32px;
+        @include border-def-radius;
+    }
+}
+
+.fg-col:last-child {
+    margin-bottom: 6px;
+}
+
+.fg-required {
+    .fg-label:before {
+        content: "*";
+        color: $danger;
+        font-size: 16px;
+    }
+}
+
+.form {
+    $padding: 16px;
+    @include mat;
+
+    &-header {
+        padding: $padding;
+        border-bottom: solid #e5e5e5 1px;
+    }
+
+    &-body {
+        padding: $padding;
+        @include column;
+    }
+
+    &-footer {
+        border-top: solid #e5e5e5 1px;
+        padding: $padding;
+        @include row-reverse;
+        grid-gap: 12px;
+    }
+}
+
+.forms {
+    @include grid-gap(230px,16px)
+}
+/*#endregion */
+/*#region Main */
+
+$grid-gap: 16px;
+$aside-width: 350px;
+
+.m {
+    display: grid;
+    grid-template-columns: 1fr $aside-width;
+    grid-gap: $grid-gap;
+
+    .dumdum1 {
+        background: red;
+        height: 200px;
+        width: 100%;
+    }
+
+    .dumdum3 {
+        background: $primary;
+        height: 400px;
+        width: 100%;
+    }
+
+    .dumdum2 {
+        background: blue;
+        height: 200px;
+        width: 100%;
+    }
+
+    .m-aside {
+        @include column;
+        grid-gap: $grid-gap;
+    }
+
+    .m-content {
+        @include column;
+        grid-gap: $grid-gap;
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    .m {
+        grid-template-columns: 1fr;
+
+        .m-aside {
+            display: none;
+        }
+    }
+}
+
+
+.gap-t {
+    margin-top: $grid-gap;
+}
+
+.gap-b {
+    margin-bottom: $grid-gap;
+}
+
+.gap-l {
+    margin-left: $grid-gap;
+}
+
+.gap-r {
+    margin-right: $grid-gap;
+}
+/*#endregion */
+.dropdown {
+    background: #fff;
+    padding: 0;
+    @include shadow-medium;
+    @include border-def-radius;
+    border: 1px #dfdfdf solid;
+
+    .dropdown-list {
+        @include column;
+        margin-bottom: 0;
+
+        li {
+            @include trans(.2s);
+
+            a {
+                padding: 10px 12px;
+                color: lighten($Text,12%);
+                height: 100%;
+            }
+
+            a, span {
+                white-space: nowrap !important;
+            }
+        }
+
+        li:hover {
+            background-color: transparentize(#000,0.94);
+        }
+
+        li:active {
+            background-color: transparentize(#000,0.86);
+            @include trans(0s);
+        }
+    }
+}
+
+$between-card-margin: 16px;
+
+.margin-between {
+    margin-bottom: $between-card-margin;
+}
+
+$card-padding: 16px;
+
+.gap-card {
+    grid-gap: $card-padding;
+}
+
+.card {
+    @include mat;
+    margin-bottom: $between-card-margin;
+    @include shadow-medium;
+    padding: $card-padding;
+}
+
+/*#region tbl */
+.controls-grid {
+    @include row-reverse;
+    -ms-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    grid-gap: 12px;
+
+    .entry {
+        min-width: 160px;
+    }
+
+    label {
+        margin: auto 0;
+
+        .uk-checkbox {
+            width: 28px;
+            height: 28px;
+            padding: 0 !important;
+            margin: auto 0 auto 8px;
+        }
+    }
+}
+
+$background-odd: #f9f9f9;
+$background-highlight: #eee;
+
+.scrollh-container {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+}
+
+.tbl {
+    direction: rtl;
+    border-spacing: 0;
+
+    .actions {
+        @include row;
+        grid-gap: 12px;
+
+        * {
+            margin: auto 0;
+        }
+    }
+
+    td:first-child, th:first-child {
+        min-width: 28px !important;
+        width: 28px !important;
+        background-color: transparentize(darken($primary-light,8%),.96);
+    }
+
+    td, th {
+        height: 48px;
+        padding: 0 20px;
+        min-width: 150px;
+    }
+
+    tbody {
+
+        tr {
+            width: 100%;
+            @include trans(.4s);
+        }
+
+        tr:nth-child(2n+1) {
+            background-color: $background-odd;
+        }
+
+        tr:hover {
+            background-color: $background-highlight;
+            @include trans(.1s);
+        }
+    }
+
+    .btn-link:hover {
+        background-color: transparent;
+    }
+
+    .btn-link:active {
+        color: darken($primary-dark,18%);
+    }
+}
+/*#endregion */
+
+.header {
+    @include column;
+    width: 100%;
+    position: fixed;
+    z-index: 500;
+
+    img {
+        width: 100%;
+        height: auto;
+        background-color: #EFF1F5;
+    }
+
+    .top {
+        padding-bottom: 12px;
+        background-color: #EFF1F5;
+
+        .uk-container {
+            grid-column-gap: 20px;
+        }
+
+        .logo {
+            padding: 4px;
+            filter: drop-shadow(2px 2px 8px rgba(0,0,0,.20));
+            background-color: #fff;
+            @include border-circle;
+
+            img {
+                width: 48px;
+                height: 48px;
+                @include border-circle;
+                @include obj;
+            }
+        }
+
+        .search {
+            @include mat;
+            @include border-def-radius;
+            @include shadow-mild;
+            padding: 2px 6px 2px 12px;
+            margin: auto 0;
+
+            span {
+                color: $Text-4;
+            }
+
+            #txtSearchMain {
+                color: $Text;
+                @include placeholder($Text-5);
+            }
+        }
+
+        .cart {
+            @include mat;
+            @include border-def-radius;
+            @include shadow-mild;
+            @include row;
+            margin-right: auto;
+            background-color: $primary;
+            margin: auto auto auto 0;
+            padding: 1px;
+            overflow: hidden;
+
+            button {
+                background-color: #9D189D;
+                border: 0;
+                padding: 6px;
+
+                span {
+                    color: #fff;
+                }
+            }
+
+            .label {
+                color: #fff;
+                margin: auto;
+                padding-left: 12px;
+                vertical-align: central;
+            }
+
+            .badge {
+                color: $primary;
+                background-color: #fff;
+                margin: auto 12px;
+                padding: 0 4px;
+                @include border-circle;
+                display: flex;
+                max-width: 21px;
+                max-height: 21px;
+
+                span {
+                    margin: auto;
+                }
+            }
+        }
+    }
+
+    .bottom {
+        @include mat;
+        @include shadow-mild;
+        padding: 10px 0;
+
+        nav {
+            padding: 0;
+            margin-left: auto;
+
+            button {
+            }
+
+            a {
+                color: $Text;
+            }
+
+            a:before {
+                content: "";
+                border-left: dashed $Text-3 1px;
+                margin: 0 20px;
+            }
+        }
+
+        .profile {
+            margin-right: auto;
+
+            span {
+                color: $Text;
+            }
+
+            .uk-icon {
+                margin-left: 4px;
+            }
+        }
+    }
+}
+
+$product-width: 160px;
+
+.product {
+    @include column;
+    min-width: $product-width;
+    background-color: #fff;
+    -ms-align-content: center;
+    -webkit-align-content: center;
+    align-content: center;
+
+    .star-container {
+        margin: auto;
+    }
+
+    .people {
+        margin: auto;
+        color: $Text-4;
+    }
+}

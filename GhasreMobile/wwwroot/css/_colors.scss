@@ -1,0 +1,173 @@
+
+$Background: #EFF1F5;
+
+$nav-header-height: 156px;
+
+$primary: #96027E;
+$primary-dark: #810081;
+$primary-light: #C539F6;
+
+$Text: #333;
+$Text-2: #666;
+$Text-3: #999;
+$Text-4: #ccc;
+$Text-5: #eee;
+
+$danger: #FF5A64;
+$warning: #FAAD14;
+$success: #52C41A;
+$link: #1890FF;
+
+/*Star*/
+$unchecked-color: #b5b5b5;
+$checked-color: #fc0;
+
+/*#region Material  */
+
+$mat-background: #fff;
+
+@mixin mat() {
+    background-color: $mat-background;
+    border: 1px solid #e5e5e5;
+    @include shadow-medium;
+    @include border-def-radius;
+}
+
+@mixin border-def-radius() {
+    $px: 4px;
+    -moz-border-radius: $px $px $px $px;
+    -webkit-border-radius: $px $px $px $px;
+    border-radius: $px $px $px $px;
+}
+
+@mixin mat-padding() {
+    padding: 12px;
+}
+
+/*#endregion */
+
+
+/*
+backdrop-filter: blur(2px);
+backdrop-filter: brightness(60%);
+backdrop-filter: contrast(40%);
+backdrop-filter: drop-shadow(4px 4px 10px blue);
+backdrop-filter: grayscale(30%);
+backdrop-filter: hue-rotate(120deg);
+backdrop-filter: invert(70%);
+backdrop-filter: opacity(20%);
+backdrop-filter: sepia(90%);
+backdrop-filter: saturate(80%);
+*/
+
+//*
+@mixin shadow-mild {
+    $shadowColor: rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: $shadowColor 0 2px 8px;
+    -webkit-box-shadow: $shadowColor 0 2px 8px;
+    box-shadow: $shadowColor 0 2px 8px;
+}
+
+//*
+@mixin shadow-medium {
+    $shadowColor: rgba(0, 0, 0, 0.16);
+    -moz-box-shadow: $shadowColor 0 8px 12px;
+    -webkit-box-shadow: $shadowColor 0 8px 12px;
+    box-shadow: $shadowColor 0 8px 12px;
+}
+
+@mixin shadow-more {
+    $shadowColor: rgba(0,0,0,.20);
+    -moz-box-shadow: $shadowColor 0 0 24px;
+    -webkit-box-shadow: $shadowColor 0 0 24px;
+    box-shadow: $shadowColor 0 0 24px;
+}
+
+@mixin shadow-more-hov {
+    $shadowColor: rgba(0, 0, 0, 0.24);
+    -moz-box-shadow: $shadowColor 0 0 28px;
+    -webkit-box-shadow: $shadowColor 0 0 28px;
+    box-shadow: $shadowColor 0 0 28px;
+}
+
+@mixin shadow-mega {
+    $shadowColor: rgba(0, 0, 0, 0.32);
+    -moz-box-shadow: $shadowColor 0 0px 28px;
+    -webkit-box-shadow: $shadowColor 0 0px 28px;
+    box-shadow: $shadowColor 0 0px 28px;
+}
+
+/*#endregion */
+
+@mixin subtle-glow($rgba) {
+    -moz-box-shadow: $rgba 0 6px 16px;
+    -webkit-box-shadow: $rgba 0 6px 16px;
+    box-shadow: $rgba 0 6px 16px;
+}
+
+@mixin border-radius($tl, $tr, $bl, $br) {
+    -moz-border-radius: $tl $tr $bl $br;
+    -webkit-border-radius: $tl $tr $bl $br;
+    border-radius: $tl $tr $bl $br;
+}
+
+@mixin border-circle() {
+    $px: 1000px;
+    -moz-border-radius: $px $px $px $px;
+    -webkit-border-radius: $px $px $px $px;
+    border-radius: $px $px $px $px;
+}
+
+@mixin border-bevel() {
+    $px: 100%;
+    -moz-border-radius: $px $px $px $px;
+    -webkit-border-radius: $px $px $px $px;
+    border-radius: $px $px $px $px;
+}
+
+@mixin filter($filters) {
+    filter: $filters;
+    -webkit-filter: $filters;
+    -moz-filter: $filters;
+    -o-filter: $filters;
+    -ms-filter: $filters;
+}
+
+@mixin gradient($primary,$secondary,$angle) {
+    background-color: $primary;
+    background-image: -moz-linear-gradient($angle, $primary, $secondary);
+    background-image: -o-linear-gradient($angle, $primary, $secondary);
+    background-image: -webkit-gradient($angle, left top, left bottom, from($primary), to($secondary));
+    background-image: -webkit-linear-gradient($angle, $primary, $secondary);
+    background-image: linear-gradient($angle, $primary, $secondary);
+}
+
+@mixin trans($seconds) {
+    -moz-transition: all ease $seconds;
+    -o-transition: all ease $seconds;
+    -webkit-transition: all ease $seconds;
+    transition: all ease $seconds;
+}
+
+@mixin max-line($line-count: 1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $line-count; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+@mixin placeholder($color) {
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: $color;
+        opacity: 1; /* Firefox */
+    }
+
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: $color;
+    }
+
+    ::-ms-input-placeholder { /* Microsoft Edge */
+        color: $color;
+    }
+}

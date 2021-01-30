@@ -1,9 +1,85 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
+
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="@(ViewData["Description"] ?? "سایت خرید و فروش آنلاین گوشی های موبایل به صورت اقساطی")">
+    <meta name="keywords" content="@(ViewData["Keywords"] ?? "قصر موبایل، گوشی، تلفن، خرید، آنلاین، اقساطی")">
+    <meta name="author" content="صدرا محمدی، ینال احمدزاده، مهدی سهندی">
+
+    <title>@(ViewData["Title"] ?? "قصر موبایل")</title>
+
+    <link href="~/css/uikit.min.css" rel="stylesheet" />
+    <link href="~/css/Controls.min.css" rel="stylesheet" />
+
+    @RenderSection("Styles", false)
+
 </head>
 <body>
-   
+
+    <div class="header">
+        <img src="~/st/r/TopMemphis.png" width="1366" height="59" alt="عکس بالا صفحه" />
+        <div class="top">
+            <div class="uk-container rowr">
+                <a href="/" class="logo">
+                    <img src="~/st/r/logo.jpg" width="48" height="48" alt="لوگو فصر موبایل" />
+                </a>
+                <div class="search">
+                    <span uk-icon="search"></span>
+                    <input id="txtSearchMain" class="entry-invis" type="text" placeholder="جستجو..." aria-label="جستجو" />
+                </div>
+                <div class="cart">
+                    <span class="label">سبد خرید</span>
+                    <div class="badge">
+                        <span>12</span>
+                    </div>
+                    <button>
+                        <span uk-icon="cart-outline"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="uk-container rowr">
+                <nav class="rowr">
+                    <button uk-icon="grid-outline"></button>
+                    <a href="/">خانه</a>
+                    <a href="">تالار گفتگو</a>
+                    <a href="">تماس با ما</a>
+                    <a href="">وبلاگ ها</a>
+                    <a href="">شعب ما</a>
+                    <a href="">گالری</a>
+                </nav>
+                <a href="" class="profile">
+                    <span>پروفایل</span>
+                    <span uk-icon="person-circle-outline"></span>
+                </a>
+
+                @*<a href="" class="enter">
+                                ورود / ثبت نام
+                    </a>*@
+
+            </div>
+        </div>
+    </div>
+    <div role="none" class="space-nav-header gap-b"></div>
+
+    <div class="m uk-container">
+        <main class="m-content">
+            @RenderBody()
+        </main>
+        <aside class="m-aside">
+            @RenderSection("Aside", false)
+        </aside>
+    </div>
+
+    <!--Pwa-->
+    <script src="~/app.js"></script>
+    <script src="~/js/uikit.min.js"></script>
+    <script src="~/js/uikit-icons.js"></script>
+
+    @RenderSection("Scripts", false)
+
 </body>
 </html>

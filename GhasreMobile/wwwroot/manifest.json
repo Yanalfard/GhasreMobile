@@ -1,0 +1,54 @@
+﻿{
+  "dir": "rtl",
+  "lang": "fa",
+  "name": "قصر موبایل",
+  "short_name": "قصر موبایل",
+  "display": "standalone",
+  "start_url": "/Home/Index",
+  "background_color": "#FFFFFF",
+  "theme_color": "#810081",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/st/png/Mobile/icon_72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "/st/png/Mobile/icon_96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/st/png/Mobile/icon_128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/st/png/Mobile/icon_144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/st/png/Mobile/icon_152.png",
+      "type": "image/png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "/st/png/Mobile/icon_192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/st/png/Mobile/icon_384.png",
+      "type": "image/png",
+      "sizes": "384x384"
+    },
+    {
+      "src": "/st/png/Mobile/icon_512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+} 

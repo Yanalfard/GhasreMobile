@@ -1,0 +1,37 @@
+﻿@import '../_colors.scss';
+@import '../_layout.scss';
+
+
+.categories {
+    @include mat;
+    @include border-def-radius;
+    @include shadow-mild;
+    @include mat-padding;
+
+    li {
+        @include column;
+
+        a {
+            padding: 12px 0;
+            border-bottom: 1px dashed $Text-4;
+        }
+    }
+
+    li:last-child a {
+        border: 0;
+    }
+}
+
+.main-slideshow {
+    overflow: hidden;
+    @include border-def-radius;
+    @include shadow-mild;
+
+    .navigation {
+        padding: 10px 20px;
+        backdrop-filter: blur(4px);
+        background-color: rgba(255, 255, 255, 0.24);
+        @include border-circle;
+        @include shadow-mild;
+    }
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "outputFile": "wwwroot/css/uikit.css",
+    "inputFile": "wwwroot/css/uikit.scss",
+    "sourceMap": false
+  },
+  {
+    "outputFile": "wwwroot/css/Controls.css",
+    "inputFile": "wwwroot/css/Controls.scss",
+    "sourceMap": false
+  },
+  {
+    "outputFile": "wwwroot/css/pages/index.css",
+    "inputFile": "wwwroot/css/pages/index.scss",
+    "sourceMap": false
+  }
+]

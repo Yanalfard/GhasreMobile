@@ -1,0 +1,80 @@
+﻿/*#region Alignment */
+
+@mixin column() {
+    display: flex;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -ms-align-content: center;
+    -webkit-align-content: center;
+    align-content: center;
+}
+
+@mixin row {
+    display: flex;
+    flex-direction: row;
+}
+
+.row {
+    @include row();
+}
+
+@mixin row-reverse {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.rowr {
+    @include row-reverse();
+}
+
+@mixin column {
+    display: flex;
+    flex-direction: column;
+}
+
+.col {
+    @include column();
+}
+
+@mixin column-reverse {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.colr {
+    @include column-reverse();
+}
+
+@for $var from 1 to 12 {
+    .flex-#{$var} {
+        flex: $var;
+    }
+}
+
+.flex-auto {
+    flex: auto;
+}
+
+/*#endregion */
+
+@mixin grid($width) {
+    display: grid;
+    grid-template-rows: auto;
+    grid-gap: 1em;
+    grid-template-columns: repeat(auto-fill, minmax($width, 1fr));
+}
+
+@mixin grid-gap($width, $gap) {
+    display: grid;
+    grid-template-rows: auto;
+    grid-gap: $gap;
+    grid-template-columns: repeat(auto-fit, minmax($width, 1fr));
+}
+
+@mixin obj() {
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center;
+    object-position: center;
+}
