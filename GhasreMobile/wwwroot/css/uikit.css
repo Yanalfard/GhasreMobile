@@ -294,9 +294,31 @@ body {
 .mat {
   background-color: #fff;
   border: 1px solid #e5e5e5;
-  -moz-box-shadow: rgba(0, 0, 0, 0.16) 0 8px 12px;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0 8px 12px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0 8px 12px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 2px 8px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 2px 8px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 2px 8px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px; }
+
+.mat-pad {
+  padding: 12px; }
+
+.mat-border {
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px; }
+
+.mat-card {
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 2px 8px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 2px 8px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 2px 8px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
+  padding: 12px;
   -moz-border-radius: 4px 4px 4px 4px;
   -webkit-border-radius: 4px 4px 4px 4px;
   border-radius: 4px 4px 4px 4px; }

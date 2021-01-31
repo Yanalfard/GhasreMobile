@@ -32,7 +32,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\dy\" />
     <Folder Include="wwwroot\lib\" />
-    <Folder Include="wwwroot\st\v\" />
+    <Folder Include="wwwroot\st\r\ads\" />
   </ItemGroup>
 
   <ItemGroup>

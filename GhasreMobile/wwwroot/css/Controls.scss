@@ -69,7 +69,6 @@ a.btn.btn-primary:hover {
     color: $primary-light;
 }
 
-
 //-
 
 .btn-icon {
@@ -307,38 +306,24 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
 /*#region Main */
 
 $grid-gap: 16px;
-$aside-width: 350px;
+$aside-width: 342px;
 
 .m {
     display: grid;
     grid-template-columns: 1fr $aside-width;
     grid-gap: $grid-gap;
 
-    .dumdum1 {
-        background: red;
-        height: 200px;
-        width: 100%;
-    }
-
-    .dumdum3 {
-        background: $primary;
-        height: 400px;
-        width: 100%;
-    }
-
-    .dumdum2 {
-        background: blue;
-        height: 200px;
-        width: 100%;
-    }
-
     .m-aside {
         @include column;
         grid-gap: $grid-gap;
+        width: $aside-width;
+        min-width: $aside-width;
     }
 
     .m-content {
         @include column;
+        width: auto !important;
+        min-width: 0;
         grid-gap: $grid-gap;
     }
 }
@@ -352,7 +337,6 @@ $aside-width: 350px;
         }
     }
 }
-
 
 .gap-t {
     margin-top: $grid-gap;
@@ -518,7 +502,9 @@ $background-highlight: #eee;
     img {
         width: 100%;
         height: auto;
+        max-height: 50px;
         background-color: #EFF1F5;
+        @include obj;
     }
 
     .top {
@@ -642,15 +628,39 @@ $background-highlight: #eee;
     }
 }
 
-$product-width: 160px;
+.dot-container {
+    @include row-reverse;
+
+    .dot {
+        margin: auto 0;
+        margin-left: 6px;
+    }
+
+    .dot + * {
+        margin: 0;
+    }
+}
+
+.dot {
+    height: 20px;
+    width: 20px;
+}
 
 .product {
+    padding: 20px 0;
+    margin: 0 4px;
     @include column;
-    min-width: $product-width;
     background-color: #fff;
     -ms-align-content: center;
     -webkit-align-content: center;
     align-content: center;
+    z-index: 30;
+    @include trans(.3s);
+    @include border-def-radius;
+
+    * {
+        text-align: center;
+    }
 
     .star-container {
         margin: auto;
@@ -659,5 +669,314 @@ $product-width: 160px;
     .people {
         margin: auto;
         color: $Text-4;
+    }
+
+    img {
+        margin: auto;
+        margin-top: 8px;
+        min-height: 100px;
+        min-width: 100px;
+        background-color: #efefef;
+    }
+
+    .name {
+        color: $Text;
+        font-size: 15px;
+        margin-top: 8px;
+        height: 49px;
+        padding: 0 2px;
+    }
+
+    .category {
+        color: $Text-3;
+        margin-top: 6px;
+    }
+
+    .discount {
+        margin-top: 6px;
+        color: $danger;
+        text-decoration: line-through;
+        font-size: 16px;
+    }
+
+    .price {
+        margin: 0 auto;
+        margin-top: 2px;
+        @include row;
+        color: $Text;
+        font-size: 20px;
+
+        .t {
+            margin-top: auto;
+            margin-bottom: 5px;
+            margin-right: 4px;
+            font-size: 10px;
+        }
+    }
+}
+
+.product:hover {
+    @include shadow-mild;
+    z-index: 50 !important;
+}
+
+.product-slider {
+    @include mat;
+    @include border-def-radius;
+    @include shadow-mild;
+
+    .title {
+        border-bottom: 1px solid $mat-border-color;
+        padding: 12px;
+
+        h3 {
+            font-size: 16px;
+        }
+
+        .dot {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    .uk-slider-items {
+        padding: 4px 0;
+        border-bottom: 0;
+        -moz-box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+        width: unset;
+        max-width: unset;
+    }
+}
+
+.navigation {
+    height: 16px;
+
+    li {
+        margin: auto 0;
+        @include row;
+
+        a {
+            border: 1px $Text solid;
+            background-color: transparent;
+            margin: auto;
+            @include trans(.3s);
+        }
+    }
+
+    li.uk-active {
+        a {
+            margin: auto;
+            width: 16px;
+            height: 16px;
+            border-color: $primary;
+            background-color: $primary;
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .product-slider {
+        .uk-slider-items {
+
+            li {
+                width: 33.33%;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 960px) and (max-width: 1200px) {
+    .product-slider {
+        .uk-slider-items {
+
+            li {
+                width: 50%;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 864px) and (max-width: 960px) {
+    .product-slider {
+        .uk-slider-items {
+
+            li {
+                width: 33.33%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 864px) {
+    .product-slider {
+        .uk-slider-items {
+
+            li {
+                width: 50%;
+            }
+        }
+    }
+}
+
+.product-express {
+
+    .head {
+        @include row-reverse;
+        border-bottom: 1px solid $mat-border-color;
+        position: relative;
+        @include mat-padding;
+
+        h3 {
+            color: $Text;
+            font-size: 18px;
+        }
+
+        .timer {
+            @include row;
+            grid-column-gap: 10px;
+            margin-top: 0;
+            margin-right: auto;
+
+            li {
+                @include column;
+
+                label {
+                    margin: 0 auto;
+                    font-size: 16px;
+                    line-height: 1;
+                    background-color: #F5F5F5;
+                    padding: 7px;
+                    color: $Text-2;
+                    @include border-radius(10px,10px,10px,10px);
+                }
+
+                span {
+                    margin: 0 auto;
+                    margin-top: 4px;
+                    font-size: 9px;
+                    color: $Text-2;
+                }
+            }
+        }
+    }
+
+    .body {
+        position: relative;
+        @include mat-padding;
+        @include column;
+
+        .star {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            @include column;
+            color: #FFCA35;
+
+            label {
+                margin: 0 auto;
+                @include row;
+
+                span {
+                    color: #FFCA35;
+                    margin: auto;
+                    margin-right: 4px;
+                    font-size: 16px
+                }
+            }
+
+            span {
+                margin: 4px auto;
+                color: $Text-4;
+                font-size: 11px
+            }
+        }
+
+        .colours {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            @include column;
+            margin: 0;
+            grid-gap: 16px;
+
+            li {
+                @include border-circle;
+                width: 12px;
+                height: 12px;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+        }
+
+        .link-text {
+
+            .name {
+                margin: auto;
+            }
+        }
+
+        .discount {
+
+            span {
+                color: $danger;
+                text-decoration: line-through;
+            }
+        }
+
+        .price {
+
+            .t {
+            }
+
+            span {
+            }
+        }
+    }
+}
+
+.ad {
+    @include mat;
+    overflow: hidden;
+    display: block;
+
+    img {
+        @include obj;
+        width: 100%;
+        height: auto;
+    }
+}
+
+.blog-block {
+    img {
+        @include obj;
+        width: 100%;
+        height: 240px;
+    }
+
+    h3 {
+        color: $Text;
+        margin: 6px 0;
+        font-size: 17px;
+    }
+
+    p {
+        color: $Text-3;
+        @include max-line(3);
+        font-size: 13px;
+        margin: 0;
+    }
+
+    .row {
+        a {
+            color: $primary;
+        }
+
+        label {
+            color: $Text-4;
+            margin-right: auto;
+        }
     }
 }

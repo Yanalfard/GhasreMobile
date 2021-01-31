@@ -5,6 +5,11 @@ function Swap(element) {
 
     const swapTarget = document.getElementById(element.getAttribute(swapAttrib));
 
+    if (!swapTarget) {
+        throw 'Target Element was not found! Check the id and swap attribute';
+        return;
+    }
+
     let mid = swapTarget.cloneNode();
     element.replaceWith(mid);
     swapTarget.replaceWith(element);

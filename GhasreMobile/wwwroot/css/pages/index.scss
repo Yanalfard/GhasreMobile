@@ -27,11 +27,7 @@
     @include border-def-radius;
     @include shadow-mild;
 
-    .navigation {
-        padding: 10px 20px;
-        backdrop-filter: blur(4px);
-        background-color: rgba(255, 255, 255, 0.24);
-        @include border-circle;
-        @include shadow-mild;
+    .uk-dotnav {
+        height: 16px;
     }
 }

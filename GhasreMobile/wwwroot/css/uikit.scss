@@ -247,8 +247,23 @@ body {
 }
 
 .mat {
-    @include mat();
+    @include mat;
 }
+
+.mat-pad {
+    @include mat-padding;
+}
+
+.mat-border {
+    @include border-def-radius;
+}
+
+.mat-card {
+    @include mat;
+    @include mat-padding;
+    @include border-def-radius;
+}
+
 
 /* clears the ‘X’ from Internet Explorer */
 input[type=search]::-ms-clear {
