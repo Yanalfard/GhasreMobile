@@ -31,3 +31,28 @@
         height: 16px;
     }
 }
+
+.gallery-grid {
+    .grid {
+        @include grid-gap(224px,8px);
+
+        a {
+            display: flex;
+            width: 100%;
+
+            img {
+                max-height: 200px;
+                @include obj;
+                @include border-def-radius;
+                margin: auto;
+            }
+        }
+    }
+}
+
+.service {
+    .body {
+        display:grid;
+
+    }
+}

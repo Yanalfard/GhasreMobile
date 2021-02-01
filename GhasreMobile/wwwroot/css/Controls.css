@@ -714,6 +714,14 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
   height: 20px;
   width: 20px; }
 
+.title {
+  padding: 12px; }
+  .title h3 {
+    font-size: 16px; }
+  .title .dot {
+    width: 16px;
+    height: 16px; }
+
 .product {
   padding: 20px 0;
   margin: 0 4px;
@@ -977,3 +985,60 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
 .blog-block .row label {
   color: #ccc;
   margin-right: auto; }
+
+footer {
+  background-color: #222332;
+  padding: 30px 0;
+  background-image: url("../st/v/footer/City.svg");
+  background-position: bottom;
+  background-repeat: no-repeat; }
+  footer .uk-container .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1fr;
+    grid-gap: 8px;
+    direction: rtl; }
+    footer .uk-container .grid h4 {
+      margin-bottom: 16px; }
+    footer .uk-container .grid .certificates .slideshow {
+      max-width: 124px;
+      max-height: 124px; }
+    footer .uk-container .grid ul li {
+      color: #9294B1;
+      margin: 8px 0; }
+      footer .uk-container .grid ul li a, footer .uk-container .grid ul li span {
+        color: #999bb9; }
+      footer .uk-container .grid ul li a:hover, footer .uk-container .grid ul li span:hover {
+        color: #bdbfd2; }
+    footer .uk-container .grid p {
+      color: #9294B1; }
+    footer .uk-container .grid .intro {
+      padding-left: 20px;
+      border-left: 1px #4A4E61 dashed;
+      margin-left: 20px; }
+  footer .uk-container hr {
+    color: #4A4E61;
+    border: #4A4E61 dashed 1px; }
+
+@media only screen and (min-width: 532px) and (max-width: 960px) {
+  footer .uk-container .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 16px; }
+    footer .uk-container .grid .intro {
+      padding-left: 10px;
+      border-left: 0;
+      margin-left: 0; } }
+
+@media only screen and (max-width: 532px) {
+  footer .uk-container .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-gap: 16px; }
+    footer .uk-container .grid .intro {
+      border-left: 0; }
+    footer .uk-container .grid .intro {
+      padding-left: 0;
+      border-left: 0;
+      margin-left: 0; } }
