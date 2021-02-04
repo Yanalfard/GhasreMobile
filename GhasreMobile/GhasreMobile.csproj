@@ -37,6 +37,27 @@
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\css\bootstrap.css.map" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\js\bootstrap-tagsinput.js" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\js\bootstrap.js" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\js\bootstrap.js.map" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\AdminStaticFile\Bootstrap\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\Jquery\docs.min.js" />
+    <None Include="wwwroot\Jquery\Home.js" />
+    <None Include="wwwroot\Jquery\jquery-3.4.1.js" />
+    <None Include="wwwroot\Jquery\jquery-3.4.1.min.js" />
+    <None Include="wwwroot\Jquery\modal.js" />
+    <None Include="wwwroot\Jquery\popper.min.js" />
   </ItemGroup>
 
 </Project>

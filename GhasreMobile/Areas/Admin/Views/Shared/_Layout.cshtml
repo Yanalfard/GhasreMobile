@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="/AdminStaticFile/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="/AdminStaticFile/Bootstrap/css/bootstrap-grid.css" rel="stylesheet" />
+    <link href="/AdminStaticFile/Bootstrap/css/bootstrap-reboot.css" rel="stylesheet" />
+    <link href="/AdminStaticFile/Bootstrap/css/bootstrap-rtl.css" rel="stylesheet" />
+    <link href="/AdminStaticFile/Bootstrap/css/bootstrap-tagsinput.css" rel="stylesheet" />
+    <link href="/AdminStaticFile/style.css" rel="stylesheet" />
+    <link href="/AdminStaticFile/style-rtl.css" rel="stylesheet" />
+    <link href="~/css/uikit.min.css" rel="stylesheet" />
+    <link href="~/AdminStaticFile/DataPicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="wrapper flex-div">
+        <div class="layout flex-div">
+            <!-- Side Nav START -->
+            <div class="side-nav">
+                <div class="side-nav-inner">
+                    <div class="side-nav-logo">
+                        <a href="/" class="uk-margin-auto row">
+                            <img class="logo logo-darkt" src="~/img/Admin/logo/ArvinTavLogo.svg" />
+                        </a>
+                        <div class="mobile-toggle side-nav-toggle">
+                            <a href="#" uk-icon="chevron-back-outline">
+                            </a>
+                        </div>
+                    </div>
+                    <ul class="side-nav-menu scrollable">
+
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i uk-icon="home"></i>
+                                </span>
+                                <span class="title">داشبورد</span>
+                                <span class="arrow" uk-icon="chevron-forward">
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item active">
+                                    <a href="/Admin/Package/Order">
+                                        <span class="icon-holder">
+                                            <i uk-icon="basket"></i>
+                                        </span>
+                                        <span class="title">سفارشات</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a href="/Admin/Package">
+                                        <span class="icon-holder">
+                                            <i uk-icon="cube"></i>
+                                        </span>
+                                        <span class="title">لیست پکیج ها</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i uk-icon="grid"></i>
+                                </span>
+                                <span class="title">پکیج ها</span>
+                                <span class="arrow" uk-icon="chevron-forward">
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item active">
+                                    <a href="/Admin/Package/Order">
+                                        <span class="icon-holder">
+                                            <i uk-icon="basket"></i>
+                                        </span>
+                                        <span class="title">سفارشات</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a href="/Admin/Package">
+                                        <span class="icon-holder">
+                                            <i uk-icon="cube"></i>
+                                        </span>
+                                        <span class="title">لیست پکیج ها</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                   
+                   
+
+
+                    </ul>
+                </div>
+            </div>
+            <!-- Side Nav END -->
+            <!-- Page Container START -->
+            <div class="page-container flex-div">
+                <!-- Header START -->
+                <div class="header navbar">
+                    <div class="header-container">
+                        <ul class="nav-right float-right mr-3">
+                            <li>
+                                <a class="side-nav-toggle" href="javascript:void(0);" uk-icon="menu-outline">
+
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav-left float-left">
+                            @*@Html.Action("P_UserBox", "Dashboard", new { area = "Admin" })
+                                @Html.Action("notification", "Dashboard", new { area = "Admin" })*@
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="sub-header">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb rounded-0 m-0 bg-white">
+                            <li class="breadcrumb-item p-0"><a href="/admin/Home">داشبورد</a></li>
+                            <li class="breadcrumb-item p-0 active" aria-current="page">@ViewBag.Title</li>
+                        </ol>
+                    </nav>
+                </div>
+                <!-- Header END -->
+                <!-- Content Wrapper START -->
+                <div class="main-content flex">
+                    <div class="container-fluid flex-div">
+                        @RenderBody()
+                    </div>
+                </div>
+                <!-- Content Wrapper END -->
+                <!-- Footer START -->
+                <footer class="content-footer bg-white">
+                    <div class="footer border-0">
+                        <div class="copyright">
+                            <span><b class="text-dark">قصر موبایل</b> 2020</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Footer END -->
+            </div>
+            <!-- Page Container END -->
+        </div>
+    </div>
+</body>
+</html>
+
+<!-- Modal -->
+<div class="modal fade" id="modalSave" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <img src="~/img/adminStatic/load2.gif" class="justify-content-center" width="60" height="60" />
+            @*JS Dynamic*@
+        </div>
+    </div>
+</div>
+<!-- Button trigger modal -->
+
+<script src="/Jquery/jquery-3.4.1.js"></script>
+<script src="/Jquery/jquery-3.4.1.min.js"></script>
+<script src="/Jquery/modal.js"></script>
+<script src="/Jquery/popper.min.js"></script>
+<script src="/AdminStaticFile/Bootstrap/js/bootstrap.js"></script>
+<script src="/AdminStaticFile/Bootstrap/js/bootstrap.min.js"></script>
+<script src="/AdminStaticFile/Bootstrap/js/bootstrap.bundle.js"></script>
+<script src="/AdminStaticFile/Bootstrap/js/bootstrap.bundle.min.js"></script>
+@*<script src="~/UIKit/js/Global.js"></script>*@
+<script src="~/js/uikit.min.js"></script>
+<script src="~/js/uikit-icons.js"></script>
+<link href="~/AdminStaticFile/DataPicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+<script src="~/AdminStaticFile/script.js"></script>
