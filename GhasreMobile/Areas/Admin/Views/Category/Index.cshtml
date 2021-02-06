@@ -1,8 +1,55 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "دسته بندی";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+@*<h1>Index</h1>*@
 
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div class="card-header bg-white">
+                <div class="pr-1 pt-2">
+                    <div class="form-group pb-0 mb-0">
+                        <button id="Create" data-toggle="modal" data-target="#modalSave" class="btn btn-success btn-sm">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div id="card-table" class="card-body flex-div">
+                <div class="table-responsive flex">
+                    <table class="table fixed">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>نام دسته بندی</th>
+                                <th>زیر مجموعه</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td>دسته بندی 1</td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="مشاهده زیر مجموعه">
+                                            <a  data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="albums-outline"></a>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                            <a data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                  @*  @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
