@@ -60,4 +60,9 @@
     <None Include="wwwroot\Jquery\popper.min.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
+  </ItemGroup>
+
 </Project>

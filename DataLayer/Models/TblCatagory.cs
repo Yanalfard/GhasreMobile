@@ -15,10 +15,14 @@ namespace DataLayer.Models
 
         [Key]
         public int CatagoryId { get; set; }
-        [Required]
+        [Display(Name ="نام دسته بندی")]
+        [Required(ErrorMessage = "نام دسته بندی اجباری میباشد")]
         [StringLength(256)]
+        [MaxLength(50, ErrorMessage = "لطفا کارکتر های کمتری وارد کنید")]
+        [MinLength(50, ErrorMessage = "لطفا کارکتر های بیشتری وارد کنید")]
         public string Name { get; set; }
         public int? ParentId { get; set; }
+        [Display(Name ="نمایش در ثبت محصول")]
         public bool? IsOnFirstPage { get; set; }
 
         [ForeignKey(nameof(ParentId))]
