@@ -17,9 +17,9 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int Id)
         {
-            return ViewComponent("CreateCategory");
+            return ViewComponent("CreateCategory", new { Id = Id });
         }
 
         [HttpPost]

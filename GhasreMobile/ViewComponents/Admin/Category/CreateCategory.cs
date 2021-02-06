@@ -9,9 +9,9 @@ namespace GhasreMobile.ViewComponents.Admin.Category
 {
     public class CreateCategory : ViewComponent
     {
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(int Id)
         {
-            return await Task.FromResult((IViewComponentResult)View("/Admin/Views/Catagory/Components/Create.cshtml"));
+            return await Task.FromResult((IViewComponentResult)View("/Admin/Views/Catagory/Components/Create.cshtml", Id));
         }
     }
 }

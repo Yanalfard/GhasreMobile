@@ -1,4 +1,4 @@
-﻿
+﻿@model DataLayer.Models.TblCatagory
 <div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
         افزودن دسته بندی
@@ -7,20 +7,28 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form method="post">
+<form asp-action="Create" asp-controller="Category" asp-area="Admin"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="EndCatagoryCreate()"
+      data-ajax-update="#ajaxresult">
+    <input asp-for="ParentId" />
     <div class="modal-body">
         <div class="form-row">
             <div class="form-group col-md-4">
-                <input type="text" class="form-control form-control-sm" placeholder="نام">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control form-control-sm" placeholder="مثال : لوازم جانبی">
+                <span asp-validation-for="Name"></span>
                 <br />
-                <input type="checkbox"> فعال باشد
+                <input asp-for="IsOnFirstPage"> فعال باشد
             </div>
         </div>
     </div>
     <div class="modal-footer justify-content-end">
-        @* !!!!!!!!!!!Load image!!!!!!!!!!! *@
-        @* <img src='/img/adminStatic/load2.gif' class='justify-content-center d-none loadingicon' width='60' height='60' />*@
-        <span id="Erorr" class="text-danger"></span>
         <button type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
     </div>
 </form>
+
+<script src="~/Validate/jquery.validate.min.js"></script>
+<script src="~/Validate/jquery.validate.unobtrusive.js"></script>
