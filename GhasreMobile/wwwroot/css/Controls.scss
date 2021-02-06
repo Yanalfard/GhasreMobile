@@ -843,12 +843,14 @@ $background-highlight: #eee;
 
         h3 {
             color: $Text;
-            font-size: 18px;
+            font-size: 20px;
+            vertical-align: central;
+            margin: auto 0;
         }
 
         .timer {
             @include row;
-            grid-column-gap: 10px;
+            grid-column-gap: 9px;
             margin-top: 0;
             margin-right: auto;
 
@@ -857,12 +859,12 @@ $background-highlight: #eee;
 
                 label {
                     margin: 0 auto;
-                    font-size: 16px;
+                    font-size: 15px;
                     line-height: 1;
                     background-color: #F5F5F5;
-                    padding: 7px;
+                    padding: 6px;
                     color: $Text-2;
-                    @include border-radius(10px,10px,10px,10px);
+                    @include border-radius(9px,9px,9px,9px);
                 }
 
                 span {
@@ -928,23 +930,37 @@ $background-highlight: #eee;
 
             .name {
                 margin: auto;
+                margin-bottom: 8px;
+                text-align: center;
+                font-size: 18px;
             }
         }
 
         .discount {
+            margin: auto;
 
             span {
                 color: $danger;
                 text-decoration: line-through;
+                text-align: center;
+                font-size: 18px;
             }
         }
 
         .price {
+            margin: auto;
+            @include row;
 
             .t {
+                font-size: 11px;
+                margin-top: auto;
+                margin-bottom: 5px;
+                margin-right: 3px;
             }
 
             span {
+                font-size: 24px;
+                text-align: center;
             }
         }
     }
@@ -1000,6 +1016,7 @@ footer {
     background-image: url('../st/v/footer/City.svg');
     background-position: bottom;
     background-repeat: no-repeat;
+    margin-top: 28px;
 
     .uk-container {
 
@@ -1095,7 +1112,6 @@ footer {
     }
 }
 
-
 @media only screen and (max-width: 532px) {
     footer {
 
@@ -1118,5 +1134,31 @@ footer {
                 }
             }
         }
+    }
+}
+
+.breadcrumb {
+    @include row-reverse;
+    padding-bottom: 8px;
+    width: 100%;
+
+    a {
+        font-size: 13px;
+        color: $Text-2;
+        @include trans(.2s);
+    }
+
+    a:hover {
+        color: $primary;
+    }
+
+    a:not(:last-child):before {
+        content: "/";
+        margin: 0 8px;
+        color: $Text-2 !important;
+    }
+
+    .active {
+        color: $Text;
     }
 }

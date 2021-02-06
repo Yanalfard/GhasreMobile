@@ -1,7 +1,6 @@
 ﻿@import '../_colors.scss';
 @import '../_layout.scss';
 
-
 .categories {
     @include mat;
     @include border-def-radius;
@@ -52,7 +51,16 @@
 
 .service {
     .body {
-        display:grid;
+        display: grid;
+    }
+}
 
+.questions {
+    ul {
+        li {
+            @include mat-padding;
+            margin-top: 0 !important;
+            border-bottom: solid $mat-border-color 1px;
+        }
     }
 }

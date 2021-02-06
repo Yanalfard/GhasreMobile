@@ -1,17 +1,18 @@
-[
+﻿[
   {
     "outputFile": "wwwroot/css/uikit.css",
-    "inputFile": "wwwroot/css/uikit.scss",
-    "sourceMap": false
+    "inputFile": "wwwroot/css/uikit.scss"
   },
   {
     "outputFile": "wwwroot/css/Controls.css",
-    "inputFile": "wwwroot/css/Controls.scss",
-    "sourceMap": false
+    "inputFile": "wwwroot/css/Controls.scss"
   },
   {
     "outputFile": "wwwroot/css/pages/index.css",
-    "inputFile": "wwwroot/css/pages/index.scss",
-    "sourceMap": false
+    "inputFile": "wwwroot/css/pages/index.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/pages/product.css",
+    "inputFile": "wwwroot/css/pages/product.scss"
   }
 ]

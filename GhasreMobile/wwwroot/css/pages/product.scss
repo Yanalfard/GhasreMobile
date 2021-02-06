@@ -1,0 +1,169 @@
+﻿@import '../_colors.scss';
+@import '../_layout.scss';
+
+.pr {
+    $specs-width: 180px;
+    $title-height: 92px;
+    //
+    display: grid;
+    grid-template-columns: $specs-width 2fr 1.1fr;
+    grid-template-rows: $title-height auto;
+    grid-template-areas: "title title image" "specs content image";
+    grid-gap: 8px;
+
+    &-image {
+        grid-area: image;
+
+
+
+        .head {
+            .fractional {
+                display: block;
+                @include border-radius(12px,12px,12px,12px);
+                padding: 8px;
+                color: $primary;
+                border: 2px solid $primary;
+            }
+        }
+
+        .border {
+            border: solid 1px $mat-border-color;
+
+            .slider {
+                margin: auto;
+                width: 256px;
+                display: flex;
+
+                .img {
+                    width: 100%;
+                    margin-bottom: 6px;
+                    margin-left: auto;
+                    display: flex;
+                    height: 160px;
+
+                    img {
+                        @include obj;
+                        margin: auto;
+                    }
+                }
+            }
+        }
+
+        .foot {
+            @include row;
+            @include mat-padding;
+
+            .action {
+                border: 1px $mat-border-color solid;
+                @include border-def-radius;
+                padding: 8px;
+                color: #525252;
+                cursor: pointer;
+                @include trans(.2s);
+            }
+
+            .action:hover {
+                border-color: $primary;
+                color: lighten($primary,8%);
+            }
+
+            .left {
+                margin-right: auto;
+            }
+
+            .right {
+                margin-left: auto;
+            }
+        }
+
+        .thumbnav {
+            ul.uk-thumbnav {
+                @include grid-gap(52px,8px);
+
+                li a {
+                    border: 1px $mat-border-color solid;
+                    @include border-def-radius;
+                }
+            }
+        }
+    }
+
+    &-title {
+        background-color: #F5F6F7;
+        @include mat-padding;
+        grid-area: title;
+    }
+
+    &-content {
+        grid-area: content;
+        min-height: 150px;
+        .colours{
+
+        }
+    }
+
+    &-specs {
+        background-color: transparent;
+        grid-area: specs;
+        min-height: 50px;
+        width: $specs-width;
+    }
+}
+
+.cart {
+    @include row-reverse;
+    @include subtle-glow(transparentize($primary-light,.8));
+    margin-left: auto;
+
+    button {
+        background-color: transparent;
+        outline: none;
+        color: #fff;
+        border: 0;
+    }
+
+    .counter {
+        background-color: #810081;
+        padding: 6px 12px;
+        @include border-radius(0,6px,6px,0);
+        grid-column-gap: 8px;
+
+        .plus, .minus {
+            width: 24px;
+            height: 24px;
+            margin: auto 0;
+            padding: 2px;
+            @include border-circle;
+            background-color: #fff;
+        }
+
+        .plus {
+            color: $success;
+        }
+
+        .minus {
+            color: $danger;
+        }
+
+        .count {
+            @include border-circle;
+            background-color: #fff;
+            width: 32px;
+            height: 32px;
+            margin: auto 0;
+            @include column;
+
+            span {
+                margin: auto;
+                font-size: 17px;
+                color: $primary
+            }
+        }
+    }
+
+    .button {
+        background-color: #96027E;
+        padding: 6px 8px;
+        @include border-radius(6px,0,0,6px);
+    }
+}
