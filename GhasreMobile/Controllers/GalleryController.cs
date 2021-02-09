@@ -6,22 +6,11 @@ using System.Threading.Tasks;
 
 namespace GhasreMobile.Controllers
 {
-    public class HomeController : Controller
+    public class GalleryController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Contact()
-        {
-            return View();
-        }
-
-        public IActionResult About()
-        {
-            return View();
-        }
-
     }
 }

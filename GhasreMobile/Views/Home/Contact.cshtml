@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Single"] = true;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+
+    <link href="~/css/pages/index.min.css" rel="stylesheet" />
+
+}
+
+<div class="main-contact">
+
+    <div class="left">
+        <!-- #region Contact -->
+
+        <form class="request mat-card">
+            <h3 class="uk-margin-bottom">تماس با ما</h3>
+            <div class="fg-col">
+                <label for="TelNo" class="fg-label">شماره تلفن</label>
+                <input id="TelNo" name="TelNo" type="tel" class="entry" value="" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="fg-col">
+                <label for="Name" class="fg-label">نام و نام خانوادگی</label>
+                <input id="Name" name="Name" type="text" class="entry" value="" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="fg-col">
+                <label for="Message" class="fg-label">پیغام شما</label>
+                <textarea id="Message" name="Message" class="entry"></textarea>
+                <span class="text-danger"></span>
+            </div>
+            <div class="rowr">
+                <button class="btn btn-primary">ارسال پیام</button>
+            </div>
+        </form>
+
+        <!-- #endregion -->
+        <!-- #region Sellers -->
+
+        <div class="sellers mat-card">
+            <h3>مدیران فروش</h3>
+            <ul>
+                <li>
+                    <label>نام و نام خانوادگی</label>
+                    <div class="rowr">
+                        <span>33860896</span>
+                    </div>
+                </li>
+                <li>
+                    <label>نام و نام خانوادگی</label>
+                    <div class="rowr">
+                        <span>33860896</span>
+                    </div>
+                </li>
+                <li>
+                    <label>نام و نام خانوادگی</label>
+                    <div class="rowr">
+                        <span>33860896</span>
+                    </div>
+                </li>
+                <li>
+                    <label>نام و نام خانوادگی</label>
+                    <div class="rowr">
+                        <span>33860896</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- #endregion -->
+
+    </div>
+
+    <div class="right">
+        <a href="" class="telegram">
+            <img src="~/st/r/Telegram.png" alt="" />
+        </a>
+        <a href="" class="instagram">
+            <img src="~/st/r/Instagram.png" alt="" />
+        </a>
+
+        <!-- #region Request -->
+
+        <form class="request mat-card">
+            <h3>درخواست خدمات درب منزل</h3>
+            <p class="text-3">برای درحواست خدمات تعمیراتی و گارانتی درب منزل این فرم را پر کنید </p>
+            <div class="fg-col">
+                <label for="TelNo" class="fg-label">شماره تلفن</label>
+                <input id="TelNo" name="TelNo" type="tel" class="entry" value="" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="fg-col">
+                <label for="Name" class="fg-label">نام و نام خانوادگی</label>
+                <input id="Name" name="Name" type="text" class="entry" value="" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="fg-col">
+                <label for="Address" class="fg-label">آدرس</label>
+                <textarea id="Address" name="Address" class="entry"></textarea>
+                <span class="text-danger"></span>
+            </div>
+            <div class="rowr">
+                <button class="btn btn-primary">فرستادن درخواست</button>
+            </div>
+        </form>
+
+        <!-- #endregion -->
+
+    </div>
+
+</div>
