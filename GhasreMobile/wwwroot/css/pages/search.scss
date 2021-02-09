@@ -1,0 +1,19 @@
+﻿@import '../_colors.scss';
+@import '../_layout.scss';
+
+.search-grid {
+
+    .grid {
+        @include grid-gap(224px,4px);
+        padding: 10px 6px;
+    }
+}
+
+.loading {
+    @include row;
+    width: 100%;
+
+    img {
+        margin: auto;
+    }
+}

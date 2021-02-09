@@ -10,9 +10,13 @@
     grid-template-rows: $title-height auto;
     grid-template-areas: "title title image" "specs content image";
     grid-gap: 8px;
+    z-index: 10;
+    @include border-radius(4px,4px,0,0);
+    position: relative;
 
     &-image {
         grid-area: image;
+
 
         .head {
             .fractional {
@@ -95,8 +99,65 @@
     &-content {
         grid-area: content;
         min-height: 150px;
-        .colours{
+        grid-gap: 8px;
 
+        .colours {
+            @include column;
+
+            .grid {
+                margin-top: 6px;
+                @include row-reverse;
+                grid-gap: 10px;
+                -ms-flex-wrap: wrap;
+                -webkit-flex-wrap: wrap;
+                flex-wrap: wrap;
+
+                li {
+                    .clr {
+                        border: 1px solid $mat-border-color;
+                        padding: 6px 8px;
+                        @include row;
+                        @include border-def-radius;
+
+                        span {
+                            color: $Text-2;
+                            font-size: 12px;
+                        }
+
+                        strong {
+                            width: 18px;
+                            height: 18px;
+                            margin-left: 6px;
+                            @include border-circle;
+                        }
+                    }
+                }
+            }
+        }
+
+        .price {
+            @include column;
+
+            .discount {
+                color: $danger;
+                text-decoration: line-through;
+                font-size: 20px;
+            }
+
+            .actual {
+                @include row-reverse;
+                color: $Text;
+                font-size: 24px;
+                margin-top: 0px;
+
+                .t {
+                    color: $Text;
+                    font-size: 13px;
+                    margin-top: auto;
+                    margin-bottom: 5px;
+                    margin-right: 4px;
+                }
+            }
         }
     }
 
@@ -163,5 +224,97 @@
         background-color: #96027E;
         padding: 6px 8px;
         @include border-radius(6px,0,0,6px);
+    }
+}
+
+.section-nav {
+    position: relative;
+    background-color: #F5F5F5;
+    border: 1px #ddd solid;
+    @include border-radius(0,0,4px,4px);
+    @include row-reverse;
+    margin-top: -1px;
+    @include shadow-mild;
+    z-index: 5;
+
+    a {
+        color: $Text-2;
+        padding: 12px;
+        border-left: 1px #ddd solid;
+        @include trans(.2s);
+    }
+
+    a:hover {
+        color: $primary;
+    }
+}
+
+.details {
+
+    table {
+        margin: 0;
+        margin-top: 8px;
+        border-spacing: 8px;
+
+        tbody {
+            tr {
+                td {
+                    padding: 8px;
+                    @include border-radius(3px,3px,3px,3px);
+                }
+
+                td:first-child {
+                    background-color: #F4F4F4;
+                }
+
+                td:last-child {
+                    background-color: #F9F9F9;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .product-slider {
+        .uk-slider-items {
+
+            li {
+                width: 25%;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 960px) and (max-width: 1200px) {
+    .product-slider {
+        .uk-slider-items {
+
+            li {
+                width: 33.33%;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 864px) and (max-width: 960px) {
+    .product-slider {
+        .uk-slider-items {
+
+            li {
+                width: 50%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 864px) {
+    .product-slider {
+        .uk-slider-items {
+
+            li {
+                width: 50%;
+            }
+        }
     }
 }

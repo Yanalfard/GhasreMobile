@@ -14,5 +14,21 @@
   {
     "outputFile": "wwwroot/css/pages/product.css",
     "inputFile": "wwwroot/css/pages/product.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/pages/search.css",
+    "inputFile": "wwwroot/css/pages/search.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/pages/forum.css",
+    "inputFile": "wwwroot/css/pages/forum.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/pages/blog.css",
+    "inputFile": "wwwroot/css/pages/blog.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/pages/account.css",
+    "inputFile": "wwwroot/css/pages/account.scss"
   }
 ]

@@ -1,0 +1,76 @@
+﻿@import '../_colors.scss';
+@import '../_layout.scss';
+
+.forum-block {
+    @include mat;
+    @include border-def-radius;
+    border: 1px solid $mat-border-color;
+    display: grid;
+    grid-template-columns: auto 42px;
+    min-height: 50px;
+
+    .content {
+        @include mat-padding;
+
+        .forum-body {
+            margin-top: 8px;
+            @include column;
+
+            .image-container {
+                max-height: 52vh;
+                display: flex;
+
+                img {
+                    height: 100%;
+                    margin: auto;
+                    @include obj;
+                }
+            }
+
+            p {
+                margin-bottom: 0;
+                color: $Text-2;
+                font-size: 14px;
+            }
+        }
+
+        .action {
+            @include row;
+            grid-column-gap: 4px;
+
+            span {
+                color: $Text-2;
+            }
+        }
+    }
+
+    .controls {
+        background-color: #FCFCFC;
+        border-left: 1px solid $mat-border-color;
+        @include column;
+
+        .col {
+            padding: 4px 0;
+            margin-bottom: auto;
+
+            > * {
+                margin: auto;
+                color: $Text-2;
+            }
+
+            button {
+                color: $Text-3;
+            }
+
+            button:hover {
+                color: $primary;
+            }
+        }
+    }
+}
+
+.threads {
+    .forum-block {
+        margin-bottom: 12px;
+    }
+}

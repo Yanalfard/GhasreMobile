@@ -197,8 +197,9 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
 
 .entry {
     background: transparent;
-    padding: 4px 11px;
+    padding: 3px 8px;
     direction: rtl;
+    font-size: 13px;
     @include component-border;
     @include border-def-radius;
     @include placeholder(#ddd);
@@ -228,11 +229,11 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
 }
 
 .fg-col {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     @include column;
 
     .fg-label {
-        font-size: 16px;
+        font-size: 14px;
         color: $Text;
         margin-bottom: 8px;
     }
@@ -240,7 +241,7 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
     .text-danger {
         margin-top: 8px;
         color: #DA4B1E;
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .radio {
@@ -254,6 +255,10 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
         margin-bottom: 0;
         min-height: 28px;
         height: 72px;
+    }
+
+    select.entry {
+        height: 35px;
     }
 
     input[type=color] {
@@ -278,7 +283,7 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
 }
 
 .form {
-    $padding: 16px;
+    $padding: 12px;
     @include mat;
 
     &-header {
@@ -302,6 +307,7 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
 .forms {
     @include grid-gap(230px,16px)
 }
+
 /*#endregion */
 /*#region Main */
 
@@ -660,7 +666,7 @@ $background-highlight: #eee;
 }
 
 .product {
-    padding: 20px 0;
+    padding: 12px 3px;
     margin: 0 4px;
     @include column;
     background-color: #fff;
@@ -677,32 +683,38 @@ $background-highlight: #eee;
 
     .star-container {
         margin: auto;
+
+        .Stars {
+            font-size: 20px;
+        }
     }
 
     .people {
         margin: auto;
         color: $Text-4;
+        font-size: 12px;
     }
 
     img {
         margin: auto;
         margin-top: 8px;
-        min-height: 100px;
-        min-width: 100px;
+        min-height: 92px;
+        min-width: 92px;
         background-color: #efefef;
     }
 
     .name {
         color: $Text;
-        font-size: 15px;
+        font-size: 14px;
         margin-top: 8px;
-        height: 49px;
+        height: 48px;
         padding: 0 2px;
     }
 
     .category {
         color: $Text-3;
-        margin-top: 6px;
+        margin-top: 2px;
+        font-size: 13px;
     }
 
     .discount {
@@ -733,6 +745,32 @@ $background-highlight: #eee;
     z-index: 50 !important;
 }
 
+.navigation {
+    height: 16px;
+
+    li {
+        margin: auto 0;
+        @include row;
+
+        a {
+            border: 1px $Text solid;
+            background-color: transparent;
+            margin: auto;
+            @include trans(.3s);
+        }
+    }
+
+    li.uk-active {
+        a {
+            margin: auto;
+            width: 16px;
+            height: 16px;
+            border-color: $primary;
+            background-color: $primary;
+        }
+    }
+}
+
 .product-slider {
     @include mat;
     @include border-def-radius;
@@ -760,32 +798,6 @@ $background-highlight: #eee;
         box-sizing: content-box;
         width: unset;
         max-width: unset;
-    }
-}
-
-.navigation {
-    height: 16px;
-
-    li {
-        margin: auto 0;
-        @include row;
-
-        a {
-            border: 1px $Text solid;
-            background-color: transparent;
-            margin: auto;
-            @include trans(.3s);
-        }
-    }
-
-    li.uk-active {
-        a {
-            margin: auto;
-            width: 16px;
-            height: 16px;
-            border-color: $primary;
-            background-color: $primary;
-        }
     }
 }
 
@@ -1160,5 +1172,32 @@ footer {
 
     .active {
         color: $Text;
+    }
+}
+
+.comment-section {
+
+    ul {
+        @include column;
+        grid-gap: 12px;
+    }
+
+    .comment {
+        background: #F8F8F8;
+        padding: 12px;
+        @include border-def-radius;
+
+        .actions {
+            @include row-reverse;
+
+            a {
+                color: $Text-4;
+                @include trans(.2s);
+            }
+
+            a:hover {
+                color: $primary;
+            }
+        }
     }
 }

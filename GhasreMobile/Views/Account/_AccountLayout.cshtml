@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="@(ViewData["Description"] ?? "سایت خرید و فروش آنلاین گوشی های موبایل به صورت اقساطی")">
+    <meta name="keywords" content="@(ViewData["Keywords"] ?? "قصر موبایل، گوشی، تلفن، خرید، آنلاین، اقساطی")">
+    <meta name="author" content="صدرا محمدی، ینال احمدزاده، مهدی سهندی">
+
+    <title>@(ViewData["Title"] ?? "قصر موبایل")</title>
+
+    <link href="~/css/uikit.min.css" rel="stylesheet" />
+    <link href="~/css/Controls.min.css" rel="stylesheet" />
+    <link href="~/css/pages/account.min.css" rel="stylesheet" />
+
+    @RenderSection("Styles", false)
+
+</head>
+<body>
+
+    <header class="home">
+        <a uk-icon="home" href=""></a>
+    </header>
+
+
+    <main class="l">
+        <div class="l-content">
+            <div class="l-mid">
+                @RenderBody()
+            </div>
+        </div>
+        <div class="l-image">
+            <div class="l-cover"></div>
+            <img src="@(ViewData["Image"] ?? "/st/r/Entry_2.png")" alt="" />
+        </div>
+    </main>
+
+
+    <!--Pwa-->
+    @*<script src="~/app.js"></script>*@
+
+    <script src="~/js/uikit.min.js"></script>
+    <script src="~/js/uikit-icons.js"></script>
+
+    @RenderSection("Scripts", false)
+
+</body>
+</html>

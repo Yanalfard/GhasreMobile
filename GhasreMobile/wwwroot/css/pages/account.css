@@ -1,0 +1,91 @@
+﻿/*Star*/
+/*#region Material  */
+/*#endregion */
+/*
+backdrop-filter: blur(2px);
+backdrop-filter: brightness(60%);
+backdrop-filter: contrast(40%);
+backdrop-filter: drop-shadow(4px 4px 10px blue);
+backdrop-filter: grayscale(30%);
+backdrop-filter: hue-rotate(120deg);
+backdrop-filter: invert(70%);
+backdrop-filter: opacity(20%);
+backdrop-filter: sepia(90%);
+backdrop-filter: saturate(80%);
+*/
+/*#endregion */
+/*#region Alignment */
+.row {
+  display: flex;
+  flex-direction: row; }
+
+.rowr {
+  display: flex;
+  flex-direction: row-reverse; }
+
+.col {
+  display: flex;
+  flex-direction: column; }
+
+.colr {
+  display: flex;
+  flex-direction: column-reverse; }
+
+.flex-1 {
+  flex: 1; }
+
+.flex-2 {
+  flex: 2; }
+
+.flex-3 {
+  flex: 3; }
+
+.flex-4 {
+  flex: 4; }
+
+.flex-5 {
+  flex: 5; }
+
+.flex-6 {
+  flex: 6; }
+
+.flex-7 {
+  flex: 7; }
+
+.flex-8 {
+  flex: 8; }
+
+.flex-9 {
+  flex: 9; }
+
+.flex-10 {
+  flex: 10; }
+
+.flex-11 {
+  flex: 11; }
+
+.flex-auto {
+  flex: auto; }
+
+/*#endregion */
+body {
+  background-color: #fff; }
+
+.home {
+  display: flex;
+  padding: 20px;
+  position: fixed; }
+
+.l {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh; }
+  .l-content .l-mid {
+    display: flex;
+    height: 100%; }
+  .l-image img {
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center;
+    object-position: center; }

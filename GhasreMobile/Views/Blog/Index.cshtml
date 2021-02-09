@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Single"] = true;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+
+    <link href="~/css/pages/blog.min.css" rel="stylesheet" />
+
+}
+
+<nav class="breadcrumb uk-padding-remove gap-b">
+    <a href="">وبلاگ ها</a>
+    <a href="" class="active">تمام وبلاگ ها</a>
+</nav>
+
+<div class="blogs-grid">
+    <partial name="_BlogBlock" />
+    <partial name="_BlogBlock" />
+    <partial name="_BlogBlock" />
+    <partial name="_BlogBlock" />
+    <partial name="_BlogBlock" />
+    <partial name="_BlogBlock" />
+    <partial name="_BlogBlock" />
+    <partial name="_BlogBlock" />
+</div>
+
+<div class="uk-child-width-1-2 row gap-t gap-card">
+    <partial name="_Ad">
+    <partial name="_Ad">
+</div>

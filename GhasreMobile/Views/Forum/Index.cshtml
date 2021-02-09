@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+
+    <link href="~/css/pages/forum.min.css" rel="stylesheet" />
+
+}
+
+@section Aside{
+
+    <partial name="_Ad" />
+    <partial name="_Ad" />
+
+}
+
+<nav class="breadcrumb uk-padding-remove">
+    <a href="">تالار گفتگو</a>
+    <a href="" class="active">صفحه اصلی</a>
+</nav>
+
+<div class="threads col">
+    <partial name="_ThreadBlock" />
+    <partial name="_ThreadBlock" />
+    <partial name="_ThreadBlock" />
+</div>

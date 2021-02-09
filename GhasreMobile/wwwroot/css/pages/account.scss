@@ -1,0 +1,36 @@
+﻿@import '../_colors.scss';
+@import '../_layout.scss';
+
+body {
+    background-color: #fff;
+}
+
+.home {
+    display: flex;
+    padding: 20px;
+    position: fixed;
+}
+
+.l {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+
+    &-content {
+        .l-mid {
+            display: flex;
+            height: 100%;
+        }
+    }
+
+    &-image {
+
+        &-cover {
+        }
+
+        img {
+            height: 100%;
+            @include obj;
+        }
+    }
+}

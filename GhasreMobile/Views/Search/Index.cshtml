@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+
+    <link href="~/css/pages/search.min.css" rel="stylesheet" />
+
+}
+
+@section Aside{
+
+    <div class="mat-card col">
+        <h4 class="uk-margin-bottom">
+            فیلتر ها
+        </h4>
+
+        <div class="fg-col">
+            <div class="fg-label">نام محصول</div>
+            <input type="text" class="entry" value="" />
+            <div class="text-danger"></div>
+        </div>
+
+        <div class="fg-col">
+            <div class="fg-label">نام محصول</div>
+            <select class="entry">
+                <option>سامسونگ</option>
+                <option>اپل</option>
+                <option>شیائومی</option>
+            </select>
+            <div class="text-danger"></div>
+        </div>
+
+        <div class="fg-col">
+            <label class="fg-label">قیمت</label>
+            <div class="rowr uk-child-width-1-2">
+                <div class="col">
+                    <input type="text" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" value="" />
+                    <div class="text-danger"></div>
+                </div>
+                <div class="col">
+                    <input type="text" class="entry" aria-label="priceTo" placeholder="تا" value="" />
+                    <div class="text-danger"></div>
+                </div>
+            </div>
+        </div>
+
+        <label class="text-2 rowr uk-margin-small-bottom">
+            <input class="uk-checkbox" type="checkbox" value="" />
+            فقط کالا های موجود
+        </label>
+
+        <label class="text-2 rowr uk-margin-small-bottom">
+            <input class="uk-checkbox" type="checkbox" value="" />
+            فقط کالا های تخفیف دار
+        </label>
+
+        <button class="btn btn-primary uk-margin-top">اعمال فیلتر ها</button>
+
+    </div>
+
+    <div swap="hello"><partial name="_Ad" /></div>
+
+}
+
+<div class="search-grid form">
+    <div class="form-header">
+
+        <div class="rowr">
+
+            <nav class="breadcrumb uk-padding-remove">
+                <a href="">جستجو</a>
+                <a href="">هواوی</a>
+                <a href="" class="active">هواوی میت 8</a>
+            </nav>
+
+        </div>
+
+    </div>
+    <div class="grid">
+        <partial name="_ProductBlock" />
+        <partial name="_ProductBlock" />
+        <partial name="_ProductBlock" />
+        <partial name="_ProductBlock" />
+        <partial name="_ProductBlock" />
+    </div>
+</div>
+
+<div class="loading">
+    <img src="~/st/v/loading.svg" />
+</div>

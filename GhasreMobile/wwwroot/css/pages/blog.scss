@@ -1,0 +1,12 @@
+﻿@import '../_colors.scss';
+@import '../_layout.scss';
+
+.blog-view {
+}
+
+.blog-block {
+}
+
+.blogs-grid {
+    @include grid-gap(280px,12px);
+}

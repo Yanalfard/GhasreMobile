@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+
+    <link href="~/css/pages/forum.min.css" rel="stylesheet" />
+
+}
+
+@section Aside{
+
+    <partial name="_Ad" />
+    <partial name="_Ad" />
+
+}
+
+<nav class="breadcrumb uk-padding-remove">
+    <a href="">تالار گفتگو</a>
+    <a href="" class="active">صفحه اصلی</a>
+</nav>
+
+<div class="forum-block">
+    <div class="content">
+        <div class="rowr">
+            <h5>نام این پست یا همان تاپیک</h5>
+            <div class="rowr uk-margin-auto-right">
+                <span class="uk-margin-small-left text-2">مهتاب دادسرشت</span>
+                <span class="text-2">1399/01/05</span>
+            </div>
+        </div>
+        <div class="forum-body" uk-lightbox>
+            <a class="image-container" href="~/st/r/ads/a4.jpg">
+                <img src="~/st/r/ads/a4.jpg" alt="" />
+            </a>
+            <p dir="rtl">
+                می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است.
+            </p>
+            <div class="fg-col uk-margin-medium-top">
+                <textarea class="entry" placeholder="نظر شما..."></textarea>
+            </div>
+        </div>
+        <div class="action uk-margin-small-top">
+            <span class="row uk-margin-auto-top">
+                <span uk-icon="ratio:.8;icon:chatbox-ellipses-outline"></span>
+                <span> 13 </span>
+            </span>
+            <a class="link-text  uk-margin-auto-top" href="" uk-icon="ratio:.8;icon:arrow-redo-outline"></a>
+            <button class="btn btn-dashed uk-margin-auto-top uk-margin-auto-left">ثبت نظر</button>
+        </div>
+    </div>
+    <div class="controls">
+        <div class="col">
+            <button class="link-text" uk-icon="chevron-up"></button>
+            <label>432</label>
+            <button class="link-text" uk-icon="chevron-down"></button>
+        </div>
+    </div>
+</div>
+
+<div class="comment-section mat-card">
+    <h3>نظرات کاربران</h3>
+    <ul>
+        <li>
+            <div class="comment col">
+                <div class="rowr">
+                    <h5 class="text-2">مهتاب دادسرشت</h5>
+                    <label class="text-4 uk-margin-auto-right">3 روز پیش</label>
+                </div>
+                <p>
+                    از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.
+                </p>
+                <div class="actions">
+                    @*<a href="" uk-tooltip="لایک کردن" class="gap-l" uk-icon="heart-outline"></a>*@
+                    @*<a href="" uk-tooltip="ثبت پاسخ" class="" uk-icon="arrow-redo"></a>*@
+                    @*<a href="" uk-tooltip="گزارش" class="uk-margin-auto-right" uk-icon="megaphone"></a>*@
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="comment col">
+                <div class="rowr">
+                    <h5 class="text-2">مهتاب دادسرشت</h5>
+                    <label class="text-4 uk-margin-auto-right">3 روز پیش</label>
+                </div>
+                <p>
+                    از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.
+                </p>
+                <div class="actions">
+                    @*<a href="" uk-tooltip="لایک کردن" class="gap-l" uk-icon="heart-outline"></a>*@
+                    @*<a href="" uk-tooltip="ثبت پاسخ" class="" uk-icon="arrow-redo"></a>*@
+                    @*<a href="" uk-tooltip="گزارش" class="uk-margin-auto-right" uk-icon="megaphone"></a>*@
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="comment col">
+                <div class="rowr">
+                    <h5 class="text-2">مهتاب دادسرشت</h5>
+                    <label class="text-4 uk-margin-auto-right">3 روز پیش</label>
+                </div>
+                <p>
+                    از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.
+                </p>
+                <div class="actions">
+                    @*<a href="" uk-tooltip="لایک کردن" class="gap-l" uk-icon="heart-outline"></a>*@
+                    @*<a href="" uk-tooltip="ثبت پاسخ" class="" uk-icon="arrow-redo"></a>*@
+                    @*<a href="" uk-tooltip="گزارش" class="uk-margin-auto-right" uk-icon="megaphone"></a>*@
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
