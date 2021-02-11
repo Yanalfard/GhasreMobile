@@ -15,7 +15,7 @@ namespace DataLayer.Models
         [Key]
         public int OrdeId { get; set; }
         public int? DiscountId { get; set; }
-        public bool? IsPayed { get; set; }
+        public bool IsPayed { get; set; }
         public int FinalPrice { get; set; }
         [Required]
         [StringLength(500)]
@@ -25,6 +25,10 @@ namespace DataLayer.Models
         public string PostalCode { get; set; }
         public int Status { get; set; }
         public int SendStatus { get; set; }
+        public int? SendPrice { get; set; }
+        public int PaymentStatus { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime DateSubmited { get; set; }
 
         [ForeignKey(nameof(DiscountId))]
         [InverseProperty(nameof(TblDiscount.TblOrder))]

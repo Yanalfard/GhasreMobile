@@ -12,7 +12,8 @@ namespace DataLayer.Models
             TblAlertWhenReady = new HashSet<TblAlertWhenReady>();
             TblBookMark = new HashSet<TblBookMark>();
             TblComment = new HashSet<TblComment>();
-            TblNotification = new HashSet<TblNotification>();
+            TblNotificationClient = new HashSet<TblNotification>();
+            TblNotificationSender = new HashSet<TblNotification>();
             TblOnlineOrder = new HashSet<TblOnlineOrder>();
             TblOrderDetail = new HashSet<TblOrderDetail>();
             TblRate = new HashSet<TblRate>();
@@ -29,7 +30,7 @@ namespace DataLayer.Models
         [StringLength(64)]
         public string Password { get; set; }
         public string Auth { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }
         public int RoleId { get; set; }
@@ -44,8 +45,10 @@ namespace DataLayer.Models
         public virtual ICollection<TblBookMark> TblBookMark { get; set; }
         [InverseProperty("Client")]
         public virtual ICollection<TblComment> TblComment { get; set; }
-        [InverseProperty("Client")]
-        public virtual ICollection<TblNotification> TblNotification { get; set; }
+        [InverseProperty(nameof(TblNotification.Client))]
+        public virtual ICollection<TblNotification> TblNotificationClient { get; set; }
+        [InverseProperty(nameof(TblNotification.Sender))]
+        public virtual ICollection<TblNotification> TblNotificationSender { get; set; }
         [InverseProperty("Client")]
         public virtual ICollection<TblOnlineOrder> TblOnlineOrder { get; set; }
         [InverseProperty("Client")]

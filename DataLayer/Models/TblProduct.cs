@@ -18,6 +18,7 @@ namespace DataLayer.Models
             TblProductKeywordRel = new HashSet<TblProductKeywordRel>();
             TblProductPropertyRel = new HashSet<TblProductPropertyRel>();
             TblRate = new HashSet<TblRate>();
+            TblSpecialOffer = new HashSet<TblSpecialOffer>();
         }
 
         [Key]
@@ -35,10 +36,16 @@ namespace DataLayer.Models
         public int Count { get; set; }
         public long PriceAfterDiscount { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? DateSubmited { get; set; }
+        public DateTime? DateCreated { get; set; }
         [StringLength(500)]
         public string SearchText { get; set; }
+        public bool IsFractional { get; set; }
+        public int BrandId { get; set; }
+        public bool IsDeleted { get; set; }
 
+        [ForeignKey(nameof(BrandId))]
+        [InverseProperty(nameof(TblBrand.TblProduct))]
+        public virtual TblBrand Brand { get; set; }
         [ForeignKey(nameof(CatagoryId))]
         [InverseProperty(nameof(TblCatagory.TblProduct))]
         public virtual TblCatagory Catagory { get; set; }
@@ -60,5 +67,7 @@ namespace DataLayer.Models
         public virtual ICollection<TblProductPropertyRel> TblProductPropertyRel { get; set; }
         [InverseProperty("Product")]
         public virtual ICollection<TblRate> TblRate { get; set; }
+        [InverseProperty("Product")]
+        public virtual ICollection<TblSpecialOffer> TblSpecialOffer { get; set; }
     }
 }

@@ -11,7 +11,6 @@ namespace DataLayer.Models
         {
             TblBlogCommentRel = new HashSet<TblBlogCommentRel>();
             TblBlogKeywordRel = new HashSet<TblBlogKeywordRel>();
-            TblRate = new HashSet<TblRate>();
         }
 
         [Key]
@@ -27,12 +26,12 @@ namespace DataLayer.Models
         public string BodyHtml { get; set; }
         public int LikeCount { get; set; }
         public int ViewCount { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime DateCreated { get; set; }
 
         [InverseProperty("Blog")]
         public virtual ICollection<TblBlogCommentRel> TblBlogCommentRel { get; set; }
         [InverseProperty("Blog")]
         public virtual ICollection<TblBlogKeywordRel> TblBlogKeywordRel { get; set; }
-        [InverseProperty("Blog")]
-        public virtual ICollection<TblRate> TblRate { get; set; }
     }
 }

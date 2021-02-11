@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +17,7 @@ namespace DataLayer.Models
         public int ClientId { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DateSubmited { get; set; }
+        public bool IsRead { get; set; }
 
         [ForeignKey(nameof(ClientId))]
         [InverseProperty(nameof(TblClient.TblOnlineOrder))]
