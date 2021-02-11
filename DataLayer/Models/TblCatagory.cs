@@ -19,11 +19,11 @@ namespace DataLayer.Models
         [Required(ErrorMessage = "نام دسته بندی اجباری میباشد")]
         [StringLength(256)]
         [MaxLength(50, ErrorMessage = "لطفا کارکتر های کمتری وارد کنید")]
-        [MinLength(50, ErrorMessage = "لطفا کارکتر های بیشتری وارد کنید")]
+        [MinLength(5, ErrorMessage = "لطفا کارکتر های بیشتری وارد کنید")]
         public string Name { get; set; }
         public int? ParentId { get; set; }
         [Display(Name ="نمایش در ثبت محصول")]
-        public bool? IsOnFirstPage { get; set; }
+        public bool IsOnFirstPage { get; set; }
 
         [ForeignKey(nameof(ParentId))]
         [InverseProperty(nameof(TblCatagory.InverseParent))]

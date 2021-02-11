@@ -56,8 +56,11 @@
 
 @section Script{ 
     <script>
-        $("#Create").click("/Admin/Catagory/Create/0", function (result) {
-
+        $("#Create").click(function () {
+            $.get("/Admin/Category/Create", function (result) {
+                $(".modal-content").html(result);
+            });
         });
+
     </script>
 }

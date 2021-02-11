@@ -17,7 +17,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create(int Id)
+        public IActionResult Create(int? Id)
         {
             return ViewComponent("CreateCategory", new { Id = Id });
         }
@@ -28,9 +28,21 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _core.Catagory.Add(catagory);
-                _core.Catagory.Save();
-                return Redirect("/Admin/Category");
+                if (catagory.ParentId == null)
+                {
+                    _core.Catagory.Add(catagory);
+                    _core.Catagory.Save();
+                    return Redirect("/Admin/Category");
+                }
+                else
+                {
+                    TblCatagory ParentCatagory = _core.Catagory.GetById(catagory.ParentId);
+                    ParentCatagory.IsOnFirstPage = false;
+                    _core.Catagory.Update(ParentCatagory);
+                    _core.Catagory.Add(catagory);
+                    _core.Catagory.Save();
+                    return Redirect("/Admin/Category");
+                }
             }
             return View(catagory);
         }

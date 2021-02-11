@@ -4,14 +4,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataLayer.Models;
 
 namespace GhasreMobile.ViewComponents.Admin.Category
 {
     public class CreateCategory : ViewComponent
     {
-        public async Task<IViewComponentResult> InvokeAsync(int Id)
+        Core _core = new Core();
+        public async Task<IViewComponentResult> InvokeAsync(int? Id)
         {
-            return await Task.FromResult((IViewComponentResult)View("/Admin/Views/Catagory/Components/Create.cshtml", Id));
+            if (Id == null)
+            {
+                return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Category/Components/Create.cshtml"));
+            }
+            else
+            {
+               TblCatagory catagory= _core.Catagory.GetById(Id);
+                ViewBag.ParentId = catagory.ParentId;
+                ViewBag.Name = catagory.Name;
+                return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Category/Components/Create.cshtml"));
+
+            }
         }
     }
 }
