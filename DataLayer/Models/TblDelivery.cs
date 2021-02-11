@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,5 +17,10 @@ namespace DataLayer.Models
         [Required]
         [StringLength(500)]
         public string Address { get; set; }
+        [StringLength(500)]
+        public string Message { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime DateCreated { get; set; }
+        public bool IsAccepted { get; set; }
     }
 }

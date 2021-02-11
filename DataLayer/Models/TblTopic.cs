@@ -23,6 +23,7 @@ namespace DataLayer.Models
         [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }
         public int ClientId { get; set; }
+        public int VoteCount { get; set; }
 
         [ForeignKey(nameof(ClientId))]
         [InverseProperty(nameof(TblClient.TblTopic))]

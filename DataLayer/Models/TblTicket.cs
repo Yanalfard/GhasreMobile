@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,8 +17,8 @@ namespace DataLayer.Models
         [Column(TypeName = "datetime")]
         public DateTime? DateSubmited { get; set; }
         public int? ClientId { get; set; }
-        public bool? IsAnswered { get; set; }
-        public bool? IsAdmin { get; set; }
+        public bool IsAnswerd { get; set; }
+        public bool IsAnswer { get; set; }
 
         [ForeignKey(nameof(ClientId))]
         [InverseProperty(nameof(TblClient.TblTicket))]

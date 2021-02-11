@@ -19,7 +19,7 @@ namespace DataLayer.Models
         [StringLength(50)]
         public string Name { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? ValidTill { get; set; }
+        public DateTime ValidTill { get; set; }
 
         [InverseProperty("Discount")]
         public virtual ICollection<TblOrder> TblOrder { get; set; }

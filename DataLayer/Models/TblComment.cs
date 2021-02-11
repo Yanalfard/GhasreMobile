@@ -20,9 +20,9 @@ namespace DataLayer.Models
         public int ClientId { get; set; }
         [Required]
         public string Body { get; set; }
-        public bool? IsValid { get; set; }
+        public bool IsValid { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? DateSubmited { get; set; }
+        public DateTime? DateCreated { get; set; }
         public int? ParentId { get; set; }
 
         [ForeignKey(nameof(ClientId))]

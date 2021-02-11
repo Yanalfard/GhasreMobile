@@ -45,6 +45,8 @@ namespace Services.Services
         private MainRepo<TblBannerAndSlide> _bannerAndSlide;
         private MainRepo<TblNotification> _notification;
         private MainRepo<TblTicket> _ticket;
+        private MainRepo<TblBrand> _brand;
+        private MainRepo<TblSpecialOffer> _specialOffer;
 
 
         public MainRepo<TblStore> Store => _store ??= new MainRepo<TblStore>(_context);
@@ -82,6 +84,8 @@ namespace Services.Services
         public MainRepo<TblBannerAndSlide> BannerAndSlide => _bannerAndSlide ??= new MainRepo<TblBannerAndSlide>(_context);
         public MainRepo<TblNotification> Notification => _notification ??= new MainRepo<TblNotification>(_context);
         public MainRepo<TblTicket> Ticket => _ticket ??= new MainRepo<TblTicket>(_context);
+        public MainRepo<TblBrand> Brand => _brand ??= new MainRepo<TblBrand>(_context);
+        public MainRepo<TblSpecialOffer> SpecialOffer => _specialOffer ??= new MainRepo<TblSpecialOffer>(_context);
 
         public void Dispose()
         {

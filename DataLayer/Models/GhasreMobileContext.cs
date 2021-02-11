@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Models
 {
@@ -24,6 +22,7 @@ namespace DataLayer.Models
         public virtual DbSet<TblBlogCommentRel> TblBlogCommentRel { get; set; }
         public virtual DbSet<TblBlogKeywordRel> TblBlogKeywordRel { get; set; }
         public virtual DbSet<TblBookMark> TblBookMark { get; set; }
+        public virtual DbSet<TblBrand> TblBrand { get; set; }
         public virtual DbSet<TblCatagory> TblCatagory { get; set; }
         public virtual DbSet<TblClient> TblClient { get; set; }
         public virtual DbSet<TblColor> TblColor { get; set; }
@@ -46,6 +45,7 @@ namespace DataLayer.Models
         public virtual DbSet<TblRate> TblRate { get; set; }
         public virtual DbSet<TblRegularQuestion> TblRegularQuestion { get; set; }
         public virtual DbSet<TblRole> TblRole { get; set; }
+        public virtual DbSet<TblSpecialOffer> TblSpecialOffer { get; set; }
         public virtual DbSet<TblStore> TblStore { get; set; }
         public virtual DbSet<TblTicket> TblTicket { get; set; }
         public virtual DbSet<TblTopic> TblTopic { get; set; }
@@ -73,6 +73,11 @@ namespace DataLayer.Models
                     .WithMany(p => p.TblAlertWhenReady)
                     .HasForeignKey(d => d.ProductId)
                     .HasConstraintName("FK_TblAlertWhenReady_TblProduct");
+            });
+
+            modelBuilder.Entity<TblBlog>(entity =>
+            {
+                entity.Property(e => e.DateCreated).HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<TblBlogCommentRel>(entity =>
@@ -116,8 +121,6 @@ namespace DataLayer.Models
 
             modelBuilder.Entity<TblCatagory>(entity =>
             {
-                entity.Property(e => e.IsOnFirstPage).HasDefaultValueSql("((0))");
-
                 entity.HasOne(d => d.Parent)
                     .WithMany(p => p.InverseParent)
                     .HasForeignKey(d => d.ParentId)
@@ -127,8 +130,6 @@ namespace DataLayer.Models
             modelBuilder.Entity<TblClient>(entity =>
             {
                 entity.Property(e => e.DateCreated).HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.TblClient)
@@ -147,9 +148,7 @@ namespace DataLayer.Models
 
             modelBuilder.Entity<TblComment>(entity =>
             {
-                entity.Property(e => e.DateSubmited).HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.IsValid).HasDefaultValueSql("((0))");
+                entity.Property(e => e.DateCreated).HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.TblComment)
@@ -161,6 +160,11 @@ namespace DataLayer.Models
                     .WithMany(p => p.InverseParent)
                     .HasForeignKey(d => d.ParentId)
                     .HasConstraintName("FK_TblComment_TblComment");
+            });
+
+            modelBuilder.Entity<TblDelivery>(entity =>
+            {
+                entity.Property(e => e.DateCreated).HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<TblImage>(entity =>
@@ -180,9 +184,15 @@ namespace DataLayer.Models
             modelBuilder.Entity<TblNotification>(entity =>
             {
                 entity.HasOne(d => d.Client)
-                    .WithMany(p => p.TblNotification)
+                    .WithMany(p => p.TblNotificationClient)
                     .HasForeignKey(d => d.ClientId)
                     .HasConstraintName("FK_TblNotification_TblClient");
+
+                entity.HasOne(d => d.Sender)
+                    .WithMany(p => p.TblNotificationSender)
+                    .HasForeignKey(d => d.SenderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TblNotification_TblClient1");
             });
 
             modelBuilder.Entity<TblOnlineOrder>(entity =>
@@ -203,9 +213,13 @@ namespace DataLayer.Models
                 entity.HasKey(e => e.OrdeId)
                     .HasName("PK_TblOrder_1");
 
-                entity.Property(e => e.IsPayed).HasDefaultValueSql("((0))");
+                entity.Property(e => e.DateSubmited).HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.SendStatus).HasComment("0 is via post; 1 is via client comes and pics it up himselfe");
+                entity.Property(e => e.PaymentStatus).HasComment("0 is online; 1 is KartBeKart; 2 is darbe manzel ya frushgah;");
+
+                entity.Property(e => e.SendPrice).HasComment("0");
+
+                entity.Property(e => e.SendStatus).HasComment("0 is via post; 1 is via client comes and pics it up himselfe; 2 chapar/tipax");
 
                 entity.Property(e => e.Status).HasComment("0 is making; 1 is on its way; 2 is done;");
 
@@ -242,7 +256,13 @@ namespace DataLayer.Models
 
             modelBuilder.Entity<TblProduct>(entity =>
             {
-                entity.Property(e => e.DateSubmited).HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.DateCreated).HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Brand)
+                    .WithMany(p => p.TblProduct)
+                    .HasForeignKey(d => d.BrandId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TblProduct_TblBrand");
 
                 entity.HasOne(d => d.Catagory)
                     .WithMany(p => p.TblProduct)
@@ -304,12 +324,6 @@ namespace DataLayer.Models
 
             modelBuilder.Entity<TblRate>(entity =>
             {
-                entity.HasOne(d => d.Blog)
-                    .WithMany(p => p.TblRate)
-                    .HasForeignKey(d => d.BlogId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_TblRate_TblBlog");
-
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.TblRate)
                     .HasForeignKey(d => d.ClientId)
@@ -329,16 +343,20 @@ namespace DataLayer.Models
                 entity.Property(e => e.Name).IsUnicode(false);
             });
 
+            modelBuilder.Entity<TblSpecialOffer>(entity =>
+            {
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.TblSpecialOffer)
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK_TblSpecialOffer_TblProduct");
+            });
+
             modelBuilder.Entity<TblTicket>(entity =>
             {
                 entity.HasKey(e => e.TicketId)
                     .HasName("PK_Ticket");
 
                 entity.Property(e => e.DateSubmited).HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.IsAdmin).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IsAnswered).HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.TblTicket)
