@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mat-card">
+    <div class="rowr">
+        <div class="pfp">
+            <img src="~/st/r/Entry_2.png"
+                 width="92" height="92" alt=""
+                 id="imgPfp" />
+            <label class="pfp-select" uk-icon="image">
+                <input type="file" accept="image/*" onchange="inputToImg(this, '#imgPfp');ChangeImageDb()" />
+            </label>
+        </div>
+        <dl class="datalist uk-margin-small-right flex-auto">
+            <dt>نام و نام خانوادگی</dt>
+            <dd>صدرا محمدی</dd>
+            <dt>شماره تلفن</dt>
+            <dd>0914 315 89 45</dd>
+        </dl>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        // MEHDIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+        function ChangeImageDb() {
+            // عکس طرف رو اینجا تو دیتابیس عوض کن
+        }
+
+        function inputToImg(input, imgId) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = (e) => { document.querySelector(imgId).src = e.target.result; }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

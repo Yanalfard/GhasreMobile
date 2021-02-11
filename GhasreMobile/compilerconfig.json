@@ -30,5 +30,9 @@
   {
     "outputFile": "wwwroot/css/pages/account.css",
     "inputFile": "wwwroot/css/pages/account.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/pages/user.css",
+    "inputFile": "wwwroot/css/pages/user.scss"
   }
 ]

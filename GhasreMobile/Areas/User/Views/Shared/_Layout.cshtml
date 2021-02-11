@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="@(ViewData["Description"] ?? "سایت خرید و فروش آنلاین گوشی های موبایل به صورت اقساطی")">
+    <meta name="keywords" content="@(ViewData["Keywords"] ?? "قصر موبایل، گوشی، تلفن، خرید، آنلاین، اقساطی")">
+    <meta name="author" content="صدرا محمدی، ینال احمدزاده، مهدی سهندی">
+
+    <title>@(ViewData["Title"] ?? "قصر موبایل")</title>
+
+    <link href="~/css/uikit.min.css" rel="stylesheet" />
+    <link href="~/css/Controls.min.css" rel="stylesheet" />
+    <link href="~/css/pages/user.min.css" rel="stylesheet" />
+
+    @RenderSection("Styles", false)
+
+</head>
+<body>
+
+    <div class="header">
+        <img src="~/st/r/TopMemphis.png" width="1366" height="59" alt="عکس بالا صفحه" />
+        <div class="top">
+            <div class="uk-container rowr">
+                <a href="/" class="logo">
+                    <img src="~/st/r/logo.jpg" width="48" height="48" alt="لوگو فصر موبایل" />
+                </a>
+                <div class="search">
+                    <span uk-icon="search"></span>
+                    <input id="txtSearchMain" class="entry-invis" type="text" placeholder="جستجو..." aria-label="جستجو" />
+                </div>
+                <div class="cart">
+                    <span class="label">سبد خرید</span>
+                    <div class="badge">
+                        <span>12</span>
+                    </div>
+                    <button>
+                        <span uk-icon="cart-outline"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="uk-container rowr">
+                <nav class="rowr">
+                    <button uk-icon="grid-outline"></button>
+                    <a href="/">خانه</a>
+                    <a href="/Forum">تالار گفتگو</a>
+                    <a href="/Home/Contact">تماس با ما</a>
+                    <a href="/Blog">وبلاگ ها</a>
+                    <a href="/Home/About">شعب ما</a>
+                    <a href="/Gallery">گالری</a>
+                </nav>
+                <a href="" class="profile">
+                    <span>پروفایل</span>
+                    <span uk-icon="person-circle-outline"></span>
+                </a>
+
+                @*<a href="" class="enter">
+                                ورود / ثبت نام
+                    </a>*@
+
+            </div>
+        </div>
+    </div>
+    <div role="none" class="space-nav-header gap-b"></div>
+
+    <!-- Single means the layout has only one Column -->
+    @if (ViewData["Single"] == null)
+    {
+        <div class="m uk-container">
+            <main class="m-content">
+                @RenderBody()
+            </main>
+            <aside class="m-aside">
+                <partial name="_UserNavigation" />
+            </aside>
+        </div>
+    }
+    else if (ViewData["Single"] != null)
+    {
+        <div class="uk-container">
+            @RenderBody()
+        </div>
+    }
+
+    <p class="credits uk-text-center text-4">
+        کلیه حقوق این متعلق به شرکت قصر موبایل می باشد، طراحی و توسعه توسط
+        <a href="https://arvintavco.com">شرکت ایده پرداز آروین تاو</a>
+    </p>
+
+    <!--Pwa-->
+    @*<script src="~/app.js"></script>*@
+
+    <script src="~/js/uikit.min.js"></script>
+    <script src="~/js/uikit-icons.js"></script>
+
+    @RenderSection("Scripts", false)
+
+</body>
+</html>

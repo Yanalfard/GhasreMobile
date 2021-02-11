@@ -1,0 +1,180 @@
+﻿@import '../_colors.scss';
+@import '../_layout.scss';
+
+$nav-height: 64px;
+
+.user-navigation {
+    padding: 0;
+    margin: 0;
+    position: relative;
+
+    a {
+        color: #787878;
+        padding: 12px 0 12px 20px;
+        border-left: 2px #D8D8D8 solid;
+        text-align: left;
+        @include trans(.2s);
+        display: block;
+        white-space: nowrap;
+    }
+
+    a:hover {
+        color: $primary;
+    }
+
+    a.active {
+        border-left: 4px $primary solid;
+    }
+}
+
+/*#region Main */
+
+$grid-gap: 16px;
+$aside-width: 142px;
+
+.m {
+    display: grid;
+    grid-template-columns: 1fr $aside-width;
+    grid-gap: $grid-gap;
+
+    .m-aside {
+        @include column;
+        grid-gap: $grid-gap;
+        width: $aside-width;
+        min-width: $aside-width;
+    }
+
+    .m-content {
+        @include column;
+        width: auto !important;
+        min-width: 0;
+        grid-gap: $grid-gap;
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    .m {
+        grid-template-columns: 1fr;
+
+        .m-aside {
+            display: none;
+        }
+    }
+}
+
+/*#endregion */
+
+.datalist {
+    @include column;
+    margin: 0;
+
+    dt {
+        font-size: 11px;
+        color: #B0B0B0;
+        margin-bottom: 2px;
+    }
+
+    dd {
+        font-size: 18px;
+        color: #656565;
+    }
+
+    dd:not(:last-child) {
+        margin-bottom: 16px;
+    }
+}
+
+.pfp {
+    position: relative;
+    height: 112px;
+    width: 112px;
+
+    img {
+        height: 100%;
+        width: 100%;
+        @include border-circle;
+        @include obj;
+    }
+
+    .pfp-select {
+        position: absolute;
+        bottom: -6px;
+        right: -6px;
+        color: $Text-3;
+        background: $Text-5;
+        @include border-circle;
+        padding: 5px;
+        border: 6px white solid;
+        cursor: pointer;
+
+        input {
+            position: absolute;
+            visibility: collapse;
+            height: 0;
+            width: 0;
+        }
+    }
+}
+
+.credits {
+    color: $Text-4;
+    font-size: 13px;
+
+    a {
+        color: #bbb;
+        font-weight: bold;
+    }
+}
+
+
+.wallet {
+    @include border-radius(16px,16px,16px,16px);
+    @include shadow-medium;
+    padding: 24px;
+    display: grid;
+    height: 124px;
+    min-width: 424px;
+    margin-left: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "balance title" "a button";
+    //-
+    background: rgb(255,100,156);
+    background: -moz-linear-gradient(45deg, rgba(255,100,156,1) 0%, rgba(150,10,150,1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(255,100,156,1) 0%, rgba(150,10,150,1) 100%);
+    background: linear-gradient(45deg, rgba(255,100,156,1) 0%, rgba(150,10,150,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff649c",endColorstr="#960a96",GradientType=1);
+
+    .title {
+        grid-area: title;
+        margin: 0;
+        padding: 0;
+        color: #fff;
+    }
+
+    .button {
+        grid-area: button;
+        margin-left: auto;
+        margin-top: auto;
+        background: #fff;
+        color: $primary;
+    }
+
+    .balance {
+        grid-area: balance;
+        @include row-reverse;
+
+        .bal {
+            color: #fff;
+            font-size: 32px;
+            margin: 0;
+        }
+
+        .t {
+            color: #fff;
+            font-size: 16px;
+            margin: auto 0;
+            margin-right: 5px;
+        }
+    }
+}
