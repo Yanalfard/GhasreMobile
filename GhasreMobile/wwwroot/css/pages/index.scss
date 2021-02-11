@@ -125,12 +125,13 @@
     }
 }
 
+$album-height: 180px;
+$album-width: 290px;
+
 .gallery-main {
-    @include grid-gap(224px,12px);
+    @include grid-gap(256px,12px);
 
     a {
-        height: 100%;
-        width: 100%;
         background-color: #fff;
         @include column;
         -ms-align-content: center;
@@ -139,6 +140,8 @@
 
         img {
             margin: auto;
+            width: 100%;
+            height: 100%;
             @include obj;
         }
     }
