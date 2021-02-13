@@ -9,19 +9,20 @@
     else
     {
         <h6 class="modal-title" id="modalCenterTitle">
-            افزودن دسته بندی @ViewBag.Name
+            افزودن زیر مجموعه برای دسته بندی @ViewBag.Name
         </h6>
     }
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form asp-action="Create" asp-controller="Category" asp-area="Admin"
+<form asp-action="Create" asp-controller="Catagory" asp-area="Admin"
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
       data-ajax-complete="EndCatagoryCreate()"
       data-ajax-update="#ajaxresult">
+
     @Html.AntiForgeryToken()
     @if (ViewBag.ParentId == null)
     {
@@ -29,7 +30,7 @@
     }
     else
     {
-        <input type="hidden" asp-for="ParentId" />
+        <input type="hidden" asp-for="ParentId" value="@ViewBag.ParentId" />
     }
 
     <div class="modal-body">

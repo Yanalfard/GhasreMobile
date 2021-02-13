@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -40,6 +41,7 @@
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
+    <None Include="Views\Shared\Components\Pager\Paging.cshtml" />
     <None Include="wwwroot\AdminStaticFile\Bootstrap\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\AdminStaticFile\Bootstrap\css\bootstrap-grid.min.css.map" />
     <None Include="wwwroot\AdminStaticFile\Bootstrap\css\bootstrap-reboot.css.map" />

@@ -5,21 +5,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataLayer.Models;
 using Services.Services;
+using ReflectionIT.Mvc.Paging;
+
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryController : Controller
+    public class CatagoryController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            return View();
+            IEnumerable<TblCatagory> catagories = PagingList.Create(_core.Catagory.Get(c => c.ParentId == null), 10, page);
+            return View(catagories);
         }
 
         [HttpGet]
         public IActionResult Create(int? Id)
         {
-            return ViewComponent("CreateCategory", new { Id = Id });
+            return ViewComponent("CreateCatagory", new { Id = Id });
         }
 
         [HttpPost]
@@ -32,7 +35,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     _core.Catagory.Add(catagory);
                     _core.Catagory.Save();
-                    return Redirect("/Admin/Category");
+                    return Redirect("/Admin/Catagory");
                 }
                 else
                 {
@@ -41,7 +44,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     _core.Catagory.Update(ParentCatagory);
                     _core.Catagory.Add(catagory);
                     _core.Catagory.Save();
-                    return Redirect("/Admin/Category");
+                    return Redirect("/Admin/Catagory");
                 }
             }
             return View(catagory);
@@ -50,7 +53,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int Id)
         {
-            return ViewComponent("EditCategory", new { Id = Id });
+            return ViewComponent("EditCatagory", new { Id = Id });
         }
 
         [HttpPost]
@@ -67,9 +70,9 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Child()
+        public IActionResult ShowChilds(int Id)
         {
-            return View();
+            return ViewComponent("ShowChildsCatagory", new { Id = Id });
         }
     }
 }
