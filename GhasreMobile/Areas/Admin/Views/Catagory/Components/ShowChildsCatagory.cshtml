@@ -1,7 +1,8 @@
-﻿<div class="modal-header">
+﻿@model IEnumerable<DataLayer.Models.TblCatagory>
+<div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
 
-        زیرمجموعه دسته بندی
+        زیر مجموعه دسته بندی @ViewBag.ParentName
 
     </h6>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -17,33 +18,40 @@
             <div class="card-body flex p-0">
                 <ul class="list-group list-group-flush pb-4">
 
-                    @* !!!!!!!!!!!!!!!!if is empty!!!!!!!!!!!!!! *@
-                    <li>خالی است</li>
+                    @if (Model.Count() == 0)
+                    {
+                        <li>خالی است</li>
+                    }
+                    else
+                    {
 
-                    @* !!!!!!!!!!!!!!!!else!!!!!!!!!!!!!! *@
-                    <li class="list-group-item">
-                        <div class="row">
+                        foreach (var item in Model)
+                        {
+                            <li class="list-group-item">
+                                <div class="row">
 
-                            <a class="col-xl-10 col-lg-10  col-sm-9 col-5">نام دسته بندی</a>
+                                    <a class="col-xl-10 col-lg-10  col-sm-9 col-5">@item.Name</a>
 
-                            <div class="col-xl-2 col-lg-2  col-sm-3 col-5">
-                                <div class="option d-flex">
+                                    <div class="col-xl-2 col-lg-2  col-sm-3 col-5">
+                                        <div class="option d-flex">
 
-                                    <a data-placement="top" data-toggle="tooltip"><i class="btn ml-2 text-primary" uk-icon="albums-outline"></i></a>
+                                            <a data-placement="top" data-toggle="tooltip"><i class="btn ml-2 text-primary" uk-icon="albums-outline"></i></a>
 
-                                    <a data-placement="top" data-toggle="tooltip"><i class="btn ml-2 text-primary" uk-icon="create-outline"></i></a>
+                                            <a data-placement="top" data-toggle="tooltip"><i class="btn ml-2 text-primary" uk-icon="create-outline"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </li>
+                            </li>
+                        }
 
+                    }
                 </ul>
             </div>
         </div>
         <div class="input-group input-group-sm mt-3">
             <div class="input-group-append">
 
-                <a class="btn btn-success btn-sm text-white float-right">افزودن زیرمجموعه<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></a>
+                <a onclick="CreateChildCatagory(@ViewBag.Id)" class="btn btn-success btn-sm text-white float-right">افزودن زیرمجموعه<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></a>
 
             </div>
         </div>

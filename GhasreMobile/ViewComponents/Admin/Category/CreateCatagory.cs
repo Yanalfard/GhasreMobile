@@ -20,7 +20,7 @@ namespace GhasreMobile.ViewComponents.Admin.Catagory
             else
             {
                 TblCatagory catagory = _core.Catagory.GetById(Id);
-                ViewBag.ParentId = catagory.ParentId;
+                ViewBag.ParentId = catagory.CatagoryId;
                 ViewBag.Name = catagory.Name;
                 return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Catagory/Components/Create.cshtml"));
 

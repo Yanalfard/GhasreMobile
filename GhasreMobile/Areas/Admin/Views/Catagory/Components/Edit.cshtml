@@ -22,7 +22,10 @@
             <div class="form-group col-md-4">
                 <input asp-for="Name" class="form-control form-control-sm" placeholder="نام">
                 <br />
-                <input asp-for="IsOnFirstPage"> فعال باشد
+                @if (Model.InverseParent.Count() == 0)
+                {
+                    <input asp-for="IsOnFirstPage">@:فعال باشد
+                }
             </div>
         </div>
     </div>

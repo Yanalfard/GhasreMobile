@@ -70,19 +70,29 @@
     <script>
 
         $("#Create").click(function () {
+            $(".modal-content").html("");
             $.get("/Admin/Catagory/Create", function (result) {
                 $(".modal-content").html(result);
             });
         });
 
         function ShowChildsCatagory(CatagoryId) {
-            $.get("/Admin/ShowChilds/" + CatagoryId, function (result) {
+            $(".modal-content").html("");
+            $.get("/Admin/Catagory/ShowChilds/" + CatagoryId, function (result) {
                 $(".modal-content").html(result);
             });
         }
 
         function EditCatagory(CatagoryId) {
+            $(".modal-content").html("");
             $.get("/Admin/Catagory/Edit/" + CatagoryId, function (result) {
+                $(".modal-content").html(result);
+            });
+        }
+
+        function CreateChildCatagory(Id) {
+            $(".modal-content").html("");
+            $.get("/Admin/Catagory/Create?Id=" + Id, function (result) {
                 $(".modal-content").html(result);
             });
         }

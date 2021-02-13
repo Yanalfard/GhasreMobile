@@ -13,6 +13,9 @@ namespace GhasreMobile.ViewComponents.Admin.Category
         Core _core = new Core();
         public async Task<IViewComponentResult> InvokeAsync(int? Id)
         {
+            var Catagory = _core.Catagory.GetById(Id);
+            ViewBag.ParentName = Catagory.Name;
+            ViewBag.Id = Catagory.CatagoryId;
             return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Catagory/Components/ShowChildsCatagory.cshtml", _core.Catagory.Get(c => c.ParentId == Id)));
         }
     }
