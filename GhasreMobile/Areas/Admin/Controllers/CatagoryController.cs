@@ -64,7 +64,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             {
                 _core.Catagory.Update(catagory);
                 _core.Catagory.Save();
-                return Redirect("/Admin/Category");
+                return Redirect("/Admin/Catagory");
             }
             return View(catagory);
         }
