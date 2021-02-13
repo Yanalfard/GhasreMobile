@@ -22,6 +22,7 @@
       data-ajax-mode="replace"
       data-ajax-complete="EndCatagoryCreate()"
       data-ajax-update="#ajaxresult">
+
     @Html.AntiForgeryToken()
     @if (ViewBag.ParentId == null)
     {
