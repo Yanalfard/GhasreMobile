@@ -12,5 +12,23 @@ namespace GhasreMobile.Controllers
         {
             return View();
         }
+
+        private static readonly string[] dbFake =
+        {
+            "گوشی سامسونگ",
+            "گوشی اپل",
+            "لوازم جانبی اپل",
+            "شیائومی",
+            "اینگونه",
+        };
+
+        [Route("q/{key}")]
+        public IActionResult LayoutSearch(string key)
+        {
+            if (key.Length <= 2) return Ok("Invalid Key");
+
+            return Json(dbFake.ToList().Where(i => i.Contains(key)));
+        }
+
     }
 }
