@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GhasreMobile.ViewComponents.Admin.Category
+namespace GhasreMobile.ViewComponents.Admin.Catagory
 {
-    public class EditCategory : ViewComponent
+    public class EditCatagory : ViewComponent
     {
         Core _core = new Core();
         public async Task<IViewComponentResult> InvokeAsync(int Id)
         {
-            return await Task.FromResult((IViewComponentResult)View("/Admin/Views/Catagory/Components/Edit.cshtml", _core.Catagory.GetById(Id)));
+            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Catagory/Components/Edit.cshtml", _core.Catagory.GetById(Id)));
         }
     }
 }
