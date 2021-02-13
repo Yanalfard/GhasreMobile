@@ -3307,6 +3307,8 @@ select.uk-form-width-xsmall {
     transition-property: color, opacity;
     position: absolute;
     cursor: pointer;
+    top: unset;
+    right: 5px;
 }
 /* Hover + Focus */
 .uk-close:hover,
@@ -4559,10 +4561,10 @@ select.uk-form-width-xsmall {
     width: 270px;
     padding: 20px 20px;
     background: white;
-    @include border-radius(24px,0,0,24px);
     @include shadow-mega;
     /* 3 */
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 }
 
