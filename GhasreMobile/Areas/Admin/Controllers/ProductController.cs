@@ -28,7 +28,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(TblProduct product)
+        public IActionResult Create(TblProduct product,List<string> Color)
         {
             if (ModelState.IsValid)
             {
