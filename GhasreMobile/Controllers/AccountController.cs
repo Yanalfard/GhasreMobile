@@ -64,7 +64,7 @@ namespace GhasreMobile.Controllers
                         TblClient addUser = new TblClient();
                         addUser.DateCreated = DateTime.Now;
                         addUser.Auth = Code;
-                        addUser.RoleId = 0;
+                        addUser.RoleId = 1;
                         addUser.Balance = 0;
                         addUser.IsActive = false;
                         addUser.Password = PasswordHelper.EncodePasswordMd5(register.Password);
@@ -72,7 +72,6 @@ namespace GhasreMobile.Controllers
                         db.Client.Add(addUser);
                         db.Client.Save();
                         string message = addUser.Auth;
-                        //return await Task.FromResult(Redirect("Login"));
                         await Sms.SendSms(addUser.TellNo, message, "GhasrMobileRegister");
                         return await Task.FromResult(Redirect("/Account/Validation?tellNo=" + addUser.TellNo));
                     }
