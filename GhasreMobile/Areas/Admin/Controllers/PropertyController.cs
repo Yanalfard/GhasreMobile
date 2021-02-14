@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class PropertyController : Controller
     {
         public IActionResult Index()

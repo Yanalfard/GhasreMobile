@@ -8,7 +8,7 @@ using DataLayer.Models;
 
 namespace GhasreMobile.ViewComponents.Admin.Catagory
 {
-    public class CreateCatagory : ViewComponent
+    public class CreateCatagoryAdmin : ViewComponent
     {
         Core _core = new Core();
         public async Task<IViewComponentResult> InvokeAsync(int? Id)

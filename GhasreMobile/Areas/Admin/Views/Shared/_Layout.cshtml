@@ -13,6 +13,7 @@
     <link href="/AdminStaticFile/style-rtl.css" rel="stylesheet" />
     <link href="~/css/uikit.min.css" rel="stylesheet" />
     <link href="~/AdminStaticFile/DataPicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+    <link href="~/css/Load.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -33,7 +34,7 @@
                     <ul class="side-nav-menu scrollable">
 
                         <li class="nav-item active">
-                            <a href="/Admin">
+                            <a href="/Admin" class="LoadingDiv">
                                 <span class="icon-holder">
                                     <i uk-icon="home"></i>
                                 </span>
@@ -41,7 +42,7 @@
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a href="/Admin/Catagory">
+                            <a href="/Admin/Catagory" class="LoadingDiv">
                                 <span class="icon-holder">
                                     <i uk-icon="file-tray-stacked"></i>
                                 </span>
@@ -59,7 +60,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item active">
-                                    <a href="/Admin/Product">
+                                    <a href="/Admin/Product" class="LoadingDiv">
                                         <span class="icon-holder">
                                             <i uk-icon="list"></i>
                                         </span>
@@ -67,7 +68,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a href="/Admin/Product/Create">
+                                    <a href="/Admin/Product/Create" class="LoadingDiv">
                                         <span class="icon-holder">
                                             <i uk-icon="add"></i>
                                         </span>
@@ -75,7 +76,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a href="/Admin/Color">
+                                    <a href="/Admin/Color" class="LoadingDiv">
                                         <span class="icon-holder">
                                             <i uk-icon="color-palette"></i>
                                         </span>
@@ -83,7 +84,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a href="/Admin/Property">
+                                    <a href="/Admin/Property" class="LoadingDiv">
                                         <span class="icon-holder">
                                             <i uk-icon="list"></i>
                                         </span>
@@ -93,7 +94,7 @@
                             </ul>
                         </li>
                         <li class="nav-item active">
-                            <a href="/Admin/Comment">
+                            <a href="/Admin/Comment" class="LoadingDiv">
                                 <span class="icon-holder">
                                     <i uk-icon="chatbubble-ellipses"></i>
                                 </span>
@@ -101,11 +102,11 @@
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a href="/Admin/BannerAndSlide">
+                            <a href="/Admin/Slider" class="LoadingDiv">
                                 <span class="icon-holder">
                                     <i uk-icon="images"></i>
                                 </span>
-                                <span class="title">بنر و اسلایدر</span>
+                                <span class="title">اسلایدر</span>
                             </a>
                         </li>
                     </ul>
@@ -173,6 +174,14 @@
 </div>
 <!-- Button trigger modal -->
 
+<!--Loading-->
+<div id="overlay">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+</div>
+<!--Loading-->
+
 <script src="/Jquery/jquery-3.4.1.js"></script>
 <script src="/Jquery/jquery-3.4.1.min.js"></script>
 <script src="/Jquery/modal.js"></script>
@@ -185,5 +194,9 @@
 <script src="~/js/uikit-icons.js"></script>
 <link href="~/AdminStaticFile/DataPicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
 <script src="~/AdminStaticFile/script.js"></script>
-
+<script>
+    $(".LoadingDiv").click(function () {
+        $("#overlay").fadeIn(300);
+    });
+</script>
 @RenderSection("Script", false)

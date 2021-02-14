@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DataLayer.Models.TblProduct>
 @{
     ViewData["Title"] = "محصولات";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -8,9 +8,23 @@
         <div class="card flex-div border-0 main-shadow">
             <div class="card-header bg-white">
                 <div class="pr-1 pt-2">
-                    <div class="form-group pb-0 mb-0">
-                        <a id="Create" href="#" class="btn btn-success btn-sm">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></a>
+                    <div class="card-form form-row">
+                        <div class="form-input">
+                            <div class="form-inline">
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <input class="form-control uk-text-small" type="text" placeholder="متن جستجو">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-toolbar mr-3">
+                            <button onclick="BtnSearch()" type="button" class="btn btn-primary btn-sm">جستجو<span class="icon-holder uk-margin-small-right" uk-icon="search-outline"></span></button>
+                        </div>
+                        <div class="form-group pb-0 mb-0 mr-md-3">
+                            <a id="Create" href="#" class="btn btn-success btn-sm"> افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></a>
+                        </div>
                     </div>
+
                 </div>
             </div>
             <div id="card-table" class="card-body flex-div">
@@ -26,17 +40,29 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
-                                        <a href="#" class="text-primary" uk-icon="create-outline"></a>
-                                    </span>
-                                </td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ProductId</td>
+                                    <td>@item.Name</td>
+                                    <td>
+                                        @if (item.PriceAfterDiscount == 0)
+                                        {
+                                            <span>@item.PriceBeforeDiscount.ToString("#,0 تومان")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">@item.PriceBeforeDiscount.ToString("#,0 تومان") تخفیف دار</span>
+                                        }
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                            <a href="#" class="text-primary" uk-icon="create-outline"></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -44,7 +70,7 @@
 
             <div class="card-footer bg-white">
                 <nav aria-label="Page navigation example">
-                    @*  @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
                 </nav>
             </div>
         </div>

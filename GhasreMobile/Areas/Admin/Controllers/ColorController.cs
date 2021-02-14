@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataLayer.Models;
 using Services.Services;
+using ReflectionIT.Mvc.Paging;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -14,12 +15,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1)
         {
-            return View();
+            IEnumerable<TblColor> colors = PagingList.Create(_core.Color.Get(), 10, page);
+            return View(colors);
         }
         [HttpGet]
         public IActionResult Create()
         {
-            return ViewComponent("CreateColor");
+            return ViewComponent("CreateColorAdmin");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -36,7 +38,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         public IActionResult Edit(int Id)
         {
-            return ViewComponent("EditColor", new { Id = Id });
+            return ViewComponent("EditColorAdmin", new { Id = Id });
         }
 
         public IActionResult Edit(TblColor color, int Page)

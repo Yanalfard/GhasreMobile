@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GhasreMobile.ViewComponents.Admin.Category
 {
-    public class ShowChildsCatagory : ViewComponent
+    public class ShowChildsCatagoryAdmin : ViewComponent
     {
         Core _core = new Core();
         public async Task<IViewComponentResult> InvokeAsync(int? Id)

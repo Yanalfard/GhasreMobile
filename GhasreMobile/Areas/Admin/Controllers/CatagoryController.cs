@@ -22,7 +22,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create(int? Id)
         {
-            return ViewComponent("CreateCatagory", new { Id = Id });
+            return ViewComponent("CreateCatagoryAdmin", new { Id = Id });
         }
 
         [HttpPost]
@@ -53,7 +53,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int Id)
         {
-            return ViewComponent("EditCatagory", new { Id = Id });
+            return ViewComponent("EditCatagoryAdmin", new { Id = Id });
         }
 
         [HttpPost]
@@ -72,7 +72,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult ShowChilds(int Id)
         {
-            return ViewComponent("ShowChildsCatagory", new { Id = Id });
+            return ViewComponent("ShowChildsCatagoryAdmin", new { Id = Id });
         }
     }
 }

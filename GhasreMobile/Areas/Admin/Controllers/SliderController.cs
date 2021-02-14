@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class BannerAndSlideController : Controller
+    public class SliderController : Controller
     {
         [HttpGet]
         public IActionResult Index()
