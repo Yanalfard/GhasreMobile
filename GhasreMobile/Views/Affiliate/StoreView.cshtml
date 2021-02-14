@@ -3,22 +3,65 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Styles{
+
+    <link href="~/css/pages/affiliate.min.css" rel="stylesheet" />
+    <link href="~/css/leaflet.css" rel="stylesheet" />
+
+}
 
 @section Aside{
 
-    <div class="mat-card col">
-        <h3>
-            شعب ما
-        </h3>
+    <div class="affiliates mat mat-border col">
+        <div class="mat-pad uk-padding-remove-bottom">
+            <h3 class="uk-margin-remove uk-padding-remove">
+                شعب ما
+            </h3>
+        </div>
         <ul>
-            <li class="col">
-                <h4>
-                    عباسی
-                </h4>
-                <label class="text-2 uk-margin-small-top">روبروی کلانتری</label>
-                <div class="rowr uk-margin-small-top">
-                    <span uk-icon="call-outline">36554895</span>
-                </div>
+            <li>
+                <a href="">
+                    <h4>
+                        عباسی
+                    </h4>
+                    <label>روبروی کلانتری</label>
+                    <div class="tel">
+                        <span uk-icon="call-outline">36554895</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <h4>
+                        عباسی
+                    </h4>
+                    <label>روبروی کلانتری</label>
+                    <div class="tel">
+                        <span uk-icon="call-outline">36554895</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <h4>
+                        عباسی
+                    </h4>
+                    <label>روبروی کلانتری</label>
+                    <div class="tel">
+                        <span uk-icon="call-outline">36554895</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <h4>
+                        عباسی
+                    </h4>
+                    <label>روبروی کلانتری</label>
+                    <div class="tel">
+                        <span uk-icon="call-outline">36554895</span>
+                    </div>
+                </a>
             </li>
         </ul>
     </div>
@@ -31,7 +74,6 @@
     <a href="">شعب ما</a>
     <a href="" class="active">شعبه ولیعصر</a>
 </nav>
-
 
 <div class="mat-card">
     <h3>
@@ -62,6 +104,51 @@
     </ul>
 </div>
 
-<div class="map">
+<div id="map" class="uk-box-shadow-medium">
 
 </div>
+
+@section Scripts{
+
+    <script src="~/js/leaflet.js"></script>
+
+    <script>
+        var map = L.map('map').setView([38.07674409597339, 46.29700302496196], 12);
+
+        L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+
+        var iconSetting = L.Icon.extend({
+            options: {
+                iconSize: [32, 32],
+                iconAnchor: [16, -8]
+            }
+        });
+
+        var customIcon = new iconSetting({ iconUrl: '/marker.svg' });
+
+        var theMarker = {};
+
+        theMarker = L.marker(
+            [38.07674409597339, 46.29700302496196],
+            { icon: customIcon }
+        )
+            .addTo(map).bindPopup(
+                `
+                        <div class="aff-marker">
+                            <h4>شعبه شهناز</h4>
+                            <p>
+                                این یک آدرس می باش. آدرس یک شعبه که در هحله سضناز قرار دارد. این متن برای تست و به صورت کاملا آربیتری نوشته شده است
+                            </p>
+                            <a href="" dir="rtl">
+                                مشاهده
+                            </a>
+                        </div>
+                        `
+            ).openPopup();
+
+    </script>
+
+
+
+}

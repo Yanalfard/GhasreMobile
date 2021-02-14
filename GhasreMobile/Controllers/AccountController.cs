@@ -30,7 +30,10 @@ namespace GhasreMobile.Controllers
             return View();
         }
 
-
+        public IActionResult Verify()
+        {
+            return View();
+        }
 
     }
 }
