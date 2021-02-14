@@ -34,5 +34,9 @@
   {
     "outputFile": "wwwroot/css/pages/user.css",
     "inputFile": "wwwroot/css/pages/user.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/pages/affiliate.css",
+    "inputFile": "wwwroot/css/pages/affiliate.scss"
   }
 ]

@@ -27,37 +27,37 @@
             <ul>
                 <li>
                     <a href="">
-                        <span uk-icon="home"></span>
+                        <span class="text-3" uk-icon="home"></span>
                         <span>خانه</span>
                     </a>
                 </li>
                 <li>
                     <a href="">
-                        <span uk-icon="chatbubbles"></span>
+                        <span class="text-3" uk-icon="chatbubbles"></span>
                         <span>تالار گفتگو</span>
                     </a>
                 </li>
                 <li>
                     <a href="">
-                        <span uk-icon="call"></span>
+                        <span class="text-3" uk-icon="call"></span>
                         <span>تماس با ما</span>
                     </a>
                 </li>
                 <li>
                     <a href="">
-                        <span uk-icon="flag"></span>
+                        <span class="text-3" uk-icon="flag"></span>
                         <span>شعب ما</span>
                     </a>
                 </li>
                 <li>
                     <a href="">
-                        <span uk-icon="browsers-outline"></span>
+                        <span class="text-3" uk-icon="browsers"></span>
                         <span>وبلاگ ها</span>
                     </a>
                 </li>
                 <li>
                     <a href="">
-                        <span uk-icon="image-outline"></span>
+                        <span class="text-3" uk-icon="image"></span>
                         <span>گالری</span>
                     </a>
                 </li>
@@ -115,14 +115,32 @@
                     <a href="/">خانه</a>
                     <a href="/Forum">تالار گفتگو</a>
                     <a href="/Home/Contact">تماس با ما</a>
-                    <a href="/Home/About" class="">شعب ما</a>
+                    <a href="/Home/About">درباره ما</a>
+                    <a href="/Affiliate">شعب ما</a>
                     <a href="/Blog">وبلاگ ها</a>
                     <a href="/Gallery">گالری</a>
                 </nav>
+
                 <a href="" class="profile">
                     <span>پروفایل</span>
                     <span uk-icon="person-circle-outline"></span>
                 </a>
+
+                <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
+                    <div class="mat-card">
+                        <ul class="col g-2">
+                            <li>
+                                <a class="link-text" href="">پروفایل</a>
+                            </li>
+                            <li>
+                                <a class="link-text" href="">سبد خرید</a>
+                            </li>
+                            <li>
+                                <a class="link-text" href="">خروج</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
                 @*<a href="" class="enter">
                                 ورود / ثبت نام
@@ -512,6 +530,32 @@
             IsCategoryOpen = !IsCategoryOpen;
 
         }
+
+        class Report {
+            WorkplaceName;
+            SiteName;
+            //-
+            BoreholeNumber;
+            BoreholeDepth;
+            StartDepth;
+            EndDepth;
+            //-
+            Increment = .5;
+            InstrConst = 50000;
+            //-
+            DigitalOrSpiral = d;
+            Unit = M;
+            //-
+            InclinometerSerial;
+            RotationalCorrA;
+            RotationalCorrB;
+            SensitivityFactorA;
+            SensitivityFactorB;
+
+
+
+        }
+
 
     </script>
 

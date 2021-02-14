@@ -99,19 +99,10 @@ namespace GhasreMobile.Controllers
             return View();
         }
 
-        //public async Task<RedirectResult> TryDo(Func<string> function)
-        //{
-        //    try
-        //    {
-        //        function.Invoke();
-        //        return await Task.FromResult(Redirect("ErrorPage"));
-        //    }
-        //    catch
-        //    {
-        //        return await Task.FromResult(Redirect("ErrorPage"));
-        //    }
-        //}
-
+        public IActionResult Verify()
+        {
+            return View();
+        }
 
     }
 }

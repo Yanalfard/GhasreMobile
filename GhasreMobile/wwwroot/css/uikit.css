@@ -306,8 +306,13 @@ body {
   -webkit-border-radius: 4px 4px 4px 4px;
   border-radius: 4px 4px 4px 4px; }
 
-.mat-pad {
-  padding: 12px; }
+@media only screen and (min-device-width: 420px) {
+  .mat-pad {
+    padding: 12px; } }
+
+@media only screen and (max-device-width: 420px) {
+  .mat-pad {
+    padding: 8px; } }
 
 .mat-border {
   -moz-border-radius: 4px 4px 4px 4px;
@@ -323,10 +328,15 @@ body {
   -moz-border-radius: 4px 4px 4px 4px;
   -webkit-border-radius: 4px 4px 4px 4px;
   border-radius: 4px 4px 4px 4px;
-  padding: 12px;
   -moz-border-radius: 4px 4px 4px 4px;
   -webkit-border-radius: 4px 4px 4px 4px;
   border-radius: 4px 4px 4px 4px; }
+  @media only screen and (min-device-width: 420px) {
+    .mat-card {
+      padding: 12px; } }
+  @media only screen and (max-device-width: 420px) {
+    .mat-card {
+      padding: 8px; } }
 
 /* clears the ‘X’ from Internet Explorer */
 input[type=search]::-ms-clear {
