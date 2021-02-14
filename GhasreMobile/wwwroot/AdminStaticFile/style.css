@@ -1817,3 +1817,7 @@ table.hot-download td {
     align-content: center;
     align-self: center;
 }
+.color-box{
+    width:25px;
+    height:25px;
+}
