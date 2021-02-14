@@ -1,13 +1,13 @@
 ﻿@model DataLayer.Models.TblCatagory
 <div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
-       ویرایش دسته بندی @Model.Name
+        ویرایش دسته بندی @Model.Name
     </h6>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form asp-action="Edit" asp-controller="Category" asp-area="Admin"
+<form asp-action="Edit" asp-controller="Catagory" asp-area="Admin"
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
@@ -15,17 +15,15 @@
       data-ajax-update="#ajaxresult">
 
     @Html.AntiForgeryToken()
-
+    <input type="hidden" asp-for="CatagoryId" />
     <input type="hidden" asp-for="ParentId" />
     <div class="modal-body">
         <div class="form-row">
             <div class="form-group col-md-4">
                 <input asp-for="Name" class="form-control form-control-sm" placeholder="نام">
+                <span asp-validation-for="Name" class="text-danger"></span>
                 <br />
-                @if (Model.InverseParent.Count() == 0)
-                {
-                    <input asp-for="IsOnFirstPage">@:فعال باشد
-                }
+                    <input asp-for="IsOnFirstPage">فعال باشد
             </div>
         </div>
     </div>
@@ -34,3 +32,6 @@
         <button type="submit" class="btn btn-success btn-sm text-white">ویرایش<span class="icon-holder uk-margin-small-right" uk-icon="create-outline"></span></button>
     </div>
 </form>
+
+<script src="~/Validate/jquery.validate.min.js"></script>
+<script src="~/Validate/jquery.validate.unobtrusive.js"></script>

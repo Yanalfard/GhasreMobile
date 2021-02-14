@@ -52,12 +52,9 @@ namespace DataLayer.Models
         public virtual DbSet<TblTopicCommentRel> TblTopicCommentRel { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Data Source=103.216.62.27;Initial Catalog=GhasreMobile;User ID=Yanal;Password=1710ahmad.fard");
-            }
-        }
+            => optionsBuilder
+           .UseLazyLoadingProxies()
+           .UseSqlServer("Data Source=103.216.62.27;Initial Catalog=GhasreMobile;User ID=Yanal;Password=1710ahmad.fard");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
