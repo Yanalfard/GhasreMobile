@@ -852,6 +852,68 @@ $background-highlight: #eee;
     }
 }
 
+@media only screen and (max-width: 532px) {
+    .header {
+        .bottom {
+            nav {
+                a:nth-last-child(1) {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+//-
+@media only screen and (max-width: 496px) {
+    .header {
+        .bottom {
+            nav {
+                a:nth-last-child(2) {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 432px) {
+    .header {
+        .bottom {
+            nav {
+                a:nth-last-child(3) {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 356px) {
+    .header {
+        .bottom {
+            nav {
+                a:nth-last-child(4) {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 280px) {
+    .header {
+        .bottom {
+            nav {
+                a:nth-last-child(5) {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+//-
+
 @media only screen and (max-width: 512px) {
     .header {
 
@@ -1499,5 +1561,25 @@ footer {
 
     .hide-on-threshold {
         display: none;
+    }
+}
+
+
+#offCanvas {
+    a {
+        @include row-reverse;
+        color: $Text-2;
+        @include trans(.2s);
+        padding: 12px 16px;
+        @include border-def-radius;
+        border-top: 1px dashed $Text-5;
+
+        .uk-icon {
+            margin-left: 6px;
+        }
+    }
+
+    a:hover {
+        background-color: #f5f5f5;
     }
 }
