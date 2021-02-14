@@ -4,5 +4,15 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<textarea id="content"></textarea>
 
+@section Script{
+
+    <script src="~/lib/ckeditor5/ckeditor.js"></script>
+
+    <script>
+        ClassicEditor.create(document.querySelector("#content"), {
+            language:'fa'
+        });
+    </script>
+}
