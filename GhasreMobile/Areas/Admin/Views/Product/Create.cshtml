@@ -15,24 +15,38 @@
               data-ajax-update="#ajaxresult">
             @Html.AntiForgeryToken()
             <div class="card-body flex">
-                <ul uk-accordion class="bg-costum mt-3 pt-3 pb-3 uk-text-small uk-border-rounded">
+                <ul uk-accordion class="bg-light mt-3 pt-3 pb-3 uk-text-small uk-border-rounded">
                     <li class="col-md-4">
                         <a class="uk-accordion-title uk-text-small" href="#">دسته بندی</a>
                         <div class="uk-accordion-content">
                             <ul class="uk-margin-right" uk-accordion>
-                                <li>
-                                    <a class="uk-accordion-title uk-text-small" href="#">زیر دسته بندی</a>
-                                    <div class="uk-accordion-content">
-                                        <ul class="uk-margin-right" uk-accordion>
-                                        </ul>
-                                    </div>
-                                </li>
+                                @{
+                                    IEnumerable<DataLayer.Models.TblCatagory> Parentcatagories = ViewBag.Parentcatagories;
+                                }
+                                @foreach (var item in Parentcatagories)
+                                {
+                                    <li>
+                                        @if (!item.IsOnFirstPage)
+                                        {
+                                            <a class="uk-accordion-title uk-text-small">@item.Name</a>
+                                        }
+                                        else
+                                        {
+                                            <a id="Cat-@item.CatagoryId" class="uk-accordion-title uk-text-small" onclick="SelectCatagory(@item.CatagoryId)">@item.Name</a>
+                                        }
+                                        <div class="uk-accordion-content">
+                                            <ul class="uk-margin-right" uk-accordion>
+                                                @await Component.InvokeAsync("ShowChildsCatagoryInCreateProduct", new { Id = item.CatagoryId })
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </li>
                 </ul>
                 <input type="hidden" asp-for="CatagoryId" />
-                <span asp-validation-for="CatagoryId"></span>
+                <span asp-validation-for="CatagoryId" class="text-danger"></span>
                 <hr />
                 <div class="form-row">
                     <div class="form-group col-md-3">
@@ -47,35 +61,36 @@
                             }
                         </select>
                         <input type="hidden" asp-for="BrandId" />
-                        <span asp-validation-for="BrandId"></span>
+                        <span asp-validation-for="BrandId" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-row mt-3">
                     <div class="form-group col-md-3">
                         <label>نام محصول</label>
                         <input asp-for="Name" class="form-control form-control-sm" placeholder="مثال : شارژر">
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-2">
                         <label>قیمت</label>
                         <input asp-for="PriceBeforeDiscount" class="form-control form-control-sm" placeholder="مثال : 80000 تومان">
+                        <span asp-validation-for="PriceBeforeDiscount" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-2">
                         <label>درصد تخفیف</label>
                         <input asp-for="PriceAfterDiscount" maxlength="2" class="form-control form-control-sm" placeholder="مثال : 10">
+                        <span asp-validation-for="PriceAfterDiscount" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="custom-file col-md-7 mt-3">
                     <input asp-for="MainImage" type="file" class="custom-file-input form-control form-control-sm">
                     <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر اصلی</label>
                 </div>
+                <span class="text-danger" asp-validation-for="MainImage"></span>
                 <div class="form-row mt-3">
-                    <div class="form-group col-md-2">
-                        <label>تعداد</label>
-                        <input asp-for="Count" class="form-control form-control-sm" placeholder="مثال : 20">
-                    </div>
                     <div class="form-group col-md-3">
                         <label>متن جستجو</label>
                         <input asp-for="SearchText" class="form-control form-control-sm" placeholder="مثال : ...">
+                        <span class="text-danger" asp-validation-for="SearchText"></span>
                     </div>
                     <div class=" col-md-2 mt-4 pt-3 mr-3">
                         <input asp-for="IsFractional" type="checkbox"> فروش اقساطی
@@ -85,18 +100,31 @@
                     <div class="form-group col-md-6">
                         <input type="text" value="" data-role="tagsinput" id="tags" class="form-control" placeholder="کلمات کلیدی">
                     </div>
+                    <span class="text-danger" asp-validation-for="TblProductKeywordRel"></span>
                 </div>
                 <hr />
-                <label class="uk-text-bold">رنگ:</label>
-                <div class="form-row ">
-                    <input class="mt-2" type="checkbox">
-                    <label class="mr-2"> مشکی </label>
-                    <div class=" uk-border-rounded mr-2 color-box" style="background:#000000;"></div>
+
+                <label class="uk-text-bold">افزودن رنگ :</label>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label>انتخاب رنگ</label>
+                        <input type="color" class="form-control form-control-sm" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="TblProductKeywordRel"></span>
+                    <div class="form-group col-md-3">
+                        <label>نام رنگ</label>
+                        <input type="text" placeholder="مثال : آبی" class="form-control form-control-sm" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>تعداد</label>
+                        <input type="text" placeholder="مثال : 2" class="form-control form-control-sm" />
+                    </div>
+                    <span asp-validation-for="TblColor" class="text-danger"></span>
                 </div>
                 <div class="form-row ">
-                    <input class="mt-2" type="checkbox">
-                    <label class="mr-2"> قرمز </label>
-                    <div class=" uk-border-rounded mr-2 color-box" style="background:#e62424;"></div>
+                    <label class="mr-2"> مشکی </label>
+                    <div class=" uk-border-rounded mr-2 color-box" style="background:#000000;"></div>
+                    <label class="mr-2">3 عدد</label>
                 </div>
                 <hr />
                 <div class="form-row mt-3">
@@ -114,10 +142,12 @@
                 </div>
                 <hr />
                 <div class="mt-3">
-                    <textarea id="DescriptionShortHtml" name="Mytext"></textarea>
+                    <textarea id="DescriptionShortHtml" asp-for="DescriptionShortHtml"></textarea>
+                    <span class="text-danger" asp-validation-for="DescriptionShortHtml"></span>
                 </div>
                 <div class="mt-3">
-                    <textarea id="DescriptionLongHtml" name="Mytext"></textarea>
+                    <textarea id="DescriptionLongHtml" asp-for="DescriptionLongHtml"></textarea>
+                    <span class="text-danger" asp-validation-for="DescriptionLongHtml"></span>
                 </div>
                 <hr />
                 <label class="mt-3 uk-text-bold">افزودن عکس به گالری تصاویر</label>
@@ -138,9 +168,17 @@
         }
     </style>
     <script>
+
+        function SelectCatagory(Id) {
+            var id = "Cat-" + Id;
+            $("#Cat-" + Id).css('color', '#3E9731');
+            $("#Cat-" + Id).css('color', '#3E9731');
+        };
+
+
         $("#adropzone").dropzone({
             url: "/file/post", paramName: "file", // The name that will be used to transfer the file
-            maxFilesize: 1, // MB
+            maxFilesize: 3, // MB
             addRemoveLinks: true,
             acceptedFiles: "image/x-png,image/gif,image/jpeg",
             autoProcessQueue: false,
@@ -149,7 +187,7 @@
                 UIkit.notification({ message: "فایل با موفقیت حذف شد" });
             },
             complete: function (file) {
-                if (file.size > 1000000) {
+                if (file.size > 3000000) {
                     UIkit.notification({ message: "حجم فایل بیش از اندازه میباشد لطفا بیشتر از 3 مگابایت وارد نکنید" });
                     file.previewElement.remove();
                 }

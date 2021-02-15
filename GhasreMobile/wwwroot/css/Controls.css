@@ -180,10 +180,11 @@ a.btn.btn-primary:hover {
   -moz-transition: all ease 0.2s;
   -o-transition: all ease 0.2s;
   -webkit-transition: all ease 0.2s;
-  transition: all ease 0.2s; }
+  transition: all ease 0.2s;
+  cursor: pointer; }
 
 .link-text:hover {
-  color: #96027E; }
+  color: #96027E !important; }
 
 .link-text:active {
   color: #C539F6; }

@@ -5,3 +5,49 @@
 }
 
 
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            @*<div class="card-header bg-white">
+                    <div class="pr-1 pt-2">
+                        <div class="form-group pb-0 mb-0">
+                            <a id="Create" href="#" class="btn btn-success btn-sm">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></a>
+                        </div>
+                    </div>
+                </div>*@
+            <div id="card-table mt-4" class="card-body flex-div">
+                <div class="table-responsive flex">
+                    <table class="table fixed">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>نام کاربری</th>
+                                <th>تاریخ ثبت</th>
+                                <th>وضعیت</th>
+                                <th>جزئیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
+                                        <a onclick="Information()" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                    @*  @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
