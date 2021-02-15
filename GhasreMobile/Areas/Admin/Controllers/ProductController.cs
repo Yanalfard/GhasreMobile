@@ -35,6 +35,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return "1";
         }
 
+        public IActionResult Stock()
+        {
+            return ViewComponent("EditStokeAdmin");
+        }
+
         [HttpGet]
         public IActionResult Edit(int Id)
         {

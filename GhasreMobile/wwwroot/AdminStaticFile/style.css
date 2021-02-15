@@ -1835,3 +1835,8 @@ table.hot-download td {
     overflow: hidden;
     text-align: center;
 }
+.uk-notification-close {
+    text-align: right !important;
+    color: #fff !important;
+    margin-right:8px!important;
+}
