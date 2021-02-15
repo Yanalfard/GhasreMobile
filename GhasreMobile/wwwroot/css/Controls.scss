@@ -59,10 +59,11 @@ a.btn.btn-primary:hover {
 .link-text {
     color: $Text;
     @include trans(.2s);
+    cursor: pointer;
 }
 
 .link-text:hover {
-    color: $primary;
+    color: $primary !important;
 }
 
 .link-text:active {
@@ -226,6 +227,20 @@ input:not(input[type=checkbox]):not(input[type=radio]) {
     direction: rtl;
     border: 0;
     color: $Text;
+}
+
+@media only screen and (max-width: 400px) {
+    .entry {
+        background: transparent;
+        padding: 2px 8px;
+        direction: rtl;
+        min-height: 24px;
+        font-size: 12px;
+        @include component-border;
+        @include border-def-radius;
+        @include placeholder(#ddd);
+        @include trans(.3s);
+    }
 }
 
 .fg-col {
@@ -643,10 +658,15 @@ $background-highlight: #eee;
 
         .profile {
             margin-right: auto;
+            height: 100%;
             background-color: transparent;
             border: 0;
 
             span {
+                margin-top: auto !important;
+                margin-bottom: auto !important;
+                vertical-align: central;
+                text-align: center;
                 color: $Text;
             }
 
@@ -1016,17 +1036,23 @@ $background-highlight: #eee;
     img {
         margin: auto;
         margin-top: 8px;
+        margin-bottom: 8px;
         min-height: 92px;
         min-width: 92px;
         background-color: #efefef;
+        @include obj;
+        max-height: 192px;
     }
 
     .name {
         color: $Text;
         font-size: 14px;
         margin-top: 8px;
-        height: 48px;
+        margin-bottom: 4px;
+        height: 40px;
         padding: 0 2px;
+
+        @include max-line(2);
     }
 
     .category {
@@ -1062,6 +1088,58 @@ $background-highlight: #eee;
     @include shadow-mild;
     z-index: 50 !important;
 }
+
+@media only screen and (max-width: 480px) {
+    .product {
+        padding: 6px 4px;
+        margin: 0 4px;
+
+        .people {
+            margin: 0 auto;
+            font-size: 10px;
+        }
+
+        .name {
+            color: $Text;
+            font-size: 11px;
+            margin-top: 8px;
+            margin-bottom: 4px;
+            height: 30px;
+            max-height: 30px;
+            padding: 0 3px;
+            @include max-line(2);
+        }
+
+        img {
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+
+        .category {
+            color: $Text-3;
+            margin-top: 3px;
+            font-size: 10px;
+        }
+
+        .discount {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .price {
+            margin: 0 auto;
+            margin-top: 2px;
+            @include row;
+            color: $Text;
+            font-size: 16px;
+
+            .t {
+                font-size: 9px;
+            }
+        }
+    }
+}
+
 
 .navigation {
     height: 16px;
@@ -1340,6 +1418,22 @@ $background-highlight: #eee;
     }
 }
 
+@media only screen and (max-width: 380px)  {
+    .blog-block {
+
+        h3 {
+            margin: 5px 0;
+            font-size: 15px;
+        }
+
+        p {
+            @include max-line(3);
+            font-size: 11px;
+            margin: 0;
+        }
+    }
+}
+
 footer {
     background-color: #222332;
     padding: 30px 0;
@@ -1545,7 +1639,11 @@ footer {
                 }
 
                 ul {
+                    @include column;
+
                     li {
+                        height: auto;
+
                         a {
                             color: $Text-2;
                             @include trans(.2s);
@@ -1560,6 +1658,46 @@ footer {
         }
     }
 }
+
+@media only screen and (max-width: 960px) {
+    #dropbar {
+        height: calc(100vh - 108px);
+        overflow-y: auto !important;
+        direction: rtl;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    #dropbar {
+
+        .uk-container {
+
+            .grid {
+                @include grid-gap(124px,10px);
+                @include trans(.2s);
+                direction: rtl;
+
+                section {
+                    h4 {
+                        color: $Text;
+                        font-size: 15px;
+                    }
+
+                    ul {
+                        @include column;
+
+                        li {
+                            a {
+                                font-size: 12px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 .show-on-threshold {
     display: none;
@@ -1590,7 +1728,6 @@ footer {
 .g-3 {
     grid-gap: 12px;
 }
-
 
 #offCanvas {
     a {

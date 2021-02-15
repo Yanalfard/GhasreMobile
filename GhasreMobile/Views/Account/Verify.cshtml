@@ -1,32 +1,30 @@
-﻿
+﻿@model ActiveVm
 @{
     ViewData["Title"] = "Index";
     ViewData["Image"] = "/st/r/Entry_1.png";
     Layout = "_AccountLayout.cshtml";
 }
 
-<div class="form-block col">
-
+<form asp-action="Verify" method="post" asp-area="" class="form-block col">
+    <input type="hidden" asp-for="Tell"  />
     <h3 class="uk-margin-remove-bottom">
         احراز هویت
     </h3>
-
     <p class="uk-margin-bottom uk-margin-small-top text-2">
         کد احراز هویت به شماره شما ارسال گردید
     </p>
 
     <div class="fg-col">
         <label class="fg-label">کد احراز</label>
-        <input class="entry" type="tel" value="" />
-        <span class="text-danger"></span>
+        <input class="entry" type="text" asp-for="Auth" />
+        <span class="text-danger"asp-validation-for="Auth"></span>
     </div>
 
-    <div class="fg-col">
+    @*<div class="fg-col">
         <a href="/Account/ForgotPassword">ارسال دوباره کد احراز</a>
-    </div>
+    </div>*@
 
     <div class="actions gap-t">
         <button class="btn btn-primary">تایید</button>
     </div>
-
-</div>
+</form>

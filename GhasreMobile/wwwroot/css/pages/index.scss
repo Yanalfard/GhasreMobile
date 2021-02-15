@@ -34,6 +34,7 @@
 .gallery-grid {
     .grid {
         @include grid-gap(224px,8px);
+        margin-bottom: 16px;
 
         a {
             display: flex;
@@ -49,6 +50,29 @@
     }
 }
 
+@media only screen and (max-width: 960px) {
+    .gallery-grid {
+        .grid {
+            @include grid-gap(150px,8px);
+
+            a {
+
+                img {
+                    max-height: 164px;
+                }
+            }
+
+            a:nth-child(n+5) {
+                display: none;
+
+                img {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
 .service {
     .body {
         display: grid;
@@ -56,11 +80,52 @@
 }
 
 .questions {
+    h3 {
+        font-size: 20px;
+        padding: 12px;
+        margin-top: 0 !important;
+    }
+
     ul {
         li {
             @include mat-padding;
             margin-top: 0 !important;
             border-bottom: solid $mat-border-color 1px;
+
+            .uk-accordion-title {
+                font-size: 16px !important;
+            }
+
+            .uk-accordion-content {
+                margin-top: 10px !important;
+                font-size: 13px !important;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .questions {
+        h3 {
+            font-size: 17px;
+            margin-top: 0 !important;
+        }
+
+        ul {
+            li {
+                @include mat-padding;
+                margin-top: 0 !important;
+                border-bottom: solid $mat-border-color 1px;
+
+                .uk-accordion-title {
+                    font-size: 14px !important;
+                }
+
+                .uk-accordion-content {
+                    margin-top: 8px !important;
+                    font-size: 12px !important;
+                }
+            }
         }
     }
 }
