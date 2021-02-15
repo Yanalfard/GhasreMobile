@@ -33,7 +33,6 @@ namespace DataLayer.Models
         public string DescriptionShortHtml { get; set; }
         public string DescriptionLongHtml { get; set; }
         public int? CatagoryId { get; set; }
-        public int Count { get; set; }
         public long PriceAfterDiscount { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }

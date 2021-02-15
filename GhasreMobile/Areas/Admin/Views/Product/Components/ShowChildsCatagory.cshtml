@@ -1,0 +1,20 @@
+﻿@model IEnumerable<DataLayer.Models.TblCatagory>
+
+@foreach (var item in Model)
+{
+    <li>
+        @if (!item.IsOnFirstPage)
+        {
+            <a class="uk-text-small uk-accordion-title">@item.Name</a>
+        }
+        else
+        {
+            <a id="Cat-@item.CatagoryId" class="uk-text-small" onclick="SelectCatagory(@item.CatagoryId)">@item.Name</a>
+        }
+        <div class="uk-accordion-content">
+            <ul class="uk-margin-right" uk-accordion>
+                @await Component.InvokeAsync("ShowChildsCatagoryInCreateProduct", new { Id = item.CatagoryId })
+            </ul>
+        </div>
+    </li>
+}

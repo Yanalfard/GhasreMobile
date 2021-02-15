@@ -23,18 +23,16 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+            ViewBag.Brands = _core.Brand.Get();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(TblProduct product)
+        public string Create(TblProduct product, List<string> Color)
         {
-            if (ModelState.IsValid)
-            {
-
-            }
-            return View(product);
+            return "1";
         }
 
         [HttpGet]
@@ -53,5 +51,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             return View(product);
         }
+
     }
 }

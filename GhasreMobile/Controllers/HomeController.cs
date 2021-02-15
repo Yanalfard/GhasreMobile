@@ -24,6 +24,10 @@ namespace GhasreMobile.Controllers
         {
             return View();
         }
-
+        [Route("ErrorPage")]
+        public async Task<IActionResult> ErrorPage()
+        {
+            return await Task.FromResult(View());
+        }
     }
 }
