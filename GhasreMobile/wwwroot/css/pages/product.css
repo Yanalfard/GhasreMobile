@@ -223,18 +223,13 @@ backdrop-filter: saturate(80%);
 
 @media only screen and (max-device-width: 420px) {
   .pr-title {
-    background-color: #F5F6F7;
-    grid-area: title; } }
-  @media only screen and (max-device-width: 420px) and (min-device-width: 420px) {
-    .pr-title {
-      padding: 12px; } }
-  @media only screen and (max-device-width: 420px) and (max-device-width: 420px) {
-    .pr-title {
-      padding: 8px; } }
-
-@media only screen and (max-device-width: 420px) {
+    background-color: transparent;
+    padding: 0;
+    grid-area: title; }
     .pr-title h1 {
       font-size: 16px; }
+    .pr-title span {
+      font-size: 13px; }
   .pr-content {
     grid-area: content;
     min-height: 150px;
@@ -287,6 +282,11 @@ backdrop-filter: saturate(80%);
           margin-top: auto;
           margin-bottom: 5px;
           margin-right: 4px; }
+    .pr-content .cart {
+      margin-left: 0; }
+      .pr-content .cart .button {
+        width: 100%;
+        white-space: nowrap; }
   .pr-specs {
     background-color: transparent;
     grid-area: specs;
@@ -361,14 +361,26 @@ backdrop-filter: saturate(80%);
   z-index: 5; }
   .section-nav a {
     color: #666;
-    padding: 12px;
     border-left: 1px #ddd solid;
     -moz-transition: all ease 0.2s;
     -o-transition: all ease 0.2s;
     -webkit-transition: all ease 0.2s;
     transition: all ease 0.2s; }
+    @media only screen and (min-device-width: 420px) {
+      .section-nav a {
+        padding: 12px; } }
+    @media only screen and (max-device-width: 420px) {
+      .section-nav a {
+        padding: 8px; } }
   .section-nav a:hover {
     color: #96027E; }
+
+@media only screen and (max-width: 375px) {
+  .section-nav a {
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+    white-space: nowrap; } }
 
 .details table {
   margin: 0;
@@ -383,6 +395,18 @@ backdrop-filter: saturate(80%);
     background-color: #F4F4F4; }
   .details table tbody tr td:last-child {
     background-color: #F9F9F9; }
+
+@media only screen and (max-width: 400px) {
+  .details table {
+    margin: 0;
+    margin-top: 8px;
+    border-spacing: 6px; }
+    .details table tbody tr td {
+      padding: 6px;
+      -moz-border-radius: 3px 3px 3px 3px;
+      -webkit-border-radius: 3px 3px 3px 3px;
+      border-radius: 3px 3px 3px 3px;
+      font-size: 12px !important; } }
 
 @media only screen and (min-width: 1200px) {
   .product-slider .uk-slider-items li {
@@ -399,3 +423,8 @@ backdrop-filter: saturate(80%);
 @media only screen and (max-width: 864px) {
   .product-slider .uk-slider-items li {
     width: 50%; } }
+
+@media only screen and (max-width: 385px) {
+  .star-cb-group label {
+    width: 24px !important;
+    font-size: 28px !important; } }
