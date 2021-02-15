@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,10 +15,8 @@ namespace DataLayer.Models
 
         [Key]
         public int CatagoryId { get; set; }
-        [Display(Name = "نام دسته بندی")]
-        [Required(ErrorMessage = "نام دسته بندی را وارد کنید")]
-        [MaxLength(100, ErrorMessage = "کارکتر های کمتری وارد کنید")]
-        [MinLength(3, ErrorMessage = "لطفا کارکتر های بیشتری وارد کنید")]
+        [Required]
+        [StringLength(256)]
         public string Name { get; set; }
         public int? ParentId { get; set; }
         public bool IsOnFirstPage { get; set; }
