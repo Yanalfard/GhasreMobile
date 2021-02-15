@@ -59,10 +59,11 @@ a.btn.btn-primary:hover {
 .link-text {
     color: $Text;
     @include trans(.2s);
+    cursor: pointer;
 }
 
 .link-text:hover {
-    color: $primary;
+    color: $primary !important;
 }
 
 .link-text:active {

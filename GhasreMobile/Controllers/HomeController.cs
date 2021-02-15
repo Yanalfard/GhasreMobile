@@ -13,11 +13,13 @@ namespace GhasreMobile.Controllers
             return View();
         }
 
+        [Route("/Contact")]
         public IActionResult Contact()
         {
             return View();
         }
 
+        [Route("/About")]
         public IActionResult About()
         {
             return View();
