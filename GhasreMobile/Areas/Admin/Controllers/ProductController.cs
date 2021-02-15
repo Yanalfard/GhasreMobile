@@ -23,18 +23,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Brands = _core.Brand.Get();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(TblProduct product,List<string> Color)
+        public string Create(TblProduct product,List<string> Color)
         {
-            if (ModelState.IsValid)
-            {
-
-            }
-            return View(product);
+            return "1";
         }
 
         [HttpGet]
