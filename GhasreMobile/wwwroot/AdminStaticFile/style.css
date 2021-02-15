@@ -1821,3 +1821,17 @@ table.hot-download td {
     width:25px;
     height:25px;
 }
+.uk-notification-message {
+    opacity: 1;
+    position: relative;
+    padding: 15px;
+    background: #e04f4f !important;
+    color: #fff !important;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    cursor: pointer;
+    border-radius: 8px !important;
+    font-family: 'Sahel';
+    overflow: hidden;
+    text-align: center;
+}
