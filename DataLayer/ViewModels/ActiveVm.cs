@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataLayer.ViewModels
 {
-    public class ActiveVm
+    public class ActiveVm:CaptchaVm
     {
         [Display(Name = "کد فعال سازی")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]

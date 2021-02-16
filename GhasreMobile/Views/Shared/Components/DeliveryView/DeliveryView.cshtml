@@ -1,0 +1,49 @@
+﻿@model DeliveryVm
+<form id="ajaxresult" class="mat-card uk-margin-remove-top" asp-action="Delivery" asp-controller="Home" method="post" asp-area=""
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="endDelivery()"
+      data-ajax-update="#ajaxresult">
+    <h3>درخواست خدمات درب منزل</h3>
+    <p class="text-3">برای درحواست خدمات تعمیراتی و گارانتی درب منزل این فرم را پر کنید </p>
+    <div class="col">
+        <div class="col-at-xs col-at-s rowr-at-m rowr-at-l gap-card
+             rowr-at-xl uk-child-width-1-2-at-m uk-child-width-1-2-at-l uk-child-width-1-2-at-xl
+             uk-child-width-1-1-at-xs uk-child-width-1-1-at-s">
+            <div class="fg-col uk-margin-remove-bottom">
+                <label for="Name" class="fg-label">نام و نام خانوادگی</label>
+                <input id="Name" name="Name" type="text" class="entry" asp-for="Name" />
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+            <div class="fg-col">
+                <label for="TelNo" class="fg-label">شماره تلفن</label>
+                <input id="TellNo" name="TellNo" type="tel" class="entry" asp-for="TellNo" />
+                <span class="text-danger" asp-validation-for="TellNo"></span>
+            </div>
+        </div>
+        <div class="fg-col">
+            <label for="Address" class="fg-label">توضیحات</label>
+            <textarea id="Message" name="Message" class="entry" asp-for="Message"></textarea>
+            <span class="text-danger" asp-validation-for="Message"></span>
+        </div>
+        <div class="fg-col">
+            <label for="Address" class="fg-label">آدرس</label>
+            <textarea id="Address" name="Address" class="entry" asp-for="Address"></textarea>
+            <span class="text-danger" asp-validation-for="Address"></span>
+        </div>
+    </div>
+    <div class="rowr gap-t">
+        <button class="btn btn-primary" onclick="LoadingRun('#ajaxresult')">فرستادن درخواست</button>
+    </div>
+</form>
+
+<script>
+    function endDelivery() {
+        $("input").val("");
+        $("textarea").val("");
+        UIkit.notification('درخواست شما ثبت شد');
+        LoadingEnd();
+    }
+</script>
+

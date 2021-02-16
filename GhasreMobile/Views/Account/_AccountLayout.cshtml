@@ -20,7 +20,7 @@
 <body>
 
     <header class="home">
-        <a uk-icon="home" href=""></a>
+        <a uk-icon="home" href="/"></a>
     </header>
 
 
@@ -31,18 +31,32 @@
             </div>
         </div>
         <div class="l-image">
-            <img src="~/st/v/biscuits/account_biscuit.svg" class="l-cover"/>
+            <img src="~/st/v/biscuits/account_biscuit.svg" class="l-cover" />
             <img src="@(ViewData["Image"] ?? "/st/r/Entry_2.png")" alt="" />
         </div>
     </main>
 
-
+    <link href="~/css/Load.css" rel="stylesheet" />
+    <!-- #Loadinh -->
+    <div id="overlay">
+        <div class="cv-spinner">
+            <span class="spinner"></span>
+        </div>
+    </div>
     <!--Pwa-->
     @*<script src="~/app.js"></script>*@
 
+    <script src="~/Jquery/jquery-3.4.1.min.js"></script>
     <script src="~/js/uikit.min.js"></script>
     <script src="~/js/uikit-icons.js"></script>
-
+    <script>
+        function LoadingRun() {
+            $("#overlay").fadeIn(300);
+        }
+        function LoadingEnd() {
+            $("#overlay").fadeOut(300);
+        }
+    </script>
     @RenderSection("Scripts", false)
 
 </body>
