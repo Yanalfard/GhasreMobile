@@ -10,9 +10,9 @@ namespace GhasreMobile.ViewComponents.Admin
     public class CommentInfoAdmin : ViewComponent
     {
         Core _core = new Core();
-        public async Task<IViewComponentResult> InvokeAsync(int Id)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Comment/Components/CommentInfo.cshtml", _core.Comment.GetById(Id)));
+            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Comment/Components/CommentInfo.cshtml"));
         }
     }
 }
