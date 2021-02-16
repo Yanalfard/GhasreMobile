@@ -1,36 +1,10 @@
-﻿/**
- * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+/**
+ * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
-	// config.language = 'fr';
-    // config.uiColor = '#AADC6E';
-    config.contentsLangDirection = 'rtl';
-    config.language = 'fa';
-    config.skin = 'moono-dark';
-    config.filebrowserImageUploadUrl = '/Admin/Upload/UploadCkEditor';
-
- //   config.toolbar =
- //[
- //  [
- //    'SourceBold',
- //    'Italic',
- //    'Underline',
- //    'Strike',
- //    '-',
- //    'Subscript',
- //    'SuperscriptNumberedList',
- //    'BulletedList',
- //    '-',
- //    'Outdent',
- //    'Indent/Styles',
- //    'Format',
- //    'Font',
- //    'FontSize',
- //    'Image'
-
- //  ]
- //];
+	config.language = 'fa';
+	// config.uiColor = '#AADC6E';
 };

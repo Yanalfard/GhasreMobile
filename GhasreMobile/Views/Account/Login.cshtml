@@ -10,7 +10,11 @@
     <partial name="_CaptchaScripts" />
 }
 
-<form asp-action="Login" method="post" asp-area="" class="form-block col">
+<form asp-action="Login" method="post" asp-area="" class="form-block col"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="LoadingEnd()">
     <partial name="_CaptchaInput" />
     @if (Context.Request.Query["Active"].ToString() == "true")
     {
@@ -53,7 +57,7 @@
 
     <div class="actions gap-t">
         <a href="/Register" class="btn btn-link">ثبت نام</a>
-        <button class="btn btn-primary">ورود</button>
+        <button class="btn btn-primary" onclick="LoadingRun()">ورود</button>
 
     </div>
 

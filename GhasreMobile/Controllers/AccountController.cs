@@ -157,7 +157,7 @@ namespace GhasreMobile.Controllers
                     {
                         TblClient forgotPassword = db.Client.Get().FirstOrDefault(i => i.TellNo == forget.TellNo);
                         string message = forgotPassword.Auth;
-                        await Sms.SendSms(forgotPassword.TellNo, message, "GhasrMobileRegister");
+                        await Sms.SendSms(forgotPassword.TellNo, message, "GhasrMobileForget");
                         return await Task.FromResult(Redirect("/RestorePassword/" + forgotPassword.TellNo));
                     }
                     else
@@ -184,26 +184,40 @@ namespace GhasreMobile.Controllers
         [Route("RestorePassword/{tell}")]
         public async Task<IActionResult> RestorePasswordAsync(ActiveVm active)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (db.Client.Get().Any(i => i.TellNo == active.Tell))
+                if (!await _captchaValidator.IsCaptchaPassedAsync(active.Captcha))
                 {
-                    TblClient selectedUser = db.Client.Get().FirstOrDefault(i => i.TellNo == active.Tell);
-                    if (selectedUser.Auth == active.Auth)
+                    ModelState.AddModelError("Auth", "ورود غیر مجاز");
+                    return View(active);
+                }
+                if (ModelState.IsValid)
+                {
+                    if (db.Client.Get().Any(i => i.TellNo == active.Tell))
                     {
-                        return await Task.FromResult(Redirect("/ChangePassword/" + selectedUser.TellNo + "/" + selectedUser.Auth));
+                        TblClient selectedUser = db.Client.Get().FirstOrDefault(i => i.TellNo == active.Tell);
+                        if (selectedUser.Auth == active.Auth)
+                        {
+                            return await Task.FromResult(Redirect("/ChangePassword/" + selectedUser.TellNo + "/" + selectedUser.Auth));
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Auth", "کد تغیر رمز  اشتباه است");
+                        }
                     }
                     else
                     {
-                        ModelState.AddModelError("Auth", "کد تغیر رمز  اشتباه است");
+                        ModelState.AddModelError("Auth", "شماره تلفن یافت نشد");
                     }
                 }
-                else
-                {
-                    ModelState.AddModelError("Auth", "شماره تلفن یافت نشد");
-                }
+                return await Task.FromResult(View(active));
             }
-            return await Task.FromResult(View(active));
+            catch
+            {
+                return await Task.FromResult(Redirect("ErrorPage"));
+            }
+
+
         }
         [Route("ChangePassword/{tell}/{auth}")]
         public async Task<IActionResult> ChangePassword(string tell, string auth)
@@ -218,25 +232,39 @@ namespace GhasreMobile.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangePasswordAsync(ChangePasswordVm change)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (db.Client.Get().Any(i => i.TellNo == change.Tell && i.Auth == change.Auth))
+
+                if (!await _captchaValidator.IsCaptchaPassedAsync(change.Captcha))
                 {
-                    TblClient selectedUser = db.Client.Get().FirstOrDefault(i => i.TellNo == change.Tell);
-                    selectedUser.Password = PasswordHelper.EncodePasswordMd5(change.Password);
-                    var CodeCreator = Guid.NewGuid().ToString();
-                    string Code = CodeCreator.Substring(CodeCreator.Length - 5);
-                    selectedUser.Auth = Code;
-                    db.Client.Update(selectedUser);
-                    db.Client.Save();
-                    return await Task.FromResult(Redirect("/Login?ChangePassword=true"));
+                    ModelState.AddModelError("Password", "ورود غیر مجاز");
+                    return View(change);
                 }
-                else
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("Password", "شماره تلفن یا کد فعال سازی اشتباه است");
+                    if (db.Client.Get().Any(i => i.TellNo == change.Tell && i.Auth == change.Auth))
+                    {
+                        TblClient selectedUser = db.Client.Get().FirstOrDefault(i => i.TellNo == change.Tell);
+                        selectedUser.Password = PasswordHelper.EncodePasswordMd5(change.Password);
+                        var CodeCreator = Guid.NewGuid().ToString();
+                        string Code = CodeCreator.Substring(CodeCreator.Length - 5);
+                        selectedUser.Auth = Code;
+                        db.Client.Update(selectedUser);
+                        db.Client.Save();
+                        return await Task.FromResult(Redirect("/Login?ChangePassword=true"));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Password", "شماره تلفن یا کد فعال سازی اشتباه است");
+                    }
                 }
+                return await Task.FromResult(View(change));
             }
-            return await Task.FromResult(View(change));
+            catch
+            {
+                return await Task.FromResult(Redirect("ErrorPage"));
+            }
+
         }
         [Route("Verify/{tellNo}")]
         public async Task<IActionResult> Verify(string tellNo)
@@ -250,37 +278,57 @@ namespace GhasreMobile.Controllers
         [HttpPost]
         public async Task<IActionResult> VerifyAsync(ActiveVm active)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (db.Client.Get().Any(i => i.TellNo == active.Tell))
+
+                if (!await _captchaValidator.IsCaptchaPassedAsync(active.Captcha))
                 {
-                    TblClient selectedUser = db.Client.Get().FirstOrDefault(i => i.TellNo == active.Tell);
-                    if (selectedUser.Auth == active.Auth)
+                    ModelState.AddModelError("Auth", "ورود غیر مجاز");
+                    return View(active);
+                }
+                if (ModelState.IsValid)
+                {
+                    if (db.Client.Get().Any(i => i.TellNo == active.Tell))
                     {
-                        selectedUser.IsActive = true;
-                        var CodeCreator = Guid.NewGuid().ToString();
-                        string Code = CodeCreator.Substring(CodeCreator.Length - 5);
-                        selectedUser.Auth = Code;
-                        db.Client.Save();
-                        return await Task.FromResult(Redirect("/Login?Active=true"));
+                        TblClient selectedUser = db.Client.Get().FirstOrDefault(i => i.TellNo == active.Tell);
+                        if (selectedUser.Auth == active.Auth)
+                        {
+                            selectedUser.IsActive = true;
+                            var CodeCreator = Guid.NewGuid().ToString();
+                            string Code = CodeCreator.Substring(CodeCreator.Length - 5);
+                            selectedUser.Auth = Code;
+                            db.Client.Save();
+                            return await Task.FromResult(Redirect("/Login?Active=true"));
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Auth", "کد فعال سازی اشتباه است");
+                        }
                     }
                     else
                     {
-                        ModelState.AddModelError("Auth", "کد فعال سازی اشتباه است");
+                        ModelState.AddModelError("Auth", "شماره تلفن یافت نشد");
                     }
                 }
-                else
-                {
-                    ModelState.AddModelError("Auth", "شماره تلفن یافت نشد");
-                }
+                return await Task.FromResult(View(active));
             }
-            return await Task.FromResult(View(active));
+            catch
+            {
+                return await Task.FromResult(Redirect("ErrorPage"));
+            }
         }
         [Route("LogOut")]
         public async Task<IActionResult> LogOut()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Redirect("/");
+            try
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                return Redirect("/");
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("ErrorPage"));
+            }
         }
     }
 }
