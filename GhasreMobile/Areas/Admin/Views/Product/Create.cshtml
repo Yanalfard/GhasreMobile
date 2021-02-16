@@ -32,7 +32,7 @@
                                         }
                                         else
                                         {
-                                            <a id="Cat-@item.CatagoryId" class="uk-accordion-title uk-text-small" onclick="SelectCatagory(@item.CatagoryId)">@item.Name</a>
+                                            <a id="Cat-@item.CatagoryId" class="uk-accordion-title uk-text-small Cat" onclick="SelectCatagory(@item.CatagoryId)">@item.Name</a>
                                         }
                                         <div class="uk-accordion-content">
                                             <ul class="uk-margin-right" uk-accordion>
@@ -121,11 +121,13 @@
                     </div>
                     <span asp-validation-for="TblColor" class="text-danger"></span>
                 </div>
-                <div class="form-row ">
-                    <label class="mr-2"> مشکی </label>
-                    <div class=" uk-border-rounded mr-2 color-box" style="background:#000000;"></div>
-                    <label class="mr-2">3 عدد</label>
-                </div>
+                <aside>
+                    <div class="form-row ">
+                        <label class="mr-2"> مشکی </label>
+                        <div class=" uk-border-rounded mr-2 color-box" style="background:#000000;"></div>
+                        <label class="mr-2">3 عدد</label>
+                    </div>
+                </aside>
                 <hr />
                 <div class="form-row mt-3">
                     <div class="form-group col-md-5">
@@ -142,11 +144,13 @@
                 </div>
                 <hr />
                 <div class="mt-3">
+                    <label class="ml-5">توضیحات کوتاه :</label>
                     <textarea id="DescriptionShortHtml" asp-for="DescriptionShortHtml"></textarea>
                     <span class="text-danger" asp-validation-for="DescriptionShortHtml"></span>
                 </div>
                 <div class="mt-3">
-                    <textarea id="DescriptionLongHtml" asp-for="DescriptionLongHtml"></textarea>
+                    <label class="ml-5">توضیحات کامل :</label>
+                    <textarea id="DescriptionLongHtml" asp-for="DescriptionLongHtml" style="max-height:300px !important;"></textarea>
                     <span class="text-danger" asp-validation-for="DescriptionLongHtml"></span>
                 </div>
                 <hr />
@@ -162,6 +166,7 @@
 @section Script{
     <script src="~/js/bootstrap-tagsinput.js"></script>
     <script src="~/js/dropzone.js"></script>
+    
     <style>
         .dz-error-message {
             display: none !important;
@@ -169,10 +174,20 @@
     </style>
     <script>
 
+        function EndCatagoryCreate(result) {
+            alert("2")
+        }
+
+        $(function () {
+            $('#DescriptionShortHtml').ckeditor();
+        });
+
         function SelectCatagory(Id) {
-            var id = "Cat-" + Id;
+            $(".Cat").css('color', '');
+            $(".Cat").css('font-weight', 'normal');
             $("#Cat-" + Id).css('color', '#3E9731');
-            $("#Cat-" + Id).css('color', '#3E9731');
+            $("#Cat-" + Id).css('font-weight', 'bold');
+            $("#CatagoryId").val(Id);
         };
 
 
