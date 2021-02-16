@@ -19,52 +19,102 @@
 </head>
 <body>
 
-    <div class="header">
-        <img src="~/st/r/TopMemphis.png" width="1366" height="59" alt="عکس بالا صفحه" />
-        <div class="top">
-            <div class="uk-container rowr">
-                <a href="/" class="logo">
-                    <img src="~/st/r/logo.jpg" width="48" height="48" alt="لوگو فصر موبایل" />
-                </a>
-                <div class="search">
-                    <span uk-icon="search"></span>
-                    <input id="txtSearchMain" class="entry-invis" type="text" placeholder="جستجو..." aria-label="جستجو" />
-                </div>
-                <div class="cart">
-                    <span class="label">سبد خرید</span>
-                    <div class="badge">
-                        <span>12</span>
-                    </div>
-                    <button>
-                        <span uk-icon="cart-outline"></span>
-                    </button>
-                </div>
-            </div>
+    <!-- This is the off-canvas -->
+    <div id="offCanvas" uk-offcanvas="overlay: true;flip: true">
+        <div class="uk-offcanvas-bar col">
+
+            <img src="~/st/r/logo.jpg" width="92" height="92" class="uk-margin-auto" alt="" />
+
+            <ul>
+                <li>
+                    <a href="/">
+                        <span class="text-3" uk-icon="home"></span>
+                        <span>خانه</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Forum">
+                        <span class="text-3" uk-icon="chatbubbles"></span>
+                        <span>تالار گفتگو</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Contact">
+                        <span class="text-3" uk-icon="call"></span>
+                        <span>تماس با ما</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Affiliate">
+                        <span class="text-3" uk-icon="flag"></span>
+                        <span>شعب ما</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Blog">
+                        <span class="text-3" uk-icon="browsers"></span>
+                        <span>وبلاگ ها</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Gallery">
+                        <span class="text-3" uk-icon="image"></span>
+                        <span>گالری</span>
+                    </a>
+                </li>
+            </ul>
+
         </div>
+    </div>
+
+    <div class="header">
         <div class="bottom">
             <div class="uk-container rowr">
-                <nav class="rowr">
-                    <button uk-icon="grid-outline"></button>
+                <nav>
+                    <img src="~/st/r/logo.jpg" alt="logo" width="28" height="28" onclick="window.location = '/'" />
+                    <button uk-icon="menu-outline" uk-toggle="target: #offCanvas" type="button" class="uk-margin-small-right show-on-threshold"></button>
                     <a href="/">خانه</a>
                     <a href="/Forum">تالار گفتگو</a>
-                    <a href="/Home/Contact">تماس با ما</a>
+                    <a href="/Contact">تماس با ما</a>
+                    <a href="/About">درباره ما</a>
+                    <a href="/Affiliate">شعب ما</a>
                     <a href="/Blog">وبلاگ ها</a>
-                    <a href="/Home/About">شعب ما</a>
                     <a href="/Gallery">گالری</a>
                 </nav>
                 <a href="" class="profile">
                     <span>پروفایل</span>
                     <span uk-icon="person-circle-outline"></span>
                 </a>
-
-                @*<a href="" class="enter">
-                                ورود / ثبت نام
-                    </a>*@
-
+                <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
+                    <div class="mat-card">
+                        <ul class="col g-2">
+                            <li>
+                                <a class="link-text" href="">پروفایل</a>
+                            </li>
+                            <li>
+                                <a class="link-text" href="">سبد خرید</a>
+                            </li>
+                            <li>
+                                <a class="link-text" href="/LogOut">خروج</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div role="none" class="space-nav-header gap-b"></div>
+
+    <button uk-toggle="target: #fnav" type="button" class="floating-navigation">
+        <span uk-icon="ratio:1.1;icon:menu"></span>
+    </button>
+
+    <!-- This is the modal -->
+    <div id="fnav" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <partial name="_UserNavigation" />
+        </div>
+    </div>
 
     <!-- Single means the layout has only one Column -->
     @if (ViewData["Single"] == null)

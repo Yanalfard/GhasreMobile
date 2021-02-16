@@ -12,7 +12,7 @@
 
 @section Aside{
 
-    <div class="mat-card col">
+    <div swap="filter" class="mat-card col">
         <h4 class="uk-margin-bottom">
             فیلتر ها
         </h4>
@@ -24,8 +24,9 @@
         </div>
 
         <div class="fg-col">
-            <div class="fg-label">نام محصول</div>
+            <div class="fg-label">برند محصول</div>
             <select class="entry">
+                <option>برند...</option>
                 <option>سامسونگ</option>
                 <option>اپل</option>
                 <option>شیائومی</option>
@@ -64,6 +65,8 @@
     <div swap="hello"><partial name="_Ad" /></div>
 
 }
+
+<div id="filter"></div>
 
 <div class="search-grid form">
     <div class="form-header">

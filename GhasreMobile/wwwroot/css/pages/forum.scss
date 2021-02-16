@@ -48,6 +48,7 @@
         background-color: #FCFCFC;
         border-left: 1px solid $mat-border-color;
         @include column;
+        margin-top: 0;
 
         .col {
             padding: 4px 0;
@@ -72,5 +73,47 @@
 .threads {
     .forum-block {
         margin-bottom: 12px;
+    }
+}
+
+@media only screen and (max-width: 564px) {
+    .forum-block {
+        grid-template-columns: auto 34px;
+
+        .content {
+
+            h5 {
+                font-size: 14px;
+            }
+
+            .rowr {
+                span {
+                    font-size: 11px;
+                }
+            }
+
+            .forum-body {
+                margin-top: 6px;
+
+                p {
+                    font-size: 11px;
+                }
+            }
+
+            .action {
+                @include row;
+                grid-column-gap: 3px;
+
+                span {
+                    color: $Text-2;
+                }
+            }
+        }
+    }
+
+    .threads {
+        .forum-block {
+            margin-bottom: 12px;
+        }
     }
 }

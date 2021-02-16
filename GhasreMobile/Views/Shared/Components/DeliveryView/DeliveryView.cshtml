@@ -1,10 +1,10 @@
 ﻿@model DeliveryVm
-<form id="ajaxresult" class="mat-card uk-margin-remove-top" asp-action="Delivery" asp-controller="Home" method="post" asp-area=""
+<form id="ajaxresultDelivery" class="mat-card uk-margin-remove-top" asp-action="Delivery" asp-controller="Home" method="post" asp-area=""
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
       data-ajax-complete="endDelivery()"
-      data-ajax-update="#ajaxresult">
+      data-ajax-update="#ajaxresultDelivery">
     <h3>درخواست خدمات درب منزل</h3>
     <p class="text-3">برای درحواست خدمات تعمیراتی و گارانتی درب منزل این فرم را پر کنید </p>
     <div class="col">
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="rowr gap-t">
-        <button class="btn btn-primary" onclick="LoadingRun('#ajaxresult')">فرستادن درخواست</button>
+        <button class="btn btn-primary" onclick="LoadingRun('#ajaxresultDelivery')">فرستادن درخواست</button>
     </div>
 </form>
 
