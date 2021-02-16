@@ -30,9 +30,21 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public string Create(TblProduct product, List<string> Color)
+        public IActionResult Create(TblProduct product,List<string> Property)
         {
-            return "1";
+            if (ModelState.IsValid)
+            {
+
+            }
+            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+            ViewBag.Brands = _core.Brand.Get();
+            return View(product);
+        }
+
+
+        public IActionResult ProperyList()
+        {
+            return ViewComponent("ProperyListAdmin");
         }
 
         public IActionResult Stock()

@@ -23,22 +23,28 @@ namespace DataLayer.Models
 
         [Key]
         public int ProductId { get; set; }
-        [Required]
-        [StringLength(256)]
+        [Required(ErrorMessage = "نام محصول را وارد کنید")]
+        [MaxLength(100, ErrorMessage = "نام محصول را معتبر وارد کنید")]
+        [MinLength(3, ErrorMessage = "نام محصول را معتبر وارد کنید")]
         public string Name { get; set; }
-        [Required]
-        [StringLength(500)]
+        [Required(ErrorMessage = "تصویر محصول را وارد کنید")]
         public string MainImage { get; set; }
-        public long PriceBeforeDiscount { get; set; }
+        [Required(ErrorMessage = "لطفا قیمت محصول را وارد کنید")]
+        public long? PriceBeforeDiscount { get; set; }
+        [Required(ErrorMessage = "لطفا توضیحات کوتاه محصول را وارد کنید")]
+        [MaxLength(600, ErrorMessage = "نهایتا 600 کارکتر وارد کنید")]
         public string DescriptionShortHtml { get; set; }
+        [Required(ErrorMessage = "لطفا توضیحات کامل محصول را وارد کنید")]
         public string DescriptionLongHtml { get; set; }
+        [Required(ErrorMessage = "دسته بندی را انتخاب کنید")]
         public int? CatagoryId { get; set; }
-        public long PriceAfterDiscount { get; set; }
+        public long? PriceAfterDiscount { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DateCreated { get; set; }
-        [StringLength(500)]
+        [Required(ErrorMessage = "متن جستجو را وارد کنید")]
         public string SearchText { get; set; }
         public bool IsFractional { get; set; }
+        [Required(ErrorMessage = "برند را انتخاب کنید")]
         public int BrandId { get; set; }
         public bool IsDeleted { get; set; }
 

@@ -17,7 +17,6 @@ namespace DataLayer.Models
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
-        [Required]
         public string Description { get; set; }
 
         [InverseProperty("Property")]
