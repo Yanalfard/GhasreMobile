@@ -18,9 +18,9 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult Info(int Id)
+        public IActionResult Info()
         {
-            return ViewComponent("CommentInfoAdmin", new { Id = Id });
+            return ViewComponent("CommentInfoAdmin");
         }
 
         [HttpPost]
