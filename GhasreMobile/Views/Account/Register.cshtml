@@ -7,7 +7,11 @@
 {
     <partial name="_CaptchaScripts" />
 }
-<form asp-action="Register" asp-area="" class="form-block col">
+<form asp-action="Register" asp-area="" class="form-block col"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="LoadingEnd()">
     <partial name="_CaptchaInput" />
     <h3 class="uk-margin-medium-bottom">
         ثبت نام
@@ -32,7 +36,7 @@
 
     <div class="actions gap-t">
         <a href="/Login" class="btn btn-link">ورود</a>
-        <button class="btn btn-primary">ثبت نام</button>
+        <button class="btn btn-primary" onclick="LoadingRun()">ثبت نام</button>
     </div>
 
 </form>

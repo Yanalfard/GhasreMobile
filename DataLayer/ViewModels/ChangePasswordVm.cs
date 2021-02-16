@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataLayer.ViewModels
 {
-    public class ChangePasswordVm
+    public class ChangePasswordVm : CaptchaVm
     {
         public int Id { get; set; }
         public string Auth { get; set; }
