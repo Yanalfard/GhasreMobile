@@ -106,11 +106,6 @@
 
 @media only screen and (max-width: 480px) {
     .questions {
-        h3 {
-            font-size: 17px;
-            margin-top: 0 !important;
-        }
-
         ul {
             li {
                 @include mat-padding;
@@ -118,12 +113,12 @@
                 border-bottom: solid $mat-border-color 1px;
 
                 .uk-accordion-title {
-                    font-size: 14px !important;
+                    font-size: 17px !important;
                 }
 
                 .uk-accordion-content {
                     margin-top: 8px !important;
-                    font-size: 12px !important;
+                    font-size: 13px !important;
                 }
             }
         }
