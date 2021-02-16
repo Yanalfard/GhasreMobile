@@ -4096,10 +4096,10 @@ select.uk-form-width-xsmall {
 .uk-modal-body {
   position: relative;
   display: flow-root;
-  padding: 30px 30px;
-  -moz-border-radius: 32px 32px 32px 32px;
-  -webkit-border-radius: 32px 32px 32px 32px;
-  border-radius: 32px 32px 32px 32px; }
+  padding: 16px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px; }
 
 .uk-modal-header {
   display: flow-root;

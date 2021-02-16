@@ -4276,8 +4276,8 @@ select.uk-form-width-xsmall {
 .uk-modal-body {
     position: relative;
     display: flow-root;
-    padding: 30px 30px;
-    @include border-radius(32px,32px,32px,32px);
+    padding: 16px;
+    @include border-def-radius;
 }
 
 .uk-modal-header {
