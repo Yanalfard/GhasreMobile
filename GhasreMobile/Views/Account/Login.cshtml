@@ -1,30 +1,54 @@
-﻿
+﻿@model LoginVm
 @{
     ViewData["Title"] = "Index";
     ViewData["Image"] = "/st/r/Entry_1.png";
     Layout = "_AccountLayout.cshtml";
 }
 
-<div class="form-block col">
+@section Scripts
+{
+    <partial name="_CaptchaScripts" />
+}
 
+<form asp-action="Login" method="post" asp-area="" class="form-block col">
+    <partial name="_CaptchaInput" />
+    @if (Context.Request.Query["Active"].ToString() == "true")
+    {
+        <div class="uk-alert uk-alert-success">
+            <p class="help-block">حساب کاربری شما فعال شد می توانید وارد حساب خود شوید</p>
+        </div>
+    }
+    @if (Context.Request.Query["ChangePassword"].ToString() == "true")
+    {
+        <div class="uk-alert uk-alert-success">
+            <p class="help-block">رمز شما تغیر یافت می توانید وارد حساب خود شوید</p>
+        </div>
+    }
     <h3 class="uk-margin-medium-bottom">
         ورود
     </h3>
 
     <div class="fg-col">
         <label class="fg-label">شماره تلفن</label>
-        <input class="entry" type="tel" value="" />
-        <span class="text-danger"></span>
+        <input class="entry" type="tel" asp-for="TellNo" />
+        <span class="text-danger" asp-validation-for="TellNo"></span>
     </div>
 
     <div class="fg-col">
         <label class="fg-label">گذر واژه</label>
-        <input class="entry" type="tel" value="" />
-        <span class="text-danger"></span>
+        <input class="entry" type="password" asp-for="Password" />
+        <span class="text-danger" asp-validation-for="Password"></span>
     </div>
 
     <div class="fg-col">
-        <a href="/Account/ForgotPassword">فراموشی رمز عبور</a>
+        <label class="row uk-margin-auto-left">
+            مرا بخاطر بسپار
+            <input type="checkbox" asp-for="RememberMe" class="uk-checkbox" />
+        </label>
+    </div>
+
+    <div class="fg-col">
+        <a href="/ForgotPassword">رمز عبور خود را فراموش کرده اید؟</a>
     </div>
 
     <div class="actions gap-t">
@@ -33,4 +57,4 @@
 
     </div>
 
-</div>
+</form>

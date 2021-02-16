@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataLayer.ViewModels
 {
-    public class LoginVm: CaptchaVm
+    public class ForgotPasswordVm : CaptchaVm
     {
         [Display(Name = "شماره تلفن")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -15,12 +15,5 @@ namespace DataLayer.ViewModels
         [RegularExpression("[0]{1}[9]{1}[0-9]{9}", ErrorMessage = "شماره تلفن وارد شده معتبر نمی باشد")]
         [StringLength(11)]
         public string TellNo { get; set; }
-        [Display(Name = "کد واژه")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [MinLength(4, ErrorMessage = "تعداد کاراکتر کم است")]
-        [StringLength(25)]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-        public bool RememberMe { get; set; }
     }
 }

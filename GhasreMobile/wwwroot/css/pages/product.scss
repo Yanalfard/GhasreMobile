@@ -185,12 +185,16 @@
 @media only screen and (max-device-width : 420px) {
     .pr {
         &-title {
-            background-color: #F5F6F7;
-            @include mat-padding;
+            background-color: transparent;
+            padding: 0;
             grid-area: title;
 
             h1 {
                 font-size: 16px;
+            }
+
+            span {
+                font-size: 13px;
             }
         }
 
@@ -257,6 +261,15 @@
                     }
                 }
             }
+
+            .cart {
+                margin-left: 0;
+
+                .button {
+                    width: 100%;
+                    white-space: nowrap;
+                }
+            }
         }
 
         &-specs {
@@ -266,7 +279,6 @@
         }
     }
 }
-
 
 .cart {
     @include row-reverse;
@@ -338,13 +350,25 @@
 
     a {
         color: $Text-2;
-        padding: 12px;
+        @include mat-padding;
         border-left: 1px #ddd solid;
         @include trans(.2s);
     }
 
     a:hover {
         color: $primary;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .section-nav {
+
+        a {
+            font-size: 12px;
+            text-align: center;
+            width: 100%;
+            white-space: nowrap;
+        }
     }
 }
 
@@ -373,6 +397,29 @@
         }
     }
 }
+
+@media only screen and (max-width: 400px) {
+    .details {
+
+        table {
+            margin: 0;
+            margin-top: 8px;
+            border-spacing: 6px;
+
+            tbody {
+                tr {
+                    td {
+                        padding: 6px;
+                        @include border-radius(3px,3px,3px,3px);
+                        font-size: 12px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//-
 
 @media only screen and (min-width: 1200px) {
     .product-slider {
@@ -414,6 +461,15 @@
             li {
                 width: 50%;
             }
+        }
+    }
+}
+
+@media only screen and (max-width: 385px) {
+    .star-cb-group {
+        label {
+            width: 24px !important;
+            font-size: 28px !important;
         }
     }
 }
