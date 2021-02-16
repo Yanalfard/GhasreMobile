@@ -13,5 +13,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public IActionResult Create()
+        {
+            return ViewComponent("CreateBrandAdmin");
+        }
+
+        public IActionResult Edit()
+        {
+            return ViewComponent("EditBrandAdmin");
+        }
     }
 }
