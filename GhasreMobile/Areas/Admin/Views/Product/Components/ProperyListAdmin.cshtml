@@ -1,0 +1,18 @@
+﻿@model IEnumerable<DataLayer.Models.TblProperty>
+@if (Model.Count() == 0)
+{
+    <div class="form-inline col-md-7">
+        <span>ویژگی وجود ندارد</span>
+    </div>
+}
+else
+{
+    foreach (var item in Model)
+    {
+        <div id="Property" class="form-inline col-md-7">
+            <label class="ml-5">@item.Name:</label>
+            <input id="PropetryName" type="hidden" />
+            <input id="PropertyValue" class="form-control form-control-sm">
+        </div>
+    }
+}

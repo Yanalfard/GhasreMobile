@@ -36,13 +36,27 @@
         </div>
     </main>
 
-
+    <link href="~/css/Load.css" rel="stylesheet" />
+    <!-- #Loadinh -->
+    <div id="overlay">
+        <div class="cv-spinner">
+            <span class="spinner"></span>
+        </div>
+    </div>
     <!--Pwa-->
     @*<script src="~/app.js"></script>*@
 
+    <script src="~/Jquery/jquery-3.4.1.min.js"></script>
     <script src="~/js/uikit.min.js"></script>
     <script src="~/js/uikit-icons.js"></script>
-
+    <script>
+        function LoadingRun() {
+            $("#overlay").fadeIn(300);
+        }
+        function LoadingEnd() {
+            $("#overlay").fadeOut(300);
+        }
+    </script>
     @RenderSection("Scripts", false)
 
 </body>

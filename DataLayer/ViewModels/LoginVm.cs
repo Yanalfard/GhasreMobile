@@ -17,7 +17,6 @@ namespace DataLayer.ViewModels
         public string TellNo { get; set; }
         [Display(Name = "کد واژه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [MinLength(4, ErrorMessage = "تعداد کاراکتر کم است")]
         [StringLength(25)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
