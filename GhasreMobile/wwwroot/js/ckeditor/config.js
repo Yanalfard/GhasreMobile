@@ -10,7 +10,7 @@ CKEDITOR.editorConfig = function( config ) {
     config.contentsLangDirection = 'rtl';
     config.language = 'fa';
     config.skin = 'moono-dark';
-    config.filebrowserImageUploadUrl = '/UploadImage/UploadImages';
+    config.filebrowserImageUploadUrl = '/Admin/Upload/UploadCkEditor';
 
  //   config.toolbar =
  //[
