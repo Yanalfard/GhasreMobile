@@ -12,6 +12,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
     [Area("Admin")]
     public class UploadController : Controller
     {
+
+        public async Task<IActionResult> xxx(List<IFormFile> xx)
+        {
+            return View();
+        }
+
         //[HttpPost]
         //public async Task<IActionResult> UploadCkEditorAsync(IFormFile upload, string CKEditorFuncNum, string CKEditor, string langCode)
         //{
@@ -55,4 +61,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
         //    }
         //}
     }
+
+
 }

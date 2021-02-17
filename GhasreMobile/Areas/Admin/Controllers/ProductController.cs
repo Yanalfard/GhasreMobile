@@ -30,15 +30,31 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(TblProduct product,List<string> Property)
+        public string Create(TblProduct product)
         {
             if (ModelState.IsValid)
             {
+                if (product.CatagoryId == 0)
+                {
+                    ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                    ViewBag.Brands = _core.Brand.Get();
+                    return "لطفا دسته بندی را وارد کنید";
 
+                }
+                else
+                {
+                    if (product.BrandId == 0)
+                    {
+                        ModelState.AddModelError("BrandId", "لطفا دسته بندی را وارد کنید");
+                        ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                        ViewBag.Brands = _core.Brand.Get();
+                        return "لطفا دسته بندی را وارد کنید";
+                    }
+                }
             }
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
             ViewBag.Brands = _core.Brand.Get();
-            return View(product);
+            return "لطفا دسته بندی را وارد کنید";
         }
 
 
