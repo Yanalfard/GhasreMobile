@@ -11,9 +11,20 @@ namespace GhasreMobile.ViewComponents.Admin.Catagory
     public class CreateCatagoryAdmin : ViewComponent
     {
         Core _core = new Core();
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(int? Id)
         {
-            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Brand/Components/Edit.cshtml"));
+            if (Id == null)
+            {
+                return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Catagory/Components/Create.cshtml"));
+            }
+            else
+            {
+                TblCatagory catagory = _core.Catagory.GetById(Id);
+                ViewBag.ParentId = catagory.CatagoryId;
+                ViewBag.Name = catagory.Name;
+                return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Catagory/Components/Create.cshtml"));
+
+            }
         }
     }
 }

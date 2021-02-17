@@ -32,11 +32,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public string Create(TblProduct product,List<string> Keyword,List<IFormFile> Gallery,List<CreatePropertyVm> Properties)
+        public string Create(TblProduct product, List<string> Keyword, List<IFormFile> Gallery, List<CreatePropertyVm> Properties, List<string> Colors)
         {
             if (ModelState.IsValid)
             {
-                
+
             }
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
             ViewBag.Brands = _core.Brand.Get();

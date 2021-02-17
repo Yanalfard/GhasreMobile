@@ -12,8 +12,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
     [Area("Admin")]
     public class UploadController : Controller
     {
-
-        public async Task<IActionResult> xxx(List<IFormFile> xx)
+        [HttpPost]
+        public async Task<IActionResult> uploadgallery(List<IFormFile> files)
         {
             return View();
         }
