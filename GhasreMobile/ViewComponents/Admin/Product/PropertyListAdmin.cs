@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace GhasreMobile.ViewComponents.Admin.Product
 {
-    public class ProperyListAdmin:ViewComponent
+    public class PropertyListAdmin:ViewComponent
     {
         Core _core = new Core();
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Product/Components/ProperyListAdmin.cshtml",_core.Property.Get()));
+            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Product/Components/PropertyListAdmin.cshtml",_core.Property.Get()));
         }
     }
 }
