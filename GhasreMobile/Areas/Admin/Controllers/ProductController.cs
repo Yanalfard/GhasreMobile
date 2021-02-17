@@ -32,7 +32,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TblProduct product, IFormFile MainImage, List<string> Keywords, List<string> Colors, List<int> ColorsCounts, List<int?> PropertyId, List<string> Value, List<IFormFile> GalleryFile)
+        public async Task<IActionResult> Create(AdminProductVm productVm,IFormFile MainImage,List<IFormFile> GalleryFile)
         {
             if (ModelState.IsValid)
             {
@@ -40,7 +40,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
             ViewBag.Brands = _core.Brand.Get();
-            return await Task.FromResult(View(product));
+            return await Task.FromResult(View(productVm));
         }
 
 

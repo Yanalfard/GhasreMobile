@@ -1,4 +1,4 @@
-﻿@model DataLayer.Models.TblProduct
+﻿@model DataLayer.ViewModels.AdminProductVm
 @{
     ViewData["Title"] = "افزودن محصول";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -40,12 +40,12 @@
                         </div>
                     </li>
                 </ul>
-                <input type="hidden" asp-for="CatagoryId" />
-                <span id="CatagoryIdErorr" asp-validation-for="CatagoryId" class="text-danger"></span>
+                <input type="hidden" asp-for="product.CatagoryId" />
+                <span id="CatagoryIdErorr" asp-validation-for="product.CatagoryId" class="text-danger"></span>
                 <hr />
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <select asp-for="BrandId" class="form-control form-control-sm">
+                        <select asp-for="product.BrandId" class="form-control form-control-sm">
                             @{
                                 IEnumerable<DataLayer.Models.TblBrand> Brands = ViewBag.Brands;
                             }
@@ -55,47 +55,47 @@
                                 <option value="@item.BrandId">@item.Name</option>
                             }
                         </select>
-                        <input type="hidden" asp-for="BrandId" />
-                        <span id="BrandIdErorr" asp-validation-for="BrandId" class="text-danger"></span>
+                        <input type="hidden" asp-for="product.BrandId" />
+                        <span id="BrandIdErorr" asp-validation-for="product.BrandId" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-row mt-3">
                     <div class="form-group col-md-3">
                         <label>نام محصول</label>
-                        <input asp-for="Name" class="form-control form-control-sm" placeholder="مثال : شارژر">
-                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <input asp-for="product.Name" class="form-control form-control-sm" placeholder="مثال : شارژر">
+                        <span asp-validation-for="product.Name" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-2">
                         <label>قیمت</label>
-                        <input asp-for="PriceBeforeDiscount" class="form-control form-control-sm" placeholder="مثال : 80000 تومان">
-                        <span asp-validation-for="PriceBeforeDiscount" class="text-danger"></span>
+                        <input asp-for="product.PriceBeforeDiscount" class="form-control form-control-sm" placeholder="مثال : 80000 تومان">
+                        <span asp-validation-for="product.PriceBeforeDiscount" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-2">
                         <label>درصد تخفیف</label>
-                        <input asp-for="PriceAfterDiscount" maxlength="2" class="form-control form-control-sm" placeholder="مثال : 10">
-                        <span asp-validation-for="PriceAfterDiscount" class="text-danger"></span>
+                        <input asp-for="product.PriceAfterDiscount" maxlength="2" class="form-control form-control-sm" placeholder="مثال : 10">
+                        <span asp-validation-for="product.PriceAfterDiscount" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="custom-file col-md-7 mt-3">
-                    <input asp-for="MainImage" type="file" class="custom-file-input form-control form-control-sm">
+                    <input asp-for="product.MainImage" type="file" accept="image/x-png,image/gif,image/jpeg" class="custom-file-input form-control form-control-sm">
                     <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر اصلی</label>
                 </div>
-                <span id="MainImageErorr" class="text-danger" asp-validation-for="MainImage"></span>
+                <span id="MainImageErorr" class="text-danger" asp-validation-for="product.MainImage"></span>
                 <div class="form-row mt-3">
                     <div class="form-group col-md-3">
                         <label>متن جستجو</label>
-                        <input asp-for="SearchText" class="form-control form-control-sm" placeholder="مثال : ...">
-                        <span class="text-danger" asp-validation-for="SearchText"></span>
+                        <input asp-for="product.SearchText" class="form-control form-control-sm" placeholder="مثال : ...">
+                        <span class="text-danger" asp-validation-for="product.SearchText"></span>
                     </div>
                     <div class=" col-md-2 mt-4 pt-3 mr-3">
-                        <input asp-for="IsFractional" type="checkbox"> فروش اقساطی
+                        <input asp-for="product.IsFractional" type="checkbox"> فروش اقساطی
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <input type="text" value="" data-role="tagsinput" id="tags" class="form-control" placeholder="کلمات کلیدی">
                     </div>
-                    <span class="text-danger" asp-validation-for="TblProductKeywordRel"></span>
+                    <span class="text-danger" asp-validation-for="product.TblProductKeywordRel"></span>
                 </div>
                 <hr />
 
@@ -116,10 +116,9 @@
                     <div class="form-group col-md-2 mt-md-4 pt-2 text-white">
                         <a id="SubmitColor" class="btn btn-info btn-sm">افزودن</a>
                     </div>
-                    <span id="TblColor" asp-validation-for="TblColor" class="text-danger"></span>
+                    <span id="TblColor" asp-validation-for="product.TblColor" class="text-danger"></span>
                 </div>
                 <aside id="ColorPanel">
-
                 </aside>
                 <hr />
                 <div class="form-row mt-3">
@@ -138,26 +137,26 @@
                 <hr />
                 <div class="mt-3">
                     <label class="ml-5">توضیحات کوتاه :</label>
-                    <textarea id="DescriptionShortHtml" asp-for="DescriptionShortHtml"></textarea>
-                    <span class="text-danger" asp-validation-for="DescriptionShortHtml"></span>
+                    <textarea id="DescriptionShortHtml" asp-for="product.DescriptionShortHtml"></textarea>
+                    <span class="text-danger" asp-validation-for="product.DescriptionShortHtml"></span>
                 </div>
                 <div class="mt-3">
                     <label class="ml-5">توضیحات کامل :</label>
-                    <textarea id="DescriptionLongHtml" asp-for="DescriptionLongHtml" style="max-height:300px !important;"></textarea>
-                    <span class="text-danger" asp-validation-for="DescriptionLongHtml"></span>
+                    <textarea id="DescriptionLongHtml" asp-for="product.DescriptionLongHtml" style="max-height:300px !important;"></textarea>
+                    <span class="text-danger" asp-validation-for="product.DescriptionLongHtml"></span>
                 </div>
                 <hr />
                 <label class="mt-3 uk-text-bold">افزودن عکس به گالری تصاویر</label>
-                &nbsp;<span onclick="SetNewInputGallery()" class="text-success"uk-icon="add-circle-outline"></span>
+                &nbsp;<span onclick="SetNewInputGallery()" class="text-success" uk-icon="add-circle-outline"></span>
                 &nbsp;<span onclick="RemoveInputGallery()" class="text-danger" uk-icon="remove-circle-outline"></span>
 
-                <ol id="GalleryPanel">
-
-                </ol>
+                <div id="GalleryPanel" class="h-50">
+                </div>
 
             </div>
             <div class="card-footer bg-white">
                 <button type="submit" class="btn btn-success btn-sm text-white pull-right ml-4">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+                <span class="text-danger"></span>
             </div>
         </form>
     </div>
@@ -176,13 +175,13 @@
     <script>
 
         function SetNewInputGallery() {
-            $("#GalleryPanel").append("<li><input type='file' name='GalleryFile'/></i>");
+            $("#GalleryPanel").append("<div><input type='file' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/></div>");
         }
 
         function RemoveInputGallery() {
-            $("#GalleryPanel li").last().remove();
+            $("#GalleryPanel div").last().remove();
         }
-      
+
         $(function () {
             $('#DescriptionShortHtml').ckeditor();
             $('#DescriptionLongHtml').ckeditor();
@@ -193,7 +192,7 @@
             $(".Cat").css('font-weight', 'normal');
             $("#Cat-" + Id).css('color', '#3E9731');
             $("#Cat-" + Id).css('font-weight', 'bold');
-            $("#CatagoryId").val(Id);
+            $("#product_CatagoryId").val(Id);
         };
 
         $("#SubmitColor").click(function () {
@@ -237,5 +236,6 @@
                 });
             }
         }
+
     </script>
 }
