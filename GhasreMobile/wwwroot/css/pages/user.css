@@ -258,3 +258,217 @@ backdrop-filter: saturate(80%);
       font-size: 16px;
       margin: auto 0;
       margin-right: 5px; }
+
+.cart {
+  display: flex;
+  flex-direction: column; }
+  .cart table {
+    border-spacing: 12px; }
+    .cart table tbody .img {
+      width: 72px;
+      height: 72px; }
+      .cart table tbody .img a img {
+        width: 72px;
+        height: 72px; }
+    .cart table tbody .name h5 {
+      font-size: 14px;
+      color: #333;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      /* number of lines to show */
+      -webkit-box-orient: vertical; }
+    .cart table tbody .name a {
+      font-size: 13px;
+      color: #666;
+      margin-top: 6px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      /* number of lines to show */
+      -webkit-box-orient: vertical; }
+    .cart table tbody .counter {
+      display: flex;
+      flex-direction: column;
+      background-color: #f5f5f5;
+      margin-left: auto;
+      width: 28px;
+      overflow: hidden;
+      -moz-border-radius: 6px 6px 6px 6px;
+      -webkit-border-radius: 6px 6px 6px 6px;
+      border-radius: 6px 6px 6px 6px; }
+      .cart table tbody .counter button {
+        outline: none;
+        border: 0;
+        height: 22px !important;
+        min-height: 22px !important;
+        color: #666;
+        font-size: 12px;
+        -moz-transition: all ease 0.2s;
+        -o-transition: all ease 0.2s;
+        -webkit-transition: all ease 0.2s;
+        transition: all ease 0.2s; }
+      .cart table tbody .counter button:hover {
+        background-color: #e8e8e8;
+        color: #333; }
+      .cart table tbody .counter label {
+        text-align: center;
+        font-size: 16px;
+        border-top: #e3e3e3 solid 1px;
+        border-bottom: #e3e3e3 solid 1px; }
+    .cart table tbody .price label:first-child {
+      color: #FF5A64;
+      font-size: 16px;
+      text-decoration: line-through; }
+    .cart table tbody .price label:last-child {
+      color: #666;
+      font-size: 20px; }
+  .cart .finalize {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 12px; }
+    .cart .finalize .price {
+      display: flex;
+      flex-direction: row-reverse;
+      margin-right: auto; }
+      .cart .finalize .price h3 {
+        color: #52C41A;
+        margin: 0;
+        font-size: 24px; }
+      .cart .finalize .price span {
+        color: #52C41A;
+        font-size: 11px;
+        margin-top: auto;
+        margin-right: 5px;
+        margin-bottom: 7px; }
+
+@media only screen and (max-width: 764px) {
+  .cart thead {
+    margin-bottom: 8px; }
+    .cart thead tr th {
+      font-size: 10px;
+      color: #333; }
+  .cart table {
+    border-spacing: 8px; }
+    .cart table tbody .img {
+      width: 52px;
+      height: 52px; }
+      .cart table tbody .img a img {
+        width: 52px;
+        height: 52px;
+        -o-object-fit: cover;
+        object-fit: cover;
+        -o-object-position: center;
+        object-position: center; }
+    .cart table tbody .name h5 {
+      font-size: 11px; }
+    .cart table tbody .name a {
+      font-size: 10px;
+      color: #666;
+      margin-top: 6px; }
+    .cart table tbody .counter {
+      width: 24px; }
+      .cart table tbody .counter button {
+        height: 16px !important;
+        min-height: 16px !important;
+        -moz-border-radius: 3px 3px 3px 3px;
+        -webkit-border-radius: 3px 3px 3px 3px;
+        border-radius: 3px 3px 3px 3px; }
+      .cart table tbody .counter label {
+        font-size: 12px; }
+    .cart table tbody .price label:first-child {
+      font-size: 11px; }
+    .cart table tbody .price label:last-child {
+      font-size: 14px; }
+  .cart .finalize {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 12px; }
+    .cart .finalize .btn {
+      height: 24px;
+      min-height: 24px;
+      font-size: 11px;
+      padding: 2px 4px; }
+    .cart .finalize .price {
+      display: flex;
+      flex-direction: row-reverse;
+      margin-right: auto; }
+      .cart .finalize .price h3 {
+        color: #52C41A;
+        margin: 0;
+        font-size: 20px; }
+      .cart .finalize .price span {
+        color: #52C41A;
+        font-size: 10px;
+        margin-top: auto;
+        margin-right: 5px;
+        margin-bottom: 6px; } }
+
+.details {
+  direction: rtl;
+  overflow-x: auto; }
+  .details table {
+    margin: 0;
+    margin-top: 8px;
+    border-spacing: 8px; }
+    .details table thead a {
+      display: flex;
+      flex-direction: column;
+      grid-gap: 5px;
+      -ms-align-content: center;
+      -webkit-align-content: center;
+      align-content: center; }
+      .details table thead a * {
+        margin: 0 auto;
+        text-align: center; }
+      .details table thead a img {
+        -o-object-fit: cover;
+        object-fit: cover;
+        -o-object-position: center;
+        object-position: center;
+        width: 72px;
+        height: 72px; }
+      .details table thead a h5 {
+        font-size: 11px; }
+      .details table thead a label:nth-last-child(2) {
+        color: #FF5A64;
+        text-decoration: line-through;
+        font-size: 12px; }
+      .details table thead a label:last-child {
+        color: #52C41A;
+        font-size: 15px; }
+    .details table tbody tr td {
+      padding: 8px;
+      -moz-border-radius: 3px 3px 3px 3px;
+      -webkit-border-radius: 3px 3px 3px 3px;
+      border-radius: 3px 3px 3px 3px;
+      min-width: 150px; }
+    .details table tbody tr td:first-child {
+      background-color: #F4F4F4;
+      font-size: 12px; }
+    .details table tbody tr td:not(:first-child) {
+      background-color: #F9F9F9;
+      font-size: 11px; }
+
+@media only screen and (max-width: 400px) {
+  .details table {
+    margin: 0;
+    margin-top: 8px;
+    border-spacing: 6px; }
+    .details table tbody tr td {
+      padding: 6px;
+      -moz-border-radius: 3px 3px 3px 3px;
+      -webkit-border-radius: 3px 3px 3px 3px;
+      border-radius: 3px 3px 3px 3px;
+      font-size: 12px !important; } }
+
+.bookmarks {
+  display: grid;
+  grid-template-rows: auto;
+  grid-gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(224px, 1fr));
+  direction: rtl; }
+  .bookmarks .product {
+    direction: ltr !important; }

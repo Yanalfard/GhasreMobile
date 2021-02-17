@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataLayer.Models;
+using DataLayer.ViewModels;
 using ReflectionIT.Mvc.Paging;
 using Services.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -30,15 +32,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(TblProduct product,List<string> Property)
+        public string Create(TblProduct product,List<string> Keyword,List<IFormFile> Gallery,List<CreatePropertyVm> Properties)
         {
             if (ModelState.IsValid)
             {
-
+                
             }
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
             ViewBag.Brands = _core.Brand.Get();
-            return View(product);
+            return "لطفا دسته بندی را وارد کنید";
         }
 
 
