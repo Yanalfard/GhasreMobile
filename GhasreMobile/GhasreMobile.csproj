@@ -40,7 +40,6 @@
     <Folder Include="wwwroot\dy\" />
     <Folder Include="wwwroot\Images\ckeditorimage\" />
     <Folder Include="wwwroot\lib\" />
-    <Folder Include="wwwroot\st\r\ads\" />
   </ItemGroup>
 
   <ItemGroup>

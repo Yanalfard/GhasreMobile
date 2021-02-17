@@ -52,125 +52,21 @@
     </div>
 
 </div>
+<!-- #Product -->
+@await Component.InvokeAsync("ProductView")
 
-<div class="product-slider uk-position-relative uk-visible-toggle" tabindex="-1" uk-slider="">
-    <div class="title">
-        <a href="#" class="dot-container">
-            <img src="~/st/v/dot.svg" alt="" class="dot" />
-            <h3>سامسونگ</h3>
-        </a>
-    </div>
+<!-- #Product -->
 
-    <ul class="uk-slider-items">
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-    </ul>
+<!-- #Blogs -->
+@await Component.InvokeAsync("BlogsView")
+<!-- #Blogs -->
 
-    <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
-
-</div>
-
-<div class="product-slider uk-position-relative uk-visible-toggle" tabindex="-1" uk-slider="">
-
-    <div class="title">
-        <a href="#" class="dot-container">
-            <img src="~/st/v/dot.svg" alt="" class="dot" />
-            <h3>شیائومی</h3>
-        </a>
-    </div>
-
-    <ul class="uk-slider-items">
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-    </ul>
-
-    <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
-
-</div>
-
-<div class="mat-card uk-position-relative uk-visible-toggle" tabindex="-1" uk-slider="">
-
-    <div class="title gap-b">
-        <a href="#" class="dot-container">
-            <img src="~/st/v/dot.svg" alt="" class="dot" />
-            <h3>وبلاگ ها</h3>
-        </a>
-    </div>
-
-    <ul class="uk-slider-items uk-child-width-1-1-at-xs uk-child-width-1-2-at-s uk-child-width-1-2-at-m uk-child-width-1-2-at-l uk-child-width-1-2-at-xl uk-grid">
-        <li>
-            <partial name="_BlogBlock" />
-        </li>
-        <li>
-            <partial name="_BlogBlock" />
-        </li>
-        <li>
-            <partial name="_BlogBlock" />
-        </li>
-        <li>
-            <partial name="_BlogBlock" />
-        </li>
-    </ul>
-
-    <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin uk-margin-top"></ul>
-
-</div>
 
 
 <div id="hello"></div>
 
-<div class="gallery-grid mat-card">
-    <div class="title">
-        <a href="#" class="dot-container">
-            <img src="~/st/v/dot.svg" alt="" class="dot" />
-            <h3>گالری</h3>
-        </a>
-    </div>
-    <div class="grid" uk-lightbox>
-        <a href="~/st/r/ads/a1.jpg" data-caption="نام"><img src="~/st/r/ads/a1.jpg" alt="" /></a>
-        <a href="~/st/r/phones/p1.jpg" data-caption="نام"><img src="~/st/r/phones/p1.jpg" alt="" /></a>
-        <a href="~/st/r/ads/a3.jpg" data-caption="نام"><img src="~/st/r/ads/a3.jpg" alt="" /></a>
-        <a href="~/st/r/phones/p2.jpg" data-caption="نام"><img src="~/st/r/phones/p2.jpg" alt="" /></a>
-        <a href="~/st/r/ads/a4.jpg" data-caption="نام"><img src="~/st/r/ads/a4.jpg" alt="" /></a>
-        <a href="~/st/r/ads/a6.jpg" data-caption="نام"><img src="~/st/r/ads/a6.jpg" alt="" /></a>
-    </div>
-    <div class="row">
-        <a class="btn btn-secondary uk-margin-auto" href="">بیشتر</a>
-    </div>
-</div>
-
+@await Component.InvokeAsync("GalleryView")
 @await Component.InvokeAsync("DeliveryView")
-
-
 
 <div class="questions mat-card uk-padding-remove">
     <a href="#faq" name="faq"></a>
