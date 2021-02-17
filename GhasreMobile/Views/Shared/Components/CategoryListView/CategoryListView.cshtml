@@ -1,0 +1,23 @@
+﻿@model IEnumerable<TblCatagory>
+
+@foreach (var item in Model.Where(i => i.Parent == null))
+{
+    <section>
+        <h4>
+            @item.Name
+        </h4>
+        @if (item.InverseParent.Any())
+        {
+            <ul>
+                @foreach (var j in item.InverseParent)
+                {
+                    <li>
+                        <a href="">@j.Name</a>
+                    </li>
+
+                }
+            </ul>
+        }
+
+    </section>
+}

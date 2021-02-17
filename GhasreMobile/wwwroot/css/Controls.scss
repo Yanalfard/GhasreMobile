@@ -62,7 +62,7 @@ a.btn.btn-primary:hover {
     cursor: pointer;
 }
 
-.link-text:hover {
+.link-text:hover, .link-active {
     color: $primary !important;
 }
 
@@ -711,7 +711,7 @@ $background-highlight: #eee;
     .header {
 
         .biscuit {
-            display: none;
+            display: none!important
         }
 
         .top {
@@ -1418,7 +1418,7 @@ $background-highlight: #eee;
     }
 }
 
-@media only screen and (max-width: 380px)  {
+@media only screen and (max-width: 380px) {
     .blog-block {
 
         h3 {
@@ -1482,7 +1482,6 @@ footer {
                 color: #9294B1;
             }
 
-
             .links {
             }
 
@@ -1544,8 +1543,8 @@ footer {
             .grid {
                 display: grid;
                 grid-template-columns: 1fr;
-                grid-template-rows: 1fr 1fr 1fr 1fr;
-                grid-gap: 16px;
+                grid-template-rows: auto auto auto auto;
+                grid-gap: 18px;
 
                 .intro {
                     border-left: 0;
@@ -1555,6 +1554,15 @@ footer {
                     padding-left: 0;
                     border-left: 0;
                     margin-left: 0;
+                }
+
+                .certificates {
+                    margin-bottom: 32px;
+
+                    .slideshow {
+                        max-width: 124px;
+                        max-height: 124px;
+                    }
                 }
             }
         }
@@ -1589,6 +1597,11 @@ footer {
 
 .comment-section {
 
+    h3 {
+        font-size: 20px;
+        color: $Text;
+    }
+
     ul {
         @include column;
         grid-gap: 12px;
@@ -1596,8 +1609,31 @@ footer {
 
     .comment {
         background: #F8F8F8;
-        padding: 12px;
+        @include mat-padding;
         @include border-def-radius;
+        @include column;
+
+        .head {
+            @include row-reverse;
+
+            h5 {
+                font-size: 16px;
+                color: $Text;
+            }
+
+            .date {
+                direction: rtl;
+                margin-right: auto;
+                color: $Text-3;
+                font-size: 13px;
+            }
+        }
+
+        p {
+            margin: 8px 0;
+            color: $Text-2;
+            font-size: 14px;
+        }
 
         .actions {
             @include row-reverse;
@@ -1609,6 +1645,58 @@ footer {
 
             a:hover {
                 color: $primary;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 542px) {
+
+    .comment-section {
+
+        h3 {
+            font-size: 17px;
+            color: $Text;
+        }
+
+        ul {
+            grid-gap: 10px;
+        }
+
+        .comment {
+
+            .head {
+
+                h5 {
+                    font-size: 15px;
+                    color: $Text;
+                }
+
+                .date {
+                    direction: rtl;
+                    margin-right: auto;
+                    color: $Text-3;
+                    font-size: 13px;
+                }
+            }
+
+            p {
+                margin: 8px 0;
+                color: $Text-2;
+                font-size: 13px;
+            }
+
+            .actions {
+                @include row-reverse;
+
+                a {
+                    color: $Text-4;
+                    @include trans(.2s);
+                }
+
+                a:hover {
+                    color: $primary;
+                }
             }
         }
     }

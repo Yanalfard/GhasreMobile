@@ -84,29 +84,7 @@
         </a>
 
         <!-- #region Request -->
-
-        <form class="request mat-card">
-            <h3>درخواست خدمات درب منزل</h3>
-            <p class="text-3">برای درحواست خدمات تعمیراتی و گارانتی درب منزل این فرم را پر کنید </p>
-            <div class="fg-col">
-                <label for="TelNo" class="fg-label">شماره تلفن</label>
-                <input id="TelNo" name="TelNo" type="tel" class="entry" value="" />
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col">
-                <label for="Name" class="fg-label">نام و نام خانوادگی</label>
-                <input id="Name" name="Name" type="text" class="entry" value="" />
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col">
-                <label for="Address" class="fg-label">آدرس</label>
-                <textarea id="Address" name="Address" class="entry"></textarea>
-                <span class="text-danger"></span>
-            </div>
-            <div class="rowr">
-                <button class="btn btn-primary">فرستادن درخواست</button>
-            </div>
-        </form>
+        @await Component.InvokeAsync("DeliveryInContactView")
 
         <!-- #endregion -->
 

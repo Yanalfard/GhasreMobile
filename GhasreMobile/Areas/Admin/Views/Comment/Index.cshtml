@@ -33,7 +33,7 @@
                                 <td></td>
                                 <td>
                                     <span data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
-                                        <a onclick="Information()" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
+                                        <a id="Information" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
                                     </span>
                                 </td>
                             </tr>
@@ -50,4 +50,16 @@
         </div>
     </div>
 </div>
+@section Script{
+    <script>
+
+        $("#Information").click(function () {
+            $(".modal-content").html("");
+            $.get("/Admin/Comment/Info", function (result) {
+                $(".modal-content").html(result);
+            });
+        });
+
+    </script>
+}
 
