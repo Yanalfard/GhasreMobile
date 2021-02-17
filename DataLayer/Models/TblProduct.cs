@@ -37,6 +37,7 @@ namespace DataLayer.Models
         [Required(ErrorMessage = "لطفا توضیحات کامل محصول را وارد کنید")]
         public string DescriptionLongHtml { get; set; }
         [Required(ErrorMessage = "دسته بندی را انتخاب کنید")]
+        [RegularExpression("(.*[1-9].*)|(.*[.].*[0-9].*)",ErrorMessage ="لطفا دسته بندی را وارد کنید")]
         public int? CatagoryId { get; set; }
         public long? PriceAfterDiscount { get; set; }
         [Column(TypeName = "datetime")]
