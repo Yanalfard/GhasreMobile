@@ -7,7 +7,7 @@
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
 
-        <form asp-action="Create" asp-controller="Product" asp-area="Admin" class="card flex-div border-0 main-shadow"
+        <form id="CreateProduct" class="card flex-div border-0 main-shadow"
               data-ajax="true"
               data-ajax-method="POST"
               data-ajax-mode="replace"
@@ -162,6 +162,8 @@
         </form>
     </div>
 </div>
+
+<button id="sss">sss</button>
 @section Script{
     <script src="~/js/bootstrap-tagsinput.js"></script>
     <script src="~/js/dropzone.js"></script>
@@ -174,6 +176,9 @@
     </style>
     <script>
 
+        $("#sss").click(function () {
+            
+        });
         $(function () {
             $('#DescriptionShortHtml').ckeditor();
             $('#DescriptionLongHtml').ckeditor();
@@ -191,8 +196,10 @@
             alert("2");
         }
 
+        
+
         $("#adropzone").dropzone({
-            url: "/file/post", paramName: "file", // The name that will be used to transfer the file
+            url: "/Upload/xxx", paramName: "file", // The name that will be used to transfer the file
             maxFilesize: 3, // MB
             addRemoveLinks: true,
             acceptedFiles: "image/x-png,image/gif,image/jpeg",
@@ -213,6 +220,11 @@
                 }
 
             }
+
+        });
+
+        $("#CreateProduct").submit(function (e) {
+            e.preventDefault();
         });
 
         $("#SubmitColor").click(function () {
