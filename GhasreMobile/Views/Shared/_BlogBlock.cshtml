@@ -4,13 +4,13 @@
 }
 
 <div class="blog-block col mat-card">
-    <img src="@($"/st/r/ads/a{r.Next(1,7)}.jpg")" width="200" height="160" alt="وبلاگ" />
+    <img src="~/Images/Blogs/@Model.MainImage" width="200" height="160" alt="وبلاگ" />
     <h3>@Model.Title</h3>
     <p dir="rtl">
         @Model.Description
     </p>
     <div class="row gap-t">
         <label>@Model.DateCreated</label>
-        <a href="/Blog/ViewBlog" dir="rtl">بیشتر...</a>
+        <a href="/ViewBlog/@Model.BlogId/@Model.Title.Replace(" ","-")" dir="rtl">بیشتر...</a>
     </div>
 </div>

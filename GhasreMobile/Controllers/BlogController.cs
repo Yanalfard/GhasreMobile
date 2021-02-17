@@ -14,7 +14,7 @@ namespace GhasreMobile.Controllers
         {
             return View();
         }
-        [Route("ViewBlog/{title}")]
+        [Route("ViewBlog/{id}/{title}")]
         public async Task<IActionResult> ViewBlog(int id, string title)
         {
             return await Task.FromResult(View(db.Blog.GetById(id)));
