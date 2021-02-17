@@ -46,7 +46,7 @@
                     </li>
                 </ul>
                 <input type="hidden" asp-for="CatagoryId" />
-                <span asp-validation-for="CatagoryId" class="text-danger"></span>
+                <span id="CatagoryIdErorr" asp-validation-for="CatagoryId" class="text-danger"></span>
                 <hr />
                 <div class="form-row">
                     <div class="form-group col-md-3">
@@ -61,7 +61,7 @@
                             }
                         </select>
                         <input type="hidden" asp-for="BrandId" />
-                        <span asp-validation-for="BrandId" class="text-danger"></span>
+                        <span id="BrandIdErorr" asp-validation-for="BrandId" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-row mt-3">
@@ -176,9 +176,6 @@
     </style>
     <script>
 
-        $("#sss").click(function () {
-            
-        });
         $(function () {
             $('#DescriptionShortHtml').ckeditor();
             $('#DescriptionLongHtml').ckeditor();
@@ -191,12 +188,6 @@
             $("#Cat-" + Id).css('font-weight', 'bold');
             $("#CatagoryId").val(Id);
         };
-
-        function EndCatagoryCreate() {
-            alert("2");
-        }
-
-        
 
         $("#adropzone").dropzone({
             url: "/Upload/xxx", paramName: "file", // The name that will be used to transfer the file
@@ -225,6 +216,31 @@
 
         $("#CreateProduct").submit(function (e) {
             e.preventDefault();
+            if ($("#CatagoryId").val() == null || $("#CatagoryId").val() == "") {
+                $("#CatagoryIdErorr").html("لطفا دسته بندی را وارد کنید");
+                window.location.href = "#CatagoryId";
+            } else {
+                $("#CatagoryIdErorr").html("");
+                if ($("#BrandId option:selected").val() == 0) {
+                    $("#BrandIdErorr").html("لطفا برند محصول را انتخاب کنید");
+                    window.location.href = "#BrandId";
+                } else {
+                    $("#BrandIdErorr").html("");
+
+                    //Data
+                    var Form = $(this).serializeArray();
+                    //var Keyword = [];
+                    //var MainImage ="";
+                    //var Gallery = "";
+                    //var Properties = "";
+
+                    $.post("/Admin/Product/Create?product=" + Form + "&Keyword=" + Keyword + "&Gallery=" + Gallery + "&Properties=" + Properties, function (result) {
+
+                    });
+
+
+                }
+            }
         });
 
         $("#SubmitColor").click(function () {

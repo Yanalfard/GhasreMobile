@@ -18,7 +18,7 @@ namespace GhasreMobile.Controllers
             return View();
         }
 
-        [Route("/Contact")]
+        [Route("Contact")]
         public IActionResult Contact()
         {
             return View();
@@ -36,6 +36,7 @@ namespace GhasreMobile.Controllers
         }
 
         [HttpPost]
+        [Route("Delivery")]
         public async Task<IActionResult> Delivery(DeliveryVm delivery)
         {
             try
@@ -51,14 +52,15 @@ namespace GhasreMobile.Controllers
                     addDelivery.IsAccepted = false;
                     db.Delivery.Add(addDelivery);
                     db.Delivery.Save();
-                    return await Task.FromResult(View(delivery));
+                    return await Task.FromResult(PartialView(delivery));
                 }
-                return await Task.FromResult(View(delivery));
+                return await Task.FromResult(PartialView(delivery));
             }
             catch 
             {
                 return await Task.FromResult(Redirect("ErrorPage"));
             }
         }
+
     }
 }

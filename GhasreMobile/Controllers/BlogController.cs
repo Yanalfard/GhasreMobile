@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,15 @@ namespace GhasreMobile.Controllers
 {
     public class BlogController : Controller
     {
+        private Core db = new Core();
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult ViewBlog()
+        [Route("ViewBlog/{title}")]
+        public async Task<IActionResult> ViewBlog(int id, string title)
         {
-            return View();
+            return await Task.FromResult(View(db.Blog.GetById(id)));
         }
 
     }
