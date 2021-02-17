@@ -1,15 +1,16 @@
-﻿@{
+﻿@model TblBlog
+@{
     Random r = new Random();
 }
 
 <div class="blog-block col mat-card">
-    <img src="@($"/st/r/ads/a{r.Next(1,7)}.jpg")" width="200" height="160" alt="وبلاگ" />
-    <h3>این یک وبلاگ می باشد</h3>
+    <img src="~/Images/Blogs/@Model.MainImage" width="200" height="160" alt="وبلاگ" />
+    <h3>@Model.Title</h3>
     <p dir="rtl">
-        لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل
+        @Model.Description
     </p>
     <div class="row gap-t">
-        <label>1366/04/06</label>
-        <a href="/Blog/ViewBlog" dir="rtl">بیشتر...</a>
+        <label>@Model.DateCreated</label>
+        <a href="/ViewBlog/@Model.BlogId/@Model.Title.Replace(" ","-")" dir="rtl">بیشتر...</a>
     </div>
 </div>

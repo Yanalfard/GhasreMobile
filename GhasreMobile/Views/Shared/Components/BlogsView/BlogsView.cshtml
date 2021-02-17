@@ -1,0 +1,28 @@
+﻿@model IEnumerable<TblBlog>
+@if (Model.Any())
+{
+    <div class="mat-card uk-position-relative uk-visible-toggle" tabindex="-1" uk-slider="">
+
+        <div class="title gap-b">
+            <a href="#" class="dot-container">
+                <img src="~/st/v/dot.svg" alt="" class="dot" />
+                <h3>وبلاگ ها</h3>
+            </a>
+        </div>
+
+        <ul class="uk-slider-items uk-child-width-1-1-at-xs uk-child-width-1-2-at-s uk-child-width-1-2-at-m uk-child-width-1-2-at-l uk-child-width-1-2-at-xl uk-grid">
+
+            @foreach (var item in Model)
+            {
+                <li>
+                    <partial name="_BlogBlock" model="item" />
+                </li>
+            }
+
+        </ul>
+
+        <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin uk-margin-top"></ul>
+
+    </div>
+
+}

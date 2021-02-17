@@ -89,10 +89,10 @@
                     <div class="mat-card">
                         <ul class="col g-2">
                             <li>
-                                <a class="link-text" href="">پروفایل</a>
+                                <a class="link-text" href="/User/Profile">پروفایل</a>
                             </li>
                             <li>
-                                <a class="link-text" href="">سبد خرید</a>
+                                <a class="link-text" href="/User/Cart">سبد خرید</a>
                             </li>
                             <li>
                                 <a class="link-text" href="/LogOut">خروج</a>
@@ -112,7 +112,7 @@
     <!-- This is the modal -->
     <div id="fnav" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
-            <partial name="_UserNavigation" />
+            <div id="navswapper"></div>
         </div>
     </div>
 
@@ -124,7 +124,7 @@
                 @RenderBody()
             </main>
             <aside class="m-aside">
-                <partial name="_UserNavigation" />
+                <div swap="navswapper"><partial name="_UserNavigation" /></div>
             </aside>
         </div>
     }
@@ -145,6 +145,7 @@
 
     <script src="~/js/uikit.min.js"></script>
     <script src="~/js/uikit-icons.js"></script>
+    <script src="~/js/main.js"></script>
 
     @RenderSection("Scripts", false)
 
