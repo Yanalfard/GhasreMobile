@@ -181,7 +181,6 @@ $aside-width: 142px;
     }
 }
 
-
 .wallet {
     @include border-radius(16px,16px,16px,16px);
     @include shadow-medium;
@@ -231,5 +230,313 @@ $aside-width: 142px;
             margin: auto 0;
             margin-right: 5px;
         }
+    }
+}
+
+.cart {
+    @include column;
+
+    table {
+        border-spacing: 12px;
+
+        tbody {
+
+            .img {
+                width: 72px;
+                height: 72px;
+
+                a {
+                    img {
+                        width: 72px;
+                        height: 72px;
+                    }
+                }
+            }
+
+            .name {
+
+                h5 {
+                    font-size: 14px;
+                    color: $Text;
+                    @include max-line(2);
+                }
+
+                a {
+                    font-size: 13px;
+                    color: $Text-2;
+                    margin-top: 6px;
+                    @include max-line(1);
+                }
+            }
+
+            .counter {
+                @include column;
+                background-color: #f5f5f5;
+                margin-left: auto;
+                width: 28px;
+                overflow: hidden;
+                @include border-radius(6px,6px,6px,6px);
+
+                button {
+                    outline: none;
+                    border: 0;
+                    height: 22px !important;
+                    min-height: 22px !important;
+                    color: $Text-2;
+                    font-size: 12px;
+                    @include trans(.2s);
+                }
+
+                button:hover {
+                    background-color: #e8e8e8;
+                    color: $Text;
+                }
+
+                label {
+                    text-align: center;
+                    font-size: 16px;
+                    border-top: #e3e3e3 solid 1px;
+                    border-bottom: #e3e3e3 solid 1px;
+                }
+            }
+
+            .price {
+                label:first-child {
+                    color: $danger;
+                    font-size: 16px;
+                    text-decoration: line-through;
+                }
+
+                label:last-child {
+                    color: $Text-2;
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+
+    .finalize {
+        @include row-reverse;
+        margin-top: 12px;
+
+        .price {
+            @include row-reverse;
+            margin-right: auto;
+
+            h3 {
+                color: $success;
+                margin: 0;
+                font-size: 24px;
+            }
+
+            span {
+                color: $success;
+                font-size: 11px;
+                margin-top: auto;
+                margin-right: 5px;
+                margin-bottom: 7px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 764px) {
+    .cart {
+
+        thead {
+            margin-bottom: 8px;
+
+            tr {
+                th {
+                    font-size: 10px;
+                    color: $Text;
+                }
+            }
+        }
+
+        table {
+            border-spacing: 8px;
+
+            tbody {
+
+                .img {
+                    width: 52px;
+                    height: 52px;
+
+                    a {
+                        img {
+                            width: 52px;
+                            height: 52px;
+                            @include obj;
+                        }
+                    }
+                }
+
+                .name {
+
+                    h5 {
+                        font-size: 11px;
+                    }
+
+                    a {
+                        font-size: 10px;
+                        color: $Text-2;
+                        margin-top: 6px;
+                    }
+                }
+
+                .counter {
+                    width: 24px;
+
+                    button {
+                        height: 16px !important;
+                        min-height: 16px !important;
+                        @include border-radius(3px,3px,3px,3px);
+                    }
+
+                    label {
+                        font-size: 12px;
+                    }
+                }
+
+                .price {
+                    label:first-child {
+                        font-size: 11px;
+                    }
+
+                    label:last-child {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+
+        .finalize {
+            @include row-reverse;
+            margin-top: 12px;
+
+            .btn {
+                height: 24px;
+                min-height: 24px;
+                font-size: 11px;
+                padding: 2px 4px;
+            }
+
+            .price {
+                @include row-reverse;
+                margin-right: auto;
+
+                h3 {
+                    color: $success;
+                    margin: 0;
+                    font-size: 20px;
+                }
+
+                span {
+                    color: $success;
+                    font-size: 10px;
+                    margin-top: auto;
+                    margin-right: 5px;
+                    margin-bottom: 6px;
+                }
+            }
+        }
+    }
+}
+
+.details {
+    direction: rtl;
+    overflow-x: auto;
+
+    table {
+        margin: 0;
+        margin-top: 8px;
+        border-spacing: 8px;
+
+        thead {
+            a {
+                @include column;
+                grid-gap: 5px;
+                -ms-align-content: center;
+                -webkit-align-content: center;
+                align-content: center;
+
+                * {
+                    margin: 0 auto;
+                    text-align: center;
+                }
+
+                img {
+                    @include obj;
+                    width: 72px;
+                    height: 72px;
+                }
+
+                h5 {
+                    font-size: 11px;
+                }
+
+                label:nth-last-child(2) {
+                    color: $danger;
+                    text-decoration: line-through;
+                    font-size: 12px;
+                }
+
+                label:last-child {
+                    color: $success;
+                    font-size: 15px;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    padding: 8px;
+                    @include border-radius(3px,3px,3px,3px);
+                    min-width: 150px;
+                }
+
+                td:first-child {
+                    background-color: #F4F4F4;
+                    font-size: 12px;
+                }
+
+                td:not(:first-child) {
+                    background-color: #F9F9F9;
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .details {
+
+        table {
+            margin: 0;
+            margin-top: 8px;
+            border-spacing: 6px;
+
+            tbody {
+                tr {
+                    td {
+                        padding: 6px;
+                        @include border-radius(3px,3px,3px,3px);
+                        font-size: 12px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.bookmarks {
+    @include grid-gap(224px,8px);
+    direction: rtl;
+
+    .product {
+        direction: ltr !important;
     }
 }
