@@ -10,9 +10,9 @@ namespace GhasreMobile.Controllers
     public class BlogController : Controller
     {
         private Core db = new Core();
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return await Task.FromResult(View(db.Blog.Get()));
         }
         [Route("ViewBlog/{id}/{title}")]
         public async Task<IActionResult> ViewBlog(int id, string title)

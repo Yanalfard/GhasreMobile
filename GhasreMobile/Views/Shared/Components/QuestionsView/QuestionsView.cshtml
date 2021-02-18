@@ -1,0 +1,27 @@
+﻿@model IEnumerable<TblRegularQuestion>
+@if (Model.Any())
+{
+
+    <div class="questions mat-card uk-padding-remove">
+        <a href="#faq" name="faq"></a>
+        <h3>
+            پاسخ به سوالات شما
+        </h3>
+        <hr class="uk-margin-remove" />
+        <div>
+            <ul uk-accordion class="uk-margin-remove-top">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a class="uk-accordion-title" href="#">@item.Question</a>
+                        <p class="uk-accordion-content uk-margin-top uk-margin-remove-bottom text-3">
+                            @item.Answer
+                        </p>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </div>
+
+}
