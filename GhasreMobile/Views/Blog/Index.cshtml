@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<TblBlog>
 @{
     ViewData["Title"] = "Index";
     ViewData["Single"] = true;
@@ -8,7 +8,6 @@
 @section Styles{
 
     <link href="~/css/pages/blog.min.css" rel="stylesheet" />
-
 }
 
 <nav class="breadcrumb uk-padding-remove gap-b">
@@ -17,17 +16,13 @@
 </nav>
 
 <div class="blogs-grid">
-    <partial name="_BlogBlock" />
-    <partial name="_BlogBlock" />
-    <partial name="_BlogBlock" />
-    <partial name="_BlogBlock" />
-    <partial name="_BlogBlock" />
-    <partial name="_BlogBlock" />
-    <partial name="_BlogBlock" />
-    <partial name="_BlogBlock" />
+    @foreach (var item in Model)
+    {
+        <partial name="_BlogBlock" model="item" />
+    }
 </div>
 
 <div class="uk-child-width-1-2 row gap-t gap-card">
     <partial name="_Ad">
-    <partial name="_Ad">
+        <partial name="_Ad">
 </div>
