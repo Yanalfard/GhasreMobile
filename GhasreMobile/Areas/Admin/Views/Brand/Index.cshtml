@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DataLayer.Models.TblBrand>
 @{
     ViewData["Title"] = "برند ها";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -23,14 +23,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
-                                        <a id="Edit" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
-                                    </span>
-                                </td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                            <a onclick="Edit(@item.BrandId)" id="Edit" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -38,7 +41,7 @@
 
             <div class="card-footer bg-white">
                 <nav aria-label="Page navigation example">
-                    @*  @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                      @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
                 </nav>
             </div>
         </div>
@@ -54,9 +57,9 @@
             });
         });
 
-        $("#Edit").click(function () {
+        function Edit (Id) {
             $(".modal-content").html("");
-            $.get("/Admin/Brand/Edit", function (result) {
+            $.get("/Admin/Brand/Edit/" + Id, function (result) {
                 $(".modal-content").html(result);
             });
         });

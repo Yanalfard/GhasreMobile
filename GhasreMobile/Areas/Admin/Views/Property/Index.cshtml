@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DataLayer.Models.TblProperty>
 @{
     ViewData["Title"] = "ویژگی ها";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -12,29 +12,13 @@
                     <div class="form-row">
                         <label class="uk-text-bold mt-md-1 ml-1">افزودن ویژگی:</label>
                         <div class="form-group">
-                            <input class="form-control" placeholder="مثال : حافظه داخلی">
+                            <input id="PropertyInput" class="form-control" placeholder="مثال : حافظه داخلی">
                         </div>
                         <div class="form-group col-md-2">
-                            <a href="#" class="btn btn-success btn-sm"> افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></a>
+                            <a onclick="CreateNewProperty()" class="btn btn-success btn-sm"> افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></a>
+                            <span class="text-danger" id="CreatePropertyErorr"></span>
                         </div>
                     </div>
-                    @*<div class="card-form form-row">
-            <label >افزودن ویژگی:</label>
-            <div class="form-input">
-                <div class="form-inline">
-                    <div class="form-group mx-sm-1 mb-2">
-                        <input class="form-control uk-text-small" type="text" placeholder="مثال: ابعاد">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group pb-0 mb-0 mr-md-3">
-                <a id="Create" href="#" class="btn btn-success btn-sm"> افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></a>
-            </div>
-        </div>*@
-                    @*<div class="form-group pb-0 mb-0">
-            <input />
-            <button id="Create" data-toggle="modal" data-target="#modalSave" class="btn btn-success btn-sm">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
-        </div>*@
                 </div>
             </div>
             <div id="card-table" class="card-body flex-div">
@@ -46,9 +30,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -56,7 +43,7 @@
 
             <div class="card-footer bg-white">
                 <nav aria-label="Page navigation example">
-                    @*  @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
                 </nav>
             </div>
         </div>
@@ -65,12 +52,16 @@
 @section Script{
     <script>
 
-        $("#Create").click(function () {
-            $(".modal-content").html("");
-            $.get("/Admin/Property/Create", function (result) {
-                $(".modal-content").html(result);
+        function CreateNewProperty() {
+            var PropertyInput = $("#PropertyInput").val();
+            $.post("/Admin/Property/Create?Name=" + PropertyInput, function (result) {
+                if (result == "true") {
+                    window.location.reload();
+                } else {
+                    $("#CreatePropertyErorr").html(result);
+                }
             });
-        });
+        }
 
     </script>
 }

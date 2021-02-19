@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Services.Services;
 using DataLayer.Models;
+using ReflectionIT.Mvc.Paging;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -12,9 +13,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
     public class PropertyController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index()
+        public IActionResult Index(int page=1)
         {
-            return View();
+            IEnumerable<TblProperty> properties = PagingList.Create(_core.Property.Get(), 10, page);
+            return View(properties);
         }
 
         public string Create(string Name)

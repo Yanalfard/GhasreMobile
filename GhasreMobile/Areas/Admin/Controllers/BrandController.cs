@@ -3,25 +3,55 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataLayer.Models;
+using Services.Services;
+using ReflectionIT.Mvc.Paging;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class BrandController : Controller
     {
-        public IActionResult Index()
+        Core _core = new Core();
+        public IActionResult Index(int page = 1)
         {
-            return View();
+            IEnumerable<TblBrand> brands = PagingList.Create(_core.Brand.Get(), 10, page);
+            return View(brands);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return ViewComponent("CreateBrandAdmin");
         }
 
-        public IActionResult Edit()
+        [HttpPost]
+        public IActionResult Create(TblBrand brand)
         {
-            return ViewComponent("EditBrandAdmin");
+            if (ModelState.IsValid)
+            {
+                _core.Brand.Add(brand);
+                _core.Brand.Save();
+                return Redirect("/Admin/Brand");
+            }
+            return View(brand);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int Id)
+        {
+            return ViewComponent("EditBrandAdmin", new { Id = Id });
+        }
+
+        public IActionResult Edit(TblBrand brand)
+        {
+            if (ModelState.IsValid)
+            {
+                _core.Brand.Update(brand);
+                _core.Brand.Save();
+                return Redirect("/Admin/Brand");
+            }
+            return View(brand);
         }
     }
 }

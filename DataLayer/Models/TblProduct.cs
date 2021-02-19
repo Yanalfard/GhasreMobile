@@ -27,7 +27,6 @@ namespace DataLayer.Models
         [MaxLength(100, ErrorMessage = "نام محصول را معتبر وارد کنید")]
         [MinLength(3, ErrorMessage = "نام محصول را معتبر وارد کنید")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "تصویر محصول را وارد کنید")]
         public string MainImage { get; set; }
         [Required(ErrorMessage = "لطفا قیمت محصول را وارد کنید")]
         public long? PriceBeforeDiscount { get; set; }
