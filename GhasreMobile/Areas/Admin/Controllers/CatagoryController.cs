@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using DataLayer.Models;
 using Services.Services;
 using ReflectionIT.Mvc.Paging;
+using GhasreMobile.Utilities;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [PermissionChecker("admin")]
     public class CatagoryController : Controller
     {
         Core _core = new Core();

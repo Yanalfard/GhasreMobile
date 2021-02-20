@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DataLayer.Models.TblBannerAndSlide>
 @{
     ViewData["Title"] = "اسلایدر";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -21,13 +21,22 @@
                             <tr>
                                 <th>نام</th>
                                 <th>تاریخ انقضا</th>
+                                <th>عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.ActiveTill</td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
+                                            <a onclick="RemoveSlider(@item.BannerAndSlideId)" class="text-danger" uk-icon="trash"></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -35,7 +44,7 @@
 
             <div class="card-footer bg-white">
                 <nav aria-label="Page navigation example">
-                    @*  @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                 @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
                 </nav>
             </div>
         </div>
@@ -50,6 +59,14 @@
                 $(".modal-content").html(result);
             });
         });
+
+        function RemoveSlider(Id) {
+            $.post("/Admin/Slider/RemoveSlider/" + Id, function (result) {
+                if (result == "true") {
+                    window.location.reload();
+                }
+            });
+        }
 
     </script>
 }
