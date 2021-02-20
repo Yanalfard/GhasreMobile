@@ -1,26 +1,41 @@
-﻿@{
+﻿@model TblProduct
+@{
     Random r = new Random();
+
+    var raiting = (Model.TblRate.Count > 0) ? (Model.TblRate.Sum(i => i.Rate) / Model.TblRate.Count) : 0;
 }
 
 <div class="product">
-    <div class="star-container" uk-tooltip="">
-        <div class="Stars" style="--rating: @r.Next(0,5)"></div>
+    <div class="star-container" uk-tooltip="@raiting">
+        <div class="Stars" style="--rating:  @raiting"></div>
     </div>
-    <span class="people">(2445)</span>
-    <a href="/Product" class="link-text">
-        <img src="@($"/st/r/phones/p{r.Next(1,9)}.jpg")" alt="" width="200" height="200" />
+
+    <span class="people">(@Model.TblRate.Count)</span>
+    <a href="/Product/@Model.ProductId/@Model.Name.Replace(" ","-")" class="link-text">
+        <img src="~/Images/ProductMain/@Model.MainImage" alt="" width="200" height="200" />
     </a>
     <a href="/Product" class="link-text">
         <h3 class="name" dir="rtl">
-            گوشی موبایل Iphone X دو سیمکارته 256gb پلاس 7 گیگ رم
+            @Model.Name
         </h3>
     </a>
-    <a href="/Search" class="category link-text">دسته بندی</a>
-    <span class="discount">
-        <span>4,680,000</span>
-    </span>
-    <span class="price">
-        <span class="t">تومان</span>
-        <span>3,999,000</span>
-    </span>
+    <a href="/Search" class="category link-text">@Model.Catagory.Name </a>
+    @if (Model.PriceAfterDiscount == 0)
+    {
+        <span class="price">
+            <span class="t">تومان</span>
+            <span>@Model.PriceBeforeDiscount.Value.ToString("#,0")</span>
+        </span>
+    }
+    else
+    {
+        <span class="discount">
+            <span>@Model.PriceBeforeDiscount.Value.ToString("#,0")</span>
+        </span>
+        <span class="price">
+            <span class="t">تومان</span>
+            <span>@Model.PriceAfterDiscount.Value.ToString("#,0")</span>
+        </span>
+    }
+
 </div>

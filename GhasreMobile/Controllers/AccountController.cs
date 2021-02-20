@@ -17,7 +17,7 @@ namespace GhasreMobile.Controllers
 {
     public class AccountController : Controller
     {
-        Core db = new Core();
+        private Core db = new Core();
         private readonly ICaptchaValidator _captchaValidator;
 
         public AccountController(ICaptchaValidator captchaValidator)
