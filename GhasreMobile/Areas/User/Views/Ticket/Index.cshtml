@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
+}
+
+<div class="tickets mat">
+    <div class="head">
+        <h3>
+            پشتیبانی
+        </h3>
+    </div>
+    <div class="body">
+        <ul>
+            <li>
+                <partial name="_TicketBlock" />
+            </li>
+            <li>
+                <partial name="_TicketBlock" />
+            </li>
+            <li>
+                <partial name="_TicketBlock" />
+            </li>
+            <li>
+                <partial name="_TicketBlock" />
+            </li>
+            <li>
+                <partial name="_TicketBlock" />
+            </li>
+            <li>
+                <partial name="_TicketBlock" />
+            </li>
+        </ul>
+    </div>
+    <div class="foot">
+        <textarea type="tel" class="entry" value=""></textarea>
+        <button class="send" uk-icon="send"></button>
+    </div>
+</div>
