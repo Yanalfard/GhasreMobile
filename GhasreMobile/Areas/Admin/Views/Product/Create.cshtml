@@ -3,7 +3,6 @@
     ViewData["Title"] = "افزودن محصول";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<link href="~/css/dropzone.css" rel="stylesheet" />
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
 
@@ -155,8 +154,8 @@
 
             </div>
             <div class="card-footer bg-white">
-                <span class="text-danger"></span>
-                <button type="submit" class="btn btn-success btn-sm text-white pull-right ml-4">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+                <span class="text-danger" id="SubmitErorr"></span>
+                <button id="SubmitCreateProduct" type="submit" disabled class="btn btn-success btn-sm text-white pull-right ml-4">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
             </div>
         </form>
     </div>
@@ -165,14 +164,32 @@
 
 @section Script{
     <script src="~/js/bootstrap-tagsinput.js"></script>
-    <script src="~/Validate/jquery.validate.min.js"></script>
-    <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
     <style>
         .dz-error-message {
             display: none !important;
         }
     </style>
     <script>
+
+        //Controll
+        $("#SubmitCreateProduct").click(function () {
+            $("#overlay").fadeIn(300);
+            setInterval(4000, function () {
+                $("#overlay").fadeIn(300);
+            });
+        });
+
+        $("#BrandId").change(function () {
+            var CatagoryId = $("#CatagoryId").val();
+            var BrandId = $("#BrandId option:selected").val();
+            if (CatagoryId == null || CatagoryId == "" || BrandId == 0) {
+                $("#SubmitErorr").html("دسته بندی , برند و رنگ اجباری است");
+                $("#SubmitCreateProduct").attr("disabled", "disabled");
+            } else {
+                $("#SubmitErorr").html("");
+                $("#SubmitCreateProduct").removeAttr("disabled");
+            }
+        });
 
         function SetNewInputGallery() {
             $("#GalleryPanel").append("<div><input type='file' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/></div>");
@@ -193,6 +210,15 @@
             $("#Cat-" + Id).css('color', '#3E9731');
             $("#Cat-" + Id).css('font-weight', 'bold');
             $("#CatagoryId").val(Id);
+            var CatagoryId = $("#CatagoryId").val();
+            var BrandId = $("#BrandId option:selected").val();
+            if (CatagoryId == null || CatagoryId == "" || BrandId == 0) {
+                $("#SubmitErorr").html("دسته بندی , برند و رنگ اجباری است");
+                $("#SubmitCreateProduct").attr("disabled", "disabled");
+            } else {
+                $("#SubmitErorr").html("");
+                $("#SubmitCreateProduct").removeAttr("disabled");
+            }
         };
 
         $("#SubmitColor").click(function () {

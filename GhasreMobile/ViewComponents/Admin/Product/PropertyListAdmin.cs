@@ -10,9 +10,19 @@ namespace GhasreMobile.ViewComponents.Admin.Product
     public class PropertyListAdmin:ViewComponent
     {
         Core _core = new Core();
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(int? Id)
         {
-            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Product/Components/PropertyListAdmin.cshtml",_core.Property.Get()));
+            if(Id==null || Id == 0)
+            {
+                
+                return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Product/Components/PropertyListAdmin.cshtml", _core.Property.Get()));
+            }
+            else
+            {
+                ViewBag.PropertyId = Id;
+                return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Product/Components/PropertyListAdmin.cshtml", _core.Property.Get()));
+
+            }
         }
     }
 }

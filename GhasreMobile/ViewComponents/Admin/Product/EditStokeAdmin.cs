@@ -10,9 +10,10 @@ namespace GhasreMobile.ViewComponents.Admin.Product
     public class EditStokeAdmin : ViewComponent
     {
         Core _core = new Core();
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(int Id)
         {
-            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Product/Components/Stock.cshtml"));
+            
+            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Product/Components/Stock.cshtml", _core.Color.Get(c => c.ProductId == Id)));
         }
     }
 }

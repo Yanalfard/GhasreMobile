@@ -17,10 +17,21 @@ namespace GhasreMobile.Areas.Admin.Controllers
     {
         Core _core = new Core();
         [HttpGet]
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(int page = 1, string Search = null)
         {
-            IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => !c.IsDeleted), 10, page);
-            return View(products);
+            if (string.IsNullOrEmpty(Search))
+            {
+                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => !c.IsDeleted), 10, page);
+                return View(products);
+            }
+            else
+            {
+                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => !c.IsDeleted && c.SearchText.Contains(Search)), 10, page);
+                ViewBag.Search = Search;
+                return View(products);
+
+            }
+
         }
 
         [HttpGet]
@@ -48,7 +59,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             {
                 if (MainImage == null)
                 {
-                    ModelState.AddModelError("MainImage", "تصویر اصلی محصول را وارد کنید");
+                    ModelState.AddModelError("MainImage", "تصویر الزامی میباشد . لطفا موارد را بررسی کنید");
                     ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
                     ViewBag.Brands = _core.Brand.Get();
                     return await Task.FromResult(View(product));
@@ -67,14 +78,17 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         //New Prodcut
                         TblProduct NewProduct = new TblProduct();
                         NewProduct.Name = product.Name;
-                        NewProduct.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
-                        string savePath = Path.Combine(
-                                                Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", NewProduct.MainImage
-                                            );
-
-                        using (var stream = new FileStream(savePath, FileMode.Create))
+                        if (MainImage != null)
                         {
-                            await MainImage.CopyToAsync(stream);
+                            NewProduct.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
+                            string savePath = Path.Combine(
+                                                    Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", NewProduct.MainImage
+                                                );
+
+                            using (var stream = new FileStream(savePath, FileMode.Create))
+                            {
+                                await MainImage.CopyToAsync(stream);
+                            }
                         }
                         NewProduct.PriceBeforeDiscount = product.PriceBeforeDiscount;
                         NewProduct.DescriptionShortHtml = product.DescriptionShortHtml;
@@ -102,26 +116,29 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         album.Name = NewProduct.Name;
                         _core.Album.Add(album);
                         _core.Album.Save();
-                        foreach (var item in GalleryFile)
+                        if (GalleryFile.Count() > 0)
                         {
-                            TblImage image = new TblImage();
-                            image.AlbumId = album.AlbumId;
-                            image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
-                            string savePathAlbum = Path.Combine(
-                                                Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", image.Image
-                                            );
-
-                            using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                            foreach (var item in GalleryFile)
                             {
-                                await item.CopyToAsync(stream);
+                                TblImage image = new TblImage();
+                                image.AlbumId = album.AlbumId;
+                                image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
+                                string savePathAlbum = Path.Combine(
+                                                    Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", image.Image
+                                                );
+
+                                using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                                {
+                                    await item.CopyToAsync(stream);
+                                }
+                                _core.Image.Add(image);
+                                _core.Image.Save();
+                                TblProductImageRel tblProductImageRel = new TblProductImageRel();
+                                tblProductImageRel.ImageId = image.ImageId;
+                                tblProductImageRel.ProductId = NewProduct.ProductId;
+                                _core.ProductImageRel.Add(tblProductImageRel);
+                                _core.ProductImageRel.Save();
                             }
-                            _core.Image.Add(image);
-                            _core.Image.Save();
-                            TblProductImageRel tblProductImageRel = new TblProductImageRel();
-                            tblProductImageRel.ImageId = image.ImageId;
-                            tblProductImageRel.ProductId = NewProduct.ProductId;
-                            _core.ProductImageRel.Add(tblProductImageRel);
-                            _core.ProductImageRel.Save();
                         }
 
                         if (PropertyId != null)
@@ -177,6 +194,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         return await Task.FromResult(Redirect("/Admin/Product"));
                     }
                 }
+
+
             }
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
             ViewBag.Brands = _core.Brand.Get();
@@ -188,33 +207,80 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return ViewComponent("PropertyListAdmin");
         }
 
-        public IActionResult Stock()
+        public IActionResult Stock(int id)
         {
-            return ViewComponent("EditStokeAdmin");
+            return ViewComponent("EditStokeAdmin", new { Id = id });
+        }
+
+        [HttpPost]
+        public void EditStoke(int Id, int count)
+        {
+            TblColor color = _core.Color.GetById(Id);
+            color.Count = count;
+            _core.Color.Update(color);
+            _core.Color.Save();
+        }
+
+        public void EditPrice(int Id, long Price)
+        {
+            TblProduct product = _core.Product.GetById(Id);
+            if (product.PriceAfterDiscount != 0)
+            {
+                product.PriceAfterDiscount = Price;
+            }
+            else
+            {
+                product.PriceBeforeDiscount = Price;
+            }
+            _core.Product.Update(product);
+            _core.Product.Save();
+        }
+
+        public string RemoveAlbumImage(int id)
+        {
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", _core.Image.GetById(id).Image);
+
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+
+
+            TblProductImageRel tblProductImageRel = _core.ProductImageRel.Get().Where(i => i.ImageId == id).SingleOrDefault();
+            _core.ProductImageRel.Delete(tblProductImageRel);
+            _core.Image.DeleteById(id);
+            _core.Image.Save();
+            return "true";
         }
 
         [HttpGet]
-        public IActionResult Edit(int Id)
+        public IActionResult Edit(int id)
         {
-            AdminProductVm adminProductVm = new AdminProductVm();
-            adminProductVm.product = _core.Product.GetById(Id);
-            adminProductVm.Keywords = (List<string>)_core.ProductKeywordRel.Get(pk => pk.ProductId == Id);
-            adminProductVm.ColorName = (List<string>)_core.Color.Get(c => c.ProductId == Id).OrderBy(p => p.ColorId).Select(c => c.Name);
-            adminProductVm.ColorsCounts = (List<int>)_core.Color.Get(c => c.ProductId == Id).OrderBy(p => p.ColorId).Select(c => c.Count);
-            adminProductVm.PropertyId = (List<int?>)_core.ProductPropertyRel.Get(p => p.ProductId == Id).OrderBy(p => p.PropertyId).Select(p => p.PropertyId);
-            adminProductVm.Value = (List<string>)_core.ProductPropertyRel.Get(p => p.ProductId == Id).OrderBy(p => p.PropertyId).Select(p => p.Value);
-            return View(adminProductVm);
+            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+            ViewBag.Brands = _core.Brand.Get();
+            return View(_core.Product.GetById(id));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(AdminProductVm productVm)
+        public IActionResult Edit(TblProduct product,
+                                                List<string> Keywords,
+                                                List<string> Colors,
+                                                List<string> ColorName,
+                                                List<int> ColorsCounts,
+                                                List<int?> PropertyId,
+                                                List<string> Value,
+                                                IFormFile MainImage,
+                                                List<IFormFile> GalleryFile
+            )
         {
             if (ModelState.IsValid)
             {
 
             }
-            return View(productVm);
+            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+            ViewBag.Brands = _core.Brand.Get();
+            return View(product);
         }
 
     }
