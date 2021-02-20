@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using Services.Services;
 using DataLayer.Models;
 using ReflectionIT.Mvc.Paging;
+using GhasreMobile.Utilities;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [PermissionChecker("admin")]
     public class PropertyController : Controller
     {
         Core _core = new Core();

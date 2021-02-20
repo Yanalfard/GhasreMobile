@@ -54,13 +54,18 @@
 
         function CreateNewProperty() {
             var PropertyInput = $("#PropertyInput").val();
-            $.post("/Admin/Property/Create?Name=" + PropertyInput, function (result) {
-                if (result == "true") {
-                    window.location.reload();
-                } else {
-                    $("#CreatePropertyErorr").html(result);
-                }
-            });
+            if (PropertyInput == "" || PropertyInput == null) {
+                $("#CreatePropertyErorr").html("لطفا نام ویژگی را وارد کنید");
+            } else {
+                $("#CreatePropertyErorr").html("");
+                $.post("/Admin/Property/Create?Name=" + PropertyInput, function (result) {
+                    if (result == "true") {
+                        window.location.reload();
+                    } else {
+                        $("#CreatePropertyErorr").html(result);
+                    }
+                });
+            }
         }
 
     </script>

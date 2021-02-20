@@ -9,9 +9,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [PermissionChecker("admin")]
-    public class HomeController : Controller
+    public class OrderController : Controller
     {
-        [HttpGet]
         public IActionResult Index()
         {
             return View();

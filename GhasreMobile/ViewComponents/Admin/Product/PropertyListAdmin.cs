@@ -12,7 +12,7 @@ namespace GhasreMobile.ViewComponents.Admin.Product
         Core _core = new Core();
         public async Task<IViewComponentResult> InvokeAsync(int? Id)
         {
-            if(Id==null || Id == 0)
+            if(Id == null || Id == 0)
             {
                 
                 return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Product/Components/PropertyListAdmin.cshtml", _core.Property.Get()));

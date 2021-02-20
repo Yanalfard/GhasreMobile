@@ -14,8 +14,8 @@ namespace DataLayer.Models
 
         [Key]
         public int BrandId { get; set; }
-        [Required]
-        [StringLength(150)]
+        [Required(ErrorMessage ="لطفا نام برند را وارد کنید")]
+        [StringLength(150,ErrorMessage ="لطفا نام مناسب وارد کنید")]
         public string Name { get; set; }
         [StringLength(500)]
         public string MainImage { get; set; }
