@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 namespace GhasreMobile.Areas.User.Controllers
 {
     [Area("User")]
-    public class OrderController : Controller
+    public class TicketController : Controller
     {
-        // History
         public IActionResult Index()
         {
             return View();
