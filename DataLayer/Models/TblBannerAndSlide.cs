@@ -9,14 +9,12 @@ namespace DataLayer.Models
     {
         [Key]
         public int BannerAndSlideId { get; set; }
-        [Required]
-        [StringLength(128)]
+        [Required(ErrorMessage = "نام اسلایدر الزامی میباشد")]
+        [StringLength(128, ErrorMessage = "نام اسلایدر مناسب وارد کنید")]
         public string Name { get; set; }
-        [Required]
-        [StringLength(4000)]
         public string ImageUrl { get; set; }
-        [Required]
-        [StringLength(4000)]
+        [Required(ErrorMessage = "لینک اسلایدر الزامی میباشد")]
+        [StringLength(4000, ErrorMessage = "لینک اسلایدر مناسب وارد کنید")]
         public string Link { get; set; }
         public bool IsActive { get; set; }
         [Column(TypeName = "datetime")]

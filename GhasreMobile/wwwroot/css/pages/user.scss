@@ -540,3 +540,154 @@ $aside-width: 142px;
         direction: ltr !important;
     }
 }
+
+.table {
+    border-spacing: 8px 16px;
+
+    .date {
+        font-size: 18px;
+        color: $Text-2;
+    }
+
+    tr {
+        height: 32px;
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    .table {
+        border-spacing: 6px 12px;
+
+        .date {
+            font-size: 15px;
+            color: $Text-2;
+        }
+
+        th {
+            font-size: 12px;
+        }
+
+        tr {
+            height: 42px;
+
+            td {
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+.tickets {
+    .head {
+        @include mat-padding;
+
+        h3 {
+            font-size: 18px;
+            color: $Text;
+        }
+    }
+
+    .body {
+        padding: 0;
+        background-color: #fafafa;
+        max-height: 52vh;
+        overflow-y: auto;
+        border-top: solid #e4e4e4 1px;
+        border-bottom: solid #e4e4e4 1px;
+
+        ul {
+            padding: 0;
+            margin: 0;
+
+            li {
+                .ticket-block {
+                    border-bottom: solid #e4e4e4 1px;
+                    @include mat-padding;
+
+                    .top {
+                        @include row-reverse;
+
+                        .name {
+                            margin-left: auto;
+                            text-align: right;
+                        }
+
+                        .date {
+                            text-align: left;
+                            margin-right: auto;
+                            color: $Text-3;
+                        }
+                    }
+
+                    .text {
+                        margin: 10px 0 8px 0;
+                        color: $Text-2;
+                    }
+                }
+            }
+
+            li:last-child {
+                .ticket-block {
+                    border: 0;
+                }
+            }
+        }
+    }
+
+    .foot {
+        @include mat-padding;
+        @include row;
+        grid-gap: 8px;
+
+        .entry {
+            flex: auto;
+            min-height: 28px !important;
+            height: 28px;
+        }
+
+        .send {
+            margin-bottom: auto !important;
+            border: 0;
+            background-color: $primary;
+            @include border-def-radius;
+            color: #fff;
+            cursor: pointer;
+            padding: 4px;
+            max-width: 35px;
+            height: 35px;
+            width: 35px;
+            flex: auto;
+        }
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .tickets {
+        .head {
+            h3 {
+                font-size: 16px;
+            }
+        }
+
+        .body {
+            max-height: calc(100vh - 260px);
+
+            .top {
+                .name {
+                    font-size: 12px;
+                }
+
+                .date {
+                    font-size: 11px;
+                }
+            }
+
+            p {
+                font-size: 10px;
+            }
+        }
+
+        .foot {
+        }
+    }
+}

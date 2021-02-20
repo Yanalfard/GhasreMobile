@@ -13,5 +13,10 @@ namespace GhasreMobile.Areas.User.Controllers
         {
             return View();
         }
+
+        public IActionResult Charge()
+        {
+            return View();
+        }
     }
 }

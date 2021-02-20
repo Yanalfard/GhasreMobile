@@ -9,10 +9,12 @@ using ReflectionIT.Mvc.Paging;
 using Services.Services;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using GhasreMobile.Utilities;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [PermissionChecker("admin")]
     public class ProductController : Controller
     {
         Core _core = new Core();
@@ -21,12 +23,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(Search))
             {
-                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => !c.IsDeleted), 10, page);
+                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => !c.IsDeleted), 30, page);
                 return View(products);
             }
             else
             {
-                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => !c.IsDeleted && c.SearchText.Contains(Search)), 10, page);
+                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => !c.IsDeleted && c.SearchText.Contains(Search)), 30, page);
                 ViewBag.Search = Search;
                 return View(products);
 

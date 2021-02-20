@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GhasreMobile.Utilities;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GhasreMobile.Areas.User.Controllers
+namespace GhasreMobile.Areas.Admin.Controllers
 {
-    [Area("User")]
+    [Area("Admin")]
+    [PermissionChecker("admin")]
     public class OrderController : Controller
     {
-        // History
         public IActionResult Index()
         {
             return View();

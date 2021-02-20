@@ -57,11 +57,11 @@
             });
         });
 
-        function Edit (Id) {
+        function Edit(Id) {
             $(".modal-content").html("");
             $.get("/Admin/Brand/Edit/" + Id, function (result) {
                 $(".modal-content").html(result);
             });
-        });
+        }
     </script>
 }
