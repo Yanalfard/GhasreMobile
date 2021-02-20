@@ -35,7 +35,10 @@ namespace DataLayer.Models
         public DateTime? DateCreated { get; set; }
         public int RoleId { get; set; }
         public long Balance { get; set; }
-
+        [StringLength(50)]
+        public string Name { get; set; }
+        [StringLength(200)]
+        public string MainImage { get; set; }
         [ForeignKey(nameof(RoleId))]
         [InverseProperty(nameof(TblRole.TblClient))]
         public virtual TblRole Role { get; set; }
