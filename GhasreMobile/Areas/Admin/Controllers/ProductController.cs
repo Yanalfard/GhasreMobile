@@ -103,7 +103,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         }
                         else
                         {
-                            NewProduct.PriceAfterDiscount = null;
+                            NewProduct.PriceAfterDiscount = 0;
                         }
                         NewProduct.DateCreated = DateTime.Now;
                         NewProduct.SearchText = product.SearchText;
