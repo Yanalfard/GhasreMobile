@@ -1,4 +1,4 @@
-﻿
+﻿@model TblProduct
 @{
     ViewData["Title"] = "Index";
     ViewData["Single"] = true;
@@ -6,9 +6,7 @@
 }
 
 @section Styles{
-
     <link href="~/css/pages/product.min.css" rel="stylesheet" />
-
 }
 
 <nav class="breadcrumb">
@@ -248,7 +246,7 @@
         </a>
     </div>
 
-    <ul class="uk-slider-items">
+    @*<ul class="uk-slider-items">
         <li>
             <partial name="_ProductBlock" />
         </li>
@@ -264,7 +262,7 @@
         <li>
             <partial name="_ProductBlock" />
         </li>
-    </ul>
+    </ul>*@
 
     <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
 

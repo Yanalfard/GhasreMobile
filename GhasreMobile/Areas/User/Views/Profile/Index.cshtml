@@ -1,41 +1,87 @@
-﻿
+﻿@model TblClient
 @{
     ViewData["Title"] = "Index";
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
 }
 
 <div class="mat-card">
+    @if (Context.Request.Query["ResetPass"].ToString() == "true")
+    {
+        <div class="uk-alert uk-alert-success">
+            <p class="help-block">رمز شما تغیر یافت</p>
+        </div>
+    }
     <div class="rowr">
         <div class="pfp">
-            <img src="~/st/r/Entry_2.png"
-                 width="92" height="92" alt=""
-                 id="imgPfp" />
+            @if (Model.MainImage != null)
+            {
+                <img src="~/Images/User/@Model.MainImage"
+                     width="92" height="92" alt=""
+                     id="imgPfp" />
+            }
+            else
+            {
+                <img src="~/st/r/Entry_2.png"
+                     width="92" height="92" alt=""
+                     id="imgPfp" />
+            }
+
             <label class="pfp-select" uk-icon="image">
-                <input type="file" accept="image/*" onchange="inputToImg(this, '#imgPfp');ChangeImageDb()" />
+                <input type="file" id="files" accept="image/*" onchange="inputToImg(this, '#imgPfp');" />
             </label>
         </div>
         <dl class="datalist uk-margin-small-right flex-auto">
             <dt>نام و نام خانوادگی</dt>
-            <dd>صدرا محمدی</dd>
+            <dd>@Model.Name</dd>
             <dt>شماره تلفن</dt>
-            <dd>0914 315 89 45</dd>
+            <dd>@Model.TellNo</dd>
         </dl>
     </div>
 </div>
 
 @section Scripts{
-    <script>
-        // MEHDIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-        function ChangeImageDb() {
-            // عکس طرف رو اینجا تو دیتابیس عوض کن
-        }
 
+
+    <script>
+        //showImage();
+        // MEHDIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
         function inputToImg(input, imgId) {
+            $("#overlay").fadeIn(300);
             if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = (e) => { document.querySelector(imgId).src = e.target.result; }
-                reader.readAsDataURL(input.files[0]);
+                var fileUpload = $("#files").get(0);
+                var files = fileUpload.files;
+                var data = new FormData();
+                data.append(files[0].name, files[0]);
+                $.ajax({
+                    type: "POST",
+                    url: "/User/Profile/UploadImage",
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    async: false,
+                    beforeSend: function () {
+                    },
+                    success: function (message) {
+                        if (message == "true") {
+                            UIkit.notification('عکس شما تغیر یافت');
+                            var reader = new FileReader();
+                            reader.onload = (e) => { document.querySelector(imgId).src = e.target.result; }
+                            reader.readAsDataURL(input.files[0]);
+                            //var delay = 2000;
+                            //setTimeout(function () { window.location = "/"; }, delay);
+                        }
+                        else if (message == "false") {
+                            UIkit.notification('عکس مورد نظر معتبر نیست');
+                        }
+                    },
+                    error: function () {
+                        alert("Error!");
+                    },
+                    complete: function () {
+                    }
+                });
             }
+            $("#overlay").fadeOut(300);
         }
     </script>
 }

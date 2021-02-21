@@ -162,15 +162,22 @@
                 &nbsp;<span onclick="SetNewInputGallery()" class="text-success" uk-icon="add-circle-outline"></span>
                 &nbsp;<span onclick="RemoveInputGallery()" class="text-danger" uk-icon="remove-circle-outline"></span>
 
-                <div id="GalleryPanel" class="h-50">
-                    @if (Model.TblProductImageRel != null)
-                    {
-                        foreach (var item in Model.TblProductImageRel)
-                        {
-                            <input id="Img-@item.ImageId" type="file" value="@item.Image" /><span onclick="RemoveImageGallery(@item.ImageId)" class="text-danger" uk-icon="remove-circle-outline"></span>
-                        }
-                    }
-                </div>
+                      <div id="GalleryPanel" class="h-50">
+                          @if (Model.TblProductImageRel != null)
+                          {
+                              foreach (var item in Model.TblProductImageRel)
+                              {
+
+                          <div id="Img-@item.ImageId" class="custom-file col-10 col-md-7 mt-3">
+                              <input type="file" value="@item.Image" class="custom-file-input form-control form-control-sm">
+                              <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">@item.Image.Image</label>
+                              
+                          </div><span onclick="RemoveImageGallery(@item.ImageId)" class="text-danger mr-md-2 mr-1" uk-icon="remove-circle-outline"></span>
+
+                                  @*<input id="Img-@item.ImageId" type="file" value="@item.Image" /><span onclick="RemoveImageGallery(@item.ImageId)" class="text-danger" uk-icon="remove-circle-outline"></span>*@
+                              }
+                          }
+                      </div>
 
             </div>
             <div class="card-footer bg-white">

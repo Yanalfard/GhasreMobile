@@ -14,5 +14,12 @@ namespace GhasreMobile.Areas.User.Controllers
         {
             return View();
         }
+
+        // Make order
+        public IActionResult Finalize()
+        {
+            return View();
+        }
+
     }
 }

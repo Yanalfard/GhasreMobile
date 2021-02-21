@@ -39,6 +39,7 @@
     <Folder Include="Areas\User\Models\" />
     <Folder Include="wwwroot\dy\" />
     <Folder Include="wwwroot\Images\Slider\" />
+    <Folder Include="wwwroot\Images\User\" />
     <Folder Include="wwwroot\Images\ProductAlbum\" />
     <Folder Include="wwwroot\Images\ProductMain\" />
     <Folder Include="wwwroot\lib\" />
