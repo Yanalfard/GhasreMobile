@@ -1,0 +1,55 @@
+﻿<div class="modal-header">
+    <h6 class="modal-title" id="modalCenterTitle">
+        افزودن پست
+    </h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form action="">
+    <div class="modal-body">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label>عنوان</label>
+                <input class="form-control" placeholder="مثال: پست 1">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-7">
+                <label>توضیحات </label>
+                <input class="form-control" placeholder="توضیحات پست">
+            </div>
+        </div>
+        <label class="mt-2">تصویر پست</label>
+        <br />
+        <div class="custom-file col-md-7">
+            <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" onchange="inputChanged(this)">
+            <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر</label>
+        </div>
+        <div class="form-row mt-3">
+            <div class="form-group col-md-7">
+                <label>کلمات کلیدی</label>
+                <input type="text" value="" data-role="tagsinput" id="tags" class="form-control" placeholder="کلمات کلیدی">
+            </div>
+        </div>
+        <label>متن پست </label>
+        <div>
+            <textarea id="DescriptionLongHtml" class="textarea-fix-height-300"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-end">
+        <button type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+    </div>
+</form>
+
+<script src="~/js/bootstrap-tagsinput.js"></script>
+<script>
+    function inputChanged(sender) {
+        var fileName = sender.files[0].name;
+        sender.parentElement.querySelector('.custom-file-label').innerHTML = fileName;
+    }
+
+    $(function () {
+        $('#DescriptionLongHtml').ckeditor();
+    });
+</script>

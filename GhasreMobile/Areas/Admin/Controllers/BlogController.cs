@@ -15,5 +15,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public IActionResult Create()
+        {
+            return ViewComponent("BlogCreateAdmin");
+        }
     }
 }

@@ -1801,6 +1801,11 @@ table.hot-download td {
     min-height: 90px !important;
     resize:none;
 }
+.textarea-fix-height-300 {
+    max-height: 300px !important;
+    min-height: 300px !important;
+    resize: none;
+}
 .bg-costum {
     background: #c1e5b0 !important;
 }
