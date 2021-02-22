@@ -18,23 +18,24 @@
 <div class="pr mat-card">
     <div class="pr-title col">
         <h1 class="uk-h4" dir="rtl">
-            گوشی موبایل هواوی مدل Lite p10 دو سیم کارت
+            @Model.Name
         </h1>
         <div class="rowr uk-margin-top">
             <span class="row" dir="rtl">
                 <span class="uk-margin-small-left">برند:</span>
-                <a href="">هواوی</a>
+                <a href="">@Model.Brand.Name</a>
             </span>
             <span class="row uk-margin-right" dir="rtl">
                 <span class="uk-margin-small-left">دسته:</span>
-                <a href="">موبایل</a>
+                <a href="">@Model.Catagory.Name</a>
             </span>
             <span class="row uk-margin-right" dir="rtl">
                 <span class="uk-margin-small-left">کد:</span>
-                <a href="">#4456</a>
+                <a href="">#@Model.ProductId</a>
             </span>
         </div>
     </div>
+
     <div class="pr-image">
         <div class="head">
 
@@ -44,30 +45,18 @@
                 <div class="slider">
                     <ul class="img uk-slideshow-items" uk-lightbox="animation: slide">
                         <li>
-                            <a href="~/st/r/phones/p1.jpg">
-                                <img src="~/st/r/phones/p1.jpg" alt="" uk-cover>
+                            <a href="~/Images/ProductMain/@Model.MainImage">
+                                <img src="~/Images/ProductMain/@Model.MainImage" alt="" uk-cover>
                             </a>
                         </li>
-                        <li>
-                            <a href="~/st/r/phones/p2.jpg">
-                                <img src="~/st/r/phones/p2.jpg" alt="" uk-cover>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="~/st/r/phones/p3.jpg">
-                                <img src="~/st/r/phones/p3.jpg" alt="" uk-cover>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="~/st/r/phones/p4.jpg">
-                                <img src="~/st/r/phones/p4.jpg" alt="" uk-cover>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="~/st/r/phones/p5.jpg">
-                                <img src="~/st/r/phones/p5.jpg" alt="" uk-cover>
-                            </a>
-                        </li>
+                        @foreach (var item in Model.TblProductImageRel)
+                        {
+                            <li>
+                                <a href="~/Images/ProductAlbum/@item.Image.Image">
+                                    <img src="~/Images/ProductAlbum/@item.Image.Image" alt="" uk-cover>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div class="foot">
@@ -83,49 +72,52 @@
             </div>
             <div class="thumbnav uk-margin-small-top">
                 <ul class="uk-thumbnav">
-                    <li uk-slideshow-item="0"><a href="#"><img src="~/st/r/phones/p1.jpg" alt=""></a></li>
-                    <li uk-slideshow-item="1"><a href="#"><img src="~/st/r/phones/p2.jpg" alt=""></a></li>
-                    <li uk-slideshow-item="2"><a href="#"><img src="~/st/r/phones/p3.jpg" alt=""></a></li>
-                    <li uk-slideshow-item="3"><a href="#"><img src="~/st/r/phones/p4.jpg" alt=""></a></li>
-                    <li uk-slideshow-item="4"><a href="#"><img src="~/st/r/phones/p5.jpg" alt=""></a></li>
+                    <li uk-slideshow-item="0"><a href="#"><img src="~/Images/ProductMain/@Model.MainImage" alt=""></a></li>
+                    @foreach (var item in Model.TblProductImageRel)
+                    {
+                        <li uk-slideshow-item="@(Model.TblProductImageRel.ToList().IndexOf(item)+1)"><a href="#"><img src="~/Images/ProductAlbum/@item.Image.Image" alt=""></a></li>
+                    }
                 </ul>
             </div>
         </div>
     </div>
     <div class="pr-content col">
         <div class="body">
-
+            @Html.Raw(Model.DescriptionShortHtml)
         </div>
         <div class="price">
-            <h4 class="discount">
-                4,200,000
-            </h4>
-            <h3 class="actual">
-                4,100,000
-                <span class="t">تومان</span>
-            </h3>
+
+            @if (Model.PriceAfterDiscount == 0)
+            {
+                <h3 class="actual">
+                    @Model.PriceBeforeDiscount.Value.ToString("#,0")
+                    <span class="t">تومان</span>
+                </h3>
+            }
+            else
+            {
+                <h4 class="discount">
+                    @Model.PriceBeforeDiscount.Value.ToString("#,0")
+                </h4>
+                <h3 class="actual">
+                    @Model.PriceAfterDiscount.Value.ToString("#,0")
+                    <span class="t">تومان</span>
+                </h3>
+            }
+
         </div>
         <div class="colours">
             <h4>رنگ بندی</h4>
             <ul class="grid">
-                <li>
-                    <div class="clr">
-                        <span>سفید</span>
-                        <strong style="background-color: #E0E0E0"></strong>
-                    </div>
-                </li>
-                <li>
-                    <div class="clr">
-                        <span>طلایی</span>
-                        <strong style="background-color: #f3cc14"></strong>
-                    </div>
-                </li>
-                <li>
-                    <div class="clr">
-                        <span>نقره ای</span>
-                        <strong style="background-color: #bababa"></strong>
-                    </div>
-                </li>
+                @foreach (var item in Model.TblColor)
+                {
+                    <li>
+                        <div class="clr">
+                            <span>@item.Name</span>
+                            <strong style="background-color: @item.ColorCode"></strong>
+                        </div>
+                    </li>
+                }
             </ul>
         </div>
         <div class="cart uk-margin-top">
@@ -154,48 +146,24 @@
 </nav>
 
 <div class="mat-card gap-t">
-    <h3 dir="rtl">نقد و بررسی هواوی Lite M5 MediaPad 8</h3>
-    <p>
-        تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برن
-    </p>
+    @Html.Raw(Model.DescriptionLongHtml)
 </div>
 
 <div class="details col mat-card gap-t">
     <h3 dir="rtl">جزئیات فنی</h3>
     <table dir="rtl">
         <tbody>
-            <tr>
-                <td>ابعاد</td>
-                <td>7.9x73.6x158.5 میلی‌متر</td>
-            </tr>
-            <tr>
-                <td>توضیحات سیم کارت</td>
-                <td>سایز نانو   8.8 × 12.3 میلی‌متر</td>
-            </tr>
-            <tr>
-                <td>وزن</td>
-                <td>172 گرم</td>
-            </tr>
-            <tr>
-                <td>ساختار بدنه</td>
-                <td>قاب جلو شیشه + قاب پشت و فریم پلاستیکی</td>
-            </tr>
-            <tr>
-                <td>ویژگی‌های خاص</td>
-                <td>مجهز به حس‌گر اثرانگشت , فبلت , مناسب عکاسی , مناسب عکاسی سلفی</td>
-            </tr>
-            <tr>
-                <td>تعداد سیم کارت</td>
-                <td>دو سیم کارت</td>
-            </tr>
-            <tr>
-                <td>زمان معرفی</td>
-                <td>12 دسامبر 2019</td>
-            </tr>
-            <tr>
-                <td>تراشه</td>
-                <td>Exynos 9611 CPU</td>
-            </tr>
+            @foreach (var item in Model.TblProductPropertyRel)
+            {
+                @if (item.Value != null)
+                {
+                    <tr>
+                        <td>@item.Property.Name</td>
+                        <td>@item.Value</td>
+                    </tr>
+                }
+            }
+
         </tbody>
     </table>
 </div>
@@ -221,21 +189,20 @@
         </div>
     </div>
 </div>
-
-<div class="comment-section mat-card gap-t">
-    <h3>نظرات کاربران</h3>
-    <ul>
-        <li>
-            <partial name="_CommentBlock" />
-        </li>
-        <li>
-            <partial name="_CommentBlock" />
-        </li>
-        <li>
-            <partial name="_CommentBlock" />
-        </li>
-    </ul>
-</div>
+@if (Model.TblProductCommentRel.Any())
+{
+    <div class="comment-section mat-card gap-t">
+        <h3>نظرات کاربران</h3>
+        <ul>
+            @foreach (var item in Model.TblProductCommentRel.Where(i => i.Comment.IsValid))
+            {
+                <li>
+                    <partial name="_CommentBlock" model="item.Comment" />
+                </li>
+            }
+        </ul>
+    </div>
+}
 
 <div class="product-slider gap-t uk-position-relative uk-visible-toggle" tabindex="-1" uk-slider="">
 
@@ -247,22 +214,22 @@
     </div>
 
     @*<ul class="uk-slider-items">
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-        <li>
-            <partial name="_ProductBlock" />
-        </li>
-    </ul>*@
+            <li>
+                <partial name="_ProductBlock" />
+            </li>
+            <li>
+                <partial name="_ProductBlock" />
+            </li>
+            <li>
+                <partial name="_ProductBlock" />
+            </li>
+            <li>
+                <partial name="_ProductBlock" />
+            </li>
+            <li>
+                <partial name="_ProductBlock" />
+            </li>
+        </ul>*@
 
     <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
 
