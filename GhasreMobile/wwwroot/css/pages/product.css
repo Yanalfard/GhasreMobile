@@ -127,8 +127,14 @@ backdrop-filter: saturate(80%);
         -moz-transition: all ease 0.2s;
         -o-transition: all ease 0.2s;
         -webkit-transition: all ease 0.2s;
-        transition: all ease 0.2s; }
-      .pr-image .foot .action:hover {
+        transition: all ease 0.2s;
+        position: relative; }
+        .pr-image .foot .action input {
+          height: 0;
+          width: 0;
+          position: absolute;
+          -webkit-appearance: none; }
+      .pr-image .foot .action:hover, .pr-image .foot .action.checked {
         border-color: #96027E;
         color: #be03a0; }
       .pr-image .foot .left {

@@ -74,12 +74,25 @@
                 </div>
                 <div class="foot">
                     <div class="left">
-                        <button class="action" uk-tooltip="افزورن به لیست مقایسه" uk-icon="contrast"></button>
-                        <button class="action" uk-tooltip="افزودن به لیست علاقه مندی ها" uk-icon="bookmark-outline"></button>
+                        <label class="action" uk-tooltip="افزورن به لیست مقایسه" uk-icon="contrast">
+                            <input name="comparison"
+                                   onchange="comparisonChanged(this)"
+                                   type="checkbox" />
+                        </label>
+                        <label class="action checked" uk-tooltip="افزودن به لیست علاقه مندی ها" uk-icon="bookmark-outline">
+                            <input name="favourites"
+                                   onchange="favouritesChanged(this)"
+                                   type="checkbox" />
+                        </label>
                     </div>
                     <div class="right">
-                        <button class="action" uk-tooltip="اشتراک گذاری" uk-icon="share-social-outline"></button>
-                        <button class="action" uk-tooltip="فعال کردن اعلان ها" uk-icon="notifications-outline"></button>
+                        <button class="action" uk-tooltip="اشتراک گذاری" onclick="share(window.location.href)"
+                                uk-icon="share-social-outline"></button>
+                        <label class="action" uk-tooltip="فعال کردن اعلان ها" uk-icon="notifications-outline">
+                            <input name="notifications"
+                                   onchange="notificationsChanged(this)"
+                                   type="checkbox" />
+                        </label>
                     </div>
                 </div>
             </div>
@@ -269,3 +282,29 @@
     <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
 
 </div>
+
+@section Scripts{
+
+    <script>
+
+        function comparisonChanged(sender) {
+            sender.parentElement.classList.toggle('checked');
+            // Toggle Comparison
+
+        }
+
+        function favouritesChanged(sender) {
+            sender.parentElement.classList.toggle('checked');
+            // Toggle Comparison
+
+        }
+
+        function notificationsChanged(sender) {
+            sender.parentElement.classList.toggle('checked');
+            // Toggle Notification
+
+        }
+
+    </script>
+
+}

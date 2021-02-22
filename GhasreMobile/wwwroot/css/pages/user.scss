@@ -691,3 +691,17 @@ $aside-width: 142px;
         }
     }
 }
+
+.procedure {
+    .circles {
+        .step {
+        }
+
+        .step.done {
+        }
+
+        .step:not(:last-child):after {
+            height: 6px;
+        }
+    }
+}
