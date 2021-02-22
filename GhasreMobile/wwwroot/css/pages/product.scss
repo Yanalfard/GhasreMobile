@@ -61,9 +61,18 @@
                 color: #525252;
                 cursor: pointer;
                 @include trans(.2s);
+                position: relative;
+
+
+                input {
+                    height: 0;
+                    width: 0;
+                    position: absolute;
+                    -webkit-appearance: none;
+                }
             }
 
-            .action:hover {
+            .action:hover, .action.checked {
                 border-color: $primary;
                 color: lighten($primary,8%);
             }

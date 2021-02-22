@@ -133,47 +133,47 @@
     .left {
         @include column;
         grid-gap: 12px;
-
-        .sellers {
-            ul {
-                display: grid;
-                @include grid-gap(132px,12px);
-                direction: rtl;
-
-                li {
-                    direction: ltr;
-                    padding: 8px;
-                    background-color: #f8f8f8;
-                    @include border-def-radius;
-                    @include column;
-                    grid-gap: 4px;
-
-                    label {
-                        font-size: 13px;
-                        color: $Text-2;
-                    }
-
-                    span {
-                        color: $Text;
-                        font-size: 16px;
-                    }
-                }
-            }
-        }
     }
 
     .right {
         @include column;
         grid-gap: 12px;
+    }
 
-        .telegram, .instagram {
-            @include border-def-radius;
-            overflow: hidden;
+    .sellers {
+        ul {
+            display: grid;
+            @include grid-gap(132px,12px);
+            direction: rtl;
 
-            img {
-                width: 100%;
-                height: auto;
+            li {
+                direction: ltr;
+                padding: 8px;
+                background-color: #f8f8f8;
+                @include border-def-radius;
+                @include column;
+                grid-gap: 4px;
+
+                label {
+                    font-size: 13px;
+                    color: $Text-2;
+                }
+
+                span {
+                    color: $Text;
+                    font-size: 16px;
+                }
             }
+        }
+    }
+
+    .telegram, .instagram {
+        @include border-def-radius;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: auto;
         }
     }
 }

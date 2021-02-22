@@ -15,8 +15,7 @@
 
     <div class="left">
         <!-- #region Contact -->
-
-        <form class="request mat-card">
+        @*<form class="request mat-card">
             <h3 class="uk-margin-bottom">تماس با ما</h3>
             <div class="fg-col">
                 <label for="TelNo" class="fg-label">شماره تلفن</label>
@@ -36,10 +35,18 @@
             <div class="rowr">
                 <button class="btn btn-primary">ارسال پیام</button>
             </div>
-        </form>
+        </form>*@
 
         <!-- #endregion -->
+
         <!-- #region Sellers -->
+
+        <a href="" class="telegram">
+            <img src="~/st/r/Telegram.png" alt="" />
+        </a>
+        <a href="" class="instagram">
+            <img src="~/st/r/Instagram.png" alt="" />
+        </a>
 
         <div class="sellers mat-card">
             <h3>مدیران فروش</h3>
@@ -76,16 +83,9 @@
     </div>
 
     <div class="right">
-        <a href="" class="telegram">
-            <img src="~/st/r/Telegram.png" alt="" />
-        </a>
-        <a href="" class="instagram">
-            <img src="~/st/r/Instagram.png" alt="" />
-        </a>
-
+      
         <!-- #region Request -->
         @await Component.InvokeAsync("DeliveryInContactView")
-
         <!-- #endregion -->
 
     </div>

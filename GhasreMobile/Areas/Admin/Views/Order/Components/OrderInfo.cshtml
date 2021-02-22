@@ -1,4 +1,8 @@
-﻿<div class="modal-header">
+﻿@model DataLayer.Models.TblOrder
+
+@using GhasreMobile.Utilities
+
+<div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
         جزئیات سفارش
     </h6>
@@ -11,59 +15,101 @@
         <div class="form-row ">
             <div class="form-group col-md-4">
                 <label>کد سفارش:</label>
-                <span>15642</span>
+                <span>#@Model.OrdeId</span>
             </div>
             <div class="form-group col-md-4">
                 <label>نام مشتری:</label>
-                <span>امیر آقایی</span>
+                <span>@Model.TblOrderDetail.First().Client.Name</span>
             </div>
             <div class="form-group col-md-4">
                 <label>تاریخ ثبت سفارش:</label>
-                <span>تاریخ</span>
+                <span>@Model.DateSubmited.AllToShamsi()</span>
             </div>
             <div class="form-group col-md-4">
                 <label>وضعیت سفارش: </label>
-                <span class="text-success">تکمیل شده</span>
-                <span class="text-info">درحال ارسال</span>
-                <span class="text-warning">در حال سفارش</span>
+
+                @if (Model.Status == 0)
+                {
+                    <span class="text-warning">در حال آماده سازی</span>
+                }
+                else if (Model.Status == 1)
+                {
+                    <span class="text-info">ارسال شده</span>
+                }
+                else if (Model.Status == 2)
+                {
+                    <span class="text-success">تکمیل شده</span>
+                }
             </div>
             <div class="form-group col-md-4">
                 <label>وضعیت پرداخت: </label>
-                <span class="text-success">پرداخت شده</span>
-                <span class="text-warning">پرداخت نشده</span>
+                @if (Model.IsPayed)
+                {
+                    <span class="text-success">پرداخت شده</span>
+                }
+                else
+                {
+                    <span class="text-warning">پرداخت نشده</span>
+                }
             </div>
             <div class="form-group col-md-4">
                 <label>نحوه پرداخت: </label>
-                <span>پرداخت آنلاین</span>
-                <span>پرداخت درب منزل یا در محل فروشگاه</span>
-                <span>کارت به کارت و ارسال رسید پرداخت</span>
+
+                @if (Model.PaymentStatus == 0)
+                {
+                    <span>پرداخت آنلاین</span>
+                }
+                else if (Model.PaymentStatus == 1)
+                {
+                    <span>کارت به کارت و ارسال رسید پرداخت</span>
+                }
+                else if (Model.PaymentStatus == 2)
+                {
+                    <span>پرداخت درب منزل یا در محل فروشگاه</span>
+                }
             </div>
             <div class="form-group col-md-4">
                 <label>وضعیت ارسال: </label>
-                <span>ارسال از طریق پست</span>
-                <span>تحویل حضوری به خریدار</span>
-                <span>ارسال از طریق تیپاکس یا چاپار</span>
+
+                @if (Model.SendStatus == 0)
+                {
+                    <span>ارسال از طریق پست</span>
+                }
+                else if (Model.SendStatus == 1)
+                {
+                    <span>تحویل حضوری به خریدار</span>
+                }
+                else
+                {
+                    <span>ارسال از طریق تیپاکس یا چاپار</span>
+                }
             </div>
             <div class="form-group col-md-4">
                 <label>هزینه ارسال:</label>
-                <span>15642</span>
+                <span>@Model.SendPrice</span>
             </div>
             <div class="form-group col-md-4">
                 <label>کد تخفیف: </label>
-                <span class="text-success">دارد</span>
-                <span class="text-danger">ندارد</span>
+                @if (Model.DiscountId != null)
+                {
+                    <span class="text-success">دارد</span>
+                }
+                else
+                {
+                    <span class="text-danger">ندارد</span>
+                }
             </div>
             <div class="form-group col-md-4">
                 <label>آدرس خریدار:</label>
-                <span>ابرسان</span>
+                <span>@Model.Address</span>
             </div>
             <div class="form-group col-md-4">
                 <label>کدپستی:</label>
-                <span>123456789</span>
+                <span>@Model.PostalCode</span>
             </div>
             <div class="form-group col-md-4">
                 <label>مبلغ کل سفارش:</label>
-                <span>546542</span>
+                <span>@Model.FinalPrice.ToString("#,0")</span>
             </div>
         </div>
         <div class="table-responsive flex">
@@ -77,11 +123,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>هدست</td>
-                        <td>5</td>
-                        <td>1300</td>
-                    </tr>
+                    @foreach (var item in Model.TblOrderDetail)
+                    {
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Count</td>
+                            <td>
+                                @if (item.Product.PriceAfterDiscount != 0)
+                                {
+                                    <span>@(((int)item.Product.PriceAfterDiscount * (int)item.Count).ToString("#,0"))</span>
+                                }
+                                else
+                                {
+                                    <span>@(((int)item.Product.PriceBeforeDiscount * (int)item.Count).ToString("#,0"))</span>
+                                }
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

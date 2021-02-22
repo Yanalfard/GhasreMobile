@@ -580,3 +580,6 @@ backdrop-filter: saturate(80%);
       font-size: 11px; }
     .tickets .body p {
       font-size: 10px; } }
+
+.procedure .circles .step:not(:last-child):after {
+  height: 6px; }

@@ -191,41 +191,41 @@ backdrop-filter: saturate(80%);
     display: flex;
     flex-direction: column;
     grid-gap: 12px; }
-    .main-contact .left .sellers ul {
-      display: grid;
-      display: grid;
-      grid-template-rows: auto;
-      grid-gap: 12px;
-      grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
-      direction: rtl; }
-      .main-contact .left .sellers ul li {
-        direction: ltr;
-        padding: 8px;
-        background-color: #f8f8f8;
-        -moz-border-radius: 4px 4px 4px 4px;
-        -webkit-border-radius: 4px 4px 4px 4px;
-        border-radius: 4px 4px 4px 4px;
-        display: flex;
-        flex-direction: column;
-        grid-gap: 4px; }
-        .main-contact .left .sellers ul li label {
-          font-size: 13px;
-          color: #666; }
-        .main-contact .left .sellers ul li span {
-          color: #333;
-          font-size: 16px; }
   .main-contact .right {
     display: flex;
     flex-direction: column;
     grid-gap: 12px; }
-    .main-contact .right .telegram, .main-contact .right .instagram {
+  .main-contact .sellers ul {
+    display: grid;
+    display: grid;
+    grid-template-rows: auto;
+    grid-gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+    direction: rtl; }
+    .main-contact .sellers ul li {
+      direction: ltr;
+      padding: 8px;
+      background-color: #f8f8f8;
       -moz-border-radius: 4px 4px 4px 4px;
       -webkit-border-radius: 4px 4px 4px 4px;
       border-radius: 4px 4px 4px 4px;
-      overflow: hidden; }
-      .main-contact .right .telegram img, .main-contact .right .instagram img {
-        width: 100%;
-        height: auto; }
+      display: flex;
+      flex-direction: column;
+      grid-gap: 4px; }
+      .main-contact .sellers ul li label {
+        font-size: 13px;
+        color: #666; }
+      .main-contact .sellers ul li span {
+        color: #333;
+        font-size: 16px; }
+  .main-contact .telegram, .main-contact .instagram {
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
+    overflow: hidden; }
+    .main-contact .telegram img, .main-contact .instagram img {
+      width: 100%;
+      height: auto; }
 
 @media only screen and (max-width: 724px) {
   .main-contact {
