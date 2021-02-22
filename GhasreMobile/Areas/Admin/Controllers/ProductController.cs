@@ -168,9 +168,9 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                         foreach (var item in Keywords)
                         {
-                            if (_core.Keyword.Get().Any(k => k.Name == item))
+                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace(" ", "-")))
                             {
-                                TblKeyword keyword = _core.Keyword.Get().Single(k => k.Name == item);
+                                TblKeyword keyword = _core.Keyword.Get().Single(k => k.Name == item.Replace(" ", "-"));
                                 TblProductKeywordRel keywordRel = new TblProductKeywordRel();
                                 keywordRel.KeywordId = keyword.KeywordId;
                                 keywordRel.ProductId = NewProduct.ProductId;
@@ -179,7 +179,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             else
                             {
                                 TblKeyword Newkeyword = new TblKeyword();
-                                Newkeyword.Name = item;
+                                Newkeyword.Name = item.Replace(" ", "-");
                                 _core.Keyword.Add(Newkeyword);
                                 _core.Keyword.Save();
                                 TblProductKeywordRel keywordRel = new TblProductKeywordRel();
@@ -265,7 +265,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(TblProduct product,
+        public async Task<IActionResult> EditAsync(TblProduct product,
                                                 List<string> Keywords,
                                                 List<string> Colors,
                                                 List<string> ColorName,
@@ -278,7 +278,193 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                TblProduct EditProduct = _core.Product.GetById(product.ProductId);
+                if (MainImage != null)
+                {
+                    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", EditProduct.MainImage);
 
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                    EditProduct.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
+                    string savePath = Path.Combine(
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", EditProduct.MainImage
+                                        );
+
+                    using (var stream = new FileStream(savePath, FileMode.Create))
+                    {
+                        await MainImage.CopyToAsync(stream);
+                    }
+                }
+
+                if (_core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId).Count() > 0)
+                {
+                    IEnumerable<TblProductKeywordRel> keywordRels = _core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId);
+
+                    foreach (var item in keywordRels)
+                    {
+                        _core.ProductKeywordRel.Delete(item);
+                    }
+                    _core.ProductKeywordRel.Save();
+
+                    if (Keywords.Count > 0)
+                    {
+                        foreach (var item in Keywords)
+                        {
+                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace(" ","-")))
+                            {
+                                TblKeyword keyword = _core.Keyword.Get(k => k.Name == item.Replace(" ","-")).SingleOrDefault();
+                                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
+                                tblProductKeywordRel.ProductId = product.ProductId;
+                                tblProductKeywordRel.KeywordId = keyword.KeywordId;
+                                _core.ProductKeywordRel.Add(tblProductKeywordRel);
+                                _core.ProductKeywordRel.Save();
+                            }
+                            else
+                            {
+                                TblKeyword keyword = new TblKeyword();
+                                keyword.Name = item.Replace(" ","-");
+                                _core.Keyword.Add(keyword);
+                                _core.Keyword.Save();
+                                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
+                                tblProductKeywordRel.KeywordId = keyword.KeywordId;
+                                tblProductKeywordRel.ProductId = product.ProductId;
+                                _core.ProductKeywordRel.Add(tblProductKeywordRel);
+                                _core.ProductKeywordRel.Save();
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (Keywords.Count > 0)
+                    {
+                        foreach (var item in Keywords)
+                        {
+                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace(" ","-")))
+                            {
+                                TblKeyword keyword = _core.Keyword.Get(k => k.Name == item.Replace(" ", "-")).SingleOrDefault();
+                                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
+                                tblProductKeywordRel.ProductId = product.ProductId;
+                                tblProductKeywordRel.KeywordId = keyword.KeywordId;
+                                _core.ProductKeywordRel.Add(tblProductKeywordRel);
+                                _core.ProductKeywordRel.Save();
+                            }
+                            else
+                            {
+                                TblKeyword keyword = new TblKeyword();
+                                keyword.Name = item.Replace(" ", "-");
+                                _core.Keyword.Add(keyword);
+                                _core.Keyword.Save();
+                                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
+                                tblProductKeywordRel.KeywordId = keyword.KeywordId;
+                                tblProductKeywordRel.ProductId = product.ProductId;
+                                _core.ProductKeywordRel.Add(tblProductKeywordRel);
+                                _core.ProductKeywordRel.Save();
+                            }
+                        }
+                    }
+                }
+                if (GalleryFile.Count > 0)
+                {
+                    IEnumerable<TblProductImageRel> tblProductImageRel = _core.ProductImageRel.Get(p => p.ProductId == product.ProductId);
+                    foreach (var item in tblProductImageRel)
+                    {
+                        TblImage image = _core.Image.GetById(item.ImageId);
+                        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", image.Image);
+
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
+                        _core.ProductImageRel.DeleteById(item.ProductImageRelId);
+                        _core.Image.Delete(image);
+                        _core.ProductImageRel.Save();
+                        _core.Image.Save();
+
+                        foreach (var galleryimage in GalleryFile)
+                        {
+                            TblAlbum album = new TblAlbum();
+                            album.Name = product.Name;
+                            _core.Album.Add(album);
+                            _core.Album.Save();
+                            TblImage NewImage = new TblImage();
+                            NewImage.AlbumId = album.AlbumId;
+                            NewImage.Image = Guid.NewGuid().ToString() + Path.GetExtension(galleryimage.FileName);
+                            string savePathAlbum = Path.Combine(
+                                                Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", NewImage.Image
+                                            );
+
+                            using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                            {
+                                await galleryimage.CopyToAsync(stream);
+                            }
+                            _core.Image.Add(NewImage);
+                            _core.Image.Save();
+                            TblProductImageRel imageRel = new TblProductImageRel();
+                            imageRel.ProductId = EditProduct.ProductId;
+                            imageRel.ImageId = NewImage.ImageId;
+
+                            _core.ProductImageRel.Add(imageRel);
+                            _core.ProductImageRel.Save();
+                        }
+
+                    }
+                }
+                if (ColorName.Count > 0)
+                {
+                    IEnumerable<TblColor> LastColors = _core.Color.Get(c => c.ProductId == EditProduct.ProductId);
+                    foreach (var item in LastColors)
+                    {
+                        _core.Color.DeleteById(item.ColorId);
+                    }
+                    _core.Color.Save();
+                    for (int i = 0; i < ColorName.Count; i++)
+                    {
+                        TblColor color = new TblColor();
+                        color.ColorCode = Colors[i];
+                        color.Name = ColorName[i];
+                        color.ProductId = product.ProductId;
+                        color.Count = ColorsCounts[i];
+                        _core.Color.Add(color);
+                    }
+                    _core.Color.Save();
+                }
+                for (int i = 0; i < PropertyId.Count; i++)
+                {
+                    TblProductPropertyRel propertyRel = new TblProductPropertyRel();
+                    propertyRel.ProductId = EditProduct.ProductId;
+                    if (Value[i] == null)
+                    {
+                        propertyRel.PropertyId = PropertyId[i].Value;
+                        propertyRel.Value = null;
+                    }
+                    else
+                    {
+                        propertyRel.PropertyId = PropertyId[i].Value;
+                        propertyRel.Value = Value[i];
+                    }
+                }
+                EditProduct.Name = product.Name;
+                EditProduct.PriceBeforeDiscount = product.PriceBeforeDiscount;
+                if (product.PriceAfterDiscount != null)
+                {
+                    EditProduct.PriceAfterDiscount =
+                        EditProduct.PriceBeforeDiscount - (EditProduct.PriceBeforeDiscount * product.PriceAfterDiscount / 100);
+                }
+                else
+                {
+                    EditProduct.PriceAfterDiscount = 0;
+                }
+                EditProduct.SearchText = product.SearchText;
+                EditProduct.IsFractional = product.IsFractional;
+                EditProduct.BrandId = product.BrandId;
+
+                _core.Product.Update(product);
+                _core.Product.Save();
+
+                return await Task.FromResult(Redirect("/Admin/Product"));
             }
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
             ViewBag.Brands = _core.Brand.Get();

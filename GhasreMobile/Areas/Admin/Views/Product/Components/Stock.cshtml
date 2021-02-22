@@ -57,9 +57,13 @@
 
 <script>
     function EditStoke(id, count) {
-        $.post("/Admin/Product/EditStoke?Id=" + id + "&count=" + count);
+        $.post("/Admin/Product/EditStoke?Id=" + id + "&count=" + count, function () {
+            UIkit.notification("موجودی بروز شد");
+        });
     }
     function EditPrice(Id, Price) {
-        $.post("/Admin/Product/EditPrice?Id=" + Id + "&Price=" + Price);
+        $.post("/Admin/Product/EditPrice?Id=" + Id + "&Price=" + Price, function () {
+            UIkit.notification("قیمت محصول بروز شد");
+        });
     }
 </script>
