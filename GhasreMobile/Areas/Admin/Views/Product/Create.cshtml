@@ -118,8 +118,7 @@
                     </div>
                     <span id="TblColor" asp-validation-for="TblColor" class="text-danger"></span>
                 </div>
-                <aside id="ColorPanel">
-                </aside>
+                <aside id="ColorPanel"></aside>
                 <hr />
                 <div class="form-row mt-3">
                     <div class="form-group col-md-5">
@@ -128,7 +127,7 @@
                         <span id="CreateNewProperyErorr" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-2 mt-md-4 pt-2">
-                        <a onclick="CreatePropery()" class="btn btn-info btn-sm text-white">افزودن</a>
+                        <a onclick="CreateProperty()" class="btn btn-info btn-sm text-white">افزودن</a>
                     </div>
                 </div>
                 <aside id="PropertyPanel">
@@ -150,8 +149,7 @@
                 &nbsp;<span onclick="SetNewInputGallery()" class="text-success" uk-icon="add-circle-outline"></span>
                 &nbsp;<span onclick="RemoveInputGallery()" class="text-danger" uk-icon="remove-circle-outline"></span>
 
-                <div id="GalleryPanel" class="h-50">
-                </div>
+                <div id="GalleryPanel" class="h-50"></div>
 
             </div>
             <div class="card-footer bg-white mt-2">
@@ -172,6 +170,10 @@
     </style>
     <script>
 
+        function RemoveTagInput(NameInput) {
+            $("#" + NameInput).remove();
+        }
+
         //Controll
         $("#SubmitCreateProduct").click(function () {
             $("#overlay").fadeIn(300);
@@ -180,10 +182,31 @@
             });
         });
 
+
+        function SelectCatagory(Id) {
+            $(".Cat").css('color', '');
+            $(".Cat").css('font-weight', 'normal');
+            $("#Cat-" + Id).css('color', '#3E9731');
+            $("#Cat-" + Id).css('font-weight', 'bold');
+            $("#CatagoryId").val(Id);
+            var CatagoryId = $("#CatagoryId").val();
+            var BrandId = $("#BrandId option:selected").val();
+            var GalleryPanel = $("#ColorPanel").children();
+            if (CatagoryId == null || CatagoryId == "" || BrandId == 0 || GalleryPanel.length == 0) {
+                $("#SubmitErorr").html("دسته بندی , برند و رنگ اجباری است");
+                $("#SubmitCreateProduct").attr("disabled", "disabled");
+            } else {
+                $("#SubmitErorr").html("");
+                $("#SubmitCreateProduct").removeAttr("disabled");
+            }
+        };
+
+
         $("#BrandId").change(function () {
             var CatagoryId = $("#CatagoryId").val();
             var BrandId = $("#BrandId option:selected").val();
-            if (CatagoryId == null || CatagoryId == "" || BrandId == 0) {
+            var ColorPanel = $("#ColorPanel").children();
+            if (CatagoryId == null || CatagoryId == "" || BrandId == 0 || ColorPanel.length == 0) {
                 $("#SubmitErorr").html("دسته بندی , برند و رنگ اجباری است");
                 $("#SubmitCreateProduct").attr("disabled", "disabled");
             } else {
@@ -196,11 +219,11 @@
             //$("#GalleryPanel").append("<div class='custom-file col-md-7 mt-3'><input type='file' class='custom-file-input form-control form-control-sm' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/><label class='custom-file-label'></label></div>");
             $("#GalleryPanel").append(
                 `<div class="custom-file col-md-7 mt-3">
-                       <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
-                       <label class="custom-file-label" data-browse="انتخاب">
-                            انتخاب فایل
-                       </label>
-                     </div>`
+                                       <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
+                                       <label class="custom-file-label" data-browse="انتخاب">
+                                            انتخاب فایل
+                                       </label>
+                                     </div>`
             );
             //$("#GalleryPanel").append("<div><input type='file' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/></div>");
         }
@@ -219,23 +242,6 @@
             $('#DescriptionLongHtml').ckeditor();
         });
 
-        function SelectCatagory(Id) {
-            $(".Cat").css('color', '');
-            $(".Cat").css('font-weight', 'normal');
-            $("#Cat-" + Id).css('color', '#3E9731');
-            $("#Cat-" + Id).css('font-weight', 'bold');
-            $("#CatagoryId").val(Id);
-            var CatagoryId = $("#CatagoryId").val();
-            var BrandId = $("#BrandId option:selected").val();
-            if (CatagoryId == null || CatagoryId == "" || BrandId == 0) {
-                $("#SubmitErorr").html("دسته بندی , برند و رنگ اجباری است");
-                $("#SubmitCreateProduct").attr("disabled", "disabled");
-            } else {
-                $("#SubmitErorr").html("");
-                $("#SubmitCreateProduct").removeAttr("disabled");
-            }
-        };
-
         $("#SubmitColor").click(function () {
             var Color = $("#InputColor").val();
             var Name = $("#InputColorName").val();
@@ -243,22 +249,40 @@
             if (Color == null || Color == "" || Name == null || Name == "" || Count == null || Count == "") {
                 $("#TblColor").html("همه موارد برای ثبت رنگ الزامی میباشد");
             } else {
+                var CatagoryId = $("#CatagoryId").val();
+                var BrandId = $("#BrandId option:selected").val();
                 $("#TblColor").html("");
                 $("#InputColor").val("");
                 $("#InputColorName").val("");
                 $("#InputColorCount").val("");
-                $("#ColorPanel").html(
-                    $("#ColorPanel").html() +
+                $("#ColorPanel").append(
                     "<div onclick='RemoveColorPat(this)' class='form-row'><label class='mr-2'>رنگ :" + Name + "</label><div class='uk-border-rounded mr-2 color-box' style='background:" + Color + ";'></div><label class='mr-2'>" + Count + " عدد</label><input type='hidden' name='Colors' value='" + Color + "' /><input type='hidden' name='ColorsCounts' value='" + Count + "' /><input type='hidden' name='ColorName' value='" + Name + "' /><span class='text-danger'>&nbsp;(x)</span></div>"
                 );
+                if (CatagoryId == null || CatagoryId == "" || BrandId == 0) {
+                    $("#SubmitErorr").html("دسته بندی , برند و رنگ اجباری است");
+                    $("#SubmitCreateProduct").attr("disabled", "disabled");
+                } else {
+                    $("#SubmitErorr").html("");
+                    $("#SubmitCreateProduct").removeAttr("disabled");
+                }
             }
         });
 
         function RemoveColorPat(par) {
-            par.parentElement.removeChild(par)
+            par.parentElement.removeChild(par);
+            var CatagoryId = $("#CatagoryId").val();
+            var BrandId = $("#BrandId option:selected").val();
+            var ColorPanel = $("#ColorPanel").children();
+            if (CatagoryId == null || CatagoryId == "" || BrandId == 0 || ColorPanel.length == 0) {
+                $("#SubmitErorr").html("دسته بندی , برند و رنگ اجباری است");
+                $("#SubmitCreateProduct").attr("disabled", "disabled");
+            } else {
+                $("#SubmitErorr").html("");
+                $("#SubmitCreateProduct").removeAttr("disabled");
+            }
         }
 
-        function CreatePropery() {
+        function CreateProperty() {
             var Name = $("#NewProperyName").val();
             if (Name == "" || Name == null) {
                 $("#CreateNewProperyErorr").html("لطفا نام ویژگی را وارد کنید");
@@ -268,7 +292,7 @@
                         $("#CreateNewProperyErorr").html("");
                         $("#PropertyPanel").html("");
                         $("#NewProperyName").val("");
-                        $.get("/Admin/Product/ProperyList", function (result) {
+                        $.get("/Admin/Product/PropertyList", function (result) {
                             $("#PropertyPanel").html(result);
                         });
                     } else {
@@ -277,6 +301,8 @@
                 });
             }
         }
+
+
 
     </script>
 }
