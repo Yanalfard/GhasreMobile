@@ -140,7 +140,7 @@
 
             // add a tag element
 
-            var $tag = $('<span class="tag ' + htmlEncode(tagClass) + (itemTitle !== null ? ('" title="' + itemTitle) : '') + '">' + htmlEncode(itemText) + '<span data-role="remove"></span></span><input type="hidden" name="Keywords" value="' + htmlEncode(itemText) + '" />'); 
+            var $tag = $('<span class="tag ' + htmlEncode(tagClass) + (itemTitle !== null ? ('" title="' + itemTitle) : '') + '">' + htmlEncode(itemText) + '<span data-role="remove" onclick="RemoveTagInput(' + "'" + htmlEncode(itemText) + "'" +')"></span></span><input type="hidden" id="' + htmlEncode(itemText) +'" name="Keywords" value="' + htmlEncode(itemText) + '" />'); 
             $tag.data('item', item);
             self.findInputWrapper().before($tag);
             $tag.after(' ');
@@ -202,6 +202,7 @@
 
                 $('.tag', self.$container).filter(function () { return $(this).data('item') === item; }).remove();
                 $('option', self.$element).filter(function () { return $(this).data('item') === item; }).remove();
+
                 if ($.inArray(item, self.itemsArray) !== -1)
                     self.itemsArray.splice($.inArray(item, self.itemsArray), 1);
             }

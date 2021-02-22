@@ -6,9 +6,9 @@
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
 
-        <form asp-action="Create" asp-controller="Product" asp-area="Admin" method="post" class="card flex-div border-0 main-shadow" enctype="multipart/form-data">
+        <form asp-action="edit" asp-controller="Product" asp-area="Admin" method="post" class="card flex-div border-0 main-shadow" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
-            <input type="hidden" value="@Model.ProductId" />
+            <input type="hidden" value="@Model.ProductId" asp-for="ProductId" />
             <div class="card-body flex">
                 <ul uk-accordion class="bg-light mt-3 pt-3 pb-3 uk-text-small uk-border-rounded">
                     <li class="col-md-4">
@@ -80,7 +80,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label>درصد تخفیف</label>
-                        <input asp-for="PriceAfterDiscount" maxlength="2" class="form-control form-control-sm" placeholder="مثال : 10">
+                        <input asp-for="PriceAfterDiscount" class="form-control form-control-sm" placeholder="مثال : 10">
                         <span asp-validation-for="PriceAfterDiscount" class="text-danger"></span>
                     </div>
                 </div>
@@ -101,7 +101,14 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <input type="text" value="" data-role="tagsinput" id="tags" class="form-control" placeholder="کلمات کلیدی">
+                        <input type="text" value="
+
+                                       @foreach (var item in Model.TblProductKeywordRel)
+                                        {
+                                        @item.Keyword.Name@:,
+                                        }
+
+                                       " data-role="tagsinput" id="tags" class="form-control">
                     </div>
                     <span class="text-danger" asp-validation-for="TblProductKeywordRel"></span>
                 </div>
@@ -136,11 +143,11 @@
                 <div class="form-row mt-3">
                     <div class="form-group col-md-5">
                         <label class="uk-text-bold">افزودن ویژگی</label>
-                        <input id="NewProperyName" class="form-control form-control-sm" placeholder="مثال : حافظه داخلی">
-                        <span id="CreateNewProperyErorr" class="text-danger"></span>
+                        <input id="NewPropertyName" class="form-control form-control-sm" placeholder="مثال : حافظه داخلی">
+                        <span id="CreateNewPropertyErorr" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-2 mt-md-4 pt-2">
-                        <a onclick="CreatePropery()" class="btn btn-info btn-sm text-white">افزودن</a>
+                        <a onclick="CreateProperty()" class="btn btn-info btn-sm text-white">افزودن</a>
                     </div>
                 </div>
                 <aside id="PropertyPanel">
@@ -162,27 +169,25 @@
                 &nbsp;<span onclick="SetNewInputGallery()" class="text-success" uk-icon="add-circle-outline"></span>
                 &nbsp;<span onclick="RemoveInputGallery()" class="text-danger" uk-icon="remove-circle-outline"></span>
 
-                      <div id="GalleryPanel" class="h-50">
-                          @if (Model.TblProductImageRel != null)
-                          {
-                              foreach (var item in Model.TblProductImageRel)
-                              {
+                <div id="GalleryPanel" class="h-50">
+                    @if (Model.TblProductImageRel != null)
+                    {
+                        foreach (var item in Model.TblProductImageRel)
+                        {
 
-                          <div id="Img-@item.ImageId" class="custom-file col-10 col-md-7 mt-3">
-                              <input type="file" value="@item.Image" class="custom-file-input form-control form-control-sm">
-                              <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">@item.Image.Image</label>
-                              
-                          </div><span onclick="RemoveImageGallery(@item.ImageId)" class="text-danger mr-md-2 mr-1" uk-icon="remove-circle-outline"></span>
+                            <div id="Img-@item.ImageId" class="custom-file col-10 col-md-7 mt-3">
+                                <input type="file" value="@item.Image" class="custom-file-input form-control form-control-sm">
+                                <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">@item.Image.Image</label>
 
-                                  @*<input id="Img-@item.ImageId" type="file" value="@item.Image" /><span onclick="RemoveImageGallery(@item.ImageId)" class="text-danger" uk-icon="remove-circle-outline"></span>*@
-                              }
-                          }
-                      </div>
+                            </div><span onclick="RemoveImageGallery(@item.ImageId)" class="text-danger mr-md-2 mr-1" uk-icon="remove-circle-outline"></span>
+                        }
+                    }
+                </div>
 
             </div>
             <div class="card-footer bg-white">
                 <span class="text-danger" id="SubmitErorr"></span>
-                <button id="SubmitCreateProduct" type="submit" disabled class="btn btn-success btn-sm text-white pull-right ml-4">ویرایش<span class="icon-holder uk-margin-small-right" uk-icon="create-outline"></span></button>
+                <button id="SubmitCreateProduct" type="submit" class="btn btn-success btn-sm text-white pull-right ml-4">ویرایش<span class="icon-holder uk-margin-small-right" uk-icon="create-outline"></span></button>
             </div>
         </form>
     </div>
@@ -198,10 +203,15 @@
     </style>
     <script>
 
+        function RemoveTagInput(NameInput) {
+            var id = `#${NameInput}`.replace(" ", "");
+            $(id).remove();
+        }
+
         //Controll
         $("#SubmitCreateProduct").click(function () {
             $("#overlay").fadeIn(300);
-            setInterval(4000, function () {
+            setInterval(3000, function () {
                 $("#overlay").fadeIn(300);
             });
         });
@@ -209,7 +219,8 @@
         $("#BrandId").change(function () {
             var CatagoryId = $("#CatagoryId").val();
             var BrandId = $("#BrandId option:selected").val();
-            if (CatagoryId == null || CatagoryId == "" || BrandId == 0) {
+            var ColorPanel = $("#ColorPanel").children();
+            if (CatagoryId == null || CatagoryId == "" || BrandId == 0 || ColorPanel.length == 0) {
                 $("#SubmitErorr").html("دسته بندی , برند و رنگ اجباری است");
                 $("#SubmitCreateProduct").attr("disabled", "disabled");
             } else {
@@ -221,11 +232,11 @@
         function SetNewInputGallery() {
             $("#GalleryPanel").append(
                 `<div class="custom-file col-md-7 mt-3">
-                       <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
-                       <label class="custom-file-label" data-browse="انتخاب">
-                            انتخاب فایل
-                       </label>
-                     </div>`
+                                       <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
+                                       <label class="custom-file-label" data-browse="انتخاب">
+                                            انتخاب فایل
+                                       </label>
+                                     </div>`
             );
 
             //$("#GalleryPanel").append("<div><input type='file' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/></div>");
@@ -277,6 +288,13 @@
                     $("#ColorPanel").html() +
                     "<div onclick='RemoveColorPat(this)' class='form-row'><label class='mr-2'>رنگ :" + Name + "</label><div class='uk-border-rounded mr-2 color-box' style='background:" + Color + ";'></div><label class='mr-2'>" + Count + " عدد</label><input type='hidden' name='Colors' value='" + Color + "' /><input type='hidden' name='ColorsCounts' value='" + Count + "' /><input type='hidden' name='ColorName' value='" + Name + "' /><span class='text-danger'>&nbsp;(x)</span></div>"
                 );
+                if (CatagoryId == null || CatagoryId == "" || BrandId == 0) {
+                    $("#SubmitErorr").html("دسته بندی , برند و رنگ اجباری است");
+                    $("#SubmitCreateProduct").attr("disabled", "disabled");
+                } else {
+                    $("#SubmitErorr").html("");
+                    $("#SubmitCreateProduct").removeAttr("disabled");
+                }
             }
         });
 
@@ -284,21 +302,21 @@
             par.parentElement.removeChild(par)
         }
 
-        function CreatePropery() {
-            var Name = $("#NewProperyName").val();
+        function CreateProperty() {
+            var Name = $("#NewPropertyName").val();
             if (Name == "" || Name == null) {
-                $("#CreateNewProperyErorr").html("لطفا نام ویژگی را وارد کنید");
+                $("#CreateNewPropertyErorr").html("لطفا نام ویژگی را وارد کنید");
             } else {
                 $.post("/Admin/Property/Create?Name=" + Name, function (result) {
                     if (result == "true") {
-                        $("#CreateNewProperyErorr").html("");
+                        $("#CreateNewPropertyErorr").html("");
                         $("#PropertyPanel").html("");
-                        $("#NewProperyName").val("");
-                        $.get("/Admin/Product/ProperyList", function (result) {
+                        $("#NewPropertyName").val("");
+                        $.get("/Admin/Product/PropertyList", function (result) {
                             $("#PropertyPanel").html(result);
                         });
                     } else {
-                        $("#CreateNewProperyErorr").html(result);
+                        $("#CreateNewPropertyErorr").html(result);
                     }
                 });
             }

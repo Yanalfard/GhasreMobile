@@ -1,0 +1,147 @@
+﻿@model DataLayer.Models.TblOrder
+
+@using GhasreMobile.Utilities
+
+<div class="modal-header">
+    <h6 class="modal-title" id="modalCenterTitle">
+        جزئیات سفارش
+    </h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div id="card-table" class="card-body flex-div">
+        <div class="form-row ">
+            <div class="form-group col-md-4">
+                <label>کد سفارش:</label>
+                <span>#@Model.OrdeId</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>نام مشتری:</label>
+                <span>@Model.TblOrderDetail.First().Client.Name</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>تاریخ ثبت سفارش:</label>
+                <span>@Model.DateSubmited.AllToShamsi()</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>وضعیت سفارش: </label>
+
+                @if (Model.Status == 0)
+                {
+                    <span class="text-warning">در حال آماده سازی</span>
+                }
+                else if (Model.Status == 1)
+                {
+                    <span class="text-info">ارسال شده</span>
+                }
+                else if (Model.Status == 2)
+                {
+                    <span class="text-success">تکمیل شده</span>
+                }
+            </div>
+            <div class="form-group col-md-4">
+                <label>وضعیت پرداخت: </label>
+                @if (Model.IsPayed)
+                {
+                    <span class="text-success">پرداخت شده</span>
+                }
+                else
+                {
+                    <span class="text-warning">پرداخت نشده</span>
+                }
+            </div>
+            <div class="form-group col-md-4">
+                <label>نحوه پرداخت: </label>
+
+                @if (Model.PaymentStatus == 0)
+                {
+                    <span>پرداخت آنلاین</span>
+                }
+                else if (Model.PaymentStatus == 1)
+                {
+                    <span>کارت به کارت و ارسال رسید پرداخت</span>
+                }
+                else if (Model.PaymentStatus == 2)
+                {
+                    <span>پرداخت درب منزل یا در محل فروشگاه</span>
+                }
+            </div>
+            <div class="form-group col-md-4">
+                <label>وضعیت ارسال: </label>
+
+                @if (Model.SendStatus == 0)
+                {
+                    <span>ارسال از طریق پست</span>
+                }
+                else if (Model.SendStatus == 1)
+                {
+                    <span>تحویل حضوری به خریدار</span>
+                }
+                else
+                {
+                    <span>ارسال از طریق تیپاکس یا چاپار</span>
+                }
+            </div>
+            <div class="form-group col-md-4">
+                <label>هزینه ارسال:</label>
+                <span>@Model.SendPrice</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>کد تخفیف: </label>
+                @if (Model.DiscountId != null)
+                {
+                    <span class="text-success">دارد</span>
+                }
+                else
+                {
+                    <span class="text-danger">ندارد</span>
+                }
+            </div>
+            <div class="form-group col-md-4">
+                <label>آدرس خریدار:</label>
+                <span>@Model.Address</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>کدپستی:</label>
+                <span>@Model.PostalCode</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>مبلغ کل سفارش:</label>
+                <span>@Model.FinalPrice.ToString("#,0")</span>
+            </div>
+        </div>
+        <div class="table-responsive flex">
+            <hr />
+            <table class="table fixed">
+                <thead class="thead-light">
+                    <tr>
+                        <th>نام محصول</th>
+                        <th>تعداد</th>
+                        <th>قیمت</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.TblOrderDetail)
+                    {
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Count</td>
+                            <td>
+                                @if (item.Product.PriceAfterDiscount != 0)
+                                {
+                                    <span>@(((int)item.Product.PriceAfterDiscount * (int)item.Count).ToString("#,0"))</span>
+                                }
+                                else
+                                {
+                                    <span>@(((int)item.Product.PriceBeforeDiscount * (int)item.Count).ToString("#,0"))</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
