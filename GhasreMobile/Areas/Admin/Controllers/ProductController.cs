@@ -312,9 +312,9 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     {
                         foreach (var item in Keywords)
                         {
-                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace(" ","-")))
+                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace("                                       ", "")))
                             {
-                                TblKeyword keyword = _core.Keyword.Get(k => k.Name == item.Replace(" ","-")).SingleOrDefault();
+                                TblKeyword keyword = _core.Keyword.Get(k => k.Name == item.Replace("                                       ", "")).SingleOrDefault();
                                 TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
                                 tblProductKeywordRel.ProductId = product.ProductId;
                                 tblProductKeywordRel.KeywordId = keyword.KeywordId;
@@ -342,9 +342,9 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     {
                         foreach (var item in Keywords)
                         {
-                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace(" ","-")))
+                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace("                                       ","")))
                             {
-                                TblKeyword keyword = _core.Keyword.Get(k => k.Name == item.Replace(" ", "-")).SingleOrDefault();
+                                TblKeyword keyword = _core.Keyword.Get(k => k.Name == item.Replace("                                       ", "")).SingleOrDefault();
                                 TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
                                 tblProductKeywordRel.ProductId = product.ProductId;
                                 tblProductKeywordRel.KeywordId = keyword.KeywordId;
@@ -354,7 +354,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             else
                             {
                                 TblKeyword keyword = new TblKeyword();
-                                keyword.Name = item.Replace(" ", "-");
+                                keyword.Name = item.Replace("                                       ", "");
                                 _core.Keyword.Add(keyword);
                                 _core.Keyword.Save();
                                 TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
@@ -450,8 +450,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 EditProduct.PriceBeforeDiscount = product.PriceBeforeDiscount;
                 if (product.PriceAfterDiscount != null)
                 {
-                    EditProduct.PriceAfterDiscount =
-                        EditProduct.PriceBeforeDiscount - (EditProduct.PriceBeforeDiscount * product.PriceAfterDiscount / 100);
+                    EditProduct.PriceAfterDiscount = product.PriceAfterDiscount;
+                       
                 }
                 else
                 {
@@ -461,7 +461,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 EditProduct.IsFractional = product.IsFractional;
                 EditProduct.BrandId = product.BrandId;
 
-                _core.Product.Update(product);
+                _core.Product.Update(EditProduct);
                 _core.Product.Save();
 
                 return await Task.FromResult(Redirect("/Admin/Product"));
