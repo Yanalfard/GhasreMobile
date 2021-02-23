@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewData["Title"] = "تخفیفات";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div class="card-header bg-white">
+                <div class="pr-1 pt-2">
+                    <div class="form-group pb-0 mb-0">
+                        <button id="addOff" data-toggle="modal" data-target="#modalSave" class="btn btn-success btn-sm">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div id="card-table" class="card-body flex-div">
+                <div class="table-responsive flex">
+                    <table class="table fixed">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>نام</th>
+                                <th>تاریخ انقضا</th>
+                                <th>درصد تخفیف</th>
+                                <th>تعداد</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>name90</td>
+                                <td>1397/12/19</td>
+                                <td>30%</td>
+                                <td>10</td>
+                                <td>
+                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                        <a onclick="Edit()" id="Edit" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                    @*@await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Script{
+
+    <script>
+        $("#addOff").click(function () {
+
+            $.get("/Admin/Discount/Create", function (result) {
+                $(".modal-content").html(result);
+            });
+
+        });
+
+        function Edit(Id) {
+            $(".modal-content").html("");
+            $.get("/Admin/Discount/Edit/" + Id, function (result) {
+                $(".modal-content").html(result);
+            });
+        }
+    </script>
+
+}
