@@ -1845,3 +1845,6 @@ table.hot-download td {
     color: #fff !important;
     margin-right:8px!important;
 }
+.AdminMap {
+    height: 220px;
+}
