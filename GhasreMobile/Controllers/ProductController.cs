@@ -30,5 +30,23 @@ namespace GhasreMobile.Controllers
                 return await Task.FromResult(Redirect("ErrorPage"));
             }
         }
+
+        [HttpPost]
+        [Route("SendComment")]
+        public async Task<IActionResult> SendComment(SendCommentVm comment)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    return await Task.FromResult(PartialView(comment));
+                }
+                return await Task.FromResult(PartialView(comment));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("ErrorPage"));
+            }
+        }
     }
 }

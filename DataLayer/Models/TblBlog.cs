@@ -17,12 +17,13 @@ namespace DataLayer.Models
         public int BlogId { get; set; }
         [StringLength(200)]
         public string MainImage { get; set; }
-        [Required]
-        [StringLength(200)]
+        [Required(ErrorMessage ="عنوان پست را وارد کنید")]
+        [StringLength(200,ErrorMessage ="عنوان کوتاه تری وارد کنید")]
         public string Title { get; set; }
-        [StringLength(500)]
+        [Required(ErrorMessage ="لطفا توضبحات کوتاه را وارد کنید")]
+        [StringLength(500,ErrorMessage ="توضیحات کوتاه پست را وارد کنید")]
         public string Description { get; set; }
-        [Required]
+        [Required(ErrorMessage ="توضیحات کامل پست را وارد کنید")]
         public string BodyHtml { get; set; }
         public int LikeCount { get; set; }
         public int ViewCount { get; set; }
