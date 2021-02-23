@@ -1796,10 +1796,11 @@ table.hot-download td {
 .textarea-max-height-90{
     max-height:90px !important;
 }
-.textarea-fix-height-90 {
-    max-height: 90px !important;
-    min-height: 90px !important;
+.textarea-fix-height-120 {
+    max-height: 120px !important;
+    min-height: 120px !important;
     resize:none;
+    width:100%;
 }
 .textarea-fix-height-300 {
     max-height: 300px !important;
@@ -1844,4 +1845,7 @@ table.hot-download td {
     text-align: right !important;
     color: #fff !important;
     margin-right:8px!important;
+}
+.AdminMap {
+    height: 220px;
 }
