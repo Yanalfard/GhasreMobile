@@ -73,16 +73,16 @@
 
         var iconSetting = L.Icon.extend({
             options: {
-                iconSize: [20, 29],
-                iconAnchor: [10, 29]
+                iconSize: [32, 32],
+                iconAnchor: [16, -8]
             }
         });
 
-        var customIcon = new iconSetting({ iconUrl: '/purple-location.png' });
+        var customIcon = new iconSetting({ iconUrl: '/marker.svg' });
         //Add a marker to show where you clicked.
         $("#Lat").val(lat.toString());
         $("#Lon").val(lon.toString());
-        theMarker = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('<h6 style="color:green">موقعیت فروشگاه شما ثبت شد</h6>').openPopup();
+        theMarker = L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup('<h6 style="color:green">موقعیت جدیدفروشگاه شما ثبت شد</h6>').openPopup();
     });
 
 </script>

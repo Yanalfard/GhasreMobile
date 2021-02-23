@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GhasreMobile.Utilities;
+using DataLayer.Models;
+using Services.Services;
+using ReflectionIT.Mvc.Paging;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -11,9 +14,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
     [PermissionChecker("admin")]
     public class StoreController : Controller
     {
-        public IActionResult Index()
+        Core _core = new Core();
+        public IActionResult Index(int page = 1, string Search = null)
         {
-            return View();
+            if (!string.IsNullOrEmpty(Search))
+            {
+                IEnumerable<TblStore> stores = PagingList.Create(_core.Store.Get(s=>s.Name.Contains(Search)), 30, page);
+                return View(stores);
+            }
+            else
+            {
+                IEnumerable<TblStore> stores = PagingList.Create(_core.Store.Get(), 30, page);
+                return View(stores);
+            }
         }
 
         public IActionResult Create()
@@ -26,9 +39,9 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return ViewComponent("StoreEditAdmin");
         }
 
-        public IActionResult Delete()
+        public void Delete()
         {
-            return View();
+
         }
     }
 }
