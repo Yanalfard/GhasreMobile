@@ -24,19 +24,27 @@
             <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" onchange="inputChanged(this)">
             <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر</label>
         </div>
-        <div class="form-row mt-2">
+        <hr />
+        <div class="form-row">
+            <div class="form-group col-md-7">
+                <label>توضیحات</label>
+                <textarea class="textarea-fix-height-120" placeholder=" متن توضیحات... "></textarea>
+            </div>
+        </div>
+        <hr />
+        <div class="form-row">
             <div class="form-group col-md-7">
                 <label>آدرس</label>
                 <input class="form-control form-control-sm" placeholder="مثال: خیابان امام...">
             </div>
         </div>
-        <hr />
         <label>لوکیشن فروشگاه</label>
         <div id="map" style="height:220px;"></div>
     </div>
     <div class="modal-footer justify-content-end">
         <button type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
     </div>
+    
 </form>
 <script>
     function inputChanged(sender) {
