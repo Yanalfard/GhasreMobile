@@ -1,10 +1,9 @@
-﻿
+﻿@model IEnumerable<DataLayer.Models.TblStore>
 @{
     ViewData["Title"] = "فروشگاه";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-@*<h1>Index</h1>*@
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
         <div class="card flex-div border-0 main-shadow">
@@ -40,29 +39,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td> فروشگاه 1</td>
-                                <td>0914552651</td>
-                                <td>
-                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
-                                        <a id="Edit" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
-                                    </span>
-                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
-                                        <a onclick="" class="text-danger" uk-icon="trash"></a>
-                                    </span>
-                                </td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.TellNo</td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                            <a onclick="Edit(@item.StoreId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                        </span>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
+                                            <a onclick="Remove(@item.StoreId)" class="text-danger" uk-icon="trash"></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <!--end list region-->
-            @*<div class="card-footer bg-white">
-                    <nav aria-label="Page navigation example">
-                        @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
-                    </nav>
-                </div>*@
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+                </nav>
+            </div>
         </div>
     </div>
 </div>
@@ -83,5 +85,10 @@
                 $(".modal-content").html(result);
             });
         });
+
+        function BtnSearch() {
+            var data = $("#SearchInput").val();
+            window.location.href = "/Admin/Store?page=1&Search=" + data;
+        }
     </script>
 }

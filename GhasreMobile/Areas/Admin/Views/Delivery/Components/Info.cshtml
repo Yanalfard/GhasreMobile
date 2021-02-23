@@ -1,4 +1,8 @@
-﻿<div class="modal-header">
+﻿@model DataLayer.Models.TblDelivery
+
+@using GhasreMobile.Utilities
+
+<div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
         جزئیات
     </h6>
@@ -11,36 +15,37 @@
         <div class="form-row ">
             <div class="form-group col-md-6">
                 <label>نام:</label>
-                <span>علی</span>
+                <span>@Model.Name</span>
             </div>
             <div class="form-group col-md-6">
                 <label>شماره:</label>
-                <span>09142121252</span>
+                <span>@Model.TellNo</span>
             </div>
             <div class="form-group col-md-6">
                 <label>تاریخ ثبت:</label>
-                <span>1399/12/04-00:36</span>
+                <span>@Model.DateCreated.AllToShamsi()</span>
             </div>
             <div class="form-group col-md-6">
                 <label>وضعیت: </label>
-
-                <span class="text-success">تایید شده</span>
-
-                <span class="text-warning">تایید نشده</span>
-
+                @if (Model.IsAccepted)
+                {
+                    <span class="text-success">تایید شده</span>
+                }
+                else
+                {
+                    <span class="text-warning">تایید نشده</span>
+                }
             </div>
             <div class="form-group col-12 mt-2">
                 <label>ادرس:</label>
-                <div class="bg-light p-3 uk-border-rounded">تبریز - چایکنار - بعد از پل منصور به سمت آبرسان - ساختمان عمارت صبا - طبقه همکف غربی</div>
+                <div class="bg-light p-3 uk-border-rounded">@Model.Address</div>
             </div>
             <div class="form-group col-12">
                 <label>پیام:</label>
                 <div class="bg-light p-3 uk-border-rounded">
-                    پرداخت آنلاین پرداخت درب منزل یا در محل فروشگاه کارت به کارت و ارسال رسید پرداخت
+                    @Model.Message
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>

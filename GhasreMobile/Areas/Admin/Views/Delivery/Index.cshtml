@@ -1,15 +1,8 @@
-﻿
+﻿@model IEnumerable<DataLayer.Models.TblDelivery>
 @{
     ViewData["Title"] = "ارائه خدمات";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
-<style>
-    #deliveryCardBody {
-        padding-top:6px;
-    }
-</style>
-
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
         <div class="card flex-div border-0 main-shadow">
@@ -25,14 +18,14 @@
                             </div>
                         </div>
                         <div class="form-toolbar">
-                            <button onclick="" type="button" class="btn btn-primary btn-sm mr-3">جستجو<span class="icon-holder uk-margin-small-right" uk-icon="search-outline"></span></button>
+                            <button onclick="Search()" type="button" class="btn btn-primary btn-sm mr-3">جستجو<span class="icon-holder uk-margin-small-right" uk-icon="search-outline"></span></button>
                         </div>
 
                     </div>
 
                 </div>
             </div>
-            <div id="deliveryCardBody" class="card-body table-responsive flex">
+            <div id="deliveryCardBody" class="card-body table-responsive flex pt-2">
                 <table class="table fixed">
                     <thead class="thead-light">
                         <tr>
@@ -43,24 +36,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>علی</td>
-                            <td>
-                                <span>09142121252</span>
-                            <td class="mr-1">
-                                <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="تایید شده">
-                                    <span class="text-success" uk-icon="checkmark-circle-outline"></span>
-                                </span>
-                                <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="تایید نشده">
-                                    <span class="text-danger" uk-icon="close-circle-outline"></span>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
-                                    <a id="testclick" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
-                                </span>
-                            </td>
-                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>
+                                    <span>@item.TellNo</span>
+                                </td>
+                                <td class="mr-1">
+                                    @if (!item.IsAccepted)
+                                    {
+                                        <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="تایید کردن">
+                                            <span onclick="ChangeStatus(@item.DeliveryId)" uk-icon="checkmark-circle-outline"></span>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="رد کردن">
+                                            <span onclick="ChangeStatus(@item.DeliveryId)" class="text-danger" uk-icon="close-circle-outline"></span>
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
+                                        <a onclick="Info(@item.DeliveryId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
+                                    </span>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -68,22 +71,32 @@
 
         <div class="card-footer bg-white">
             <nav aria-label="Page navigation example">
-
+                @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
             </nav>
         </div>
     </div>
 </div>
 
-@section Script{ 
+@section Script{
 
-<script>
-    $("#testclick").click(function () {
+    <script>
+        function Info(id) {
+            $.get("/Admin/Delivery/Info/" + id, function (result) {
+                $(".modal-content").html(result);
+            });
+        }
 
-        $.get("/Admin/Delivery/Info", function (result) {
-            $(".modal-content").html(result);
-        });
+        function ChangeStatus(id) {
+            $.post("/Admin/Delivery/ChangeStatus/" + id, function () {
+                window.location.reload();
+            });
+        }
 
-    });
-</script>
+        function Search() {
+            var data = $("#SearchInput").val();
+            window.location.href = "/Admin/Delivery?page=1&Search=" + data;
+        }
+
+    </script>
 
 }
