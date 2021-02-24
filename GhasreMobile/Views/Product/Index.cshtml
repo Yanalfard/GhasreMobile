@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Index";
     ViewData["Single"] = true;
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Styles{
@@ -182,7 +181,7 @@
 </div>
 
 
-@await Component.InvokeAsync("SenedCommentView")
+@await Component.InvokeAsync("SendCommentView", Model.ProductId)
 
 @if (Model.TblProductCommentRel.Any())
 {
