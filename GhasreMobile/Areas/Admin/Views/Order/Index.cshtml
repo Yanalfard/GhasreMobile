@@ -15,10 +15,10 @@
                         <div class="form-input">
                             <div class="form-inline">
                                 <div class="form-group mx-sm-1 mb-2">
-                                    <input id="SearchInput" class="form-control uk-text-small" type="text" placeholder="کد سفارش" value="">
+                                    <input id="SearchInputId" class="form-control uk-text-small" type="text" placeholder="کد سفارش" value="">
                                 </div>
                                 <div class="form-group mx-sm-1 mb-2">
-                                    <input id="SearchInput" class="form-control uk-text-small" type="text" placeholder="شماره تماس مشتری" value="">
+                                    <input id="SearchInputUserPhone" class="form-control uk-text-small" type="text" placeholder="شماره تماس مشتری" value="">
                                 </div>
 
                             </div>
@@ -111,8 +111,8 @@
 
             <div class="card-footer bg-white">
                 <nav aria-label="Page navigation example">
-                        @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
-                    </nav>
+                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+                </nav>
             </div>
         </div>
     </div>
@@ -121,7 +121,7 @@
 @section Script{
     <script>
 
-        function OrderInfo (id) {
+        function OrderInfo(id) {
             $(".modal-content").html("");
             $.get("/Admin/Order/Info/" + id, function (result) {
                 $(".modal-content").html(result);
@@ -140,6 +140,12 @@
             $.get("/Admin/Order/DoneOrder/" + id, function () {
                 window.location.reload();
             });
+        }
+
+        function BtnSearch() {
+            var OrderId = $("#SearchInputId").val();
+            var TellNo = $("#SearchInputUserPhone").val();
+            window.location.href = "/Admin/Order?OrderId=" + OrderId + "&TellNo=" + TellNo;
         }
 
     </script>

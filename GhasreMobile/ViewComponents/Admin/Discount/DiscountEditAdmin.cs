@@ -3,14 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Services.Services;
 
 namespace GhasreMobile.ViewComponents.Admin.Discount
 {
-    public class DiscountEditAdmin:ViewComponent
+    public class DiscountEditAdmin : ViewComponent
     {
-        public async Task<IViewComponentResult> InvokeAsync()
+        Core _core = new Core();
+        public async Task<IViewComponentResult> InvokeAsync(int id)
         {
-            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Discount/Components/Edit.cshtml"));
+            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Discount/Components/Edit.cshtml", _core.Discount.GetById(id)));
         }
     }
 }
