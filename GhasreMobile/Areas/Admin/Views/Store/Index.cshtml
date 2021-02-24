@@ -80,11 +80,17 @@
             });
         });
 
-        $("#Edit").click(function () {
-            $.get("/Admin/Store/Edit", function (result) {
+        function Edit(id) {
+            $.get("/Admin/Store/Edit/" + id, function (result) {
                 $(".modal-content").html(result);
             });
-        });
+        }
+
+        function Remove(id) {
+            $.post("/Admin/Store/Delete/" + id, function () {
+                window.location.reload();
+            });
+        }
 
         function BtnSearch() {
             var data = $("#SearchInput").val();
