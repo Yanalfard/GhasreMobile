@@ -6,75 +6,72 @@
 
 @*<h1>InnerTicket</h1>*@
 
-<div class="row flex-div" >
+<div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
-        <div class="card flex-div border-0 main-shadow" >
+        <div class="card flex-div border-0 main-shadow">
             <div class="card-header bg-white">
                 <div class="form-row">
-                    <div class="form-group col-md-2 col-6">
+                    <div class="form-group mb-0">
                         <label>کد تیکت:</label>
                         <span>149652</span>
+                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات تیکت">
+                            <a id="Information" data-toggle="modal" data-target="#modalSave" class="mr-md-1 text-primary" uk-icon="information-circle"></a>
+                        </span>
                     </div>
-                    <div class="form-group col-md-2 col-6">
-                        <label>عنوان:</label>
-                        <span>فلان</span>
-                    </div>
-                    <div class="form-group col-md-2 col-6">
-                        <label>نام کاربر:</label>
-                        <span>امیر جدیدی</span>
-                    </div><div class="form-group col-md-2 col-6">
-                        <label>وضعیت:</label>
-                        <span class="text-success">پاسخ داده شده</span>
-                        @*<span class="text-warning">پاسخ داده نشده</span>*@
-                    </div>
-                    <div class="form-group col-md-2 col-6">
-                        <label>تاریخ ثبت تیکت:</label>
-                        <span> فلان تاریخ</span>
-                    </div>
-                    <a href="/Admin/Ticket" class="btn btn-primary btn-sm text-white float-left uk-margin-auto-right uk-margin-auto-top uk-margin-auto-bottom">بازگشت</a>
+                    <a href="/Admin/Ticket" class="btn btn-primary btn-sm text-white float-left uk-margin-auto-right uk-margin-auto-top uk-margin-auto-bottom ml-md-4">بازگشت</a>
                 </div>
             </div>
             <div id="card-table" class="card-body flex-div">
-                <div class="table-responsive flex">
-                    <div >
-                        <div class="form-group float-right col-12">
-                            <div class="col-10 col-sm-10 col-md-6 bg-light p-3 uk-border-rounded float-left">
-                                <p>
-                                    طراحان سایت هنگام طراحی قالب سایت معمولا با این موضوع رو برو هستند که محتوای اصلی صفحات آماده نیست. در نتیجه طرح کلی دید درستی به کار فرما نمیدهد. اگر طراح بخواهد دنبال متن های مرتبط بگردد تمرکزش از روی کار اصلی برداشته میشود و اینکار زمان بر خواهد بود.
-                                </p>
-                                <div class="pb-2">
-                                    <hr />
+                <div id="ChatPanel" class="table-responsive flex">
 
-                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="دارای فایل">
-                                        <a href=""><i class="mr-2" uk-icon="attach-outline"></i></a>
-                                    </span>
+                    @*light background box*@
 
-                                    <time class="float-left">23:15</time>
-                                    <span class="float-left">اسم ارسال کننده &nbsp;</span>
-                                </div>
-                            </div>
+                    <div class="form-group float-right col-12">
+                        <div class="col-10 col-sm-10 col-md-6 bg-light pt-3 pb-1 uk-border-rounded float-left">
+                            <p>
+                                طراحان سایت هنگام طراحی قالب سایت معمولا با این موضوع رو برو هستند که محتوای اصلی صفحات آماده نیست. در نتیجه طرح کلی دید درستی به کار فرما نمیدهد..
+                            </p>
+                            <hr class="m-1" />
+                            <time class="float-left">23:15</time>
+                            <span class="float-left">اسم ارسال کننده &nbsp;</span>
                         </div>
-                        <div class="form-group float-left col-12">
-                            <div class="col-10 col-sm-10 col-md-6 bg-costum p-3 uk-border-rounded float-right">
-                                <p>
-                                    طراحان سایت هنگام طراحی قالب سایت معمولا با این موضوع رو برو هستند که محتوای اصلی صفحات آماده نیست. در نتیجه طرح کلی دید درستی به کار فرما نمیدهد. اگر طراح بخواهد دنبال متن های مرتبط بگردد تمرکزش از روی کار اصلی برداشته میشود و اینکار زمان بر خواهد بود.
-                                </p>
-                                <div class="pb-2">
-                                    <hr />
+                    </div>
 
-                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="دارای فایل">
-                                        <a href=""><i class="mr-2" uk-icon="attach-outline"></i></a>
-                                    </span>
+                    @*purple background box*@
 
-                                    <time class="float-left">23:15</time>
-                                    <span class="float-left">اسم ارسال کننده &nbsp;</span>
-                                </div>
-                            </div>
+                    <div class="form-group float-left col-12">
+                        <div class="col-10 col-sm-10 col-md-6 bg-purple pt-3 pb-1 uk-border-rounded float-right">
+                            <p>
+                                در نتیجه طرح کلی دید درستی به کار فرما نمیدهد. اگر طراح بخواهد دنبال متن های مرتبط بگردد تمرکزش از روی کار اصلی برداشته میشود و اینکار زمان بر خواهد بود
+                            </p>
+                            <hr class="m-1" />
+                            <time class="float-left">23:15</time>
+                            <span class="float-left">اسم ارسال کننده &nbsp;</span>
                         </div>
                     </div>
                 </div>
             </div>
-            
+            <div class="card-footer bg-white form-row ">
+                <textarea class="form-control col-md-10 textarea-fix-height-50"></textarea>
+                <div class="uk-margin-auto uk-margin-auto-vertical">
+                    <a id="BtnSendMassage" class="btn btn-success btn-sm text-white float-left uk-margin-auto-bottom mr-2 mt-2 mt-md-0" onclick="">ارسال پیام <span uk-icon="paper-plane-outline"></span></a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+@section Script{
+    <script>
+        $("#Information").click(function () {
+            $.get("/Admin/Ticket/TicketInfo", function (result) {
+                $(".modal-content").html(result);
+            });
+        });
+
+        $(document).ready(function () {
+            document.getElementById('ChatPanel').scrollTo(0, document.getElementById('ChatPanel').scrollHeight);
+        });
+
+    </script>
+}

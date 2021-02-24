@@ -71,14 +71,3 @@
         </div>
     </div>
 </div>
-
-@section Script{
-    <script>
-        $("#Information").click(function () {
-            $.get("/Admin/Ticket/TicketInfo", function (result) {
-                $(".modal-content").html(result);
-            });
-        });
-    </script>
-}
-
