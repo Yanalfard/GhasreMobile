@@ -18,10 +18,12 @@
             <div class="form-group col-md-4">
                 <label>نام فروشگاه</label>
                 <input asp-for="Name" class="form-control form-control-sm" placeholder="مثال: فروشگاه 1">
+                <span class="text-danger" asp-validation-for="Name"></span>
             </div>
             <div class="form-group col-md-3">
                 <label>شماره تماس</label>
                 <input asp-for="TellNo" type="tel" class="form-control form-control-sm" placeholder="مثال: ...0914">
+            <span class="text-danger" asp-validation-for="TellNo"></span>
             </div>
         </div>
         <label class="mt-2">تصویر اصلی</label>
@@ -30,12 +32,14 @@
             <input asp-for="MainImage" type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" onchange="inputChanged(this)">
             <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر</label>
         </div>
+        <span class="text-danger" asp-validation-for="MainImage"></span>
         <hr />
         <div class="form-row">
             <div class="form-group col-md-7">
                 <label>توضیحات</label>
                 <textarea asp-for="Body" class="textarea-fix-height-120" placeholder=" متن توضیحات... "></textarea>
             </div>
+            <span class="text-danger" asp-validation-for="Body"></span>
         </div>
         <hr />
         <div class="form-row">
@@ -43,12 +47,14 @@
                 <label>آدرس</label>
                 <input asp-for="Address" class="form-control form-control-sm" placeholder="مثال: خیابان امام...">
             </div>
+            <span class="text-danger" asp-validation-for="Address"></span>
         </div>
         <label>لوکیشن فروشگاه</label>
         <div id="map" style="height:220px;"></div>
     </div>
     <input type="hidden" asp-for="Lat" />
     <input type="hidden" asp-for="Lon" />
+    <span class="text-danger" asp-validation-for="Lat"></span>
     <div class="modal-footer justify-content-end">
         <button type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
     </div>

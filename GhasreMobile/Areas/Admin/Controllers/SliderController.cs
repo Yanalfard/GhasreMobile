@@ -35,23 +35,58 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                TblBannerAndSlide NewSlider = new TblBannerAndSlide();
-                NewSlider.Name = slider.Name;
-                NewSlider.ActiveTill = DateTime.Now.AddDays(SliderTime);
-                NewSlider.IsActive = true;
-                NewSlider.Link = slider.Link;
-                NewSlider.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
-                string savePath = Path.Combine(
-                                        Directory.GetCurrentDirectory(), "wwwroot/Images/Slider", NewSlider.ImageUrl
-                                    );
-
-                using (var stream = new FileStream(savePath, FileMode.Create))
+                if (_core.BannerAndSlide.Get().Count() > 5)
                 {
-                    await ImageUrl.CopyToAsync(stream);
-                };
-                _core.BannerAndSlide.Add(NewSlider);
-                _core.BannerAndSlide.Save();
-                return Redirect("/Admin/Slider");
+
+                    TblBannerAndSlide FirstSlider = _core.BannerAndSlide.Get().First();
+
+                    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Slider", FirstSlider.ImageUrl);
+
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                    _core.BannerAndSlide.Delete(FirstSlider);
+
+
+                    TblBannerAndSlide NewSlider = new TblBannerAndSlide();
+                    NewSlider.Name = slider.Name;
+                    NewSlider.ActiveTill = DateTime.Now.AddDays(SliderTime);
+                    NewSlider.IsActive = true;
+                    NewSlider.Link = slider.Link;
+                    NewSlider.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                    string savePath = Path.Combine(
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Slider", NewSlider.ImageUrl
+                                        );
+
+                    using (var stream = new FileStream(savePath, FileMode.Create))
+                    {
+                        await ImageUrl.CopyToAsync(stream);
+                    };
+                    _core.BannerAndSlide.Add(NewSlider);
+                    _core.BannerAndSlide.Save();
+                    return Redirect("/Admin/Slider");
+                }
+                else
+                {
+                    TblBannerAndSlide NewSlider = new TblBannerAndSlide();
+                    NewSlider.Name = slider.Name;
+                    NewSlider.ActiveTill = DateTime.Now.AddDays(SliderTime);
+                    NewSlider.IsActive = true;
+                    NewSlider.Link = slider.Link;
+                    NewSlider.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                    string savePath = Path.Combine(
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Slider", NewSlider.ImageUrl
+                                        );
+
+                    using (var stream = new FileStream(savePath, FileMode.Create))
+                    {
+                        await ImageUrl.CopyToAsync(stream);
+                    };
+                    _core.BannerAndSlide.Add(NewSlider);
+                    _core.BannerAndSlide.Save();
+                    return Redirect("/Admin/Slider");
+                }
             }
             return View(slider);
         }
