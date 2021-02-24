@@ -1802,9 +1802,9 @@ table.hot-download td {
     resize:none;
     width:100%;
 }
-.textarea-fix-height-90 {
-    max-height: 90px !important;
-    min-height:90px !important;
+.textarea-fix-height-50 {
+    max-height: 50px !important;
+    min-height:50px !important;
     resize: none;
 }
 .textarea-fix-height-300 {
@@ -1814,6 +1814,9 @@ table.hot-download td {
 }
 .bg-costum {
     background: #c1e5b0 !important;
+}
+.bg-purple {
+    background: #e9daef !important;
 }
 .justify-text {
     overflow: hidden;
@@ -1853,4 +1856,12 @@ table.hot-download td {
 }
 .AdminMap {
     height: 220px;
+}
+.gly-rotate-180 {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+    display: inline-block;
 }
