@@ -13,5 +13,6 @@ namespace DataLayer.ViewModels
         public string Body { get; set; }
         public double Rate { get; set; }
         public int ProductId { get; set; }
+        public int BlogId { get; set; }
     }
 }

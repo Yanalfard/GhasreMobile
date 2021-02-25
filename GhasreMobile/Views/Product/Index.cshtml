@@ -207,23 +207,9 @@
         </a>
     </div>
 
-    @*<ul class="uk-slider-items">
-            <li>
-                <partial name="_ProductBlock" />
-            </li>
-            <li>
-                <partial name="_ProductBlock" />
-            </li>
-            <li>
-                <partial name="_ProductBlock" />
-            </li>
-            <li>
-                <partial name="_ProductBlock" />
-            </li>
-            <li>
-                <partial name="_ProductBlock" />
-            </li>
-        </ul>*@
+    <ul class="uk-slider-items">
+        @await Component.InvokeAsync("ShowProductsInView", Model.Brand.BrandId)
+    </ul>
 
     <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
 
@@ -232,7 +218,10 @@
 @section Scripts{
 
     <script>
-
+        //var id = $('#brandName').val();
+        //$.get('/Product/SliderInProduct/' + id, function (result) {
+        //    $('#listProductsSlider').html(result);
+        //});
         function comparisonChanged(sender) {
             sender.parentElement.classList.toggle('checked');
             // Toggle Comparison
