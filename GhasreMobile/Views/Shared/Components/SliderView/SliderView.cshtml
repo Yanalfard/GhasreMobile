@@ -13,7 +13,14 @@
     </ul>
     <div class="navigation uk-position-bottom-center uk-position-small">
         <ul class="uk-dotnav">
-            <li uk-slideshow-item="0"><a href="#">Item 1</a></li>
+            @foreach (var item in Model)
+            {
+                <li uk-slideshow-item="@(Model.ToList().IndexOf(item)+1)"><a href="#">Item 1</a></li>
+                <li>
+                    <a href="@item.Link"><img src="~/Images/Slider/@item.ImageUrl" alt="@item.Name" uk-cover></a>
+                </li>
+            }
+
             <li uk-slideshow-item="1"><a href="#">Item 2</a></li>
             <li uk-slideshow-item="2"><a href="#">Item 3</a></li>
         </ul>
