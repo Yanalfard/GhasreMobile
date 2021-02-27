@@ -9,11 +9,12 @@ namespace DataLayer.Models
     {
         [Key]
         public int BankAccountId { get; set; }
-        [Required]
-        [StringLength(19)]
+        [Required(ErrorMessage = "شماره کارت اجباری است")]
+        [MaxLength(16, ErrorMessage = "لطفا کارت 16 رقمی را وارد کنید")]
+        [MinLength(16, ErrorMessage = "لطفا کارت 16 رقمی را وارد کنید")]
         public string AccountNo { get; set; }
-        [Required]
-        [StringLength(150)]
+        [Required(ErrorMessage = "لطفا نام دارنده حساب را وارد کنید")]
+        [MaxLength(15, ErrorMessage = "لطفا نام معتبر وارد کنید")]
         public string Name { get; set; }
         public bool IsActive { get; set; }
     }
