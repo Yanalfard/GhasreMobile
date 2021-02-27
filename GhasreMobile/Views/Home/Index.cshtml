@@ -1,40 +1,56 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "قصر موبایل";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Styles{
     <link href="~/css/pages/index.min.css" rel="stylesheet" />
 }
 @section Aside{
-    <div class="categories">
+    <div swap="swBrandList" class="categories">
         <ul>
             @await Component.InvokeAsync("BrandListView")
         </ul>
     </div>
-    <div class="mat mat-border">
+
+    <div swap="Exp1" class="mat mat-border">
         <partial name="_ExpressProductBlock" />
     </div>
-    <div swap="hello"><partial name="_Ad" /></div>
-    <partial name="_Ad" />
-    <partial name="_Ad" />
+
+    <div swap="Ad1"><partial name="_Ad" /></div>
+    <div swap="Ad2"><partial name="_Ad" /></div>
+
+    <div swap="Exp2" class="mat mat-border">
+        <partial name="_ExpressProductBlock" />
+    </div>
+
+    <div swap="Ad3"><partial name="_Ad" /></div>
+    <div swap="Ad4"><partial name="_Ad" /></div>
 }
 <!-- #SliderView -->
 @await Component.InvokeAsync("SliderView")
 <!-- #SliderView -->
+<div role="none" id="swBrandList"></div>
 <!-- #Product -->
 @await Component.InvokeAsync("ProductView")
 <!-- #Product -->
+<div class="swap-doubler">
+    <div role="none" id="Exp1"></div>
+    <div role="none" id="Exp2"></div>
+</div>
 <!-- #Blogs -->
 @await Component.InvokeAsync("BlogsView")
 <!-- #Blogs -->
-<div id="hello"></div>
+<div role="none" id="Ad1"></div>
 <!-- #GalleryView -->
 @await Component.InvokeAsync("GalleryView")
 <!-- #GalleryView -->
+<div role="none" id="Ad2"></div>
 <!-- #DeliveryView -->
 @await Component.InvokeAsync("DeliveryView")
 <!-- #DeliveryView -->
+<div role="none" id="Ad3"></div>
 <!-- #questions -->
 @await Component.InvokeAsync("QuestionsView")
 <!-- #questions -->
+<div role="none" id="Ad4"></div>

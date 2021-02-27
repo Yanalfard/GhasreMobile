@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GhasreMobile.ViewComponents.Admin.Card
+namespace GhasreMobile.ViewComponents.Admin.Ad
 {
-    public class adCreateAdmin:ViewComponent
+    public class AdCreateAdmin:ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/Card/Components/Create.cshtml"));
+            return await Task.FromResult((IViewComponentResult)View("/Areas/Admin/Views/ad/Components/Create.cshtml"));
         }
     }
 }

@@ -10,8 +10,8 @@
 
 <nav class="breadcrumb">
     <a href="">کالا</a>
-    <a href="">هواوی</a>
-    <a href="" class="active">هواوی میت 8</a>
+    <a href="">@Model.Brand.Name</a>
+    <a href="#" class="active">@Model.Name</a>
 </nav>
 
 <div class="pr mat-card">
@@ -22,15 +22,15 @@
         <div class="rowr uk-margin-top">
             <span class="row" dir="rtl">
                 <span class="uk-margin-small-left">برند:</span>
-                <a href="">@Model.Brand.Name</a>
+                <a href="#">@Model.Brand.Name</a>
             </span>
             <span class="row uk-margin-right" dir="rtl">
                 <span class="uk-margin-small-left">دسته:</span>
-                <a href="">@Model.Catagory.Name</a>
+                <a href="#">@Model.Catagory.Name</a>
             </span>
             <span class="row uk-margin-right" dir="rtl">
                 <span class="uk-margin-small-left">کد:</span>
-                <a href="">#@Model.ProductId</a>
+                <a href="#">#@Model.ProductId</a>
             </span>
         </div>
     </div>
@@ -39,7 +39,7 @@
         <div class="head">
 
         </div>
-        <div uk-slideshow="animation: slide; ratio:20:23">
+        <div uk-slideshow="animation: slide; ratio:1:1">
             <div class="border">
                 <div class="slider">
                     <ul class="img uk-slideshow-items" uk-lightbox="animation: slide">
@@ -223,15 +223,21 @@
         //    $('#listProductsSlider').html(result);
         //});
         function comparisonChanged(sender) {
+            
             sender.parentElement.classList.toggle('checked');
             // Toggle Comparison
 
         }
 
         function favouritesChanged(sender) {
+            if (sender.checked) {
+                alert('1');
+            }
+            else {
+                alert('2');
+            }
             sender.parentElement.classList.toggle('checked');
             // Toggle Comparison
-
         }
 
         function notificationsChanged(sender) {

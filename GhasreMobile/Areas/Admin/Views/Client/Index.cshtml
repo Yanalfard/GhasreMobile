@@ -1,8 +1,10 @@
-﻿
+﻿@model IEnumerable<DataLayer.Models.TblClient>
 @{
     ViewData["Title"] = "کاربران";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
+@using GhasreMobile.Utilities
 
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
@@ -35,29 +37,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>پیمان معادی</td>
-                                <td>091426556</td>
-                                <td class="text-success">8400000 <span>تومان</span></td>
-                                <td>مشتری</td>
-                                <td>تاریخ فلان</td>
-                                <td>
-                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
-                                        <a id="Edit" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
-                                    </span>
-                                </td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.TellNo</td>
+                                    <td class="text-success">@item.Balance<span>تومان</span></td>
+                                    <td>@item.Role.Name</td>
+                                    <td>@item.DateCreated.Value.AllToShamsi()</td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                            <a onclick="Edit(@item.ClientId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <!--end list region-->
-            @*<div class="card-footer bg-white">
-                    <nav aria-label="Page navigation example">
-                        @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
-                    </nav>
-                </div>*@
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+                </nav>
+            </div>
         </div>
     </div>
 </div>
@@ -65,8 +70,8 @@
 @section Script{
 
     <script>
-        $("#Edit").click(function () {
-            $.get("/Admin/Ad/Edit", function (result) {
+        function Edit(id) {
+            $.get("/Admin/Client/Edit/" + id, function (result) {
                 $(".modal-content").html(result);
             });
         });

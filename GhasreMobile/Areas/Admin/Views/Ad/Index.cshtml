@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DataLayer.Models.TblAd>
 @{
     ViewData["Title"] = "تبلیغات";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -26,28 +26,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>...</td>
-                                <td>
-                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
-                                        <a id="Edit" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
-                                    </span>
-                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
-                                        <a class="text-danger" uk-icon="trash"></a>
-                                    </span>
-                                </td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Label</td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                            <a onclick="Edit(@item.AdId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                        </span>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
+                                            <a onclick="Delete(@item.AdId)" uk-icon="trash"></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <!--end list region-->
-            @*<div class="card-footer bg-white">
+            <div class="card-footer bg-white">
                     <nav aria-label="Page navigation example">
                         @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
                     </nav>
-                </div>*@
+                </div>
         </div>
     </div>
 </div>
@@ -61,10 +64,13 @@
             });
         });
 
-        $("#Edit").click(function () {
-            $.get("/Admin/Ad/Edit", function (result) {
+        function Edit(id) {
+            $.get("/Admin/Ad/Edit/" + id, function (result) {
                 $(".modal-content").html(result);
             });
-        });
+        }
+
+
+
     </script>
 }
