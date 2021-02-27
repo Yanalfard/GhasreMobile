@@ -34,29 +34,18 @@
     </p>
 </div>
 
-<div class="mat-card">
-    <h4>
-        نظر شما
-    </h4>
-    <div class="fg-col uk-margin-small-top">
-        <textarea class="entry"></textarea>
-        <div class="rowr uk-margin-small-top">
-            <button class="btn btn-dashed uk-margin-auto-top">ثبت نظر</button>
-        </div>
-    </div>
-</div>
+
+@await Component.InvokeAsync("SendCommentBlogView", Model.BlogId)
+
 
 <div class="comment-section mat-card">
     <h3>نظرات کاربران</h3>
     <ul>
-        <li>
-            <partial name="_CommentBlock" />
-        </li>
-        <li>
-            <partial name="_CommentBlock" />
-        </li>
-        <li>
-            <partial name="_CommentBlock" />
-        </li>
+        @foreach (var item in Model.TblBlogCommentRel.Where(i => i.Comment.IsValid))
+        {
+            <li>
+                <partial name="_CommentBlock" model="item.Comment" />
+            </li>
+        }
     </ul>
 </div>

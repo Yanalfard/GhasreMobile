@@ -23,7 +23,6 @@ namespace GhasreMobile.Controllers
         {
             return View();
         }
-
         [Route("/About")]
         public IActionResult About()
         {

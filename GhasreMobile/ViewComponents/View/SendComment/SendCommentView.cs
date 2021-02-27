@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace GhasreMobile.ViewComponents.View.SenedComment
 {
-    public class SenedCommentView : ViewComponent
+    public class SendCommentView : ViewComponent
     {
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(int id)
         {
             SendCommentVm commentVm = new SendCommentVm();
-            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/SenedCommentView/SenedCommentView.cshtml", commentVm));
+            commentVm.ProductId = id;
+            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/SendCommentView/SendCommentView.cshtml", commentVm));
         }
     }
 }

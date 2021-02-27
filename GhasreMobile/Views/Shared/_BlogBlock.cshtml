@@ -10,7 +10,7 @@
         @Model.Description
     </p>
     <div class="row gap-t">
-        <label>@Model.DateCreated</label>
+        <label>@Model.DateCreated.DateToShamsi()</label>
         <a href="/ViewBlog/@Model.BlogId/@Model.Title.Replace(" ","-")" dir="rtl">بیشتر...</a>
     </div>
 </div>
