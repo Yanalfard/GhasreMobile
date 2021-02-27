@@ -1,4 +1,18 @@
-﻿<div class="albumBlock mat col uk-overflow-hidden" uk-lightbox>
+﻿@model TblAlbum
+<div class="albumBlock mat col uk-overflow-hidden" uk-lightbox>
+    @foreach (var item in Model.TblImage)
+    {
+        <a href="~/Images/ProductAlbum/@item.Image" data-caption="نام">
+            <img src="~/Images/ProductAlbum/@item.Image" alt="" />
+        </a>
+    }
+    <div class="mat-pad col">
+        <h2 class="uk-h5">@Model.Name</h2>
+        @*<label class="uk-h6 text-3 uk-margin-small-top">4 شنبه 20 آبان</label>*@
+    </div>
+</div>
+@*<div class="albumBlock mat col uk-overflow-hidden" uk-lightbox>
+
     <a href="~/st/r/ads/a1.jpg" data-caption="نام">
         <img src="~/st/r/ads/a1.jpg" alt="" />
     </a>
@@ -9,6 +23,6 @@
     <a href="~/st/r/ads/a6.jpg" data-caption="نام"></a>
     <div class="mat-pad col">
         <h2 class="uk-h5">نام این آلبوم</h2>
-        @*<label class="uk-h6 text-3 uk-margin-small-top">4 شنبه 20 آبان</label>*@
+        <label class="uk-h6 text-3 uk-margin-small-top">4 شنبه 20 آبان</label>
     </div>
-</div>
+</div>*@
