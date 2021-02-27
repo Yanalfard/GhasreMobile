@@ -38,7 +38,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            return ViewComponent("CardEditAdmin",_core.BankAccounts.GetById(id));
+            return ViewComponent("CardEditAdmin", id);
         }
 
         [HttpPost]
@@ -50,7 +50,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.BankAccounts.Save();
                 return Redirect("/Admin/Card");
             }
-           return View(bankAccount);
+            return View(bankAccount);
         }
 
         [HttpPost]

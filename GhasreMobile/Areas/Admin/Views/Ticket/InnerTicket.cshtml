@@ -1,10 +1,10 @@
-﻿
+﻿@model IEnumerable<DataLayer.Models.TblTicket>
 @{
     ViewData["Title"] = "محتوای تیکت";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-@*<h1>InnerTicket</h1>*@
+@using GhasreMobile.Utilities
 
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
@@ -12,10 +12,10 @@
             <div class="card-header bg-white">
                 <div class="form-row">
                     <div class="form-group mb-0">
-                        <label>کد تیکت:</label>
-                        <span>149652</span>
+                        <label>کد آخرین تیکت:</label>
+                        <span>@Model.Last().TicketId</span>
                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات تیکت">
-                            <a id="Information" data-toggle="modal" data-target="#modalSave" class="mr-md-1 text-primary" uk-icon="information-circle"></a>
+                            <a onclick="Information(@Model.Last().TicketId)" data-toggle="modal" data-target="#modalSave" class="mr-md-1 text-primary" uk-icon="information-circle"></a>
                         </span>
                     </div>
                     <a href="/Admin/Ticket" class="btn btn-primary btn-sm text-white float-left uk-margin-auto-right uk-margin-auto-top uk-margin-auto-bottom ml-md-4">بازگشت</a>
@@ -23,40 +23,50 @@
             </div>
             <div id="card-table" class="card-body flex-div">
                 <div id="ChatPanel" class="table-responsive flex">
+                    @foreach (var item in Model)
+                    {
 
-                    @*light background box*@
+                        @if (item.IsAnswer)
+                        {
+                            @*light background box*@
 
-                    <div class="form-group float-right col-12">
-                        <div class="col-10 col-sm-10 col-md-6 bg-light pt-3 pb-1 uk-border-rounded float-left">
-                            <p>
-                                طراحان سایت هنگام طراحی قالب سایت معمولا با این موضوع رو برو هستند که محتوای اصلی صفحات آماده نیست. در نتیجه طرح کلی دید درستی به کار فرما نمیدهد..
-                            </p>
-                            <hr class="m-1" />
-                            <time class="float-left">23:15</time>
-                            <span class="float-left">اسم ارسال کننده &nbsp;</span>
-                        </div>
-                    </div>
+                            <div class="form-group float-right col-12">
+                                <div class="col-10 col-sm-10 col-md-6 bg-light pt-3 pb-1 uk-border-rounded float-left">
+                                    <p>
+                                        @item.Body
+                                    </p>
+                                    <hr class="m-1" />
+                                    <time class="float-left">@item.DateSubmited.Value.AllToShamsi()</time>
+                                    <span class="float-left">@item.Client.Name &nbsp;</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            @*purple background box*@
 
-                    @*purple background box*@
+                            <div class="form-group float-left col-12">
+                                <div class="col-10 col-sm-10 col-md-6 bg-purple pt-3 pb-1 uk-border-rounded float-right">
+                                    <p>
+                                        @item.Body
+                                    </p>
+                                    <hr class="m-1" />
+                                    <time class="float-left">@item.DateSubmited.Value.AllToShamsi()</time>
+                                    <span class="float-left">@item.Client.Name &nbsp;</span>
+                                </div>
+                            </div>
+                        }
 
-                    <div class="form-group float-left col-12">
-                        <div class="col-10 col-sm-10 col-md-6 bg-purple pt-3 pb-1 uk-border-rounded float-right">
-                            <p>
-                                در نتیجه طرح کلی دید درستی به کار فرما نمیدهد. اگر طراح بخواهد دنبال متن های مرتبط بگردد تمرکزش از روی کار اصلی برداشته میشود و اینکار زمان بر خواهد بود
-                            </p>
-                            <hr class="m-1" />
-                            <time class="float-left">23:15</time>
-                            <span class="float-left">اسم ارسال کننده &nbsp;</span>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
-            <div class="card-footer bg-white form-row ">
-                <textarea class="form-control col-md-10 textarea-fix-height-50"></textarea>
+            <form class="card-footer bg-white form-row" asp-action="SendMassage" asp-controller="Ticket" asp-area="Admin">
+                <input type="hidden" value="@Model.Last().ClientId" name="ClientId" />
+                <textarea class="form-control col-md-10 textarea-fix-height-50" name="Body"></textarea>
                 <div class="uk-margin-auto uk-margin-auto-vertical">
-                    <a id="BtnSendMassage" class="btn btn-success btn-sm text-white float-left uk-margin-auto-bottom mr-2 mt-2 mt-md-0" onclick="">ارسال پیام <span uk-icon="paper-plane-outline"></span></a>
+                    <button type="submit" class="btn btn-success btn-sm text-white float-left uk-margin-auto-bottom mr-2 mt-2 mt-md-0" onclick="">ارسال پیام <span uk-icon="paper-plane-outline"></span></button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

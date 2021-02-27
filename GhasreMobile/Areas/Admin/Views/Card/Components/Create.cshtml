@@ -18,12 +18,12 @@
             <div class="form-group col-lg-6">
                 <label>شماره کارت</label>
                 <input asp-for="AccountNo" type="number" class="form-control form-control-sm" placeholder="مثال: 1234567891234">
-                <span class="text-danger"></span>
+                <span class="text-danger" asp-validation-for="AccountNo"></span>
             </div>
             <div class="form-group col-lg-6">
                 <label>صاحب کارت</label>
                 <input asp-for="Name" type="text" class="form-control form-control-sm" placeholder="مثال: علی علیزاده">
-                <span class="text-danger"></span>
+                <span class="text-danger" asp-validation-for="AccountNo"></span>
             </div>
         </div>
     </div>
