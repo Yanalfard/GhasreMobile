@@ -11,7 +11,7 @@
         <div class="grid" uk-lightbox>
             @foreach (var item in Model)
             {
-                @*<a href="~/Images/Blogs/@item.Image" data-caption="نام"><img src="~/Images/Blogs/@item.Image" alt="" /></a>*@
+                <a href="~/Images/ProductAlbum/@item.Image" data-caption="@item.Album.Name"><img src="~/Images/ProductAlbum/@item.Image" alt="" /></a>
             }
         </div>
         <div class="row">
@@ -19,22 +19,3 @@
         </div>
     </div>
 }
-<div class="gallery-grid mat-card">
-    <div class="title">
-        <a href="#" class="dot-container">
-            <img src="~/st/v/dot.svg" alt="" class="dot" />
-            <h3>گالری</h3>
-        </a>
-    </div>
-    <div class="grid" uk-lightbox>
-        <a href="~/st/r/ads/a1.jpg" data-caption="نام"><img src="~/st/r/ads/a1.jpg" alt="" /></a>
-        <a href="~/st/r/phones/p1.jpg" data-caption="نام"><img src="~/st/r/phones/p1.jpg" alt="" /></a>
-        <a href="~/st/r/ads/a3.jpg" data-caption="نام"><img src="~/st/r/ads/a3.jpg" alt="" /></a>
-        <a href="~/st/r/phones/p2.jpg" data-caption="نام"><img src="~/st/r/phones/p2.jpg" alt="" /></a>
-        <a href="~/st/r/ads/a4.jpg" data-caption="نام"><img src="~/st/r/ads/a4.jpg" alt="" /></a>
-        <a href="~/st/r/ads/a6.jpg" data-caption="نام"><img src="~/st/r/ads/a6.jpg" alt="" /></a>
-    </div>
-    <div class="row">
-        <a class="btn btn-secondary uk-margin-auto" href="/Gallery">بیشتر</a>
-    </div>
-</div>

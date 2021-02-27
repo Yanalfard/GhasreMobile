@@ -12,7 +12,8 @@ namespace GhasreMobile.ViewComponents.View.Blogs
         private Core db = new Core();
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/BlogsView/BlogsView.cshtml", db.Blog.Get().OrderByDescending(i=>i.DateCreated)));
+            Random r = new Random();
+            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/BlogsView/BlogsView.cshtml", db.Blog.Get().OrderByDescending(i=>i.DateCreated).Take(40)));
         }
     }
 }
