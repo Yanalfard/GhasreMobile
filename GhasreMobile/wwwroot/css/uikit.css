@@ -4474,7 +4474,7 @@ select.uk-form-width-xsmall {
 .uk-offcanvas-overlay {
   /* 1 */
   width: 100vw;
-  backdrop-filter: blur(6px) brightness(80%);
+  background-color: rgba(0, 0, 0, 0.36);
   /* 2 */
   touch-action: none; }
 
