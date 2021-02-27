@@ -1865,3 +1865,10 @@ table.hot-download td {
     transform: rotate(180deg);
     display: inline-block;
 }
+
+.dismissButton {
+    position: absolute;
+    left: 2vw;
+    top: 1vw;
+    border-radius: 50% !important;
+}
