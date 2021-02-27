@@ -1,0 +1,41 @@
+﻿@model SendCommentVm
+<div class="mat-card gap-t">
+    <h4>
+        نظر شما
+    </h4>
+    <form id="ajaxresultSendComment" class="fg-col uk-margin-small-top" action="/Product/SendComment" method="post"
+          data-ajax="true"
+          data-ajax-method="POST"
+          data-ajax-mode="replace"
+          data-ajax-complete="SendComment()"
+          data-ajax-update="#ajaxresultSendComment">
+        <textarea class="entry" asp-for="Body"></textarea>
+        <span class="text-danger" asp-validation-for="Body"></span>
+        <input type="hidden" id="Rate" asp-for="Rate" name="Rate" value="4" />
+        <input type="hidden" id="ProductId" asp-for="ProductId" name="ProductId" />
+        <div class="rowr uk-margin-small-top">
+            <button type="submit" class="btn btn-dashed uk-margin-auto-top" onclick="LoadingRun('#ajaxresultSendComment')">ثبت نظر</button>
+            <div class="row star-container uk-margin-auto-right">
+                <span class="star-cb-group" id="myRaiting">
+                    <input type="radio" id="rating-5" name="Raiting" onclick="submitRating()" value="5" /><label for="rating-5">5</label>
+                    <input type="radio" id="rating-4" name="Raiting" onclick="submitRating()" value="4" checked="checked" /><label for="rating-4">4</label>
+                    <input type="radio" id="rating-3" name="Raiting" onclick="submitRating()" value="3" /><label for="rating-3">3</label>
+                    <input type="radio" id="rating-2" name="Raiting" onclick="submitRating()" value="2" /><label for="rating-2">2</label>
+                    <input type="radio" id="rating-1" name="Raiting" onclick="submitRating()" value="1" /><label for="rating-1">1</label>
+                    <input type="radio" id="rating-0" name="Raiting" onclick="submitRating()" value="0" class="star-cb-clear" /><label for="rating-0">0</label>
+                </span>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function submitRating() {
+        var name = $('input[name=Raiting]:checked', '#myRaiting').val();
+        $('#Rate').val(name);
+    }
+    function SendComment() {
+        $("textarea").val("");
+        UIkit.notification('پیام شما ثبت شد');
+        LoadingEnd();
+    }
+</script>

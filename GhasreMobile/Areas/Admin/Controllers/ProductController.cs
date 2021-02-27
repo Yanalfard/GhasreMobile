@@ -324,7 +324,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             else
                             {
                                 TblKeyword keyword = new TblKeyword();
-                                keyword.Name = item.Replace(" ","-");
+                                keyword.Name = item.Replace("                                       ", "");
                                 _core.Keyword.Add(keyword);
                                 _core.Keyword.Save();
                                 TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
@@ -342,7 +342,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     {
                         foreach (var item in Keywords)
                         {
-                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace("                                       ","")))
+                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace("                                       ", "")))
                             {
                                 TblKeyword keyword = _core.Keyword.Get(k => k.Name == item.Replace("                                       ", "")).SingleOrDefault();
                                 TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
@@ -369,47 +369,28 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 if (GalleryFile.Count > 0)
                 {
                     IEnumerable<TblProductImageRel> tblProductImageRel = _core.ProductImageRel.Get(p => p.ProductId == product.ProductId);
-                    foreach (var item in tblProductImageRel)
+
+                    foreach (var galleryimage in GalleryFile)
                     {
-                        TblImage image = _core.Image.GetById(item.ImageId);
-                        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", image.Image);
+                        TblImage NewImage = new TblImage();
+                        NewImage.AlbumId = _core.ProductImageRel.Get(pi=>pi.ProductId==product.ProductId).First().Image.AlbumId;
+                        NewImage.Image = Guid.NewGuid().ToString() + Path.GetExtension(galleryimage.FileName);
+                        string savePathAlbum = Path.Combine(
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", NewImage.Image
+                                        );
 
-                        if (System.IO.File.Exists(imagePath))
+                        using (var stream = new FileStream(savePathAlbum, FileMode.Create))
                         {
-                            System.IO.File.Delete(imagePath);
+                            await galleryimage.CopyToAsync(stream);
                         }
-                        _core.ProductImageRel.DeleteById(item.ProductImageRelId);
-                        _core.Image.Delete(image);
-                        _core.ProductImageRel.Save();
+                        _core.Image.Add(NewImage);
                         _core.Image.Save();
+                        TblProductImageRel imageRel = new TblProductImageRel();
+                        imageRel.ProductId = EditProduct.ProductId;
+                        imageRel.ImageId = NewImage.ImageId;
 
-                        foreach (var galleryimage in GalleryFile)
-                        {
-                            TblAlbum album = new TblAlbum();
-                            album.Name = product.Name;
-                            _core.Album.Add(album);
-                            _core.Album.Save();
-                            TblImage NewImage = new TblImage();
-                            NewImage.AlbumId = album.AlbumId;
-                            NewImage.Image = Guid.NewGuid().ToString() + Path.GetExtension(galleryimage.FileName);
-                            string savePathAlbum = Path.Combine(
-                                                Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", NewImage.Image
-                                            );
-
-                            using (var stream = new FileStream(savePathAlbum, FileMode.Create))
-                            {
-                                await galleryimage.CopyToAsync(stream);
-                            }
-                            _core.Image.Add(NewImage);
-                            _core.Image.Save();
-                            TblProductImageRel imageRel = new TblProductImageRel();
-                            imageRel.ProductId = EditProduct.ProductId;
-                            imageRel.ImageId = NewImage.ImageId;
-
-                            _core.ProductImageRel.Add(imageRel);
-                            _core.ProductImageRel.Save();
-                        }
-
+                        _core.ProductImageRel.Add(imageRel);
+                        _core.ProductImageRel.Save();
                     }
                 }
                 if (ColorName.Count > 0)
@@ -451,7 +432,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 if (product.PriceAfterDiscount != null)
                 {
                     EditProduct.PriceAfterDiscount = product.PriceAfterDiscount;
-                       
+
                 }
                 else
                 {

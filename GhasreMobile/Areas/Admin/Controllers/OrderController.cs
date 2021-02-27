@@ -16,10 +16,23 @@ namespace GhasreMobile.Areas.Admin.Controllers
     {
         Core _core = new Core();
 
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(int page = 1, int OrderId = 0, string TellNo = null)
         {
-            IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(), 10, page);
-            return View(Orders);
+            if (!string.IsNullOrEmpty(TellNo) && OrderId == 0)
+            {
+                IEnumerable<TblOrder> Orders = PagingList.Create(_core.OrderDetail.Get(od => od.Client.TellNo.Contains(TellNo)).Select(od => od.FinalOrder), 30, page);
+                return View(Orders);
+            }
+            if (!string.IsNullOrEmpty(TellNo) && OrderId != 0)
+            {
+                IEnumerable<TblOrder> Orders = PagingList.Create(_core.OrderDetail.Get(od => od.Client.TellNo.Contains(TellNo) && od.FinalOrder.OrdeId == OrderId).Select(od => od.FinalOrder), 30, page);
+                return View(Orders);
+            }
+            else
+            {
+                IEnumerable<TblOrder> Orders = PagingList.Create(_core.OrderDetail.Get(od => od.FinalOrder.OrdeId == OrderId).Select(od => od.FinalOrder), 30, page);
+                return View(Orders);
+            }
         }
 
         public IActionResult Info(int id)

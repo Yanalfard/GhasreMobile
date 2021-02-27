@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataLayer.Models;
+using DataLayer.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +11,11 @@ namespace GhasreMobile.Controllers
 {
     public class GalleryController : Controller
     {
+        Core db = new Core();
+
         public IActionResult Index()
         {
-            return View();
+            return View(db.Album.Get());
         }
     }
 }

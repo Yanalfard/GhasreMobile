@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewData["Title"] = "آلبوم";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div class="card-header bg-white">
+                
+            </div>
+            <div id="card-table" class="card-body flex-div">
+                <div class="table-responsive flex">
+                    <table class="table fixed">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>نام آلبوم</th>                            
+                                <th>عملیات</th>                            
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td>آلبوم۱</td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="نمابش">                                            
+                                            <a onclick="Edit()" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="eye-outline"></a>
+                                        </span>
+                                    </td>                                    
+                                </tr>                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                    @*@await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Script{
+    <script>
+
+        function Edit(Id) {
+            $(".modal-content").html("");
+            $.get("/Admin/Album/Show/" + Id, function (result) {
+                $(".modal-content").html(result);
+            });
+        }
+
+    </script>
+}

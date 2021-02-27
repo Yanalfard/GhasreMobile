@@ -1,0 +1,26 @@
+﻿@model SendCommentVm
+<div class="mat-card">
+    <h4>
+        نظر شما
+    </h4>
+    <form id="ajaxresultSendCommentBlog" class="fg-col uk-margin-small-top" action="/Blog/SendComment" method="post"
+          data-ajax="true"
+          data-ajax-method="POST"
+          data-ajax-mode="replace"
+          data-ajax-complete="SendCommentBlog()"
+          data-ajax-update="#ajaxresultSendCommentBlog">
+        <textarea class="entry" asp-for="Body"></textarea>
+        <span class="text-danger" asp-validation-for="Body"></span>
+        <input type="hidden" id="BlogId" asp-for="BlogId" name="BlogId" />
+        <div class="rowr uk-margin-small-top">
+            <button type="submit" class="btn btn-dashed uk-margin-auto-top" onclick="LoadingRun('#ajaxresultSendCommentBlog')">ثبت نظر</button>
+        </div>
+    </form>
+</div>
+<script>
+    function SendCommentBlog() {
+        $("textarea").val("");
+        UIkit.notification('پیام شما ثبت شد');
+        LoadingEnd();
+    }
+</script>
