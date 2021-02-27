@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewData["Title"] = "کاربران";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div class="card-header bg-white">
+                <div class="pr-1 pt-2">
+                    <div class="card-form form-row">
+                        <div class="form-inline">
+                            <div class="form-group mx-sm-1 mb-2 mr-1 mr-md-0">
+                                <input id="SearchInput" class="form-control uk-text-small" type="text" placeholder="نام کاربر" value="">
+                                <input id="SearchInput" class="form-control uk-text-small mr-md-2 mt-2 mt-md-0" type="text" placeholder="شماره تماس" value="">
+                                <button onclick="BtnSearch()" type="button" class="btn btn-primary btn-sm mr-md-3 mt-2 mt-md-0">جستجو<span class="icon-holder uk-margin-small-right" uk-icon="search-outline"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--list region-->
+            <div id="card-table" class="card-body flex-div">
+                <div class="table-responsive flex">
+                    <table class="table fixed">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">نام کاربر</th>
+                                <th scope="col">شماره تماس</th>
+                                <th scope="col">کیف پول</th>
+                                <th scope="col">نقش</th>
+                                <th scope="col">تاریخ ثبت نام</th>
+                                <th scope="col">عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>پیمان معادی</td>
+                                <td>091426556</td>
+                                <td class="text-success">8400000 <span>تومان</span></td>
+                                <td>مشتری</td>
+                                <td>تاریخ فلان</td>
+                                <td>
+                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                        <a id="Edit" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!--end list region-->
+            @*<div class="card-footer bg-white">
+                    <nav aria-label="Page navigation example">
+                        @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+                    </nav>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+@section Script{
+
+    <script>
+        $("#Edit").click(function () {
+            $.get("/Admin/Ad/Edit", function (result) {
+                $(".modal-content").html(result);
+            });
+        });
+    </script>
+}
+
