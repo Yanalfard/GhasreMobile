@@ -1868,7 +1868,7 @@ table.hot-download td {
 
 .dismissButton {
     position: absolute;
-    left: 2vw;
-    top: 1vw;
+    left: 3vh;
+    top: 1vh;
     border-radius: 50% !important;
 }

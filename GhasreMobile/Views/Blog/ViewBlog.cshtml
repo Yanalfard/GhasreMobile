@@ -1,6 +1,6 @@
 ﻿@model TblBlog
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -18,8 +18,8 @@
 }
 
 <nav class="breadcrumb uk-padding-remove">
-    <a href="">وبلاگ ها</a>
-    <a href="" class="active">نقد و بررسی هواوی</a>
+    <a href="/Blog">وبلاگ ها</a>
+    <a href="#" class="active">@Model.Title</a>
 </nav>
 
 <div class="mat-card">

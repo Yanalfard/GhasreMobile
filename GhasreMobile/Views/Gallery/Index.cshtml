@@ -1,28 +1,18 @@
-﻿
+﻿@model IEnumerable<TblAlbum>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "گالری";
     ViewData["Single"] = true;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @section Styles{
 
     <link href="~/css/pages/index.min.css" rel="stylesheet" />
 
 }
 
-@*<div class="gallery-main" uk-lightbox>
-        <a href="~/st/r/ads/a1.jpg" data-caption="نام"><img src="~/st/r/ads/a1.jpg" alt="" /></a>
-        <a href="~/st/r/phones/p1.jpg" data-caption="نام"><img src="~/st/r/phones/p1.jpg" alt="" /></a>
-        <a href="~/st/r/ads/a3.jpg" data-caption="نام"><img src="~/st/r/ads/a3.jpg" alt="" /></a>
-        <a href="~/st/r/phones/p2.jpg" data-caption="نام"><img src="~/st/r/phones/p2.jpg" alt="" /></a>
-        <a href="~/st/r/ads/a4.jpg" data-caption="نام"><img src="~/st/r/ads/a4.jpg" alt="" /></a>
-        <a href="~/st/r/ads/a6.jpg" data-caption="نام"><img src="~/st/r/ads/a6.jpg" alt="" /></a>
-    </div>*@
-
 <div class="gallery-main">
-    <partial name="_AlbumBlock" />
-    <partial name="_AlbumBlock" />
-    <partial name="_AlbumBlock" />
-    <partial name="_AlbumBlock" />
+    @foreach (var item in Model)
+    {
+        <partial name="_AlbumBlock" , model="item" />
+    }
 </div>

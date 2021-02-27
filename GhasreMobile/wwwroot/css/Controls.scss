@@ -274,7 +274,7 @@ textarea {
         display: flex;
         margin: 6px 0 6px auto;
     }
-    
+
     select.entry {
         height: 35px;
     }
@@ -1377,6 +1377,118 @@ $background-highlight: #eee;
     }
 }
 
+@media only screen and (max-width: 664px) {
+
+    .product-express {
+
+        .head {
+            @include column;
+            grid-gap: 10px;
+            border-bottom: 0 !important;
+
+            h3 {
+                margin: auto;
+                text-align: center;
+            }
+
+            .timer {
+                margin: auto;
+                margin-bottom: -16px;
+                z-index: 10;
+                position: relative;
+            }
+        }
+
+        .body {
+            position: relative;
+            @include mat-padding;
+            @include column;
+
+            .star {
+                position: absolute;
+                left: 12px;
+                top: 12px;
+                @include column;
+                color: #FFCA35;
+
+                label {
+                    margin: 0 auto;
+                    @include row;
+
+                    span {
+                        color: #FFCA35;
+                        margin: auto;
+                        margin-right: 4px;
+                        font-size: 16px
+                    }
+                }
+
+                span {
+                    margin: 4px auto;
+                    color: $Text-4;
+                    font-size: 11px
+                }
+            }
+
+            .colours {
+                position: absolute;
+                right: 12px;
+                top: 12px;
+                @include column;
+                margin: 0;
+                grid-gap: 16px;
+
+                li {
+                    @include border-circle;
+                    width: 12px;
+                    height: 12px;
+                    -moz-box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+                }
+            }
+
+            .link-text {
+
+                .name {
+                    margin: auto;
+                    margin-bottom: 6px;
+                    text-align: center;
+                    font-size: 16px;
+                }
+            }
+
+            .discount {
+                margin: auto;
+
+                span {
+                    color: $danger;
+                    text-decoration: line-through;
+                    text-align: center;
+                    font-size: 18px;
+                }
+            }
+
+            .price {
+                margin: auto;
+                @include row;
+
+                .t {
+                    font-size: 11px;
+                    margin-top: auto;
+                    margin-bottom: 5px;
+                    margin-right: 3px;
+                }
+
+                span {
+                    font-size: 24px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+
 .ad {
     @include mat;
     overflow: hidden;
@@ -1789,7 +1901,6 @@ footer {
     }
 }
 
-
 .show-on-threshold {
     display: none;
 }
@@ -1846,4 +1957,38 @@ footer {
     padding: 3px;
     color: white;
     font-size: 11px;
+}
+
+@media only screen and (min-width: 960px) {
+    .swap-doubler {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 960px) {
+
+    .swap-doubler {
+        @include row;
+        grid-gap: 12px;
+
+        > * {
+            flex: 1;
+        }
+    }
+}
+
+@media only screen and (max-width: 500px) {
+
+    .swap-doubler {
+        @include column;
+        grid-gap: 12px;
+
+        > * {
+            flex: 1;
+        }
+    }
+}
+
+div[role=none][id] {
+    display: none;
 }
