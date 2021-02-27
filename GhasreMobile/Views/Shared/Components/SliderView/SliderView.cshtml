@@ -1,16 +1,15 @@
 ﻿@model IEnumerable<TblBannerAndSlide>
+
 <div class="main-slideshow uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="ratio:16:7">
 
     <ul class="uk-slideshow-items">
-        <li>
-            <a href="/"><img src="~/st/r/ads/a1.jpg" alt="" uk-cover></a>
-        </li>
-        <li>
-            <a href="/"><img src="~/st/r/ads/a2.jpg" alt="" uk-cover></a>
-        </li>
-        <li>
-            <a href="/"><img src="~/st/r/ads/a3.jpg" alt="" uk-cover></a>
-        </li>
+        @foreach (var item in Model)
+        {
+            <li>
+                <a href="@item.Link"><img src="~/Images/Slider/@item.ImageUrl" alt="@item.Name" uk-cover></a>
+            </li>
+        }
+
     </ul>
     <div class="navigation uk-position-bottom-center uk-position-small">
         <ul class="uk-dotnav">
