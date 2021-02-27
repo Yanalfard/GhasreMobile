@@ -6,7 +6,7 @@ function Swap(element) {
     const swapTarget = document.getElementById(element.getAttribute(swapAttrib));
 
     if (!swapTarget) {
-        throw 'Target Element was not found! Check the id and swap attribute';
+        throw `Target Element (${element.getAttribute(swapAttrib)}) was not found! Check the id and swap attribute`;
         return;
     }
 
