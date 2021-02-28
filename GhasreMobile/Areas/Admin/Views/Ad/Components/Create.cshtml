@@ -7,7 +7,12 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form asp-action="Create" asp-controller="Ad" asp-area="Admin" enctype="multipart/form-data">
+<form asp-action="Create" asp-controller="Ad" asp-area="Admin" enctype="multipart/form-data"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="EndCatagoryCreate()"
+      data-ajax-update="#ajaxresult">
     <div class="modal-body">
         <div class="form-row">
             <div class="form-group col-md-3">
@@ -40,3 +45,5 @@
         sender.parentElement.querySelector('.custom-file-label').innerHTML = fileName;
     }
 </script>
+<script src="~/Validate/jquery.validate.min.js"></script>
+<script src="~/Validate/jquery.validate.unobtrusive.js"></script>
