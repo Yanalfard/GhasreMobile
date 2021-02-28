@@ -1720,10 +1720,12 @@ footer {
     ul {
         @include column;
         grid-gap: 12px;
+        margin-top:0;
     }
 
     .comment {
         background: #F8F8F8;
+        border: $mat-border-color 1px solid;
         @include mat-padding;
         @include border-def-radius;
         @include column;
@@ -1750,16 +1752,44 @@ footer {
             font-size: 14px;
         }
 
-        .actions {
-            @include row-reverse;
+        .action {
+            @include row;
+        }
 
-            a {
-                color: $Text-4;
-                @include trans(.2s);
+        .text {
+            @include column;
+
+            .entry {
+                background: #fff;
             }
+        }
 
-            a:hover {
-                color: $primary;
+        ul {
+            padding-right: 20px;
+            padding-left: 0;
+
+            li {
+                .comment {
+                    padding: 0;
+                    border: 0;
+
+                    .head {
+
+                        h5 {
+                            font-size: 13px;
+                        }
+
+                        .date {
+                            font-size: 11px;
+                        }
+                    }
+
+                    p {
+                        margin: 6px 0;
+                        color: $Text-2;
+                        font-size: 13px;
+                    }
+                }
             }
         }
     }
