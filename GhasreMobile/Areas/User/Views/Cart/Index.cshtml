@@ -1,7 +1,7 @@
-﻿
+﻿@model IEnumerable<ShopCartItemVm>
 @{
     ViewData["Title"] = "Index";
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
 }
 
-<partial name="_Cart"/>
+<partial name="_Cart" model="Model"/>

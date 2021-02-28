@@ -36,12 +36,12 @@ namespace GhasreMobile.Controllers
         public IActionResult Contact()
         {
            // var objComplex = HttpContext.Session.GetObject<List<TblClient>>("ComplexObject");
-            var objComplex = HttpContext.Session.GetComplexData<List<TblClient>>("ShopCart");
-            List<TblClient> list = objComplex;
-            if (objComplex != null)
-            {
-                //list = sessions;
-            }
+            //var objComplex = HttpContext.Session.GetComplexData<List<TblClient>>("ShopCart");
+            //List<TblClient> list = objComplex;
+            //if (objComplex != null)
+            //{
+            //    //list = sessions;
+            //}
             return View();
         }
         [Route("About")]

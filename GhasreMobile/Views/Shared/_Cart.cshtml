@@ -1,0 +1,94 @@
+﻿@model IEnumerable<ShopCartItemVm>
+<div class="mat-card cart">
+    <table dir="rtl">
+        <thead>
+            <tr>
+                <th>عکس</th>
+                <th>نام محصول</th>
+                <th>تعداد</th>
+                <th>فی</th>
+                <th>قیمت</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="img" uk-lightbox>
+                        <a href="~/st/r/phones/p3.jpg">
+                            <img src="~/st/r/phones/p3.jpg" alt="" />
+                        </a>
+                    </td>
+                    <td class="name">
+                        <div class="col">
+                            <h5>@item.Name</h5>
+                            <a class="link-text" href="">@item.Brand</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="counter">
+                            <button uk-icon="ratio:.6;icon:add-outline"></button>
+                            <label>@item.Count</label>
+                            <button uk-icon="ratio:.6;icon:remove-outline"></button>
+                        </div>
+                    </td>
+                    <td class="price">
+                        <div class="col">
+                            <label>480,000</label>
+                            <label>360,000</label>
+                        </div>
+                    </td>
+                    <td class="price">
+                        <div class="col">
+                            <label>@item.su</label>
+                        </div>
+                    </td>
+                </tr>
+
+            }
+            @*<tr>
+                    <td class="img" uk-lightbox>
+                        <a href="~/st/r/phones/p3.jpg">
+                            <img src="~/st/r/phones/p3.jpg" alt="" />
+                        </a>
+                    </td>
+                    <td class="name">
+                        <div class="col">
+                            <h5>گوشی موبایل سامسونگ گلکسی آ هشت 256 گیگ حافظه داخلی</h5>
+                            <a class="link-text" href="">سامسونگ</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="counter">
+                            <button uk-icon="ratio:.6;icon:add-outline"></button>
+                            <label>5</label>
+                            <button uk-icon="ratio:.6;icon:remove-outline"></button>
+                        </div>
+                    </td>
+                    <td class="price">
+                        <div class="col">
+                            <label>480,000</label>
+                            <label>360,000</label>
+                        </div>
+                    </td>
+                    <td class="price">
+                        <div class="col">
+                            <label>2,300,000</label>
+                            <label>1,999,999</label>
+                        </div>
+                    </td>
+                </tr>*@
+        </tbody>
+    </table>
+    <div class="finalize">
+        <button class="btn btn-primary">نهایی سازی خرید</button>
+        <div class="price">
+            <h3>
+                8,600,000
+            </h3>
+            <span>
+                تومان
+            </span>
+        </div>
+    </div>
+</div>

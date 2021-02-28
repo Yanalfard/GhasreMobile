@@ -405,6 +405,17 @@
         function updateShopCart() {
             $("#showCart").load("/ShopCart/ShowCart").fadeOut(800).fadeIn(800);
         }
+
+
+        function commandOrder(id, count) {
+            $.ajax({
+                url: "/ShopCart/CommandOrder/" + id,
+                type: "Get",
+                data: { count: count }
+            }).done(function (res) {
+                $("#showOrder").html(res);
+            });
+        }
         /////
         function share(text) {
 
