@@ -31,6 +31,14 @@ namespace GhasreMobile.Controllers
         {
             try
             {
+                ViewBag.IsBookMark = false;
+                if (User.Identity.IsAuthenticated)
+                {
+                    if (db.BookMark.Get().Any(i => i.ProductId == id && i.ClientId == SelectUser().ClientId))
+                    {
+                        ViewBag.IsBookMark = true;
+                    }
+                }
                 return await Task.FromResult(View(db.Product.GetById(id)));
             }
             catch
@@ -84,5 +92,26 @@ namespace GhasreMobile.Controllers
             }
         }
 
+        [PermissionChecker("user,employee,admin")]
+        public async Task<string> BookMark(int id)
+        {
+            if (db.BookMark.Get().Any(i => i.ProductId == id && i.ClientId == SelectUser().ClientId))
+            {
+                TblBookMark deleteBookMark = db.BookMark.Get(i => i.ProductId == id && i.ClientId == SelectUser().ClientId).Single();
+                db.BookMark.Delete(deleteBookMark);
+                db.BookMark.Save();
+                return await Task.FromResult("false");
+            }
+            else
+            {
+                TblBookMark addBookMark = new TblBookMark();
+                addBookMark.ClientId = SelectUser().ClientId;
+                addBookMark.ProductId = id;
+                db.BookMark.Add(addBookMark);
+                db.BookMark.Save();
+                return await Task.FromResult("true");
+            }
+
+        }
     }
 }

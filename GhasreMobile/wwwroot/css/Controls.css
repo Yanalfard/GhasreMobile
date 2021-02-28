@@ -1305,6 +1305,94 @@ textarea {
       font-size: 24px;
       text-align: center; }
 
+@media only screen and (max-width: 664px) {
+  .product-express .head {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+    border-bottom: 0 !important; }
+    .product-express .head h3 {
+      margin: auto;
+      text-align: center; }
+    .product-express .head .timer {
+      margin: auto;
+      margin-bottom: -16px;
+      z-index: 10;
+      position: relative; }
+  .product-express .body {
+    position: relative;
+    display: flex;
+    flex-direction: column; } }
+  @media only screen and (max-width: 664px) and (min-device-width: 420px) {
+    .product-express .body {
+      padding: 12px; } }
+  @media only screen and (max-width: 664px) and (max-device-width: 420px) {
+    .product-express .body {
+      padding: 8px; } }
+
+@media only screen and (max-width: 664px) {
+    .product-express .body .star {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      display: flex;
+      flex-direction: column;
+      color: #FFCA35; }
+      .product-express .body .star label {
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row; }
+        .product-express .body .star label span {
+          color: #FFCA35;
+          margin: auto;
+          margin-right: 4px;
+          font-size: 16px; }
+      .product-express .body .star span {
+        margin: 4px auto;
+        color: #ccc;
+        font-size: 11px; }
+    .product-express .body .colours {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      grid-gap: 16px; }
+      .product-express .body .colours li {
+        -moz-border-radius: 1000px 1000px 1000px 1000px;
+        -webkit-border-radius: 1000px 1000px 1000px 1000px;
+        border-radius: 1000px 1000px 1000px 1000px;
+        width: 12px;
+        height: 12px;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box; }
+    .product-express .body .link-text .name {
+      margin: auto;
+      margin-bottom: 6px;
+      text-align: center;
+      font-size: 16px; }
+    .product-express .body .discount {
+      margin: auto; }
+      .product-express .body .discount span {
+        color: #FF5A64;
+        text-decoration: line-through;
+        text-align: center;
+        font-size: 18px; }
+    .product-express .body .price {
+      margin: auto;
+      display: flex;
+      flex-direction: row; }
+      .product-express .body .price .t {
+        font-size: 11px;
+        margin-top: auto;
+        margin-bottom: 5px;
+        margin-right: 3px; }
+      .product-express .body .price span {
+        font-size: 24px;
+        text-align: center; } }
+
 .ad {
   background-color: #fff;
   border: 1px solid #e5e5e5;
@@ -1460,10 +1548,12 @@ footer {
 .comment-section ul {
   display: flex;
   flex-direction: column;
-  grid-gap: 12px; }
+  grid-gap: 12px;
+  margin-top: 0; }
 
 .comment-section .comment {
   background: #F8F8F8;
+  border: #e9e9e9 1px solid;
   -moz-border-radius: 4px 4px 4px 4px;
   -webkit-border-radius: 4px 4px 4px 4px;
   border-radius: 4px 4px 4px 4px;
@@ -1490,17 +1580,28 @@ footer {
     margin: 8px 0;
     color: #666;
     font-size: 14px; }
-  .comment-section .comment .actions {
+  .comment-section .comment .action {
     display: flex;
-    flex-direction: row-reverse; }
-    .comment-section .comment .actions a {
-      color: #ccc;
-      -moz-transition: all ease 0.2s;
-      -o-transition: all ease 0.2s;
-      -webkit-transition: all ease 0.2s;
-      transition: all ease 0.2s; }
-    .comment-section .comment .actions a:hover {
-      color: #96027E; }
+    flex-direction: row; }
+  .comment-section .comment .text {
+    display: flex;
+    flex-direction: column; }
+    .comment-section .comment .text .entry {
+      background: #fff; }
+  .comment-section .comment ul {
+    padding-right: 20px;
+    padding-left: 0; }
+    .comment-section .comment ul li .comment {
+      padding: 0;
+      border: 0; }
+      .comment-section .comment ul li .comment .head h5 {
+        font-size: 13px; }
+      .comment-section .comment ul li .comment .head .date {
+        font-size: 11px; }
+      .comment-section .comment ul li .comment p {
+        margin: 6px 0;
+        color: #666;
+        font-size: 13px; }
 
 @media only screen and (max-width: 542px) {
   .comment-section h3 {
@@ -1647,3 +1748,26 @@ footer {
   padding: 3px;
   color: white;
   font-size: 11px; }
+
+@media only screen and (min-width: 960px) {
+  .swap-doubler {
+    display: none; } }
+
+@media only screen and (min-width: 500px) and (max-width: 960px) {
+  .swap-doubler {
+    display: flex;
+    flex-direction: row;
+    grid-gap: 12px; }
+    .swap-doubler > * {
+      flex: 1; } }
+
+@media only screen and (max-width: 500px) {
+  .swap-doubler {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 12px; }
+    .swap-doubler > * {
+      flex: 1; } }
+
+div[role=none][id] {
+  display: none; }
