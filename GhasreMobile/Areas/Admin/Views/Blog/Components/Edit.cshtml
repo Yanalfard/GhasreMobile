@@ -7,7 +7,12 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form asp-action="Edit" asp-controller="Blog" asp-area="Admin" method="post" enctype="multipart/form-data">
+<form asp-action="Edit" asp-controller="Blog" asp-area="Admin" method="post" enctype="multipart/form-data"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="EndBlogCreate()"
+      data-ajax-update="#ajaxresult">
     <input type="hidden" asp-for="BlogId" />
     <div class="modal-body">
         <div class="form-row">
@@ -53,6 +58,8 @@
 </form>
 
 <script src="~/js/bootstrap-tagsinput.js"></script>
+<script src="~/Validate/jquery.validate.min.js"></script>
+<script src="~/Validate/jquery.validate.unobtrusive.js"></script>
 <script>
     function inputChanged(sender) {
         var fileName = sender.files[0].name;
