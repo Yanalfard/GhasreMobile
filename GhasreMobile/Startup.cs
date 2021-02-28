@@ -55,12 +55,8 @@ namespace GhasreMobile
 
 
             #region Session
-            services.AddDistributedMemoryCache();
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
             #endregion
         }
@@ -78,13 +74,13 @@ namespace GhasreMobile
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
             app.UseMvc();
-            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -98,7 +98,7 @@
                 <div class="cart">
                     <span class="label">سبد خرید</span>
                     <div class="badge">
-                        <span>12</span>
+                        <span id="countShopCart"></span>
                     </div>
                     <button>
                         <span uk-icon="cart-outline"></span>
@@ -385,7 +385,27 @@
     </script>
 
     <script>
+        //shop
+        $(function () {
+            countShopCart();
+        });
 
+        function countShopCart() {
+            $.get("/api/Shop", function (res) {
+                $("#countShopCart").html(res);
+            });
+        }
+
+        function AddToCart(id) {
+            $.get("/api/Shop/" + id, function (res) {
+                $("#countShopCart").html(res);
+               // updateShopCart();
+            });
+        }
+        function updateShopCart() {
+            $("#showCart").load("/ShopCart/ShowCart").fadeOut(800).fadeIn(800);
+        }
+        /////
         function share(text) {
 
             if (navigator.share) {
