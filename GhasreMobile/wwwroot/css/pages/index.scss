@@ -31,6 +31,7 @@
     }
 }
 
+// Gallery section in Index
 .gallery-grid {
     .grid {
         @include grid-gap(224px,8px);
@@ -95,7 +96,7 @@
             .uk-accordion-title {
                 font-size: 16px !important;
             }
-
+            
             .uk-accordion-content {
                 margin-top: 10px !important;
                 font-size: 13px !important;
@@ -188,21 +189,27 @@
 $album-height: 180px;
 $album-width: 290px;
 
+// Gallery Page
 .gallery-main {
     @include grid-gap(256px,12px);
 
-    a {
-        background-color: #fff;
-        @include column;
-        -ms-align-content: center;
-        -webkit-align-content: center;
-        align-content: center;
+    .albumBlock {
+        max-height: 324px;
+        max-width: 300px;
 
-        img {
-            margin: auto;
-            width: 100%;
-            height: 100%;
-            @include obj;
+        a {
+            background-color: #fff;
+            @include column;
+            -ms-align-content: center;
+            -webkit-align-content: center;
+            align-content: center;
+
+            img {
+                margin: auto;
+                width: 100%;
+                height: 100%;
+                @include obj;
+            }
         }
     }
 }
