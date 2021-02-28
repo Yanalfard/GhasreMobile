@@ -36,7 +36,7 @@ namespace GhasreMobile.Controllers
                         {
                             Count = item.Count,
                             ProductID = item.ProductID,
-                            Title = product.Name,
+                            Name = product.Name,
                             ImageName = product.MainImage,
                             PriceAfterDiscount = product.PriceAfterDiscount,
                             PriceBeforeDiscount = product.PriceBeforeDiscount,

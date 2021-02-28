@@ -13,6 +13,7 @@ namespace DataLayer.ViewModels
         public int Count { get; set; }
         public long? PriceBeforeDiscount { get; set; }
         public long? PriceAfterDiscount { get; set; }
+        public long? Sum { get; set; }
 
     }
 }
