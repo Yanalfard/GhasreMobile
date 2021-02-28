@@ -65,7 +65,7 @@
                                    onchange="comparisonChanged(this)"
                                    type="checkbox" />
                         </label>
-                        <label class="action checked" uk-tooltip="افزودن به لیست علاقه مندی ها" uk-icon="bookmark-outline">
+                        <label class="action @((ViewBag.IsBookMark)?"checked":"")" uk-tooltip="افزودن به لیست علاقه مندی ها" uk-icon="bookmark-outline">
                             <input name="favourites"
                                    onchange="favouritesChanged(this)"
                                    type="checkbox" />
@@ -74,11 +74,11 @@
                     <div class="right">
                         <button class="action" uk-tooltip="اشتراک گذاری" onclick="share(window.location.href)"
                                 uk-icon="share-social-outline"></button>
-                        <label class="action" uk-tooltip="فعال کردن اعلان ها" uk-icon="notifications-outline">
+                        @*<label class="action" uk-tooltip="فعال کردن اعلان ها" uk-icon="notifications-outline">
                             <input name="notifications"
                                    onchange="notificationsChanged(this)"
                                    type="checkbox" />
-                        </label>
+                        </label>*@
                     </div>
                 </div>
             </div>
@@ -214,7 +214,7 @@
     <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
 
 </div>
-
+<input type="text" name="ProductId" id="ProductId" value="@Model.ProductId" />
 @section Scripts{
 
     <script>
@@ -222,22 +222,28 @@
         //$.get('/Product/SliderInProduct/' + id, function (result) {
         //    $('#listProductsSlider').html(result);
         //});
+
         function comparisonChanged(sender) {
-            
+
             sender.parentElement.classList.toggle('checked');
             // Toggle Comparison
 
         }
 
         function favouritesChanged(sender) {
-            if (sender.checked) {
-                alert('1');
-            }
-            else {
-                alert('2');
-            }
+            var id = $('#ProductId').val();
             sender.parentElement.classList.toggle('checked');
-            // Toggle Comparison
+            $.ajax({
+                url: '/Product/BookMark/',
+                data: { id: id },
+            }).done(function (result) {
+                if (result == "true") {
+                    UIkit.notification('محصول مورد نظر به علاقه مندی های شما اضافه شد');
+                }
+                else {
+                    UIkit.notification('محصول مورد نظر از علاقه مندی های شما حذف شد');
+                }
+            })
         }
 
         function notificationsChanged(sender) {
