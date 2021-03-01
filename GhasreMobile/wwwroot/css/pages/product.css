@@ -73,7 +73,7 @@ backdrop-filter: saturate(80%);
   grid-template-columns: 180px 2fr 1.1fr;
   grid-template-rows: 92px auto;
   grid-template-areas: "title title image" "specs content image";
-  grid-gap: 8px;
+  grid-gap: 10px;
   z-index: 10;
   -moz-border-radius: 4px 4px 0 0;
   -webkit-border-radius: 4px 4px 0 0;
@@ -182,7 +182,8 @@ backdrop-filter: saturate(80%);
           flex-direction: row;
           -moz-border-radius: 4px 4px 4px 4px;
           -webkit-border-radius: 4px 4px 4px 4px;
-          border-radius: 4px 4px 4px 4px; }
+          border-radius: 4px 4px 4px 4px;
+          cursor: pointer; }
           .pr-content .colours .grid li .clr span {
             color: #666;
             font-size: 12px; }
@@ -193,6 +194,8 @@ backdrop-filter: saturate(80%);
             -moz-border-radius: 1000px 1000px 1000px 1000px;
             -webkit-border-radius: 1000px 1000px 1000px 1000px;
             border-radius: 1000px 1000px 1000px 1000px; }
+        .pr-content .colours .grid li .active {
+          border: 1px solid rgba(150, 2, 126, 0.8); }
     .pr-content .price {
       display: flex;
       flex-direction: column; }

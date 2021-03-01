@@ -7,6 +7,7 @@ namespace DataLayer.ViewModels
     public class ShopCartItem
     {
         public int ProductID { get; set; }
+        public int ColorID { get; set; }
         public int Count { get; set; }
     }
 }
