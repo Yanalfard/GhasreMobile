@@ -75,10 +75,10 @@
                         <button class="action" uk-tooltip="اشتراک گذاری" onclick="share(window.location.href)"
                                 uk-icon="share-social-outline"></button>
                         @*<label class="action" uk-tooltip="فعال کردن اعلان ها" uk-icon="notifications-outline">
-                            <input name="notifications"
-                                   onchange="notificationsChanged(this)"
-                                   type="checkbox" />
-                        </label>*@
+                                <input name="notifications"
+                                       onchange="notificationsChanged(this)"
+                                       type="checkbox" />
+                            </label>*@
                     </div>
                 </div>
             </div>
@@ -121,8 +121,14 @@
         <div class="colours">
             <h4>رنگ بندی</h4>
             <ul class="grid">
-                @foreach (var item in Model.TblColor)
+                @foreach (var item in Model.TblColor.Where(i => i.Count > 0))
                 {
+                    if ((Model.TblColor.ToList().IndexOf(item)) == 0)
+                    {
+                        <li>
+                            <input type="hidden" name="ProductColorId" id="ProductColorId" value="@item.ColorId" />
+                        </li>
+                    }
                     <li>
                         <div class="clr">
                             <span>@item.Name</span>
@@ -133,17 +139,29 @@
             </ul>
         </div>
         <div class="cart uk-margin-top">
-            <div class="counter rowr">
-                <button class="plus" uk-icon="add"></button>
-                <span class="count">
-                    <span>16</span>
-                </span>
-                <button class="minus" uk-icon="remove"></button>
-            </div>
-            <button class="button" onclick="AddToCart(@Model.ProductId)">
-                <span>افزودن به سبد خرید</span>
-                <span uk-icon="cart"></span>
-            </button>
+            @*<div class="counter rowr">
+            <button class="plus" uk-icon="add"></button>
+            <span class="count">
+                <span>16</span>
+            </span>
+            <button class="minus" uk-icon="remove"></button>
+        </div>*@
+
+            @if (Model.TblColor.Sum(i => i.Count) > 0)
+            {
+                <button class="button" onclick="AddToCart(@Model.ProductId)">
+                    <span>افزودن به سبد خرید</span>
+                    <span uk-icon="cart"></span>
+                </button>
+            }
+            else
+            {
+                <button class="button" onclick="AddToCart(@Model.ProductId)">
+                    <span>موجود شد به من اطلاع بده</span>
+                    <span uk-icon="cart"></span>
+                </button>
+            }
+
         </div>
     </div>
     <div class="pr-specs">
