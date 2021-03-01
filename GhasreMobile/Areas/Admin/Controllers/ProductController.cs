@@ -373,7 +373,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     foreach (var galleryimage in GalleryFile)
                     {
                         TblImage NewImage = new TblImage();
-                        NewImage.AlbumId = _core.ProductImageRel.Get(pi=>pi.ProductId==product.ProductId).First().Image.AlbumId;
+                        NewImage.AlbumId = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).First().Image.AlbumId;
                         NewImage.Image = Guid.NewGuid().ToString() + Path.GetExtension(galleryimage.FileName);
                         string savePathAlbum = Path.Combine(
                                             Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", NewImage.Image
@@ -451,6 +451,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
             ViewBag.Brands = _core.Brand.Get();
             return View(product);
         }
+
+
+        public IActionResult SpecialOffer(int id)
+        {
+            return ViewComponent("SpecialOfferAddAdmin");
+        }
+
 
     }
 }

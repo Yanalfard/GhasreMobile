@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GhasreMobile.Utilities;
 using DataLayer.Models;
 using Services.Services;
+using ReflectionIT.Mvc.Paging;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -14,9 +15,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
     public class ClientController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            return View();
+            IEnumerable<TblClient> clients = PagingList.Create(_core.Client.Get(), 30, page);
+            return View(clients);
         }
 
         public IActionResult Edit(int id)

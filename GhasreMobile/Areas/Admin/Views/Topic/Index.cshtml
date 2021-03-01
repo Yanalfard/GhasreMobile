@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "سفارشات انلاین";
+    ViewData["Title"] = "تاپیک";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,7 +13,7 @@
                         <div class="form-input">
                             <div class="form-inline">
                                 <div class="form-group mx-sm-1 mb-2">
-                                    <input id="SearchInputUserPhone" class="form-control uk-text-small" type="text" placeholder="شماره تماس مشتری" value="">
+                                    <input id="SearchInputUserPhone" class="form-control uk-text-small" type="text" placeholder="عنوان" value="">
                                 </div>
 
                             </div>
@@ -31,7 +31,6 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>موضوع</th>
-                                <th>نام کاربری</th>
                                 <th>تاریخ</th>
                                 <th>وضعیت</th>
                                 <th>عملیات</th>
@@ -40,14 +39,13 @@
                         <tbody>
 
                             <tr>
-                                <td>سامسونگ</td>
-                                <td>ali00</td>
+                                <td>تاچ خراب شده است</td>
                                 <td>1399</td>
                                 <td>
-                                    <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="خوانده شده">
+                                    <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="تایید شده">
                                         <span class="text-success" uk-icon="checkmark-circle-outline"></span>
                                     </span>
-                                    <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="خوانده نشده">
+                                    <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="تایید نشده">
                                         <span class="text-danger" uk-icon="close-circle-outline"></span>
                                     </span>
 
@@ -73,14 +71,15 @@
     </div>
 </div>
 
+
 @section Script{
 
     <script>
         function Info(id) {
-            $.get("/Admin/OnlineOrder/Info/" + id, function (result) {
+            $.get("/Admin/Topic/Info/" + id, function (result) {
                 $(".modal-content").html(result);
             });
-        }        
+        }
     </script>
 
 }

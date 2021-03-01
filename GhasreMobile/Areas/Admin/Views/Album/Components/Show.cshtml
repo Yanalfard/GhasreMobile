@@ -1,4 +1,4 @@
-﻿
+﻿@model DataLayer.Models.TblAlbum
 <div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
         آلبوم۱
@@ -9,51 +9,26 @@
 </div>
 <div class="modal-body table-responsive">
     <div class="flex row col-12 my-3">
-        <div class="col-6 col-lg-3 col-md-4 mb-3">
-            <button class="bg-light dismissButton" uk-icon="close-outline"></button>
-            <a class="d-inline" href="~/Images/Slider/33806eed-1d35-42f5-a02a-d296b76688e8.jpg" target="_blank">
-                <img class="d-inline" src="https://picsum.photos/250/250" width="250" height="250" alt="">
-            </a>
-        </div>
-        <div class="col-6 col-lg-3 col-md-4 mb-3">
-            <button class="bg-light dismissButton" uk-icon="close-outline"></button>
-            <a class="d-inline" href="~/Images/Slider/33806eed-1d35-42f5-a02a-d296b76688e8.jpg" target="_blank">
-                <img class="d-inline" src="https://picsum.photos/250/250" width="250" height="250" alt="">
-            </a>
-        </div>
-        <div class="col-6 col-lg-3 col-md-4 mb-3">
-            <button class="bg-light dismissButton" uk-icon="close-outline"></button>
-            <a class="d-inline" href="~/Images/Slider/33806eed-1d35-42f5-a02a-d296b76688e8.jpg" target="_blank">
-                <img class="d-inline" src="https://picsum.photos/250/250" width="250" height="250" alt="">
-            </a>
-        </div>
-        <div class="col-6 col-lg-3 col-md-4 mb-3">
-            <button class="bg-light dismissButton" uk-icon="close-outline"></button>
-            <a class="d-inline" href="~/Images/Slider/33806eed-1d35-42f5-a02a-d296b76688e8.jpg" target="_blank">
-                <img class="d-inline" src="https://picsum.photos/250/250" width="250" height="250" alt="">
-            </a>
-        </div>
-        <div class="col-6 col-lg-3 col-md-4 mb-3">
-            <button class="bg-light dismissButton" uk-icon="close-outline"></button>
-            <a class="d-inline" href="~/Images/Slider/33806eed-1d35-42f5-a02a-d296b76688e8.jpg" target="_blank">
-                <img class="d-inline" src="https://picsum.photos/250/250" width="250" height="250" alt="">
-            </a>
-        </div>
-        <div class="col-6 col-lg-3 col-md-4 mb-3">
-            <button class="bg-light dismissButton" uk-icon="close-outline"></button>
-            <a class="d-inline" href="~/Images/Slider/33806eed-1d35-42f5-a02a-d296b76688e8.jpg" target="_blank">
-                <img class="d-inline" src="https://picsum.photos/250/250" width="250" height="250" alt="">
-            </a>
-        </div>
-        <div class="col-6 col-lg-3 col-md-4 mb-3">
-            <button class="bg-light dismissButton" uk-icon="close-outline"></button>
-            <a class="d-inline" href="~/Images/Slider/33806eed-1d35-42f5-a02a-d296b76688e8.jpg" target="_blank">
-                <img class="d-inline" src="https://picsum.photos/250/250" width="250" height="250" alt="">
-            </a>
-        </div>
+        @foreach (var item in Model.TblImage)
+        {
+            <div class="col-6 col-lg-3 col-md-4 mb-3">
+                <button id="DeleteImage(@item.ImageId,@Model.AlbumId)" class="bg-light dismissButton" uk-icon="close-outline"></button>
+                <a class="d-inline" href="~/Images/ProductAlbum/@item.Image" target="_blank">
+                    <img class="d-inline" src="/Images/ProductAlbum/@item.Image" width="250" height="250" alt="">
+                </a>
+            </div>
+        }
     </div>
 
 
 </div>
 <div class="modal-footer justify-content-end">
 </div>
+
+<script>
+    function DeleteImage(id) {
+        $.post("/Admin/Album/DeleteImage/" + id, function () {
+
+        });
+    }
+</script>
