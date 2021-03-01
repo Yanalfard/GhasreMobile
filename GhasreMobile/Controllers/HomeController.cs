@@ -1,5 +1,6 @@
 ﻿using DataLayer.Models;
 using DataLayer.ViewModels;
+using GhasreMobile.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 using System;
@@ -15,12 +16,32 @@ namespace GhasreMobile.Controllers
 
         public IActionResult Index()
         {
+           // TblClient user = new TblClient();
+           // user.Name = "mr 11111111";
+           // user.TellNo = "111111111";
+           // TblClient user2 = new TblClient();
+           // user.Name = "mr 222222222";
+           // user.TellNo = "2222222";
+
+           // List<TblClient> list = new List<TblClient>();
+           // list.Add(user2);
+           // list.Add(user);
+           // var objComplex = new TblClient();
+           ////HttpContext.Session.SetObject("ComplexObject", list);
+           // HttpContext.Session.SetComplexData("ShopCart", list);
             return View();
         }
 
         [Route("Contact")]
         public IActionResult Contact()
         {
+           // var objComplex = HttpContext.Session.GetObject<List<TblClient>>("ComplexObject");
+            //var objComplex = HttpContext.Session.GetComplexData<List<TblClient>>("ShopCart");
+            //List<TblClient> list = objComplex;
+            //if (objComplex != null)
+            //{
+            //    //list = sessions;
+            //}
             return View();
         }
         [Route("About")]

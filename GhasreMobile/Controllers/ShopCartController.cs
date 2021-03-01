@@ -1,4 +1,5 @@
-﻿using DataLayer.ViewModels;
+﻿using DataLayer.Models;
+using DataLayer.ViewModels;
 using GhasreMobile.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
@@ -7,10 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GhasreMobile.Areas.User.Controllers
+namespace GhasreMobile.Controllers
 {
-    [Area("User")]
-    public class CartController : Controller
+    public class ShopCartController : Controller
     {
         Core db = new Core();
         public IActionResult Index()
@@ -31,7 +31,6 @@ namespace GhasreMobile.Areas.User.Controllers
                             p.Name,
                             p.PriceAfterDiscount,
                             p.PriceBeforeDiscount,
-                            p.Brand,
                         }).Single();
                         list.Add(new ShopCartItemVm()
                         {
@@ -41,7 +40,6 @@ namespace GhasreMobile.Areas.User.Controllers
                             ImageName = product.MainImage,
                             PriceAfterDiscount = product.PriceAfterDiscount,
                             PriceBeforeDiscount = product.PriceBeforeDiscount,
-                            Brand = product.Brand.Name,
                         });
                     }
                 }
@@ -52,19 +50,5 @@ namespace GhasreMobile.Areas.User.Controllers
                 return RedirectToAction("/ErrorPage/NotFound");
             }
         }
-
-        [Route("User/Comparison")]
-        public IActionResult Comparison()
-        {
-            return View();
-        }
-
-        [Route("User/Bookmarks")]
-        public IActionResult Bookmarks()
-        {
-            return View();
-        }
-
-
     }
 }
