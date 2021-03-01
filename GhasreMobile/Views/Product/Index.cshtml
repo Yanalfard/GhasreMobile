@@ -75,10 +75,10 @@
                         <button class="action" uk-tooltip="اشتراک گذاری" onclick="share(window.location.href)"
                                 uk-icon="share-social-outline"></button>
                         @*<label class="action" uk-tooltip="فعال کردن اعلان ها" uk-icon="notifications-outline">
-                            <input name="notifications"
-                                   onchange="notificationsChanged(this)"
-                                   type="checkbox" />
-                        </label>*@
+                                <input name="notifications"
+                                       onchange="notificationsChanged(this)"
+                                       type="checkbox" />
+                            </label>*@
                     </div>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                 @foreach (var item in Model.TblColor)
                 {
                     <li>
-                        <div class="clr">
+                        <div class="clr" onclick="selectColour(this)">
                             <span>@item.Name</span>
                             <strong style="background-color: @item.ColorCode"></strong>
                         </div>
@@ -186,7 +186,7 @@
 @if (Model.TblProductCommentRel.Any())
 {
     <div class="comment-section mat-card gap-t">
-        <h3>نظرات کاربران</h3>
+        <h3 class="uk-margin-bottom">نظرات کاربران</h3>
         <ul>
             @foreach (var item in Model.TblProductCommentRel.Where(i => i.Comment.IsValid))
             {
@@ -214,7 +214,7 @@
     <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
 
 </div>
-<input type="text" name="ProductId" id="ProductId" value="@Model.ProductId" />
+<input type="text" class="hidden" name="ProductId" id="ProductId" value="@Model.ProductId" />
 @section Scripts{
 
     <script>
@@ -222,6 +222,13 @@
         //$.get('/Product/SliderInProduct/' + id, function (result) {
         //    $('#listProductsSlider').html(result);
         //});
+
+        let selectedColour;
+        function selectColour(sender) {
+            selectedColour?.classList.toggle('active');
+            sender.classList.toggle('active');
+            selectedColour = sender;
+        }
 
         function comparisonChanged(sender) {
 
