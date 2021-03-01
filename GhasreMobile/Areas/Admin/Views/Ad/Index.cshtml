@@ -35,7 +35,7 @@
                                             <a onclick="Edit(@item.AdId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
                                         </span>
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
-                                            <a onclick="Delete(@item.AdId)" uk-icon="trash"></a>
+                                            <a onclick="Delete(@item.AdId)" class="text-danger" uk-icon="trash"></a>
                                         </span>
                                     </td>
                                 </tr>
@@ -69,8 +69,6 @@
                 $(".modal-content").html(result);
             });
         }
-
-
 
     </script>
 }

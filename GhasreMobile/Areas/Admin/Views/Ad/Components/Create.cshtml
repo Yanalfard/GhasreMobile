@@ -7,7 +7,12 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form asp-action="Create" asp-controller="Ad" asp-area="Admin" enctype="multipart/form-data">
+<form asp-action="Create" asp-controller="Ad" asp-area="Admin" enctype="multipart/form-data"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="EndCatagoryCreate()"
+      data-ajax-update="#ajaxresult">
     <div class="modal-body">
         <div class="form-row">
             <div class="form-group col-md-3">
@@ -26,9 +31,11 @@
         <label class="mt-2">افزودن تصویر</label>
         <br />
         <div class="custom-file col-md-7">
-            <input asp-for="Image" type="file" class="custom-file-input form-control form-control-sm" onchange="inputChanged(this)">
+            <input required asp-for="Image" type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" onchange="inputChanged(this)">
             <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر</label>
         </div>
+        <br />
+        <span class="text-success">لطفا همه تصاویر در یک اندازه باشند</span>
     </div>
     <div class="modal-footer justify-content-end">
         <button type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
@@ -40,3 +47,5 @@
         sender.parentElement.querySelector('.custom-file-label').innerHTML = fileName;
     }
 </script>
+<script src="~/Validate/jquery.validate.min.js"></script>
+<script src="~/Validate/jquery.validate.unobtrusive.js"></script>
