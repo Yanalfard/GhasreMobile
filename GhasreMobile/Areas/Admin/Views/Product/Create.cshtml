@@ -80,6 +80,8 @@
                     <input asp-for="MainImage" type="file" accept="image/x-png,image/gif,image/jpeg" class="custom-file-input form-control form-control-sm" onchange="inputChanged(this)">
                     <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر اصلی</label>
                 </div>
+                <br />
+                <span class="text-success">لطفا طول و عرض تصویر یکی باشد</span>
                 <span id="MainImageErorr" class="text-danger" asp-validation-for="MainImage"></span>
                 <div class="form-row mt-3">
                     <div class="form-group col-md-3">
@@ -150,7 +152,8 @@
                 &nbsp;<span onclick="RemoveInputGallery()" class="text-danger" uk-icon="remove-circle-outline"></span>
 
                 <div id="GalleryPanel" class="h-50"></div>
-
+                <br />
+                <span class="text-success">لطفا طول و عرض تصویر یکی باشد</span>
             </div>
             <div class="card-footer bg-white mt-2">
                 <span class="text-danger" id="SubmitErorr"></span>
