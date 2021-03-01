@@ -128,13 +128,24 @@
                         <li>
                             <input type="hidden" name="ProductColorId" id="ProductColorId" value="@item.ColorId" />
                         </li>
+                        <li>
+                            <div class="clr active" onclick="selectColour(this)">
+                                <span>@item.Name</span>
+                                <strong style="background-color: @item.ColorCode"></strong>
+                                <input type="hidden" name="ColorId" value="@item.ColorId" />
+                            </div>
+                        </li>
                     }
-                    <li>
-                        <div class="clr" onclick="selectColour(this)">
-                            <span>@item.Name</span>
-                            <strong style="background-color: @item.ColorCode"></strong>
-                        </div>
-                    </li>
+                    else
+                    {
+                        <li>
+                            <div class="clr" onclick="selectColour(this)">
+                                <span>@item.Name</span>
+                                <strong style="background-color: @item.ColorCode"></strong>
+                                <input type="hidden" name="ColorId" value="@item.ColorId" />
+                            </div>
+                        </li>
+                    }
                 }
             </ul>
         </div>
@@ -241,11 +252,15 @@
         //    $('#listProductsSlider').html(result);
         //});
 
-        let selectedColour;
+        let selectedColour = document.querySelector('.clr.active');
         function selectColour(sender) {
             selectedColour?.classList.toggle('active');
             sender.classList.toggle('active');
             selectedColour = sender;
+            const input = sender.querySelector('input[name=ColorId]');
+            const targetInput = document.getElementById('ProductColorId');
+
+            targetInput.value = input.value;
         }
 
         function comparisonChanged(sender) {

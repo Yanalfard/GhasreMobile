@@ -34,20 +34,23 @@ namespace GhasreMobile.Controllers
         [HttpGet("{id}/{colorId}")]
         public int Get(int id, int colorId)
         {
-            TblColor selectedProduct = db.Color.GetById(id);
+            TblColor selectedProduct = db.Color.GetById(colorId);
             List<ShopCartItem> list = new List<ShopCartItem>();
             var sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
             if (sessions != null)
             {
                 list = sessions as List<ShopCartItem>;
             }
-            if (list.Any(p => p.ProductID == id))
+            if (list.Any(p => p.ColorID == colorId))
             {
-                int index = list.FindIndex(p => p.ProductID == id);
-                int count = selectedProduct.Count - list[index].Count;
-                if (count > 0 && selectedProduct.ProductId == id)
+                int index = list.FindIndex(p => p.ColorID == colorId);
+                if (selectedProduct != null)
                 {
-                    list[index].Count += 1;
+                    int count = selectedProduct.Count - list[index].Count;
+                    if (count > 0 && selectedProduct.ProductId == id && selectedProduct.ColorId == colorId)
+                    {
+                        list[index].Count += 1;
+                    }
                 }
             }
             else

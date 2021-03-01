@@ -8,6 +8,7 @@ namespace DataLayer.ViewModels
     {
         public int ProductID { get; set; }
         public int ColorID { get; set; }
+        public string ColorName { get; set; }
         public int Count { get; set; }
     }
 }
