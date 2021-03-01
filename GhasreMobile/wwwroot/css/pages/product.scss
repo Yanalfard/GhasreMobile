@@ -9,7 +9,7 @@
     grid-template-columns: $specs-width 2fr 1.1fr;
     grid-template-rows: $title-height auto;
     grid-template-areas: "title title image" "specs content image";
-    grid-gap: 8px;
+    grid-gap: 10px;
     z-index: 10;
     @include border-radius(4px,4px,0,0);
     position: relative;
@@ -126,6 +126,7 @@
                         padding: 6px 8px;
                         @include row;
                         @include border-def-radius;
+                        cursor: pointer;
 
                         span {
                             color: $Text-2;
@@ -138,6 +139,10 @@
                             margin-left: 6px;
                             @include border-circle;
                         }
+                    }
+
+                    .active {
+                        border: 1px solid transparentize($primary,.2);
                     }
                 }
             }
