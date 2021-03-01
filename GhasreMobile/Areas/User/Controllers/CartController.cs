@@ -1,4 +1,5 @@
-﻿using DataLayer.ViewModels;
+﻿using DataLayer.Models;
+using DataLayer.ViewModels;
 using GhasreMobile.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
@@ -42,6 +43,7 @@ namespace GhasreMobile.Areas.User.Controllers
                             PriceAfterDiscount = product.PriceAfterDiscount,
                             PriceBeforeDiscount = product.PriceBeforeDiscount,
                             Brand = product.Brand.Name,
+                            Sum = product.PriceAfterDiscount == 0 ? item.Count * product.PriceBeforeDiscount : product.PriceAfterDiscount * item.Count,
                         });
                     }
                 }
@@ -65,6 +67,40 @@ namespace GhasreMobile.Areas.User.Controllers
             return View();
         }
 
+
+        public IActionResult UpDownCount(int id, string command)
+        {
+            TblProduct selectedProduct = db.Product.GetById(id);
+            var listShop = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
+            var index = listShop.FindIndex(p => p.ProductID == id);
+            switch (command)
+            {
+                case "up":
+                    {
+                        //if(selectedProduct.TblColor)
+                        listShop[index].Count += 1;
+                        break;
+                    }
+                case "down":
+                    {
+                        listShop[index].Count -= 1;
+                        if (listShop[index].Count == 0)
+                        {
+                            listShop.RemoveAt(index);
+                        }
+                        break;
+                    }
+                case "delete":
+                    {
+
+                        listShop.RemoveAt(index);
+
+                        break;
+                    }
+            }
+            HttpContext.Session.SetComplexData("ShopCart", listShop);
+            return RedirectToAction("Index");
+        }
 
     }
 }

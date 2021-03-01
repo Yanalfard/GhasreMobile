@@ -8,6 +8,7 @@ using DataLayer.Models;
 using Services.Services;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using ReflectionIT.Mvc.Paging;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -16,30 +17,32 @@ namespace GhasreMobile.Areas.Admin.Controllers
     public class AdController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index()
+        public IActionResult Index(int page=1)
         {
-            return View();
+            IEnumerable<TblAd> ads= PagingList.Create(_core.Ad.Get(), 30, page);
+            return View(ads);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return ViewComponent("AdCreateAdmin");
         }
 
-        public async Task<IActionResult> CreateAsync(TblAd ad, IFormFile file)
+        public async Task<IActionResult> CreateAsync(TblAd ad, IFormFile Image)
         {
             if (ModelState.IsValid)
             {
-                if (file != null)
+                if (Image != null)
                 {
-                    ad.Image = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    ad.Image = Guid.NewGuid().ToString() + Path.GetExtension(Image.FileName);
                     string savePath = Path.Combine(
                                             Directory.GetCurrentDirectory(), "wwwroot/Images/Ad", ad.Image
                                         );
 
                     using (var stream = new FileStream(savePath, FileMode.Create))
                     {
-                        await file.CopyToAsync(stream);
+                        await Image.CopyToAsync(stream);
                     }
                 }
                 ad.PositionId = 0;
