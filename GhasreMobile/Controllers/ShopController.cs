@@ -3,6 +3,7 @@ using DataLayer.ViewModels;
 using GhasreMobile.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace GhasreMobile.Controllers
     [ApiController]
     public class ShopController : ControllerBase
     {
+        Core db = new Core();
+
         // GET: api/Shop
         [HttpGet]
         public int Get()
@@ -28,25 +31,34 @@ namespace GhasreMobile.Controllers
             return list.Sum(l => l.Count);
         }
         // GET: api/Shop/5
-        [HttpGet("{id}")]
-        public int Get(int id)
+        [HttpGet("{id}/{colorId}")]
+        public int Get(int id, int colorId)
         {
+            TblColor selectedProduct = db.Color.GetById(colorId);
             List<ShopCartItem> list = new List<ShopCartItem>();
             var sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
             if (sessions != null)
             {
                 list = sessions as List<ShopCartItem>;
             }
-            if (list.Any(p => p.ProductID == id))
+            if (list.Any(p => p.ColorID == colorId))
             {
-                int index = list.FindIndex(p => p.ProductID == id);
-                list[index].Count += 1;
+                int index = list.FindIndex(p => p.ColorID == colorId);
+                if (selectedProduct != null)
+                {
+                    int count = selectedProduct.Count - list[index].Count;
+                    if (count > 0 && selectedProduct.ProductId == id && selectedProduct.ColorId == colorId)
+                    {
+                        list[index].Count += 1;
+                    }
+                }
             }
             else
             {
                 list.Add(new ShopCartItem()
                 {
                     ProductID = id,
+                    ColorID = colorId,
                     Count = 1
                 });
             }

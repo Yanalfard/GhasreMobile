@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "پیشنهاد ویژه";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div class="card-header bg-white">
+                
+            </div>
+            <div id="card-table" class="card-body flex-div">
+                <div class="table-responsive flex">
+                    <table class="table fixed">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>نام محصول</th>
+                                <th>تاریخ انقضا</th>
+                                <th>درصد تخفیف</th>                                
+                                <th>عملیات</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>سامسونگ A70</td>
+                                <td>1399</td>                                
+                                <td>30٪</td>                                                                
+                                <td>
+                                    
+                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
+                                        <a class="text-danger" uk-icon="trash-outline"></a>
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                    @*@await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

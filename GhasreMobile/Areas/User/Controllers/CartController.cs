@@ -1,4 +1,5 @@
-﻿using DataLayer.ViewModels;
+﻿using DataLayer.Models;
+using DataLayer.ViewModels;
 using GhasreMobile.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
@@ -37,11 +38,14 @@ namespace GhasreMobile.Areas.User.Controllers
                         {
                             Count = item.Count,
                             ProductID = item.ProductID,
+                            ColorID = item.ColorID,
+                            ColorName = db.Color.GetById(item.ColorID).Name,
                             Name = product.Name,
                             ImageName = product.MainImage,
                             PriceAfterDiscount = product.PriceAfterDiscount,
                             PriceBeforeDiscount = product.PriceBeforeDiscount,
                             Brand = product.Brand.Name,
+                            Sum = product.PriceAfterDiscount == 0 ? item.Count * product.PriceBeforeDiscount : product.PriceAfterDiscount * item.Count,
                         });
                     }
                 }
@@ -65,6 +69,46 @@ namespace GhasreMobile.Areas.User.Controllers
             return View();
         }
 
+
+        public IActionResult UpDownCount(int id, int colorId, string command)
+        {
+            TblColor selectedProduct = db.Color.GetById(colorId);
+            var listShop = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
+            var index = listShop.FindIndex(p => p.ColorID == colorId);
+            switch (command)
+            {
+                case "up":
+                    {
+                        if (selectedProduct != null)
+                        {
+                            int count = selectedProduct.Count - listShop[index].Count;
+                            if (count > 0 && selectedProduct.ProductId == id && selectedProduct.ColorId == colorId)
+                            {
+                                listShop[index].Count += 1;
+                            }
+                        }
+                        break;
+                    }
+                case "down":
+                    {
+                        listShop[index].Count -= 1;
+                        if (listShop[index].Count == 0)
+                        {
+                            listShop.RemoveAt(index);
+                        }
+                        break;
+                    }
+                case "delete":
+                    {
+
+                        listShop.RemoveAt(index);
+
+                        break;
+                    }
+            }
+            HttpContext.Session.SetComplexData("ShopCart", listShop);
+            return RedirectToAction("Index");
+        }
 
     }
 }

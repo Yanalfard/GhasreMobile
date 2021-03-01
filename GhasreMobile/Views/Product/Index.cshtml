@@ -75,10 +75,10 @@
                         <button class="action" uk-tooltip="اشتراک گذاری" onclick="share(window.location.href)"
                                 uk-icon="share-social-outline"></button>
                         @*<label class="action" uk-tooltip="فعال کردن اعلان ها" uk-icon="notifications-outline">
-                            <input name="notifications"
-                                   onchange="notificationsChanged(this)"
-                                   type="checkbox" />
-                        </label>*@
+                                <input name="notifications"
+                                       onchange="notificationsChanged(this)"
+                                       type="checkbox" />
+                            </label>*@
                     </div>
                 </div>
             </div>
@@ -121,29 +121,58 @@
         <div class="colours">
             <h4>رنگ بندی</h4>
             <ul class="grid">
-                @foreach (var item in Model.TblColor)
+                @foreach (var item in Model.TblColor.Where(i => i.Count > 0))
                 {
-                    <li>
-                        <div class="clr">
-                            <span>@item.Name</span>
-                            <strong style="background-color: @item.ColorCode"></strong>
-                        </div>
-                    </li>
+                    if ((Model.TblColor.ToList().IndexOf(item)) == 0)
+                    {
+                        <li>
+                            <input type="hidden" name="ProductColorId" id="ProductColorId" value="@item.ColorId" />
+                        </li>
+                        <li>
+                            <div class="clr active" onclick="selectColour(this)">
+                                <span>@item.Name</span>
+                                <strong style="background-color: @item.ColorCode"></strong>
+                                <input type="hidden" name="ColorId" value="@item.ColorId" />
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <div class="clr" onclick="selectColour(this)">
+                                <span>@item.Name</span>
+                                <strong style="background-color: @item.ColorCode"></strong>
+                                <input type="hidden" name="ColorId" value="@item.ColorId" />
+                            </div>
+                        </li>
+                    }
                 }
             </ul>
         </div>
         <div class="cart uk-margin-top">
-            <div class="counter rowr">
-                <button class="plus" uk-icon="add"></button>
-                <span class="count">
-                    <span>16</span>
-                </span>
-                <button class="minus" uk-icon="remove"></button>
-            </div>
-            <button class="button" onclick="AddToCart(@Model.ProductId)">
-                <span>افزودن به سبد خرید</span>
-                <span uk-icon="cart"></span>
-            </button>
+            @*<div class="counter rowr">
+            <button class="plus" uk-icon="add"></button>
+            <span class="count">
+                <span>16</span>
+            </span>
+            <button class="minus" uk-icon="remove"></button>
+        </div>*@
+
+            @if (Model.TblColor.Sum(i => i.Count) > 0)
+            {
+                <button class="button" onclick="AddToCart(@Model.ProductId)">
+                    <span>افزودن به سبد خرید</span>
+                    <span uk-icon="cart"></span>
+                </button>
+            }
+            else
+            {
+                <button class="button" onclick="AddToCart(@Model.ProductId)">
+                    <span>موجود شد به من اطلاع بده</span>
+                    <span uk-icon="cart"></span>
+                </button>
+            }
+
         </div>
     </div>
     <div class="pr-specs">
@@ -186,7 +215,7 @@
 @if (Model.TblProductCommentRel.Any())
 {
     <div class="comment-section mat-card gap-t">
-        <h3>نظرات کاربران</h3>
+        <h3 class="uk-margin-bottom">نظرات کاربران</h3>
         <ul>
             @foreach (var item in Model.TblProductCommentRel.Where(i => i.Comment.IsValid))
             {
@@ -214,7 +243,7 @@
     <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
 
 </div>
-<input type="text" name="ProductId" id="ProductId" value="@Model.ProductId" />
+<input type="text" class="hidden" name="ProductId" id="ProductId" value="@Model.ProductId" />
 @section Scripts{
 
     <script>
@@ -222,6 +251,17 @@
         //$.get('/Product/SliderInProduct/' + id, function (result) {
         //    $('#listProductsSlider').html(result);
         //});
+
+        let selectedColour = document.querySelector('.clr.active');
+        function selectColour(sender) {
+            selectedColour?.classList.toggle('active');
+            sender.classList.toggle('active');
+            selectedColour = sender;
+            const input = sender.querySelector('input[name=ColorId]');
+            const targetInput = document.getElementById('ProductColorId');
+
+            targetInput.value = input.value;
+        }
 
         function comparisonChanged(sender) {
 

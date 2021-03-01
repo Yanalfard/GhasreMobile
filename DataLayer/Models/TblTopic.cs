@@ -24,6 +24,7 @@ namespace DataLayer.Models
         public DateTime? DateCreated { get; set; }
         public int ClientId { get; set; }
         public int VoteCount { get; set; }
+        public bool IsValid { get; set; }
 
         [ForeignKey(nameof(ClientId))]
         [InverseProperty(nameof(TblClient.TblTopic))]

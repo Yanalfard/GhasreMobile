@@ -23,7 +23,7 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.Client.TellNo</td>
+                                    <td>@item.Client.Name</td>
                                     <td>@item.DateCreated</td>
                                     <td>
                                         @if (item.IsValid)
@@ -42,7 +42,7 @@
                                         @if (!item.IsValid)
                                         {
                                             <span data-placement="top" data-toggle="tooltip" title="" data-original-title="تایید نظر">
-                                                <a id="Success(@item.CommentId)" class="text-success" uk-icon="checkmark-circle-outline"></a>
+                                                <a onclick="Success(@item.CommentId)" class="text-success" uk-icon="checkmark-circle-outline"></a>
                                             </span>
                                         }
                                     </td>

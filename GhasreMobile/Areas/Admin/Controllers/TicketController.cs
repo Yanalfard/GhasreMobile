@@ -15,10 +15,24 @@ namespace GhasreMobile.Areas.Admin.Controllers
     public class TicketController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(int page = 1, int SearchInputId = 0, string SearchInputTelNo = null)
         {
+
+            if (SearchInputId != 0)
+            {
+                IEnumerable<TblTicket> SearchIdtickets = PagingList.Create(_core.Ticket.Get(s => s.TicketId == SearchInputId), 30, page);
+                return View(SearchIdtickets);
+            }
+
+            if (!string.IsNullOrEmpty(SearchInputTelNo))
+            {
+                IEnumerable<TblTicket> SearchTelNo = PagingList.Create(_core.Ticket.Get(t => t.Client.TellNo.Contains(SearchInputTelNo)), 30, page);
+                return View(SearchInputTelNo);
+            }
+
             IEnumerable<TblTicket> tickets = PagingList.Create(_core.Ticket.Get(), 30, page);
             return View(tickets);
+
         }
 
         public IActionResult InnerTicket(int id)

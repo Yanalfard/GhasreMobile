@@ -61,7 +61,6 @@
 
     <script>
         $("#addOff").click(function () {
-
             $.get("/Admin/Discount/Create", function (result) {
                 $(".modal-content").html(result);
             });
