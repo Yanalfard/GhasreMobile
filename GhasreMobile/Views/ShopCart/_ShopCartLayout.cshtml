@@ -7,8 +7,8 @@
 
 @section Styles{
 
-
     <link href="~/css/pages/user.min.css" rel="stylesheet" />
+    <link href="~/css/Load.css" rel="stylesheet" />
 
     @RenderSection("Styles", false)
 
@@ -34,11 +34,18 @@ else if (ViewData["Single2"] != null)
     </div>
 }
 
-<p class="credits uk-text-center text-4">
-    کلیه حقوق این متعلق به شرکت قصر موبایل می باشد، طراحی و توسعه توسط
-    <a href="https://arvintavco.com">شرکت ایده پرداز آروین تاو</a>
-</p>
-<link href="~/css/Load.css" rel="stylesheet" />
+
+<button uk-toggle="target: #fnav" type="button" class="floating-navigation">
+    <span uk-icon="ratio:1.1;icon:menu"></span>
+</button>
+
+<!-- This is the modal -->
+<div id="fnav" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <div id="navswapper"></div>
+    </div>
+</div>
+
 <!-- #Loadinh -->
 <div id="overlay">
     <div class="cv-spinner">
