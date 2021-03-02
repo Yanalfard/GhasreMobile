@@ -118,6 +118,10 @@ backdrop-filter: saturate(80%);
 .space-recompinsate {
   height: 110px; }
 
+@media only screen and (max-width: 960px) {
+  .space-recompinsate {
+    height: 64px; } }
+
 /*#region Main */
 .m {
   display: grid;
