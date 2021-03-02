@@ -3,30 +3,6 @@
 
 $nav-height: 64px;
 
-.user-navigation {
-    padding: 0;
-    margin: 0;
-    position: relative;
-
-    a {
-        color: #787878;
-        padding: 12px 0 12px 20px;
-        border-left: 2px #D8D8D8 solid;
-        text-align: left;
-        @include trans(.2s);
-        display: block;
-        white-space: nowrap;
-    }
-
-    a:hover {
-        color: $primary;
-    }
-
-    a.active {
-        border-left: 4px $primary solid;
-    }
-}
-
 #fnav {
     .uk-modal-body {
         width: 260px;
@@ -80,6 +56,10 @@ $nav-height: 64px;
     .floating-navigation {
         display: block;
     }
+}
+
+.space-recompinsate {
+    height: 110px;
 }
 
 /*#region Main */

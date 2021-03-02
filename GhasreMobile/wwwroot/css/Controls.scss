@@ -593,7 +593,7 @@ $background-highlight: #eee;
             padding: 1px;
             overflow: hidden;
 
-            button {
+            button, a {
                 background-color: #9D189D;
                 border: 0;
                 padding: 6px;
@@ -785,7 +785,7 @@ $background-highlight: #eee;
                 overflow: hidden;
                 min-width: 144px;
 
-                button {
+                button, a {
                     background-color: #9D189D;
                     border: 0;
                     padding: 4px;
@@ -960,7 +960,8 @@ $background-highlight: #eee;
             .cart {
                 min-width: 70px;
 
-                button {
+                button, a {
+                    margin: auto;
                     background-color: $primary;
                 }
 
@@ -2025,4 +2026,28 @@ footer {
 
 div[role=none][id] {
     display: none;
+}
+
+.user-navigation {
+    padding: 0;
+    margin: 0;
+    position: relative;
+
+    a {
+        color: #787878;
+        padding: 12px 0 12px 20px;
+        border-left: 2px #D8D8D8 solid;
+        text-align: left;
+        @include trans(.2s);
+        display: block;
+        white-space: nowrap;
+    }
+
+    a:hover {
+        color: $primary;
+    }
+
+    a.active {
+        border-left: 4px $primary solid;
+    }
 }

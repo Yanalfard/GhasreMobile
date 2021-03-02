@@ -52,11 +52,15 @@ namespace GhasreMobile.Controllers
             }
         }
 
+        public IActionResult Comparison()
+        {
+            return View();
+        }
 
-
-
-
-
+        public IActionResult Bookmarks()
+        {
+            return View();
+        }
 
 
 
