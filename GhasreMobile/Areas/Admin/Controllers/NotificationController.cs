@@ -31,11 +31,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return ViewComponent("CreateNotificationAdmin");
         }
 
+        [HttpPost]
         public IActionResult Create(bool SendAll, int UserId, string Text)
         {
             TblClient Sender = _core.Client.Get(c => c.TellNo == User.Identity.Name.ToString()).Single();
