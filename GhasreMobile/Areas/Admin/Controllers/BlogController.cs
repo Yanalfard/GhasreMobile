@@ -13,7 +13,7 @@ using System.IO;
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [PermissionChecker("admin")]
+    [PermissionChecker("admin,employee")]
     public class BlogController : Controller
     {
         Core _core = new Core();

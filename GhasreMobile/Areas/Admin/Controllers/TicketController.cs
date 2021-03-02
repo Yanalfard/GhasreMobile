@@ -11,7 +11,7 @@ using Services.Services;
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [PermissionChecker("admin")]
+    [PermissionChecker("admin,employee")]
     public class TicketController : Controller
     {
         Core _core = new Core();
