@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<ShopCartItemVm>
+@{
     ViewData["Title"] = "Index";
     ViewData["Single"] = true;
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
@@ -16,7 +17,7 @@
         صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.
     </div>
 
-    <partial name="_Cart" model="new List<ShopCartItemVm>()" />
+    <partial name="_Cart" model="Model" />
 
     <div class="mat-card">
         <h4 class="uk-margin-small-bottom">

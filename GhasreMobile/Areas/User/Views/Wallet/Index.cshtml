@@ -13,8 +13,10 @@
     </a>
     <div class="balance">
         <label class="bal">@Model.ToString("#,0")</label>
-        <span class="t">تومان</span>
+        <span class="t">ریال</span>
     </div>
 </div>
-
-<partial name="_TransactionHistory" />
+@{ 
+    List<TblWallet> list = ViewBag.Wallet as List<TblWallet>;
+}
+<partial name="_TransactionHistory" model="list" />
