@@ -3,19 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataLayer.Models;
+using ReflectionIT.Mvc.Paging;
+using Services.Services;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class OnlineOrderController : Controller
     {
-        public IActionResult Index()
+        Core _core = new Core();
+        public IActionResult Index(int page = 1)
         {
-            return View();
+            IEnumerable<TblOnlineOrder> onlineOrders = PagingList.Create(_core.OnlineOrder.Get(), 30, page);
+            return View(onlineOrders);
         }
         public IActionResult Info(int id)
         {
-            return ViewComponent("OnlineOrderInfoAdmin");
+            return ViewComponent("OnlineOrderInfoAdmin", new { id = id });
         }
     }
 }

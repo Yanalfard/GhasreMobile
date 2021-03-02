@@ -17,9 +17,9 @@ namespace GhasreMobile.Areas.Admin.Controllers
     public class AdController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page=1)
+        public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblAd> ads= PagingList.Create(_core.Ad.Get(), 30, page);
+            IEnumerable<TblAd> ads = PagingList.Create(_core.Ad.Get(), 30, page);
             return View(ads);
         }
 

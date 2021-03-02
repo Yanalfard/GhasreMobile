@@ -15,26 +15,42 @@ namespace GhasreMobile.Areas.Admin.Controllers
     public class ClientController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(int page = 1, string Name = null, string TelNo = null)
         {
-            IEnumerable<TblClient> clients = PagingList.Create(_core.Client.Get(), 30, page);
-            return View(clients);
+            if (!string.IsNullOrEmpty(Name))
+            {
+                IEnumerable<TblClient> clients = PagingList.Create(_core.Client.Get(c => c.Name.Contains(Name)), 40, page);
+                return View(clients);
+            }
+
+            if (!string.IsNullOrEmpty(TelNo))
+            {
+                IEnumerable<TblClient> clients = PagingList.Create(_core.Client.Get(c => c.Name.Contains(Name)), 40, page);
+                return View(clients);
+            }
+            else
+            {
+                IEnumerable<TblClient> clients = PagingList.Create(_core.Client.Get(), 40, page);
+                return View(clients);
+            }
+
         }
 
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             return ViewComponent("ClientEditAdmin", new { id = id });
         }
 
-        public IActionResult Edit(TblClient client)
+        [HttpPost]
+        public IActionResult Edit(int ClientId, string Name, int RoleId)
         {
-            if (ModelState.IsValid)
-            {
-                _core.Client.Update(client);
-                _core.Client.Save();
-                return Redirect("/Admin/client");
-            }
-            return View(client);
+            TblClient client = _core.Client.GetById(ClientId);
+            client.Name = Name;
+            client.RoleId = RoleId;
+            _core.Client.Update(client);
+            _core.Client.Save();
+            return Redirect("/Admin/client");
         }
     }
 }
