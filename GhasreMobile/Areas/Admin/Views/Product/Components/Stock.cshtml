@@ -44,11 +44,11 @@
     <label>قیمت:</label>
     @if (@Model.First().Product.PriceAfterDiscount != 0)
     {
-        <input id="Price-@Model.First().Product.ProductId" class="form-control form-control-sm col-md-2" placeholder="مثال:50000 تومان" value="@Model.First().Product.PriceAfterDiscount">
+        <input id="Price-@Model.First().Product.ProductId" class="form-control form-control-sm col-md-2" placeholder="مثال:50000 ريال" value="@Model.First().Product.PriceAfterDiscount">
     }
     else
     {
-        <input id="Price-@Model.First().ProductId" class="form-control form-control-sm col-md-2" placeholder="مثال:50000 تومان" value="@Model.First().Product.PriceBeforeDiscount">
+        <input id="Price-@Model.First().ProductId" class="form-control form-control-sm col-md-2" placeholder="مثال:50000 ريال" value="@Model.First().Product.PriceBeforeDiscount">
     }
 
     <button onclick="EditPrice(@Model.First().ProductId, $('#Price-@Model.First().ProductId').val())" class="btn btn-sm btn-success ml-md-4">ثبت</button>
