@@ -1,6 +1,7 @@
-﻿@{
-    ViewData["Title"] = "سبد خرید";
+﻿@model VmComparison
+@{
+    ViewData["Title"] = "لیست مقایسه ";
     Layout = "_ShopCartLayout.cshtml";
 }
 
-<partial name="_Comparison" />
+<partial name="_Comparison" model="Model" />

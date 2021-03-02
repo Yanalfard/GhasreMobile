@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<TblProduct>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -83,11 +83,10 @@
 
     </div>
     <div class="grid">
-        <partial name="_ProductBlock" />
-        <partial name="_ProductBlock" />
-        <partial name="_ProductBlock" />
-        <partial name="_ProductBlock" />
-        <partial name="_ProductBlock" />
+        @foreach (var item in Model)
+        {
+            <partial name="_ProductBlock" model="item" />
+        }
     </div>
 </div>
 

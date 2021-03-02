@@ -12,17 +12,18 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Amount</td>
 
                 @if (item.IsDeposit)
                 {
-                    <td>
+                    <td class="uk-text-success">@item.Amount.ToString("#,0")</td>
+                    <td class="uk-text-success">
                         واریز
                     </td>
                 }
                 else
                 {
-                    <td>
+                    <td class="uk-text-danger">@item.Amount.ToString("#,0")</td>
+                    <td class="uk-text-danger">
                         برداشت
                     </td>
                 }

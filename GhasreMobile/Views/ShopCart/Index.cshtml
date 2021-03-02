@@ -1,10 +1,11 @@
-﻿
+﻿@model IEnumerable<ShopCartItemVm>
 @{
     ViewData["Title"] = "سبد خرید";
     Layout = "_ShopCartLayout.cshtml";
 }
 
-<partial name="_Cart" />
+
+<partial name="_Cart" model="Model" />
 
 <a href="/Login" class="btn btn-primary uk-margin-auto-left">ورود برای تکمیل خرید</a>
 

@@ -20,18 +20,20 @@ namespace GhasreMobile.Controllers
         [HttpGet]
         public int Get()
         {
-            //List<CompareItemVm> list = new List<CompareItemVm>();
-            //var Session = HttpContext.Session.GetComplexData<List<CompareItemVm>>("Compare");
-            //if (Session != null)
-            //{
-            //    list = Session as List<CompareItemVm>;
-            //}
-            return Get();
+
+            List<CompareItemVm> list = new List<CompareItemVm>();
+            var Session = HttpContext.Session.GetComplexData<List<CompareItemVm>>("Compare");
+            if (Session != null)
+            {
+                list = Session as List<CompareItemVm>;
+            }
+            return list.Count;
         }
         // GET: api/Shop/5
-        [HttpGet("{id}")]
-        public int Get(int id)
+        [HttpGet("{id}/{colorId}")]
+        public int Get(int id, int colorId)
         {
+            TblColor selectedColor = db.Color.GetById(colorId);
             List<CompareItemVm> list = new List<CompareItemVm>();
             var Session = HttpContext.Session.GetComplexData<List<CompareItemVm>>("Compare");
             if (Session != null)
@@ -40,12 +42,17 @@ namespace GhasreMobile.Controllers
             }
             if (!list.Any(p => p.ProductID == id))
             {
-                var product = db.Product.Get(p => p.ProductId == id).Select(p => new { p.Name, p.MainImage }).Single();
+                var product = db.Product.Get(p => p.ProductId == id).Select(p => new { p.Name, p.MainImage,p.PriceAfterDiscount,p.PriceBeforeDiscount }).Single();
                 list.Add(new CompareItemVm()
                 {
                     ProductID = id,
-                    Title = product.Name,
-                    ImageName = product.MainImage
+                    Name = product.Name,
+                    ImageName = product.MainImage,
+                    Brand = product.MainImage,
+                    PriceBeforeDiscount = product.PriceBeforeDiscount,
+                    PriceAfterDiscount = product.PriceAfterDiscount,
+                    ColorID= selectedColor.ColorId,
+                    ColorName=selectedColor.Name
                 });
             }
             HttpContext.Session.SetComplexData("Compare", list);

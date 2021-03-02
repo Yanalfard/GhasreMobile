@@ -1,4 +1,4 @@
-﻿import UIkit from "uikit";
+﻿//import UIkit from "uikit";
 
 const swapAttrib = 'swap';
 const swapThreshold = 960;

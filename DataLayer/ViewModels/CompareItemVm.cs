@@ -7,7 +7,12 @@ namespace DataLayer.ViewModels
     public class CompareItemVm
     {
         public int ProductID { get; set; }
-        public string Title { get; set; }
         public string ImageName { get; set; }
+        public string Name { get; set; }
+        public string Brand { get; set; }
+        public long? PriceBeforeDiscount { get; set; }
+        public long? PriceAfterDiscount { get; set; }
+        public int ColorID { get; set; }
+        public string ColorName { get; set; }
     }
 }

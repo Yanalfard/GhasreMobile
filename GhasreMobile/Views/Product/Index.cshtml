@@ -59,11 +59,12 @@
                     </ul>
                 </div>
                 <div class="foot">
+                   
                     <div class="left">
                         <label class="action" uk-tooltip="افزورن به لیست مقایسه" uk-icon="contrast">
                             <input name="comparison"
                                    onchange="comparisonChanged(this)"
-                                   type="checkbox" />
+                                   type="checkbox" onclick="AddToCompare(@Model.ProductId)" />
                         </label>
                         <label class="action @((ViewBag.IsBookMark)?"checked":"")" uk-tooltip="افزودن به لیست علاقه مندی ها" uk-icon="bookmark-outline">
                             <input name="favourites"
@@ -267,8 +268,13 @@
 
             sender.parentElement.classList.toggle('checked');
             // Toggle Comparison
-
+            $.get("/api/Shop/" + id + "/" + colorId, function (res) {
+                $("#countShopCart").html(res);
+                // updateShopCart();
+            });
         }
+
+      
 
         function favouritesChanged(sender) {
             var id = $('#ProductId').val();

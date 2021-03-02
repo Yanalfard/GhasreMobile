@@ -1,7 +1,7 @@
-﻿
+﻿@model VmComparison
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "لیست مقایسه";
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
 }
 
-<partial name="_Comparison"/>
+<partial name="_Comparison" model="Model" />
