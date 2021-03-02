@@ -12,7 +12,7 @@
 
 @section Aside{
 
-    <div class="affiliates mat mat-border col">
+    <div swap="swAffiliates" class="affiliates mat mat-border col">
         <div class="mat-pad uk-padding-remove-bottom">
             <h3 class="uk-margin-remove uk-padding-remove">
                 شعب ما
@@ -88,6 +88,9 @@
     </div>
 </div>
 
+<div id="swAffiliates" role="none"></div>
+
+
 @section Scripts{
 
     <script src="~/js/leaflet.js"></script>
@@ -115,20 +118,20 @@
         )
             .addTo(map).bindPopup(
                 `
-                <div class="aff-marker">
-                    <h4>شعبه شهناز</h4>
-                    <p>
-                        این یک آدرس می باش. آدرس یک شعبه که در هحله سضناز قرار دارد. این متن برای تست و به صورت کاملا آربیتری نوشته شده است
-                    </p>
-                    <a href="" dir="rtl">
-                        مشاهده
-                    </a>
-                </div>
-                `
-        ).openPopup();
+                    <div class="aff-marker">
+                        <h4>شعبه شهناز</h4>
+                        <p>
+                            این یک آدرس می باش. آدرس یک شعبه که در هحله سضناز قرار دارد. این متن برای تست و به صورت کاملا آربیتری نوشته شده است
+                        </p>
+                        <a href="" dir="rtl">
+                            مشاهده
+                        </a>
+                    </div>
+                    `
+            ).openPopup();
 
     </script>
 
-    
+
 
 }

@@ -100,9 +100,18 @@
                     <div class="badge">
                         <span id="countShopCart"></span>
                     </div>
-                    <button>
-                        <span uk-icon="cart-outline"></span>
-                    </button>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="/User/Cart">
+                            <span uk-icon="cart-outline"></span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/ShopCart">
+                            <span uk-icon="cart-outline"></span>
+                        </a>
+                    }
                 </div>
             </div>
 
@@ -261,7 +270,7 @@
                             <a href="/Contact">تماس با ما</a>
                         </li>
                         <li>
-                            <a href="/Affiliates">مشاهده نمایندگی ها</a>
+                            <a href="/Affiliate">مشاهده نمایندگی ها</a>
                         </li>
                         <li>
                             <a href="">پشتیبانی و تیکت</a>

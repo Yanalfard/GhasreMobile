@@ -690,11 +690,11 @@ textarea {
       margin: auto auto auto 0;
       padding: 1px;
       overflow: hidden; }
-      .header .top .cart button {
+      .header .top .cart button, .header .top .cart a {
         background-color: #9D189D;
         border: 0;
         padding: 6px; }
-        .header .top .cart button span {
+        .header .top .cart button span, .header .top .cart a span {
           color: #fff; }
       .header .top .cart .label {
         color: #fff;
@@ -713,7 +713,8 @@ textarea {
         max-width: 21px;
         max-height: 21px; }
         .header .top .cart .badge span {
-          margin: auto; }
+          margin: auto;
+          min-width: 8px; }
   .header .bottom {
     background-color: #fff;
     border: 1px solid #e5e5e5;
@@ -872,11 +873,11 @@ textarea {
       padding: 0px;
       overflow: hidden;
       min-width: 144px; }
-      .header .top .cart button {
+      .header .top .cart button, .header .top .cart a {
         background-color: #9D189D;
         border: 0;
         padding: 4px; }
-        .header .top .cart button span {
+        .header .top .cart button span, .header .top .cart a span {
           color: #fff; }
       .header .top .cart .label {
         color: #fff;
@@ -974,7 +975,8 @@ textarea {
 @media only screen and (max-width: 512px) {
   .header .top .cart {
     min-width: 70px; }
-    .header .top .cart button {
+    .header .top .cart button, .header .top .cart a {
+      margin: auto;
       background-color: #96027E; }
     .header .top .cart .badge {
       margin: auto 6px auto 8px; }
@@ -1222,6 +1224,9 @@ textarea {
         font-size: 15px;
         line-height: 1;
         background-color: #F5F5F5;
+        min-width: 16px !important;
+        max-width: 16px !important;
+        text-align: center;
         padding: 6px;
         color: #666;
         -moz-border-radius: 9px 9px 9px 9px;
@@ -1771,3 +1776,23 @@ footer {
 
 div[role=none][id] {
   display: none; }
+
+.user-navigation {
+  padding: 0;
+  margin: 0;
+  position: relative; }
+  .user-navigation a {
+    color: #787878;
+    padding: 12px 0 12px 20px;
+    border-left: 2px #D8D8D8 solid;
+    text-align: left;
+    -moz-transition: all ease 0.2s;
+    -o-transition: all ease 0.2s;
+    -webkit-transition: all ease 0.2s;
+    transition: all ease 0.2s;
+    display: block;
+    white-space: nowrap; }
+  .user-navigation a:hover {
+    color: #96027E; }
+  .user-navigation a.active {
+    border-left: 4px #96027E solid; }

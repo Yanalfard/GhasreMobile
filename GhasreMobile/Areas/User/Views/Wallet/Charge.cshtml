@@ -1,4 +1,4 @@
-﻿
+﻿@model ChargeWalletVm
 @{
     ViewData["Title"] = "Index";
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
@@ -11,12 +11,12 @@
     <p class="text-3 uk-margin-small-top uk-margin-bottom">
         دقت کنید، مبلغ غیر قابل عودت می باشد
     </p>
-    <form>
+    <form asp-action="Charge" asp-controller="Wallet" asp-area="User">
         <div class="fg-col" dir="rtl">
             <label class="fg-label">مبلغ شارژ <span class="text-3">(ريال)</span></label>
-            <input type="number" class="entry" value="" />
+            <input type="number" class="entry" asp-for="Amount" />
+            <span class="text-danger" asp-validation-for="Amount"></span>
         </div>
-
         <div class="uk-margin-medium-top">
             <button class="btn btn-primary">شارژ</button>
         </div>

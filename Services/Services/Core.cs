@@ -47,6 +47,7 @@ namespace Services.Services
         private MainRepo<TblTicket> _ticket;
         private MainRepo<TblBrand> _brand;
         private MainRepo<TblSpecialOffer> _specialOffer;
+        private MainRepo<TblWallet> _wallet;
 
 
         public MainRepo<TblStore> Store => _store ??= new MainRepo<TblStore>(_context);
@@ -86,6 +87,7 @@ namespace Services.Services
         public MainRepo<TblTicket> Ticket => _ticket ??= new MainRepo<TblTicket>(_context);
         public MainRepo<TblBrand> Brand => _brand ??= new MainRepo<TblBrand>(_context);
         public MainRepo<TblSpecialOffer> SpecialOffer => _specialOffer ??= new MainRepo<TblSpecialOffer>(_context);
+        public MainRepo<TblWallet> Wallet => _wallet ??= new MainRepo<TblWallet>(_context);
 
         public void Dispose()
         {
