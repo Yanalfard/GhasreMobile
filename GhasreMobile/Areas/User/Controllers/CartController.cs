@@ -70,7 +70,7 @@ namespace GhasreMobile.Areas.User.Controllers
         }
 
 
-        public IActionResult UpDownCount(int id, int colorId, string command)
+        public IActionResult UpDownCount(int id, int colorId, string command, string ReturnUrl = "/")
         {
             TblColor selectedProduct = db.Color.GetById(colorId);
             var listShop = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
@@ -107,7 +107,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     }
             }
             HttpContext.Session.SetComplexData("ShopCart", listShop);
-            return RedirectToAction("Index");
+            return Redirect(ReturnUrl);
         }
 
     }

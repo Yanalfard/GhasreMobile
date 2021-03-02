@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GhasreMobile.ViewComponents.Admin.Card
 {
-    public class adCreateAdmin:ViewComponent
+    public class CardCreateAdmin : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {

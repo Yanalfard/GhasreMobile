@@ -52,5 +52,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
             _core.Client.Save();
             return Redirect("/Admin/client");
         }
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

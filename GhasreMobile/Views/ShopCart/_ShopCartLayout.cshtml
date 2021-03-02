@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    ViewData["Single"] = true;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Styles{
+
+    <link href="~/css/pages/user.min.css" rel="stylesheet" />
+    <link href="~/css/Load.css" rel="stylesheet" />
+
+    @RenderSection("Styles", false)
+
+}
+
+<div role="none" class="space-recompinsate"></div>
+
+@if (ViewData["Single2"] == null)
+{
+    <div class="m uk-container">
+        <main class="m-content">
+            @RenderBody()
+        </main>
+        <aside class="m-aside">
+            <div swap="navswapper"><partial name="_UserNavigation" /></div>
+        </aside>
+    </div>
+}
+else if (ViewData["Single2"] != null)
+{
+    <div class="uk-container">
+        @RenderBody()
+    </div>
+}
+
+
+<button uk-toggle="target: #fnav" type="button" class="floating-navigation">
+    <span uk-icon="ratio:1.1;icon:menu"></span>
+</button>
+
+<!-- This is the modal -->
+<div id="fnav" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <div id="navswapper"></div>
+    </div>
+</div>
+
+<!-- #Loadinh -->
+<div id="overlay">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    @RenderSection("Scripts", false)
+
+}

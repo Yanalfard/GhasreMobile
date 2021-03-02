@@ -52,5 +52,16 @@ namespace GhasreMobile.Areas.Admin.Controllers
             _core.Ticket.Save();
             return Redirect("/Admin/Ticket/InnerTicket/" + ClientId);
         }
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 }

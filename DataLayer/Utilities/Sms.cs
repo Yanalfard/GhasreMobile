@@ -15,5 +15,13 @@ namespace DataLayer.Utilities
             api.VerifyLookup(receptor, Message, Temp);
             return await Task.FromResult(true);
         }
+        public static async Task<bool> SendSms2(string PhonNumber, string token, string token2, string Temp)
+        {
+            var receptor = PhonNumber;
+            var message = token;
+            var api = new Kavenegar.KavenegarApi("4D4B66616C686B64534544333856706F7A6A35793647497735395A79496C59485644345257546C615137303D");
+            api.VerifyLookup(receptor, token, token2,"", Temp);
+            return await Task.FromResult(true);
+        }
     }
 }

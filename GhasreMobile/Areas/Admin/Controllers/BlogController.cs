@@ -181,5 +181,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
             _core.Blog.Delete(blog);
             _core.Blog.Save();
         }
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

@@ -41,5 +41,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
             _core.Delivery.Update(delivery);
             _core.Delivery.Save();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

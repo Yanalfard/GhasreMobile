@@ -1,4 +1,6 @@
-﻿const swapAttrib = 'swap';
+﻿import UIkit from "uikit";
+
+const swapAttrib = 'swap';
 const swapThreshold = 960;
 
 function Swap(element) {
@@ -84,3 +86,31 @@ function copy(text, message) {
 
     UIkit.notification(message);
 }
+
+// Countdown
+window.addEventListener("load", () => {
+
+    const timers = document.querySelectorAll('[countdown]');
+
+    for (let timer of timers) {
+
+        const second = timer.querySelector('[second]');
+        const minute = timer.querySelector('[minute]');
+        const hour = timer.querySelector('[hour]');
+        const day = timer.querySelector('[day]');
+
+        const date = Date.parse(timer.getAttribute('countdown'));
+
+        setInterval(() => {
+            const now = Date.now();
+            const range = new Date(date - now);
+
+            second.innerHTML = range.getUTCSeconds();
+            minute.innerHTML = range.getUTCMinutes();
+            hour.innerHTML = range.getUTCHours();
+            day.innerHTML = range.getUTCDay();
+        }, 1000);
+
+    }
+
+})

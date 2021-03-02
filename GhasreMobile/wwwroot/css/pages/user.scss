@@ -3,30 +3,6 @@
 
 $nav-height: 64px;
 
-.user-navigation {
-    padding: 0;
-    margin: 0;
-    position: relative;
-
-    a {
-        color: #787878;
-        padding: 12px 0 12px 20px;
-        border-left: 2px #D8D8D8 solid;
-        text-align: left;
-        @include trans(.2s);
-        display: block;
-        white-space: nowrap;
-    }
-
-    a:hover {
-        color: $primary;
-    }
-
-    a.active {
-        border-left: 4px $primary solid;
-    }
-}
-
 #fnav {
     .uk-modal-body {
         width: 260px;
@@ -81,6 +57,17 @@ $nav-height: 64px;
         display: block;
     }
 }
+
+.space-recompinsate {
+    height: 110px;
+}
+
+@media only screen and (max-width: 960px) {
+    .space-recompinsate {
+        height: 64px;
+    }
+}
+
 
 /*#region Main */
 $grid-gap: 16px;
@@ -693,15 +680,105 @@ $aside-width: 142px;
 }
 
 .procedure {
+    display: flex;
+
     .circles {
+        width: 100%;
+        display: flex;
+        -ms-flex-direction: row-reverse;
+        -webkit-flex-direction: row-reverse;
+        flex-direction: row-reverse;
+        -ms-align-content: space-between;
+        -webkit-align-content: space-between;
+        align-content: space-between;
+
+        .circle {
+            width: 42px;
+            height: 42px;
+            margin: auto;
+            @include border-circle;
+            border: $mat-border-color solid 4px;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            background-color: #fff;
+            position: relative;
+            z-index: 5;
+        }
+
+        .line {
+            position: relative;
+            z-index: 0;
+            margin-top: 19px;
+            height: 4px;
+            background-color: $mat-border-color;
+            flex: auto;
+            margin-left: -36px;
+            margin-right: -36px;
+        }
+
+        .line.done {
+            background-color: $primary;
+        }
+
+        .name {
+            margin-top: 8px;
+            text-align: center;
+        }
+
         .step {
+            @include column;
+        }
+
+        .step.doing {
+            .circle {
+                border: $primary 4px solid;
+            }
         }
 
         .step.done {
+            .circle {
+                background-color: $primary;
+                border: $primary 4px solid;
+            }
         }
+    }
+}
 
-        .step:not(:last-child):after {
-            height: 6px;
+@media only screen and (max-width : 380px) {
+    .procedure {
+        display: flex;
+
+        .circles {
+            width: 100%;
+            display: flex;
+
+            .circle {
+                width: 32px;
+                height: 32px;
+                border: $mat-border-color solid 4px;
+            }
+
+            .line {
+                position: relative;
+                z-index: 0;
+                margin-top: 14px;
+            }
+
+            .name {
+                margin-top: 8px;
+                text-align: center;
+                font-size: 12px;
+            }
         }
+    }
+}
+
+.comment.unseen {
+    border: transparentize($primary,.48) solid 1px;
+    background-color: transparentize($primary,.92);
+
+    p {
+        color: $primary;
     }
 }
