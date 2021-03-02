@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using DataLayer.Models;
 using ReflectionIT.Mvc.Paging;
 using Services.Services;
+using GhasreMobile.Utilities;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [PermissionChecker("admin,employee")]
     public class OnlineOrderController : Controller
     {
         Core _core = new Core();
