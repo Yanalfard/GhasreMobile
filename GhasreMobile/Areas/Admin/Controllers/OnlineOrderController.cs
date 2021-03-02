@@ -24,5 +24,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             return ViewComponent("OnlineOrderInfoAdmin", new { id = id });
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

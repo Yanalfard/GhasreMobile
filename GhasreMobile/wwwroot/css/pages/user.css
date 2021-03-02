@@ -68,26 +68,6 @@ backdrop-filter: saturate(80%);
   flex: auto; }
 
 /*#endregion */
-.user-navigation {
-  padding: 0;
-  margin: 0;
-  position: relative; }
-  .user-navigation a {
-    color: #787878;
-    padding: 12px 0 12px 20px;
-    border-left: 2px #D8D8D8 solid;
-    text-align: left;
-    -moz-transition: all ease 0.2s;
-    -o-transition: all ease 0.2s;
-    -webkit-transition: all ease 0.2s;
-    transition: all ease 0.2s;
-    display: block;
-    white-space: nowrap; }
-  .user-navigation a:hover {
-    color: #96027E; }
-  .user-navigation a.active {
-    border-left: 4px #96027E solid; }
-
 #fnav .uk-modal-body {
   width: 260px; }
   #fnav .uk-modal-body .user-navigation {
@@ -134,6 +114,9 @@ backdrop-filter: saturate(80%);
 @media only screen and (max-width: 960px) {
   .floating-navigation {
     display: block; } }
+
+.space-recompinsate {
+  height: 110px; }
 
 /*#region Main */
 .m {

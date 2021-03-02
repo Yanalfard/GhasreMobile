@@ -106,5 +106,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
             _core.BannerAndSlide.Save();
             return await Task.FromResult("true");
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

@@ -10,6 +10,7 @@ using Services.Services;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using GhasreMobile.Utilities;
+using DataLayer.Utilities;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -215,12 +216,30 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public void EditStoke(int Id, int count)
+        public async Task<string> EditStoke(int Id, int count)
         {
             TblColor color = _core.Color.GetById(Id);
+            TblProduct product = _core.Product.GetById(color.ProductId);
+            if (color.Count == 0)
+            {
+                if (count > 0)
+                {
+                    IEnumerable<TblAlertWhenReady> whenReadies = _core.AlertWhenReady.Get(a => a.ProductId == product.ProductId);
+                    if (whenReadies.Count() > 0)
+                    {
+                        foreach (var item in whenReadies)
+                        {
+                            await Sms.SendSms2(item.Client.TellNo, item.Product.Name, "Https://gasrmobile2004.com/" + item.ProductId + "/" + item.Product.Name.Replace(" ", "-"), "GhasrMobileAlertWhenReady");
+                            _core.AlertWhenReady.Delete(item);
+                            _core.AlertWhenReady.Save();
+                        }
+                    }
+                }
+            }
             color.Count = count;
             _core.Color.Update(color);
             _core.Color.Save();
+            return "true";
         }
 
         public void EditPrice(int Id, long Price)
@@ -455,9 +474,17 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         public IActionResult SpecialOffer(int id)
         {
-            return ViewComponent("SpecialOfferAddAdmin");
+            return ViewComponent("SpecialOfferAddAdmin", new { id = id });
         }
 
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

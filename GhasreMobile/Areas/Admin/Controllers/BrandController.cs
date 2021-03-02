@@ -55,5 +55,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             return View(brand);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 }

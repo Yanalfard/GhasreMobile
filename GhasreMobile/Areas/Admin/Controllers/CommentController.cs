@@ -36,5 +36,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
             _core.Comment.Save();
             return Redirect("/Comment");
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

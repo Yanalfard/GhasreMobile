@@ -76,5 +76,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             return ViewComponent("ShowChildsCatagoryAdmin", new { Id = Id });
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 }

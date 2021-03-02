@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    ViewData["Single"] = true;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Styles{
+
+
+    <link href="~/css/pages/user.min.css" rel="stylesheet" />
+
+    @RenderSection("Styles", false)
+
+}
+
+<div role="none" class="space-recompinsate"></div>
+
+@if (ViewData["Single2"] == null)
+{
+    <div class="m uk-container">
+        <main class="m-content">
+            @RenderBody()
+        </main>
+        <aside class="m-aside">
+            <div swap="navswapper"><partial name="_UserNavigation" /></div>
+        </aside>
+    </div>
+}
+else if (ViewData["Single2"] != null)
+{
+    <div class="uk-container">
+        @RenderBody()
+    </div>
+}
+
+<p class="credits uk-text-center text-4">
+    کلیه حقوق این متعلق به شرکت قصر موبایل می باشد، طراحی و توسعه توسط
+    <a href="https://arvintavco.com">شرکت ایده پرداز آروین تاو</a>
+</p>
+<link href="~/css/Load.css" rel="stylesheet" />
+<!-- #Loadinh -->
+<div id="overlay">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    @RenderSection("Scripts", false)
+
+}

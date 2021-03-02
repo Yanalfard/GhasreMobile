@@ -10,7 +10,9 @@ namespace DataLayer.Models
         [Key]
         public int SpecialOfferId { get; set; }
         public int ProductId { get; set; }
-        public int Discount { get; set; }
+        [Required(ErrorMessage ="لطفا کد تخفیف را وارد کنید")]
+        [Range(1, 99, ErrorMessage = "از 1 تا 99 مجاز میباشد")]
+        public int? Discount { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime ValidTill { get; set; }
 

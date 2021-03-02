@@ -16,6 +16,11 @@ namespace DataLayer.Models
         [Required(ErrorMessage = "لطفا نام دارنده حساب را وارد کنید")]
         [MaxLength(15, ErrorMessage = "لطفا نام معتبر وارد کنید")]
         public string Name { get; set; }
+
+        [Required(ErrorMessage ="لطفا نام بانک را وارد نمایید")]
+        [MaxLength(100,ErrorMessage ="لطفا نام معتبری وارد کنید")]
+        public string BankName { get; set; }
+
         public bool IsActive { get; set; }
     }
 }

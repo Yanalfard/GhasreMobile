@@ -63,5 +63,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
             _core.BankAccounts.Update(bankAccounts);
             _core.BankAccounts.Save();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
