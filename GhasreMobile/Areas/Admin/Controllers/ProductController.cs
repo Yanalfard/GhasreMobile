@@ -14,7 +14,7 @@ using GhasreMobile.Utilities;
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [PermissionChecker("admin")]
+    [PermissionChecker("admin,employee")]
     public class ProductController : Controller
     {
         Core _core = new Core();

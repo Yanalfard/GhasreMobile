@@ -5,10 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataLayer.Models;
 using Services.Services;
+using GhasreMobile.Utilities;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [PermissionChecker("admin")]
     public class CardController : Controller
     {
         Core _core = new Core();
