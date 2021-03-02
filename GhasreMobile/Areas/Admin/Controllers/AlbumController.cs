@@ -42,5 +42,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
             _core.Image.Save();
             return Redirect("/Admin/Album");
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
