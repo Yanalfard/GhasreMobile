@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DataLayer.Models.TblNotification>
 @{
     ViewData["Title"] = "اعلان ها";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -40,31 +40,41 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1234</td>
-                                <td>رضا رضایی</td>
-                                <td>محمد امینی</td>
-                                <td>
-                                    <span class="text-success">خوانده شده</span>
-                                    <span class="text-danger">خوانده نشده</span>
-                                </td>
-                                <td>
-                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
-                                        <a id="Information" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
-                                    </span>
-                                </td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.NotificationId</td>
+                                    <td>@item.Client.Name</td>
+                                    <td>@item.Sender.Name</td>
+                                    <td>
+                                        @if (item.IsSeen)
+                                        {
+                                            <span class="text-success">خوانده شده</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">خوانده نشده</span>
+                                        }
+
+                                    </td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
+                                            <a onclick="Information(@item.NotificationId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <!--end list region-->
-            @*<div class="card-footer bg-white">
-                    <nav aria-label="Page navigation example">
-                        @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
-                    </nav>
-                </div>*@
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+                </nav>
+            </div>
         </div>
     </div>
 </div>
@@ -72,11 +82,17 @@
 @section Script{
 
     <script>
-        $("#Information").click(function () {
-            $.get("/Admin/Notification/NotificationInfo", function (result) {
+
+        function BtnSearch() {
+            var data = $("#SearchInput").val();
+            window.location.href = "/Admin/Notification?page=1&Search=" + data;
+        }
+
+        function Information(id) {
+            $.get("/Admin/Notification/NotificationInfo/" + id, function (result) {
                 $(".modal-content").html(result);
             });
-        });
+        }
         $("#Create").click(function () {
             $.get("/Admin/Notification/Create", function (result) {
                 $(".modal-content").html(result);

@@ -60,9 +60,18 @@
                                     </td>
                                     <td>@item.DateCreated.Value.AllToShamsi()</td>
                                     <td>
-                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن به پیشنهاد ویژه">
-                                            <a onclick="SpecialOffer(@item.ProductId)" class="text-primary" data-toggle="modal" data-target="#modalSave" uk-icon="bookmark-outline"></a>
-                                        </span>
+                                        @if (item.TblSpecialOffer.Count == 0)
+                                        {
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن به پیشنهاد ویژه">
+                                                <a onclick="SpecialOffer(@item.ProductId)" class="text-primary" data-toggle="modal" data-target="#modalSave" uk-icon="bookmark-outline"></a>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger" data-placement="top" data-toggle="tooltip" title="" data-original-title="به پیشنهاد ویژه">
+                                                @item.TblSpecialOffer.First().Discount% تا تاریخ @item.TblSpecialOffer.First().ValidTill
+                                            </span>
+                                        }
                                     </td>
                                     <td>
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
@@ -104,8 +113,9 @@
         function BtnSearch() {
             window.location.href = "/Admin/Product?page=1&Search=" + $("#SearchInput").val();
         }
+
         function SpecialOffer(id) {
-            $.get("/Admin/Product/SpecialOffer/", id, function (result) {
+            $.get("/Admin/Product/SpecialOffer/" + id, function (result) {
                 $(".modal-content").html(result);
             });
         }
