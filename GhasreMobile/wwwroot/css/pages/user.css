@@ -581,5 +581,75 @@ backdrop-filter: saturate(80%);
     .tickets .body p {
       font-size: 10px; } }
 
-.procedure .circles .step:not(:last-child):after {
-  height: 6px; }
+.procedure {
+  display: flex; }
+  .procedure .circles {
+    width: 100%;
+    display: flex;
+    -ms-flex-direction: row-reverse;
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    -ms-align-content: space-between;
+    -webkit-align-content: space-between;
+    align-content: space-between; }
+    .procedure .circles .circle {
+      width: 42px;
+      height: 42px;
+      margin: auto;
+      -moz-border-radius: 1000px 1000px 1000px 1000px;
+      -webkit-border-radius: 1000px 1000px 1000px 1000px;
+      border-radius: 1000px 1000px 1000px 1000px;
+      border: #e9e9e9 solid 4px;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      background-color: #fff;
+      position: relative;
+      z-index: 5; }
+    .procedure .circles .line {
+      position: relative;
+      z-index: 0;
+      margin-top: 19px;
+      height: 4px;
+      background-color: #e9e9e9;
+      flex: auto;
+      margin-left: -36px;
+      margin-right: -36px; }
+    .procedure .circles .line.done {
+      background-color: #96027E; }
+    .procedure .circles .name {
+      margin-top: 8px;
+      text-align: center; }
+    .procedure .circles .step {
+      display: flex;
+      flex-direction: column; }
+    .procedure .circles .step.doing .circle {
+      border: #96027E 4px solid; }
+    .procedure .circles .step.done .circle {
+      background-color: #96027E;
+      border: #96027E 4px solid; }
+
+@media only screen and (max-width: 380px) {
+  .procedure {
+    display: flex; }
+    .procedure .circles {
+      width: 100%;
+      display: flex; }
+      .procedure .circles .circle {
+        width: 32px;
+        height: 32px;
+        border: #e9e9e9 solid 4px; }
+      .procedure .circles .line {
+        position: relative;
+        z-index: 0;
+        margin-top: 14px; }
+      .procedure .circles .name {
+        margin-top: 8px;
+        text-align: center;
+        font-size: 12px; } }
+
+.comment.unseen {
+  border: rgba(150, 2, 126, 0.52) solid 1px;
+  background-color: rgba(150, 2, 126, 0.08); }
+  .comment.unseen p {
+    color: #96027E; }

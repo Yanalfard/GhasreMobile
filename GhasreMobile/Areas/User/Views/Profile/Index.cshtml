@@ -48,22 +48,18 @@
     </div>
 </div>
 
-<div class="procedure mat-card">
-    <div class="circles">
-        <div class="step done">
-            <div class="circle"></div>
-            <span class="name">آماده سازی</span>
-        </div>
-        <div class="step done">
-            <div class="circle"></div>
-            <span class="name">در حال انتقال</span>
-        </div>
-        <div class="step done">
-            <div class="circle"></div>
-            <span class="name">تحویل داده شد</span>
-        </div>
-    </div>
-</div>
+<partial name="_OrderStatus"/>
+
+@{
+    var list = new List<TblNotification>() {
+        new TblNotification() { Message = "این یک مسژ می باشد ها ها ها" , IsSeen = false},
+        new TblNotification() { Message = "این یک مسژ می باشد ها ها ها" , IsSeen = true},
+        new TblNotification() { Message = "این یک مسژ می باشد ها ها ها" , IsSeen = true}
+    };
+}
+
+<partial name="_Notifications" model="list" />
+
 
 <div id="ModalChangeName" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
