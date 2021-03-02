@@ -1,4 +1,4 @@
-﻿
+﻿@model long
 @{
     ViewData["Title"] = "Index";
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
@@ -8,11 +8,11 @@
     <h2 class="title">
         کیف پول
     </h2>
-    <a href="/User/Wallet/Charge"  class="btn button">
+    <a href="/User/Wallet/Charge" class="btn button">
         شارژ
     </a>
     <div class="balance">
-        <label class="bal">36,000,000</label>
+        <label class="bal">@Model.ToString("#,0")</label>
         <span class="t">تومان</span>
     </div>
 </div>

@@ -13,9 +13,15 @@ namespace GhasreMobile.Areas.User.Controllers
     public class WalletController : Controller
     {
         Core db = new Core();
+        TblClient SelectUser()
+        {
+            int userId = Convert.ToInt32(User.Claims.First().Value);
+            TblClient selectUser = db.Client.GetById(userId);
+            return selectUser;
+        }
         public IActionResult Index()
         {
-            return View();
+            return View(SelectUser().Balance);
         }
 
         public IActionResult Charge()
@@ -27,7 +33,27 @@ namespace GhasreMobile.Areas.User.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+                TblWallet addWallet = new TblWallet();
+                addWallet.Amount = (int)charge.Amount;
+                addWallet.Date = DateTime.Now;
+                addWallet.Description = "شارژ حساب";
+                addWallet.IsDeposit = true;
+                addWallet.IsFinaly = false;
+                addWallet.ClientId = SelectUser().ClientId;
+                db.Wallet.Add(addWallet);
+                db.Wallet.Save();
+
+                #region Online Payment
+
+                var payment = new ZarinpalSandbox.Payment((int)charge.Amount);
+                var res = payment.PaymentRequest("شارژ کیف پول", "https://localhost:44371/OnlinePayment/" + addWallet.WalletId, "Info@topLearn.Com", "09197070750");
+
+                if (res.Result.Status == 100)
+                {
+                    return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + res.Result.Authority);
+                }
+                return null;
+                #endregion
             }
             return View(charge);
         }
