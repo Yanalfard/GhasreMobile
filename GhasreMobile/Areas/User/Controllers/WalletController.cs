@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataLayer.Models;
+using DataLayer.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +12,7 @@ namespace GhasreMobile.Areas.User.Controllers
     [Area("User")]
     public class WalletController : Controller
     {
+        Core db = new Core();
         public IActionResult Index()
         {
             return View();
@@ -17,6 +21,15 @@ namespace GhasreMobile.Areas.User.Controllers
         public IActionResult Charge()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult Charge(ChargeWalletVm charge)
+        {
+            if (ModelState.IsValid)
+            {
+                
+            }
+            return View(charge);
         }
     }
 }
