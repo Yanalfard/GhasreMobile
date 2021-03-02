@@ -38,6 +38,8 @@ namespace GhasreMobile.Areas.User.Controllers
                         {
                             Count = item.Count,
                             ProductID = item.ProductID,
+                            ColorID = item.ColorID,
+                            ColorName = db.Color.GetById(item.ColorID).Name,
                             Name = product.Name,
                             ImageName = product.MainImage,
                             PriceAfterDiscount = product.PriceAfterDiscount,
@@ -68,17 +70,23 @@ namespace GhasreMobile.Areas.User.Controllers
         }
 
 
-        public IActionResult UpDownCount(int id, string command)
+        public IActionResult UpDownCount(int id, int colorId, string command)
         {
-            TblProduct selectedProduct = db.Product.GetById(id);
+            TblColor selectedProduct = db.Color.GetById(colorId);
             var listShop = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
-            var index = listShop.FindIndex(p => p.ProductID == id);
+            var index = listShop.FindIndex(p => p.ColorID == colorId);
             switch (command)
             {
                 case "up":
                     {
-                        //if(selectedProduct.TblColor)
-                        listShop[index].Count += 1;
+                        if (selectedProduct != null)
+                        {
+                            int count = selectedProduct.Count - listShop[index].Count;
+                            if (count > 0 && selectedProduct.ProductId == id && selectedProduct.ColorId == colorId)
+                            {
+                                listShop[index].Count += 1;
+                            }
+                        }
                         break;
                     }
                 case "down":
