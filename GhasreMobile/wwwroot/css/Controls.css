@@ -713,7 +713,8 @@ textarea {
         max-width: 21px;
         max-height: 21px; }
         .header .top .cart .badge span {
-          margin: auto; }
+          margin: auto;
+          min-width: 8px; }
   .header .bottom {
     background-color: #fff;
     border: 1px solid #e5e5e5;
@@ -1222,6 +1223,9 @@ textarea {
         font-size: 15px;
         line-height: 1;
         background-color: #F5F5F5;
+        min-width: 16px !important;
+        max-width: 16px !important;
+        text-align: center;
         padding: 6px;
         color: #666;
         -moz-border-radius: 9px 9px 9px 9px;

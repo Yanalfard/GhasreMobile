@@ -1,0 +1,18 @@
+﻿@model IEnumerable<TblNotification>
+
+@if (Model.Any())
+{
+    <div class="mat-card col comment-section g-3">
+        <h4>
+            اعلان ها
+        </h4>
+        @foreach (var notification in Model.OrderByDescending(x => x.NotificationId))
+        {
+            <div class="comment @((!notification.IsSeen) ? "unseen" : "")">
+                <p>
+                    @notification.Message
+                </p>
+            </div>
+        }
+    </div>
+}

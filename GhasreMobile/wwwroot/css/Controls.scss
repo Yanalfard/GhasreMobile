@@ -622,6 +622,7 @@ $background-highlight: #eee;
 
                 span {
                     margin: auto;
+                    min-width: 8px;
                 }
             }
         }
@@ -1273,6 +1274,9 @@ $background-highlight: #eee;
                     font-size: 15px;
                     line-height: 1;
                     background-color: #F5F5F5;
+                    min-width: 16px !important;
+                    max-width: 16px !important;
+                    text-align: center;
                     padding: 6px;
                     color: $Text-2;
                     @include border-radius(9px,9px,9px,9px);
@@ -1720,7 +1724,7 @@ footer {
     ul {
         @include column;
         grid-gap: 12px;
-        margin-top:0;
+        margin-top: 0;
     }
 
     .comment {
