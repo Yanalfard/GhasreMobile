@@ -34,12 +34,10 @@
     </p>
 </div>
 
-
 @await Component.InvokeAsync("SendCommentBlogView", Model.BlogId)
 
-
 <div class="comment-section mat-card">
-    <h3>نظرات کاربران</h3>
+    <h3 class="uk-margin-bottom">نظرات کاربران</h3>
     <ul>
         @foreach (var item in Model.TblBlogCommentRel.Where(i => i.Comment.IsValid))
         {

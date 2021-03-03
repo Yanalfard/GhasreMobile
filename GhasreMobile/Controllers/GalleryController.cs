@@ -17,5 +17,11 @@ namespace GhasreMobile.Controllers
         {
             return View(db.Album.Get());
         }
+
+        public IActionResult AlbumView()
+        {
+            return View();
+        }
+
     }
 }

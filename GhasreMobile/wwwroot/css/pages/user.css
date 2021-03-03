@@ -246,6 +246,38 @@ backdrop-filter: saturate(80%);
       margin: auto 0;
       margin-right: 5px; }
 
+.mini-wallet {
+  -moz-border-radius: 8px 8px 8px 8px;
+  -webkit-border-radius: 8px 8px 8px 8px;
+  border-radius: 8px 8px 8px 8px;
+  display: flex;
+  flex-direction: column;
+  -moz-box-shadow: rgba(0, 0, 0, 0.16) 0 8px 12px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0 8px 12px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0 8px 12px;
+  padding: 10px;
+  min-width: 110px;
+  cursor: pointer;
+  background: #ff649c;
+  background: -moz-linear-gradient(45deg, #ff649c 0%, #960a96 100%);
+  background: -webkit-linear-gradient(45deg, #ff649c 0%, #960a96 100%);
+  background: linear-gradient(45deg, #ff649c 0%, #960a96 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff649c",endColorstr="#960a96",GradientType=1); }
+  .mini-wallet * {
+    cursor: pointer;
+    color: #fff; }
+  .mini-wallet label {
+    margin-bottom: 4px;
+    font-size: 12px;
+    margin-left: auto; }
+  .mini-wallet span {
+    font-size: 18px; }
+    .mini-wallet span span {
+      margin-top: auto;
+      font-size: 9px;
+      margin-right: 3px;
+      margin-bottom: 3px; }
+
 .cart {
   display: flex;
   flex-direction: column; }

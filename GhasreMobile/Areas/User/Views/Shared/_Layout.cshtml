@@ -106,9 +106,12 @@
     </div>
     <div role="none" class="space-nav-header gap-b"></div>
 
-    <button uk-toggle="target: #fnav" type="button" class="floating-navigation">
-        <span uk-icon="ratio:1.1;icon:menu"></span>
-    </button>
+    @if (ViewData["NoNav"] == null)
+    {
+        <button uk-toggle="target: #fnav" type="button" class="floating-navigation">
+            <span uk-icon="ratio:1.1;icon:menu"></span>
+        </button>
+    }
 
     <!-- This is the modal -->
     <div id="fnav" uk-modal>
