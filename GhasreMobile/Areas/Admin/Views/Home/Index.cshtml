@@ -1,4 +1,4 @@
-﻿
+﻿@model DataLayer.ViewModels.AdminDashboardVm
 @{
     ViewData["Title"] = "پنل مدیریت قصر موبایل";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -19,7 +19,7 @@
                                     <span class="icon-pic-success">کاربران</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">4</span>
+                                    <span class="icon-pic-primary font-weight-bold">@Model.CustomersCount</span>
                                 </div>
                             </div>
                         </a>
@@ -30,7 +30,7 @@
                                     <span class="icon-pic-primary">کارمندان</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">7</span>
+                                    <span class="icon-pic-primary font-weight-bold">@Model.EmployeesCount</span>
                                 </div>
                             </div>
                         </a>
@@ -41,7 +41,7 @@
                                     <span class="icon-pic-primary">نمایندگی ها</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">10</span>
+                                    <span class="icon-pic-primary font-weight-bold">@Model.AgenciesCount</span>
                                 </div>
                             </div>
                         </a>
@@ -52,7 +52,7 @@
                                     <span class="icon-pic-primary">برندها</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">10</span>
+                                    <span class="icon-pic-primary font-weight-bold">@Model.BrandsCount</span>
                                 </div>
                             </div>
                         </a>
@@ -73,7 +73,7 @@
                                     <span class="icon-pic-success">کل سفارشات</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">20</span>
+                                    <span class="icon-pic-primary font-weight-bold">@Model.AllOrderCount</span>
                                 </div>
                             </div>
                         </a>
@@ -84,7 +84,7 @@
                                     <span class="icon-pic-primary">سفارشات پرداخت شده</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">15</span>
+                                    <span class="icon-pic-primary font-weight-bold">@Model.OrderSucssesCount</span>
                                 </div>
                             </div>
                         </a>
@@ -95,7 +95,7 @@
                                     <span class="icon-pic-primary">سفارشات لغو شده</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">5</span>
+                                    <span class="icon-pic-primary font-weight-bold">@Model.OrderCancelCount</span>
                                 </div>
                             </div>
                         </a>
@@ -106,7 +106,7 @@
                                     <span class="icon-pic-warning">سفارشات آفلاین</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-warning font-weight-bold">3</span>
+                                    <span class="icon-pic-warning font-weight-bold">@Model.OnlineOrderCount</span>
                                 </div>
                             </div>
                         </a>
@@ -127,7 +127,7 @@
                                     <span class="icon-pic-primary">کل تیکت ها</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">9</span>
+                                    <span class="icon-pic-primary font-weight-bold">@Model.allTicketCount</span>
                                 </div>
                             </div>
                         </a>
@@ -138,7 +138,7 @@
                                     <span class="icon-pic-success">تیکت های خوانده شده</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">7</span>
+                                    <span class="icon-pic-primary font-weight-bold">@Model.IsSeenTicketCount</span>
                                 </div>
                             </div>
                         </a>
@@ -149,7 +149,7 @@
                                     <span class="icon-pic-primary">تیکت های باز نشده</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">2</span>
+                                    <span class="icon-pic-primary font-weight-bold">@Model.NotSeenTicketCount</span>
                                 </div>
                             </div>
                         </a>
@@ -170,7 +170,7 @@
                                     <span class="icon-pic-success">تاپیک ها</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">10</span>
+                                    <span class="icon-pic-primary font-weight-bold">@Model.AllTopicCount</span>
                                 </div>
                             </div>
                         </a>
@@ -181,7 +181,7 @@
                                     <span class="icon-pic-warning">پست ها</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-warning font-weight-bold">12</span>
+                                    <span class="icon-pic-warning font-weight-bold">@Model.AllPostCount</span>
                                 </div>
                             </div>
                         </a>
@@ -192,7 +192,7 @@
                                     <span class="icon-pic-primary">پیام های ارسال شده برای کاربران</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-primary font-weight-bold">10</span>
+                                    <span class="icon-pic-primary font-weight-bold">@Model.AllNotificationCount</span>
                                 </div>
                             </div>
                         </a>
@@ -203,7 +203,7 @@
                                     <span class="icon-pic-dark">سوالات متداول</span>
                                 </div>
                                 <div class="user-count">
-                                    <span class="icon-pic-dark font-weight-bold">13</span>
+                                    <span class="icon-pic-dark font-weight-bold">@Model.AllRegularQuestionCount</span>
                                 </div>
                             </div>
                         </a>
