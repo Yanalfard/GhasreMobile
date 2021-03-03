@@ -28,13 +28,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult ChangeStatus(int id)
+        public void ChangeStatus(int id)
         {
             TblComment comment = _core.Comment.GetById(id);
             comment.IsValid = !comment.IsValid;
             _core.Comment.Update(comment);
             _core.Comment.Save();
-            return Redirect("/Comment");
         }
 
         protected override void Dispose(bool disposing)

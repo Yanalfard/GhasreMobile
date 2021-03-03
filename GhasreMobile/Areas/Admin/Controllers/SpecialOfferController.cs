@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataLayer.Models;
 using Services.Services;
+using ReflectionIT.Mvc.Paging;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -14,9 +15,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
     public class SpecialOfferController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            return View();
+            IEnumerable<TblSpecialOffer> SpecialOffers = PagingList.Create(_core.SpecialOffer.Get(), 40, page);
+            return View(SpecialOffers);
         }
 
         public IActionResult CreateSpecialOffer(TblSpecialOffer specialOffer, int Till)
@@ -34,6 +36,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return View(specialOffer);
         }
 
+        [HttpPost]
+        public void Delete(int id)
+        {
+            _core.SpecialOffer.DeleteById(id);
+            _core.SpecialOffer.Save();
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -42,6 +52,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 
 }

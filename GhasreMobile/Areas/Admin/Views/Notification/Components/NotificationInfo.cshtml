@@ -1,4 +1,5 @@
-﻿<div class="modal-header">
+﻿@model DataLayer.Models.TblNotification
+<div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
         جزئیات اعلان
     </h6>
@@ -10,26 +11,32 @@
     <div class="form-row ">
         <div class="form-group col-md-3">
             <label>کد اعلان:</label>
-            <span>1234</span>
+            <span>@Model.NotificationId</span>
         </div>
         <div class="form-group col-md-3">
             <label>نام کاربر:</label>
-            <span>رضا رضایی</span>
+            <span>@Model.Client.Name</span>
         </div>
         <div class="form-group col-md-3">
             <label>نام فرستنده:</label>
-            <span>محمد امینی</span>
+            <span>@Model.Sender.Name</span>
         </div>
         <div class="form-group col-md-3">
             <label>وضعیت:</label>
-            <span class="text-success">خوانده شده</span>
-            <span class="text-danger">خوانده نشده</span>
+            @if (Model.IsSeen)
+            {
+                <span class="text-success">خوانده شده</span>
+            }
+            else
+            {
+                <span class="text-danger">خوانده نشده</span>
+            }
         </div>
         <hr />
         <div class="form-group col-12">
             <label>متن اعلان:</label>
             <div class="bg-light p-3 uk-border-rounded">
-                از آنجا که لورم ایپسوم، شباهت زیادی به متن های واقعی دارد، طراحان معمولا از لورم ایپسوم استفاده میکنند تا فقط به مشتری یا کار فرما نشان دهند که قالب طراحی شده بعد از اینکه متن در آن قرار میگرد چگونه خواهد بود و فونت ها و اندازه ها چگونه در نظر گرفته شده است.
+                @Model.Message
             </div>
         </div>
     </div>

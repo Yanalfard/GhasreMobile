@@ -15,10 +15,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
     public class OnlineOrderController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(int page = 1, string TelNo = null)
         {
-            IEnumerable<TblOnlineOrder> onlineOrders = PagingList.Create(_core.OnlineOrder.Get(), 30, page);
-            return View(onlineOrders);
+            if (!string.IsNullOrEmpty(TelNo))
+            {
+                IEnumerable<TblOnlineOrder> onlineOrders = PagingList.Create(_core.OnlineOrder.Get(on => on.Client.TellNo.Contains(TelNo)), 30, page);
+                return View(onlineOrders);
+            }
+            else
+            {
+                IEnumerable<TblOnlineOrder> onlineOrders = PagingList.Create(_core.OnlineOrder.Get(), 30, page);
+                return View(onlineOrders);
+            }
+
         }
         public IActionResult Info(int id)
         {
