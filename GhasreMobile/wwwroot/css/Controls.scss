@@ -1087,6 +1087,18 @@ $background-highlight: #eee;
             font-size: 10px;
         }
     }
+
+    .unavailable {
+        @include column;
+        height: 24px + 30px + 8px;
+
+        span {
+            margin: auto;
+            font-size: 16px;
+            color: $Text-2;
+            margin-bottom: 6px;
+        }
+    }
 }
 
 .product:hover {
