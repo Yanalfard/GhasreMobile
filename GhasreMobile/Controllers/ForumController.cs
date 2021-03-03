@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataLayer.Models;
 using DataLayer.ViewModels;
+using GhasreMobile.Utilities;
 using Services.Services;
 
 namespace GhasreMobile.Controllers
@@ -56,6 +57,7 @@ namespace GhasreMobile.Controllers
             return Ok(false);
         }
         [HttpPost]
+
         public IActionResult VoteDown(int id)
         {
             if (User.Identity.IsAuthenticated)
@@ -69,10 +71,35 @@ namespace GhasreMobile.Controllers
 
             return Ok(false);
         }
-
-        public IActionResult SubmitComment(string comment)
+        [PermissionChecker("user,employee,admin")]
+        [HttpPost]
+        public IActionResult SubmitComment(string Comment, int TopicId)
         {
-            return Redirect("/404.html");
+            try
+            {
+                TblClient client = _core.Client.Get(i => i.TellNo == User.Identity.Name).ToList()[0];
+                TblComment commentToAdd = new TblComment
+                {
+                    DateCreated = DateTime.Now,
+                    Body = Comment,
+                    ClientId = client.ClientId,
+                    IsValid = false
+                };
+                commentToAdd = (TblComment)_core.Comment.Add(commentToAdd).Entity;
+                _core.Comment.Save();
+                TblTopicCommentRel rel = new TblTopicCommentRel
+                {
+                    TopicId = TopicId,
+                    CommentId = commentToAdd.CommentId
+                };
+                _core.TopicCommentRel.Add(rel);
+                _core.TopicCommentRel.Save();
+                return View();
+            }
+            catch
+            {
+                return Redirect("/404.html");
+            }
         }
     }
 }

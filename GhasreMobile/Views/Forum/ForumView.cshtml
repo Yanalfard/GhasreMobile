@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["id"] = Model.TopicId;
+    ViewData["TopicId"] = Model.TopicId;
 }
 
 @section Styles{
@@ -25,6 +25,7 @@
 
 <div class="forum-block">
     <form asp-action="SubmitComment" asp-controller="Forum" class="content">
+        <input type="text" asp-for="TopicId" style="display: none" value="@Model.TopicId" />
         <div class="rowr">
             <h5>@Model.Title</h5>
             <div class="rowr uk-margin-auto-right">
@@ -37,13 +38,13 @@
                 @Model.Body
             </p>
             <div class="fg-col uk-margin-medium-top">
-                <textarea name="comment" class="entry" placeholder="نظر شما..."></textarea>
+                <textarea name="comment" id="Comment" class="entry" placeholder="نظر شما..."></textarea>
             </div>
         </div>
         <div class="action uk-margin-small-top">
             <span class="row uk-margin-auto-top">
                 <span uk-icon="ratio:.8;icon:chatbox-ellipses-outline"></span>
-                <span> @Model.Comments.Count </span>
+                <span> @Model.Comments.Count </span>
             </span>
             <a class="link-text  uk-margin-auto-top" href="" uk-icon="ratio:.8;icon:arrow-redo-outline"></a>
             <button class="btn btn-dashed uk-margin-auto-top uk-margin-auto-left">ثبت نظر</button>
@@ -52,7 +53,7 @@
     <div class="controls">
         <div class="col">
             <button class="link-text" uk-icon="chevron-up" onclick="VoteUp(@Model.TopicId);"></button>
-            <label>@Model.VoteCount</label>
+            <label id="Vote@(Model.TopicId)">@Model.VoteCount</label>
             <button class="link-text" uk-icon="chevron-down" onclick="VoteDown(@Model.TopicId);"></button>
         </div>
     </div>
@@ -105,11 +106,7 @@
     </script>
 
     <script>
-        $.get('https://www.cloudflare.com/cdn-cgi/trace',
-            function (data) {
-                console.log(data);
-                console.log(data.split('ip=')[1].split('ts')[0]);
-            });
+
         function VoteUp(val) {
             var result = Bjax("/Forum/VoteUp?id=", val, "SP");
             if (result) {
