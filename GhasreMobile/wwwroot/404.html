@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>404</title>
+
+    <style>
+        @charset "UTF-8";
+
+        @font-face {
+            font-family: 'iranyekan';
+            src: url('fonts/IRANYekan.ttf') format('truetype');
+            font-display: swap;
+        }
+
+        body {
+            font-family: iranyekan, 'Arial Narrow', Arial, sans-serif;
+            background-color: #EFF1F5;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+
+        .col {
+            display: flex;
+            -ms-flex-direction: column;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .row {
+            display: flex;
+            -ms-flex-direction: row;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+        }
+
+        .colr {
+            display: flex;
+            -ms-flex-direction: column-reverse;
+            -webkit-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+        }
+
+        .rowr {
+            display: flex;
+            -ms-flex-direction: row-reverse;
+            -webkit-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+        }
+
+        .message {
+            margin: auto;
+        }
+
+            .message > * {
+                margin: auto;
+            }
+
+            .message h1 {
+                font-size: 64px;
+                color: #111;
+            }
+
+            .message p {
+                font-size: 20px;
+                color: #333;
+            }
+
+            .message a {
+                margin-top: 24px;
+            }
+
+        .btn {
+            cursor: pointer;
+            display: block;
+            -moz-border-radius: 4px 4px 4px 4px;
+            -webkit-border-radius: 4px 4px 4px 4px;
+            border-radius: 4px 4px 4px 4px;
+            border: 0;
+            padding: 8px 18px;
+            min-width: 100px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 400;
+            white-space: nowrap;
+            -moz-box-sizing: content-box;
+            -webkit-box-sizing: content-box;
+            box-sizing: padding-box;
+            -moz-transition: all ease 0.3s;
+            -o-transition: all ease 0.3s;
+            -webkit-transition: all ease 0.3s;
+            transition: all ease 0.3s;
+        }
+
+        .btn-secondary {
+            border: 1px #ddd solid;
+            background-color: transparent;
+            color: #525252;
+            -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+        }
+
+            .btn-secondary:hover, .btn-secondary:focus {
+                border-color: #96027E;
+                color: #C539F6;
+            }
+
+            .btn-secondary:active {
+                border-color: #810081;
+                color: #810081;
+                -moz-box-shadow: 0 0 9px rgba(150, 2, 126, 0.32);
+                -webkit-box-shadow: 0 0 9px rgba(150, 2, 126, 0.32);
+                box-shadow: 0 0 9px rgba(150, 2, 126, 0.32);
+                transition: background-color ease .2s;
+            }
+    </style>
+
+</head>
+<body class="col">
+    <div class="message col">
+        <h1>404</h1>
+        <p>...صفحه مورد نظر شما پیدا نشد</p>
+        <a class="btn btn-secondary" onclick="window.location = '/'">بازگشت به خانه</a>
+    </div>
+</body>
+</html>

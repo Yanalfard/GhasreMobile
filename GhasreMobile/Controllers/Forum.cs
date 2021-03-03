@@ -18,5 +18,10 @@ namespace GhasreMobile.Controllers
             return View();
         }
 
+        public IActionResult NewForum()
+        {
+            return View();
+        }
+
     }
 }

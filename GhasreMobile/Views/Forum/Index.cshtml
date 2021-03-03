@@ -12,6 +12,12 @@
 
 @section Aside{
 
+    <div class="mat-card" swap="swNewForum">
+        <h3>موضوع جدید</h3>
+        <p>موضوعی برای بحث دارید؟ آن را به اشتراک بگزارید</p>
+        <a href="/Forum/NewForum" class="btn btn-primary">ثبت موضوع</a>
+    </div>
+
     @await Component.InvokeAsync("AdView")
     @await Component.InvokeAsync("AdView")
 
@@ -21,6 +27,8 @@
     <a href="">تالار گفتگو</a>
     <a href="" class="active">صفحه اصلی</a>
 </nav>
+
+<div role="none" id="swNewForum"></div>
 
 <div class="threads col">
     <partial name="_ThreadBlock" />

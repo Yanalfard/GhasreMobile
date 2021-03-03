@@ -8,13 +8,13 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form asp-action="Create" asp-controller="RegularQuestion" asp-area="Admin"
+<form asp-action="Edit" asp-controller="RegularQuestion" asp-area="Admin"
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
       data-ajax-complete="EndCatagoryCreate()"
       data-ajax-update="#ajaxresult">
-
+    <input type="hidden" asp-for="RegularQuestionId" />
     <div class="modal-body">
         <div class="form-group col-md-7">
             <label>پرسش</label>
@@ -27,7 +27,7 @@
             <span asp-validation-for="Answer" class="text-danger"></span>
         </div>
         <div class="modal-footer justify-content-end">
-            <button type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+            <button type="submit" class="btn btn-success btn-sm text-white">ویرایش<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
         </div>
     </div>
 

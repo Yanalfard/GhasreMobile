@@ -41,6 +41,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 }
                 else
                 {
+                    
                     TblCatagory ParentCatagory = _core.Catagory.GetById(catagory.ParentId);
                     ParentCatagory.IsOnFirstPage = false;
                     _core.Catagory.Update(ParentCatagory);

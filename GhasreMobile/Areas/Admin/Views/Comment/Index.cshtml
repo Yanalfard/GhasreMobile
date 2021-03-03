@@ -72,10 +72,8 @@
         }
 
         function Success(Id) {
-            $.get("/Admin/Comment/ChangeStatus/" + Id, function (result) {
-                if (result == "true") {
-                    window.location.reload();
-                }
+            $.post("/Admin/Comment/ChangeStatus/" + Id, function () {
+                window.location.reload();
             });
         }
 
