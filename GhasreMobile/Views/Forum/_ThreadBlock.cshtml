@@ -1,30 +1,32 @@
-﻿<div class="forum-block">
+﻿@model VmTopic
+<div class="forum-block">
     <div class="content">
         <div class="rowr">
-            <a href="/Forum/ForumView"><h5 class="link-text" >نام این پست یا همان تاپیک</h5></a>
+            <a href="/Forum/ForumView/@Model.TopicId"><h5 class="link-text">@Model.Title</h5></a>
             <div class="rowr uk-margin-auto-right">
-                <span class="uk-margin-small-left text-2">مهتاب دادسرشت</span>
-                <span class="text-3">1399/01/05</span>
+                <span class="uk-margin-small-left text-2">@Model.Client.Name</span>
+                <span class="text-3">@(Model.DateCreated.HasValue ? Model.DateCreated.Value.DateToShamsi() : "")</span>
             </div>
         </div>
         <div class="forum-body">
             <p dir="rtl">
-                می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است.
+                @Model.Body
             </p>
         </div>
         <div class="action">
             <span class="row">
                 <span uk-icon="ratio:.72;icon:chatbox-ellipses-outline"></span>
-                <span> 13 </span>
+                <span> @Model.Comments.Count </span>
             </span>
             <span class="link-text" uk-icon="ratio:.72;icon:arrow-redo-outline"></span>
         </div>
     </div>
     <div class="controls">
         <div class="col">
-            <button class="link-text" uk-icon="chevron-up"></button>
-            <label>432</label>
-            <button class="link-text" uk-icon="chevron-down"></button>
+            <button class="link-text" uk-icon="chevron-up" onclick="VoteUp(@Model.TopicId);"></button>
+            <label id="Vote@(Model.TopicId)">@Model.VoteCount</label>
+            <button class="link-text" uk-icon="chevron-down" onclick="VoteDown(@Model.TopicId);"></button>
         </div>
     </div>
+    
 </div>

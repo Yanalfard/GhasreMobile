@@ -13,19 +13,28 @@
         </ul>
     </div>
 
+
     <div swap="Exp1" class="mat mat-border">
-        <partial name="_ExpressProductBlock" />
+        @await Component.InvokeAsync("SpecialOfferViem")
     </div>
 
-    <div swap="Ad1"><partial name="_Ad" /></div>
-    <div swap="Ad2"><partial name="_Ad" /></div>
+    <div swap="Ad1">
+        @await Component.InvokeAsync("AdView")
+    </div>
+    <div swap="Ad2">
+        @await Component.InvokeAsync("AdView")
+    </div>
 
     <div swap="Exp2" class="mat mat-border">
-        <partial name="_ExpressProductBlock" />
+        @await Component.InvokeAsync("SpecialOfferViem")
+    </div>
+    <div swap="Ad3">
+        @await Component.InvokeAsync("AdView")
+    </div>
+    <div swap="Ad4">
+        @await Component.InvokeAsync("AdView")
     </div>
 
-    <div swap="Ad3"><partial name="_Ad" /></div>
-    <div swap="Ad4"><partial name="_Ad" /></div>
 }
 <!-- #SliderView -->
 @await Component.InvokeAsync("SliderView")

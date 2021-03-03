@@ -220,7 +220,7 @@
             @foreach (var item in Model.TblProductCommentRel.Where(i => i.Comment.IsValid))
             {
                 <li>
-                    <partial name="_CommentBlock" model="item.Comment" />
+                    <partial name="_RepliableComment" model="item.Comment" />
                 </li>
             }
         </ul>

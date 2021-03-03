@@ -1,7 +1,8 @@
-﻿<div class="product-express">
+﻿@model TblSpecialOffer
+<div class="product-express">
     <div class="head">
         <h3>پیشنهاد ویژه</h3>
-        <ul class="timer" countdown="Tue Mar 02 2021 11:26:54 GMT+0330 (Iran Standard Time)">
+        <ul class="timer" countdown="@Model.ValidTill">
             <li>
                 <label day></label>
                 <span>روز</span>
