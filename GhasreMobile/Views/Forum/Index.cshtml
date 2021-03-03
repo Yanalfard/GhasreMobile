@@ -1,13 +1,11 @@
-﻿
+﻿@model IEnumerable<VmTopic>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Styles{
-
     <link href="~/css/pages/forum.min.css" rel="stylesheet" />
-
 }
 
 @section Aside{
@@ -31,7 +29,39 @@
 <div role="none" id="swNewForum"></div>
 
 <div class="threads col">
-    <partial name="_ThreadBlock" />
-    <partial name="_ThreadBlock" />
-    <partial name="_ThreadBlock" />
+    @foreach (var i in Model)
+    {
+        <partial name="_ThreadBlock" model="i" />
+    }
 </div>
+
+@section Scripts{
+    <script src="~/js/BjaxLib.js"></script>
+
+    <script>
+        $.get('https://www.cloudflare.com/cdn-cgi/trace',
+            function(data) {
+                console.log(data);
+                console.log(data.split('ip=')[1].split('ts')[0]);
+            });
+        function VoteUp(val) {
+            var result = Bjax("/Forum/VoteUp?id=", val, "SP");
+            if (result) {
+                var vote = document.getElementById('Vote' + val);
+                vote.innerText = parseInt(vote.innerText) + 1;
+            } else {
+                window.location = "";
+            }
+        }
+        function VoteDown(val) {
+            var result = Bjax("/Forum/VoteDown?id=", val, "SP");
+            if (result) {
+                var vote = document.getElementById('Vote' + val);
+                vote.innerText = parseInt(vote.innerText) - 1;
+            } else {
+                window.location = "";
+            }
+        }
+    </script>
+
+}
