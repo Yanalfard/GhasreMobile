@@ -101,5 +101,10 @@ namespace GhasreMobile.Controllers
                 return Redirect("/404.html");
             }
         }
+
+        public IActionResult NewForum()
+        {
+            return View();
+        }
     }
 }
