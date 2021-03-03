@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using GhasreMobile.Utilities;
 using Services.Services;
+using DataLayer.Models;
+using ReflectionIT.Mvc.Paging;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -14,10 +16,53 @@ namespace GhasreMobile.Areas.Admin.Controllers
     {
         Core _core = new Core();
 
-
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            return View();
+            IEnumerable<TblRegularQuestion> regularQuestions = PagingList.Create(_core.RegularQuestion.Get(), 40, page);
+            return View(regularQuestions);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return ViewComponent("CreateRegularQuestionAdmin");
+        }
+
+        [HttpPost]
+        public IActionResult Create(TblRegularQuestion regularQuestion)
+        {
+            if (ModelState.IsValid)
+            {
+                _core.RegularQuestion.Add(regularQuestion);
+                _core.RegularQuestion.Save();
+                return Redirect("/Admin/RegularQuestion");
+            }
+            return View(regularQuestion);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            return ViewComponent("EditRegularQuestionAdmin", new { id = id });
+        }
+
+        [HttpPost]
+        public IActionResult Edit(TblRegularQuestion regularQuestion)
+        {
+            if (ModelState.IsValid)
+            {
+                _core.RegularQuestion.Update(regularQuestion);
+                _core.RegularQuestion.Save();
+                return Redirect("/Admin/RegularQuestion");
+            }
+
+            return View(regularQuestion);
+        }
+
+
+        public IActionResult RegularQuestionInfo(int id)
+        {
+            return ViewComponent("RegularQuestionInfoAdmin", new { id = id });
         }
 
         protected override void Dispose(bool disposing)

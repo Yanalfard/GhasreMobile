@@ -8,6 +8,7 @@ using Services.Services;
 using DataLayer.Models;
 using ReflectionIT.Mvc.Paging;
 
+
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -38,13 +39,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(bool SendAll, int UserId, string Text)
+        public IActionResult Create(bool SendAll, int? UserId, string Text)
         {
             TblClient Sender = _core.Client.Get(c => c.TellNo == User.Identity.Name.ToString()).Single();
             if (SendAll == false)
             {
                 TblNotification notification = new TblNotification();
-                notification.ClientId = UserId;
+                notification.ClientId = UserId.Value;
                 notification.IsSeen = false;
                 notification.SenderId = Sender.ClientId;
                 notification.Message = Text;
@@ -71,7 +72,21 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         public IActionResult NotificationInfo(int id)
         {
-            return ViewComponent("NotificationInfo", new { id = id });
+            return ViewComponent("NotificationInfoAdmin", new { id = id });
+        }
+
+        public int ReturnUser(string TelNo)
+        {
+            TblClient client = _core.Client.Get(c=>c.TellNo==TelNo).SingleOrDefault();
+
+            if (client != null)
+            {
+                return client.ClientId;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         protected override void Dispose(bool disposing)
