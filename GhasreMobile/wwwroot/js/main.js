@@ -1,6 +1,4 @@
-﻿import UIkit from "uikit";
-
-const swapAttrib = 'swap';
+﻿const swapAttrib = 'swap';
 const swapThreshold = 960;
 
 function Swap(element) {
