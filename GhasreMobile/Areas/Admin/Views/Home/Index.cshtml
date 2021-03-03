@@ -4,5 +4,212 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-
-
+<div class="form-row flex-div">
+    <div class="col-md-12 flex pb-3 pt-3 pr-1 pl-1">
+        <div class="col-md-12 mb-2 pr-2 pl-2">
+            <div class="card shadow-full border-0 ">
+                <div class="card-body user-card-bg">
+                </div>
+                <div class="card-body user-content">
+                    <div class="row">
+                        <a href="/Admin/Client" class="col-md-3 text-dark">
+                            <div class="user-box alert alert-success p-3 rounded shadow">
+                                <span uk-icon="people"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-success">کاربران</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-primary font-weight-bold">4</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/Admin/Client" class="col-md-3">
+                            <div class="user-box alert alert-success px-3 p-3 rounded shadow">
+                                <span uk-icon="people-circle"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-primary">کارمندان</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-primary font-weight-bold">7</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/Admin/Store" class="col-md-3">
+                            <div class="user-box alert alert-info px-3 p-3 rounded shadow">
+                                <span uk-icon="storefront"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-primary">نمایندگی ها</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-primary font-weight-bold">10</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/Admin/Brand" class="col-md-3">
+                            <div class="user-box alert alert-info px-3 p-3 rounded shadow">
+                                <span uk-icon="pricetag"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-primary">برندها</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-primary font-weight-bold">10</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mb-2 pr-2 pl-2">
+            <div class="card shadow-full border-0">
+                <div class="card-body user-card-bg">
+                </div>
+                <div class="card-body user-content">
+                    <div class="row">
+                        <a href="/Admin/Order" class="col-md-3">
+                            <div class="user-box alert alert-primary p-3 rounded shadow">
+                                <span uk-icon="cart"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-success">کل سفارشات</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-primary font-weight-bold">20</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/Admin/Order" class="col-md-3">
+                            <div class="user-box alert alert-success px-3 p-3 rounded shadow">
+                                <span uk-icon="cash"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-primary">سفارشات پرداخت شده</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-primary font-weight-bold">15</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/Admin/Order" class="col-md-3">
+                            <div class="user-box alert alert-danger px-3 p-3 rounded shadow">
+                                <span uk-icon="trash-bin"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-primary">سفارشات لغو شده</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-primary font-weight-bold">5</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/Admin/OnlineOrder" class="col-md-3">
+                            <div class="user-box alert alert-warning px-3 p-3 rounded shadow">
+                                <span uk-icon="cart"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-warning">سفارشات آفلاین</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-warning font-weight-bold">3</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mb-2 pr-2 pl-2">
+            <div class="card shadow-full border-0">
+                <div class="card-body user-card-bg">
+                </div>
+                <div class="card-body user-content">
+                    <div class="row">
+                        <a href="/Admin/Ticket" class="col-md-4">
+                            <div class="user-box alert alert-primary px-3 p-3 rounded shadow">
+                                <span uk-icon="mail"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-primary">کل تیکت ها</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-primary font-weight-bold">9</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/Admin/Ticket" class="col-md-4">
+                            <div class="user-box alert alert-success p-3 rounded shadow">
+                                <span uk-icon="mail-open"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-success">تیکت های خوانده شده</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-primary font-weight-bold">7</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/Admin/Ticket" class="col-md-4">
+                            <div class="user-box alert alert-danger px-3 p-3 rounded shadow">
+                                <span uk-icon="mail-unread"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-primary">تیکت های باز نشده</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-primary font-weight-bold">2</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mb-2 pr-2 pl-2">
+            <div class="card shadow-full border-0 ">
+                <div class="card-body user-card-bg">
+                </div>
+                <div class="card-body user-content">
+                    <div class="row">
+                        <a href="/Admin/Topic" class="col-md-3 text-dark">
+                            <div class="user-box alert alert-success p-3 rounded shadow">
+                                <span uk-icon="clipboard"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-success">تاپیک ها</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-primary font-weight-bold">10</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/Admin/Blog" class="col-md-3">
+                            <div class="user-box alert alert-warning px-3 p-3 rounded shadow">
+                                <span uk-icon="newspaper-outline"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-warning">پست ها</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-warning font-weight-bold">12</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/Admin/Notification" class="col-md-3">
+                            <div class="user-box alert alert-info px-3 p-3 rounded shadow">
+                                <span uk-icon="paper-plane"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-primary">پیام های ارسال شده برای کاربران</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-primary font-weight-bold">10</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/Admin/RegularQuestion" class="col-md-3">
+                            <div class="user-box alert alert-dark px-3 p-3 rounded shadow">
+                                <span uk-icon="help-circle"></span>
+                                <div class="user-title mb-3 mt-3">
+                                    <span class="icon-pic-dark">سوالات متداول</span>
+                                </div>
+                                <div class="user-count">
+                                    <span class="icon-pic-dark font-weight-bold">13</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

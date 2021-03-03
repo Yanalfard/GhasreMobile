@@ -412,6 +412,12 @@
                 // updateShopCart();
             });
         }
+        function AddToCompare(id) {
+            var colorId = $('#ProductColorId').val();
+            $.get("/api/CompareApi/" + id + "/" + colorId, function (res) {
+                window.location.href = "/ShopCart/Comparison";
+            });
+        }
         function updateShopCart() {
             $("#showCart").load("/ShopCart/ShowCart").fadeOut(800).fadeIn(800);
         }

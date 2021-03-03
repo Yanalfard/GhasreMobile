@@ -1,87 +1,91 @@
-﻿@{
+﻿@model IEnumerable<ShopCartItemVm>
+@{
     ViewData["Title"] = "Index";
     ViewData["Single"] = true;
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
 }
 
-<div class="col g-3 uk-margin-medium-bottom">
+@if (Model.Any())
+{
+    <div class="col g-3 uk-margin-medium-bottom">
 
-    <div class="mat-card">
-        <div class="rowr uk-margin-small-bottom">
-            <h3 class="uk-h2 uk-margin-auto-left">
-                تایید خرید
-            </h3>
-            <img src="~/st/r/logo.jpg" height="48" width="48" alt="" />
+        <div class="mat-card">
+            <div class="rowr uk-margin-small-bottom">
+                <h3 class="uk-h2 uk-margin-auto-left">
+                    تایید خرید
+                </h3>
+                <img src="~/st/r/logo.jpg" height="48" width="48" alt="" />
+            </div>
+            صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.
         </div>
-        صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.
+
+        <partial name="_Cart" model="Model" />
+
+        <div class="mat-card">
+            <h4 class="uk-margin-small-bottom">
+                کد تخفیف
+            </h4>
+            <form asp-action="CheckDiscount" asp-controller="Order" asp-area="User" class="rowr g-2">
+                <input type="text" placeholder="کد تخفیف را وارد کنید" class="entry flex-auto" name=""/>
+                @*<button class="btn btn-primary unselectable"> CODEX 64%</button>*@
+                <button class="btn btn-dashed">اعمال</button>
+            </form>
+            <div class="fg-col"> <label class="text-danger">کد تخفیف صحیح نمی باشد</label></div>
+        </div>
+
+        <div class="mat-card">
+            <h4 class="uk-margin-small-bottom">
+                انتخاب آدرس
+            </h4>
+            <div class="fg-col">
+                <label class="fg-label">آدرس</label>
+                <textarea class="entry"></textarea>
+            </div>
+        </div>
+
+        <div class="mat-card">
+            <h4 class="uk-margin-small-bottom">
+                روش های ارسال
+            </h4>
+            <div class="fg-col">
+                <label class="radio">
+                    <span>ارسال با پیک</span>
+                    <input id="radio0" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="سیب" type="radio">
+                </label>
+                <label class="radio">
+                    <span>ارسال با پست</span>
+                    <input id="radio1" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="موز" type="radio">
+                </label>
+                <label class="radio">
+                    <span>ارسال با چاپاره</span>
+                    <input id="radio2" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="هلو" type="radio">
+                </label>
+                <label class="radio">
+                    <span>ارسال با تیپاکس</span>
+                    <input id="radio3" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="آلبالو" type="radio">
+                </label>
+            </div>
+        </div>
+
+        <hr class="uk-divider-icon uk-margin" />
+
+        <div class="mat-card col">
+            <p class="uk-alert uk-alert-warning">
+                مشتری محترم، لطفا دقت کنید مبلغ پرداخت شده غیر قابل عودت می باشد، لطفا قبل از خرید اطمینان حاصل فرمایید
+            </p>
+            <div class="rowr">
+                <h3 class="row g-1">
+                    <span>
+                        ريال
+                    </span>
+                    463,000,000
+                </h3>
+                <button class="btn btn-primary uk-margin-auto-right">پرداخت</button>
+            </div>
+        </div>
+
     </div>
 
-    <partial name="_Cart" model="new List<ShopCartItemVm>()" />
-
-    <div class="mat-card">
-        <h4 class="uk-margin-small-bottom">
-            کد تخفیف
-        </h4>
-        <div class="rowr g-2">
-            <input type="text" placeholder="کد تخفیف را وارد کنید" class="entry flex-auto" value="" />
-            <button class="btn btn-primary unselectable"> CODEX 64%</button>
-            <button class="btn btn-dashed">اعمال</button>
-        </div>
-        <div class="fg-col"> <label class="text-danger">کد تخفیف صحیح نمی باشد</label></div>
-    </div>
-
-    <div class="mat-card">
-        <h4 class="uk-margin-small-bottom">
-            انتخاب آدرس
-        </h4>
-        <div class="fg-col">
-            <label class="fg-label">آدرس</label>
-            <textarea class="entry"></textarea>
-        </div>
-    </div>
-
-    <div class="mat-card">
-        <h4 class="uk-margin-small-bottom">
-            روش های ارسال
-        </h4>
-        <div class="fg-col">
-            <label class="radio">
-                <span>ارسال با پیک</span>
-                <input id="radio0" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="سیب" type="radio">
-            </label>
-            <label class="radio">
-                <span>ارسال با پست</span>
-                <input id="radio1" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="موز" type="radio">
-            </label>
-            <label class="radio">
-                <span>ارسال با چاپاره</span>
-                <input id="radio2" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="هلو" type="radio">
-            </label>
-            <label class="radio">
-                <span>ارسال با تیپاکس</span>
-                <input id="radio3" name="I-1586-1603-1600-1595-1589O" class="uk-radio" value="آلبالو" type="radio">
-            </label>
-        </div>
-    </div>
-
-    <hr class="uk-divider-icon uk-margin" />
-
-    <div class="mat-card col">
-        <p class="uk-alert uk-alert-warning">
-            مشتری محترم، لطفا دقت کنید مبلغ پرداخت شده غیر قابل عودت می باشد، لطفا قبل از خرید اطمینان حاصل فرمایید
-        </p>
-        <div class="rowr">
-            <h3 class="row g-1">
-                <span>
-                    ريال
-                </span>
-                463,000,000
-            </h3>
-            <button class="btn btn-primary uk-margin-auto-right">پرداخت</button>
-        </div>
-    </div>
-
-</div>
 
 
-
+}

@@ -1,6 +1,6 @@
 ﻿@model TblProduct
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Model.Name;
     ViewData["Single"] = true;
 }
 
@@ -59,11 +59,12 @@
                     </ul>
                 </div>
                 <div class="foot">
+
                     <div class="left">
                         <label class="action" uk-tooltip="افزورن به لیست مقایسه" uk-icon="contrast">
                             <input name="comparison"
                                    onchange="comparisonChanged(this)"
-                                   type="checkbox" />
+                                   type="checkbox" onclick="AddToCompare(@Model.ProductId)" />
                         </label>
                         <label class="action @((ViewBag.IsBookMark)?"checked":"")" uk-tooltip="افزودن به لیست علاقه مندی ها" uk-icon="bookmark-outline">
                             <input name="favourites"
@@ -103,7 +104,7 @@
             {
                 <h3 class="actual">
                     @Model.PriceBeforeDiscount.Value.ToString("#,0")
-                    <span class="t">تومان</span>
+                    <span class="t">ريال</span>
                 </h3>
             }
             else
@@ -113,7 +114,7 @@
                 </h4>
                 <h3 class="actual">
                     @Model.PriceAfterDiscount.Value.ToString("#,0")
-                    <span class="t">تومان</span>
+                    <span class="t">ريال</span>
                 </h3>
             }
 
@@ -151,12 +152,12 @@
         </div>
         <div class="cart uk-margin-top">
             @*<div class="counter rowr">
-            <button class="plus" uk-icon="add"></button>
-            <span class="count">
-                <span>16</span>
-            </span>
-            <button class="minus" uk-icon="remove"></button>
-        </div>*@
+                    <button class="plus" uk-icon="add"></button>
+                    <span class="count">
+                        <span>16</span>
+                    </span>
+                    <button class="minus" uk-icon="remove"></button>
+                </div>*@
 
             @if (Model.TblColor.Sum(i => i.Count) > 0)
             {
@@ -167,9 +168,8 @@
             }
             else
             {
-                <button class="button" onclick="AddToCart(@Model.ProductId)">
+                <button class="button" onclick="alertWhenReady(@Model.ProductId)">
                     <span>موجود شد به من اطلاع بده</span>
-                    <span uk-icon="cart"></span>
                 </button>
             }
 
@@ -267,8 +267,27 @@
 
             sender.parentElement.classList.toggle('checked');
             // Toggle Comparison
-
+            $.get("/api/Shop/" + id + "/" + colorId, function (res) {
+                $("#countShopCart").html(res);
+                // updateShopCart();
+            });
         }
+
+
+        function alertWhenReady(id) {
+            $.ajax({
+                url: '/Product/AlertWhenReady/',
+                data: { id: id },
+            }).done(function (result) {
+                if (result == "true") {
+                    UIkit.notification('بعد از موجود شدن محصول اطلاع رسانی خواهد شد');
+                }
+                else {
+                    UIkit.notification('شما در صف اطلاع رسانی قرار دارید');
+                }
+            })
+        }
+
 
         function favouritesChanged(sender) {
             var id = $('#ProductId').val();

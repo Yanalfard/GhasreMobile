@@ -20,22 +20,33 @@
         </h3>
     </a>
     <a href="/Search" class="category link-text">@Model.Catagory.Name </a>
-    @if (Model.PriceAfterDiscount == 0)
+    @if (Model.TblColor.Sum(i => i.Count) > 0)
     {
-        <span class="price">
-            <span class="t">تومان</span>
-            <span>@Model.PriceBeforeDiscount.Value.ToString("#,0")</span>
-        </span>
+        @if (Model.PriceAfterDiscount == 0)
+        {
+            <span class="price">
+                <span class="t">ريال</span>
+                <span>@Model.PriceBeforeDiscount.Value.ToString("#,0")</span>
+            </span>
+        }
+        else
+        {
+            <span class="discount">
+                <span>@Model.PriceBeforeDiscount.Value.ToString("#,0")</span>
+            </span>
+            <span class="price">
+                <span class="t">ريال</span>
+                <span>@Model.PriceAfterDiscount.Value.ToString("#,0")</span>
+            </span>
+        }
     }
     else
     {
-        <span class="discount">
-            <span>@Model.PriceBeforeDiscount.Value.ToString("#,0")</span>
-        </span>
-        <span class="price">
-            <span class="t">تومان</span>
-            <span>@Model.PriceAfterDiscount.Value.ToString("#,0")</span>
-        </span>
+        <button class="button">
+            <span>ناموجود</span>
+        </button>
     }
+
+
 
 </div>

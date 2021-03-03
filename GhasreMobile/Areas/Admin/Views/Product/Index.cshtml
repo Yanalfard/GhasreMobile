@@ -51,11 +51,11 @@
                                     <td>
                                         @if (item.PriceAfterDiscount == 0)
                                         {
-                                            <span>@item.PriceBeforeDiscount.Value.ToString("#,0 تومان")</span>
+                                            <span>@item.PriceBeforeDiscount.Value.ToString("#,0 ريال")</span>
                                         }
                                         else
                                         {
-                                            <span class="text-danger">@item.PriceAfterDiscount.Value.ToString("#,0 تومان") تخفیف دار</span>
+                                            <span class="text-danger">@item.PriceAfterDiscount.Value.ToString("#,0 ريال") تخفیف دار</span>
                                         }
                                     </td>
                                     <td>@item.DateCreated.Value.AllToShamsi()</td>
