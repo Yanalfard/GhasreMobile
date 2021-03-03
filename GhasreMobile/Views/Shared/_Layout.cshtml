@@ -428,15 +428,37 @@
             });
         }
         function AddToCompare(id) {
-            var colorId = $('#ProductColorId').val();
-            $.get("/api/CompareApi/" + id + "/" + colorId, function (res) {
-                window.location.href = "/ShopCart/Comparison";
+            $.get("/api/CompareApi/" + id , function (res) {
+                window.location = "/ShopCart/Comparison";
             });
         }
         function updateShopCart() {
             $("#showCart").load("/ShopCart/ShowCart").fadeOut(800).fadeIn(800);
         }
 
+
+        function alertWhenReady(id) {
+            $.get("/Product/AlertWhenReady/" + id , function (res) {
+                if (result == "true") {
+                    UIkit.notification('بعد از موجود شدن محصول اطلاع رسانی خواهد شد');
+                }
+                else {
+                    UIkit.notification('شما در صف اطلاع رسانی قرار دارید');
+                }
+            });
+
+            //$.ajax({
+            //    url: '/Product/AlertWhenReady/',
+            //    data: { id: id },
+            //}).done(function (result) {
+            //    if (result == "true") {
+            //        UIkit.notification('بعد از موجود شدن محصول اطلاع رسانی خواهد شد');
+            //    }
+            //    else {
+            //        UIkit.notification('شما در صف اطلاع رسانی قرار دارید');
+            //    }
+            //})
+        }
 
         function commandOrder(id, count) {
             $.ajax({
