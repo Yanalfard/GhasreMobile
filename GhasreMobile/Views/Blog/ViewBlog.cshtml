@@ -12,8 +12,8 @@
 
 @section Aside{
 
-    <partial name="_BlogBlock" />
-    <partial name="_Ad" />
+    @await Component.InvokeAsync("AdView")
+    @await Component.InvokeAsync("AdView")
 
 }
 
@@ -42,8 +42,10 @@
         @foreach (var item in Model.TblBlogCommentRel.Where(i => i.Comment.IsValid))
         {
             <li>
-                <partial name="_CommentBlock" model="item.Comment" />
+                <partial name="_RepliableComment" model="item.Comment" />
             </li>
         }
     </ul>
 </div>
+
+

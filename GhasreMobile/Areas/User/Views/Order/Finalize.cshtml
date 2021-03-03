@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Index";
     ViewData["Single"] = true;
+    ViewData["NoNav"] = true;
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
 }
 
@@ -26,7 +27,7 @@
                 کد تخفیف
             </h4>
             <form asp-action="CheckDiscount" asp-controller="Order" asp-area="User" class="rowr g-2">
-                <input type="text" placeholder="کد تخفیف را وارد کنید" class="entry flex-auto" name=""/>
+                <input type="text" placeholder="کد تخفیف را وارد کنید" class="entry flex-auto" name="" />
                 @*<button class="btn btn-primary unselectable"> CODEX 64%</button>*@
                 <button class="btn btn-dashed">اعمال</button>
             </form>
@@ -70,22 +71,29 @@
         <hr class="uk-divider-icon uk-margin" />
 
         <div class="mat-card col">
+            <h3>
+                پرداخت
+            </h3>
             <p class="uk-alert uk-alert-warning">
                 مشتری محترم، لطفا دقت کنید مبلغ پرداخت شده غیر قابل عودت می باشد، لطفا قبل از خرید اطمینان حاصل فرمایید
             </p>
             <div class="rowr">
                 <h3 class="row g-1">
                     <span>
-                        ريال
+                        تومان
                     </span>
                     463,000,000
                 </h3>
-                <button class="btn btn-primary uk-margin-auto-right">پرداخت</button>
+                <a href="" class="mini-wallet uk-margin-auto-right">
+                    <label>کیف پول</label>
+                    <span class="rowr">
+                        460,000
+                        <span>تومان</span>
+                    </span>
+                </a>
             </div>
         </div>
 
     </div>
-
-
 
 }

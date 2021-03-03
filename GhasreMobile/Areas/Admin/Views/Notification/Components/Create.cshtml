@@ -6,28 +6,30 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form>
+<form asp-action="Create" asp-controller="Notification" asp-area="Admin">
     <div class="modal-body">
         <div class=" col-md-6">
-            <input type="checkbox" id="SendAll" onchange="SendFunction(this)"> ارسال برای همه
+            <input type="checkbox" name="SendAll" value="true" onchange="SendFunction(this)"> ارسال برای همه
         </div>
         <div class="form-row mr-2 mt-3">
             <div class="form-group col-md-3">
                 <label>شماره تماس</label>
                 <input type="tel" class="form-control form-control-sm" placeholder="مثال:0914...." id="PhoneNumber" onchange="ShowUser()">
+
             </div>
             <div class="mt-md-4 pt-md-2 mr-md-3 d-none" id="UserName">
-                <span class="text-success" uk-icon="checkmark-circle-outline"></span>
-                <label class="">نام کاربر</label>
+                <span id="Status" class="text-success" uk-icon="checkmark-circle-outline"></span>
+                <label id="UserNameLabel"></label>
+                <input type="hidden" name="UserId" id="UserId" />
             </div>
         </div>
         <div class="form-group col-md-7 mt-2">
             <label>متن اعلان</label>
-            <textarea class="textarea-fix-height-120 bg-light uk-border-rounded" placeholder=" متن اعلان را بنویسید... "></textarea>
+            <textarea required name="Text" class="textarea-fix-height-120 bg-light uk-border-rounded" placeholder=" متن اعلان را بنویسید... "></textarea>
         </div>
     </div>
     <div class="modal-footer justify-content-end">
-        <button type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+        <button id="SubmitSendNoti" type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
     </div>
 </form>
 <script>
@@ -41,6 +43,23 @@
     }
 
     function ShowUser() {
-        document.getElementById("UserName").classList.remove("d-none");
+        var data = $("#PhoneNumber").val();
+        $.get("/Admin/Notification/ReturnUser?TelNo=" + data, function (result) {
+            if (result == "0") {
+                document.getElementById("UserName").classList.remove("d-none");
+                $("#UserId").val("");
+                $("#Status").removeAttr('uk-icon');
+                $("#UserNameLabel").html("این شماره تماس وجود ندارد");
+                $("#Status").Attr("uk-icon", "close-circle");
+                $("#SubmitSendNoti").prop("disabled", true);
+            }
+            if (result != "0") {
+                document.getElementById("UserName").classList.remove("d-none");
+                $("#Status").addClass('show');
+                $("#UserId").val(result);
+                $("#SubmitSendNoti").prop("disabled", false);
+            }
+        });
+
     }
 </script>
