@@ -12,8 +12,8 @@
 
 @section Aside{
 
-    <partial name="_Ad" />
-    <partial name="_Ad" />
+    @await Component.InvokeAsync("AdView")
+    @await Component.InvokeAsync("AdView")
 
 }
 

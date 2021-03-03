@@ -1,0 +1,32 @@
+﻿@model CommentReplay
+
+
+<form id="ajaxresultReplayComment" class="form uk-modal-dialog uk-modal-body" asp-action="CommentReplay" asp-controller="Home" method="post"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="ReplayComment()"
+      data-ajax-update="#ajaxresultReplayComment">
+    <h3 class="uk-margin-bottom">
+        پاسخ
+    </h3>
+    @*  آیدی کامنتی که بهش پاسخ داریم میدیم رو موقع واز کردن مودال پاس میدم اینتو  *@
+    <input type="hidden" name="ParentId" asp-for="ParentId" id="ParentId" />
+    <div class="fg-col">
+        <div class="fg-label">متن پاسخ</div>
+        <textarea class="entry" asp-for="Body"></textarea>
+        <span class="text-danger" asp-validation-for="Body"></span>
+    </div>
+    <div class="actions">
+        <button class="btn btn-primary" onclick="LoadingRun('#ajaxresultReplayComment')">ثبت</button>
+    </div>
+</form>
+
+<script>
+    function ReplayComment() {
+        $("textarea").val("");
+        UIkit.modal(document.getElementById('ModalReply')).hide();
+        UIkit.notification('پیام شما ثبت شد');
+        LoadingEnd();
+    }
+</script>

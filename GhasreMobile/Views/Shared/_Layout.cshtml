@@ -74,9 +74,9 @@
                     <img src="~/st/r/logo.jpg" width="48" height="48" alt="لوگو فصر موبایل" />
                 </a>
                 <div class="search">
-                    <span onclick="window.location = '/Search';//SEARCH" class="link-text" uk-icon="search"></span>
+                    <span onclick="window.location = '/Search?q=' + (this.parentElement.querySelector('[name=q]').value);//SEARCH" class="link-text" uk-icon="search"></span>
                     <input id="txtSearchMain" class="entry-invis"
-                           type="text" placeholder="جستجو..."
+                           type="text" placeholder="جستجو..." name="q"
                            aria-label="جستجو"
                            oninput="SearchInput(this)" />
                 </div>
@@ -318,6 +318,11 @@
             <span class="spinner"></span>
         </div>
     </div>
+    <!-- Modal Reply -->
+    <div id="ModalReply" uk-modal>
+        @await Component.InvokeAsync("CommentReplayView")
+    </div>
+
     <!--Pwa-->
     @*<script src="~/app.js"></script>*@
 
@@ -331,6 +336,16 @@
     <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
     <script src="~/Validate/jquery.unobtrusive-ajax.min.js"></script>
 
+
+
+    <script>
+        function reply(commentId) {
+            // آیدی کامنتی که بهش پاسخ داریم میدیم رو میزارم تو یه اینپوت
+            const input = document.getElementById('ParentId');
+            input.value = commentId;
+            UIkit.modal(document.getElementById('ModalReply')).show();
+        }
+    </script>
 
     <script>
         function LoadingRun(form) {
@@ -358,7 +373,7 @@
 
                     i.forEach(b => {
                         list.innerHTML +=
-                            `<a href="/">${b.replace(val, `<strong>${val}</strong>`)}</a>`;
+                            `<a href="/Search?q=${val}">${b.replace(val, `<strong>${val}</strong>`)}</a>`;
                     })
 
                     if (list.innerHTML !== "")

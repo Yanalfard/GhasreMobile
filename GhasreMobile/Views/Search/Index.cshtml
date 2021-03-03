@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<TblProduct>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = ViewData["Title"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,24 +12,28 @@
 
 @section Aside{
 
-    <div swap="filter" class="mat-card col">
+    <form asp-action="/Search" swap="filter" class="mat-card col">
         <h4 class="uk-margin-bottom">
             فیلتر ها
         </h4>
 
         <div class="fg-col">
             <div class="fg-label">نام محصول</div>
-            <input type="text" class="entry" value="" />
+            <input type="text" class="entry" name="name"  value="@ViewData["name"]"/>
             <div class="text-danger"></div>
         </div>
+        <input type="hidden" class="entry" name="q" value="" />
 
         <div class="fg-col">
             <div class="fg-label">برند محصول</div>
-            <select class="entry">
-                <option>برند...</option>
-                <option>سامسونگ</option>
-                <option>اپل</option>
-                <option>شیائومی</option>
+            @{
+                List<TblBrand> listBrand = ViewData["brandList"] as List<TblBrand>;
+            }
+            <select class="entry" name="brand">
+                @foreach (var item in listBrand)
+                {
+                    <option>@item.Name</option>
+                }
             </select>
             <div class="text-danger"></div>
         </div>
@@ -38,31 +42,31 @@
             <label class="fg-label">قیمت</label>
             <div class="rowr uk-child-width-1-2">
                 <div class="col">
-                    <input type="text" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" value="" />
+                    <input type="number" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" name="minPrice" value="@ViewData["minPrice"]" />
                     <div class="text-danger"></div>
                 </div>
                 <div class="col">
-                    <input type="text" class="entry" aria-label="priceTo" placeholder="تا" value="" />
+                    <input type="number" class="entry" aria-label="priceTo" placeholder="تا" name="maxPrice"  value="@ViewData["maxPrice"]"/>
                     <div class="text-danger"></div>
                 </div>
             </div>
         </div>
 
         <label class="text-2 rowr uk-margin-small-bottom">
-            <input class="uk-checkbox" type="checkbox" value="" />
+            <input class="uk-checkbox" type="checkbox" name="available" />
             فقط کالا های موجود
         </label>
 
         <label class="text-2 rowr uk-margin-small-bottom">
-            <input class="uk-checkbox" type="checkbox" value="" />
+            <input class="uk-checkbox" type="checkbox" name="discount" />
             فقط کالا های تخفیف دار
         </label>
 
         <button class="btn btn-primary uk-margin-top">اعمال فیلتر ها</button>
 
-    </div>
+    </form>
 
-    <div swap="Ad"><partial name="_Ad" /></div>
+    <div swap="Ad"> @await Component.InvokeAsync("AdView")</div>
 
 }
 
@@ -74,9 +78,8 @@
         <div class="rowr">
 
             <nav class="breadcrumb uk-padding-remove">
-                <a href="">جستجو</a>
-                <a href="">هواوی</a>
-                <a href="" class="active">هواوی میت 8</a>
+                <a href="#">جستجو</a>
+                <a href="#">@ViewData["Title"]</a>
             </nav>
 
         </div>
@@ -92,6 +95,9 @@
 
 <div role="none" id="Ad"></div>
 
-<div class="loading">
-    <img src="~/st/v/loading.svg" />
-</div>
+@if (Model.Any())
+{
+    <div class="loading">
+        <img src="~/st/v/loading.svg" />
+    </div>
+}

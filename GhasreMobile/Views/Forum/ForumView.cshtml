@@ -12,9 +12,9 @@
 
 @section Aside{
 
-    <partial name="_Ad" />
-    <partial name="_Ad" />
-
+  
+    @await Component.InvokeAsync("AdView") 
+@await Component.InvokeAsync("AdView")
 }
 
 <nav class="breadcrumb uk-padding-remove">
@@ -74,32 +74,3 @@
         </li>
     </ul>
 </div>
-
-<!-- Modal Reply -->
-<div id="ModalReply" uk-modal>
-    <form class="form uk-modal-dialog uk-modal-body">
-        <h3 class="uk-margin-bottom">
-            پاسخ
-        </h3>
-        @*  آیدی کامنتی که بهش پاسخ داریم میدیم رو موقع واز کردن مودال پاس میدم اینتو  *@
-        <input type="hidden" name="ParentId" id="CommentId" />
-        <div class="fg-col">
-            <div class="fg-label">متن پاسخ</div>
-            <textarea class="entry"></textarea>
-            <span class="text-danger"></span>
-        </div>
-        <div class="actions">
-            <button class="btn btn-primary">ثبت</button>
-        </div>
-    </form>
-</div>
-
-<script>
-    function reply(commentId) {
-        // آیدی کامنتی که بهش پاسخ داریم میدیم رو میزارم تو یه اینپوت
-        const input = document.getElementById('CommentId');
-        input.value = commentId;
-
-        UIkit.modal(document.getElementById('ModalReply')).show();
-    }
-</script>

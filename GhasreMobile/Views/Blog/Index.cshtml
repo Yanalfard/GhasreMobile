@@ -23,6 +23,6 @@
 </div>
 
 <div class="uk-child-width-1-2 row gap-t gap-card">
-    <partial name="_Ad">
-        <partial name="_Ad">
+    @await Component.InvokeAsync("AdView")
+    @await Component.InvokeAsync("AdView")
 </div>
