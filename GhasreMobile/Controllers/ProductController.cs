@@ -113,5 +113,20 @@ namespace GhasreMobile.Controllers
             }
 
         }
+        [PermissionChecker("user,employee,admin")]
+        public async Task<string> AlertWhenReady(int id)
+        {
+            if (!db.AlertWhenReady.Get().Any(i => i.ProductId == id && i.ClientId == SelectUser().ClientId))
+            {
+                TblAlertWhenReady addAlertWhenReady = new TblAlertWhenReady();
+                addAlertWhenReady.ClientId = SelectUser().ClientId;
+                addAlertWhenReady.ProductId = id;
+                db.AlertWhenReady.Add(addAlertWhenReady);
+                db.AlertWhenReady.Save();
+                return await Task.FromResult("true");
+            }
+            return await Task.FromResult("false");
+
+        }
     }
 }

@@ -25,7 +25,7 @@
         @if (Model.PriceAfterDiscount == 0)
         {
             <span class="price">
-                <span class="t">تومان</span>
+                <span class="t">ريال</span>
                 <span>@Model.PriceBeforeDiscount.Value.ToString("#,0")</span>
             </span>
         }
@@ -35,16 +35,20 @@
                 <span>@Model.PriceBeforeDiscount.Value.ToString("#,0")</span>
             </span>
             <span class="price">
-                <span class="t">تومان</span>
+                <span class="t">ريال</span>
                 <span>@Model.PriceAfterDiscount.Value.ToString("#,0")</span>
             </span>
         }
     }
     else
     {
-        <button class="button">
-            <span>ناموجود</span>
-        </button>
+        <div class="unavailable">
+            <span>
+                <span></span>
+                ناموجود
+            </span>
+            <button href="/" uk-tooltip="موجود شد خبر بده" class="link-text" uk-icon="notifications-outline"></button>
+        </div>
     }
 
 

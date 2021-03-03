@@ -64,5 +64,12 @@ namespace GhasreMobile.Areas.User.Controllers
             }
         }
 
+
+
+        public IActionResult CheckDiscount(TblDiscount discoun)
+        {
+            return View(discoun);
+        }
+
     }
 }
