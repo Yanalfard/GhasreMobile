@@ -1,6 +1,6 @@
-﻿@model IEnumerable<VmTopic>
+﻿@model IEnumerable<TblTopic>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "تالار گفتگو";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -22,16 +22,21 @@
 }
 
 <nav class="breadcrumb uk-padding-remove">
-    <a href="">تالار گفتگو</a>
-    <a href="" class="active">صفحه اصلی</a>
+    <a href="#">تالار گفتگو</a>
+    <a href="#" class="active">صفحه اصلی</a>
 </nav>
 
 <div role="none" id="swNewForum"></div>
-
+@if (Context.Request.Query["addForum"].ToString() == "true")
+{
+    <div class="uk-alert uk-alert-success">
+        <p class="help-block">پیام شما ثبت شد و بعد از بررسی در تالار گفتوگو قرار خواهد گرفت</p>
+    </div>
+}
 <div class="threads col">
-    @foreach (var i in Model)
+    @foreach (var item in Model)
     {
-        <partial name="_ThreadBlock" model="i" />
+        <partial name="_ThreadBlock" model="item" />
     }
 </div>
 
@@ -40,7 +45,7 @@
 
     <script>
         $.get('https://www.cloudflare.com/cdn-cgi/trace',
-            function(data) {
+            function (data) {
                 console.log(data);
                 console.log(data.split('ip=')[1].split('ts')[0]);
             });

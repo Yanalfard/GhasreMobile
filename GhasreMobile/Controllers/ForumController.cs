@@ -12,24 +12,27 @@ namespace GhasreMobile.Controllers
 {
     public class ForumController : Controller
     {
-        private Core _core;
+        private Core db;
+        TblClient SelectUser()
+        {
+            int userId = Convert.ToInt32(User.Claims.First().Value);
+            TblClient selectUser = db.Client.GetById(userId);
+            return selectUser;
+        }
         public ForumController()
         {
-            _core = new Core();
+            db = new Core();
         }
         public IActionResult Index()
         {
-            List<VmTopic> topics = new List<VmTopic>();
-            _core.Topic.Get().ToList().ForEach(i => topics.Add(new VmTopic(i)));
-            return View(topics);
+            return View(db.Topic.Get(i => i.IsValid));
         }
-        [Route("Forum/ForumView/{id}")]
-        public IActionResult ForumView(int id)
+        [Route("ForumView/{id}/{name}")]
+        public IActionResult ForumView(int id, string name)
         {
             try
             {
-                VmTopic topic = new VmTopic(_core.Topic.GetById(id));
-                return View(topic);
+                return View(db.Topic.GetById(id));
             }
             catch
             {
@@ -47,10 +50,10 @@ namespace GhasreMobile.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                TblTopic topic = _core.Topic.GetById(id);
+                TblTopic topic = db.Topic.GetById(id);
                 topic.VoteCount++;
-                bool res = _core.Topic.Update(topic);
-                _core.Topic.Save();
+                bool res = db.Topic.Update(topic);
+                db.Topic.Save();
                 return Ok(true);
             }
 
@@ -62,49 +65,80 @@ namespace GhasreMobile.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                TblTopic topic = _core.Topic.GetById(id);
+                TblTopic topic = db.Topic.GetById(id);
                 topic.VoteCount--;
-                _core.Topic.Update(topic);
-                _core.Topic.Save();
+                db.Topic.Update(topic);
+                db.Topic.Save();
                 return Ok(true);
             }
 
             return Ok(false);
         }
-        [PermissionChecker("user,employee,admin")]
         [HttpPost]
-        public IActionResult SubmitComment(string Comment, int TopicId)
+        [PermissionChecker("user,employee,admin")]
+        public async Task<IActionResult> SendComment(SendCommentVm comment)
         {
             try
             {
-                TblClient client = _core.Client.Get(i => i.TellNo == User.Identity.Name).ToList()[0];
-                TblComment commentToAdd = new TblComment
+                if (ModelState.IsValid)
                 {
-                    DateCreated = DateTime.Now,
-                    Body = Comment,
-                    ClientId = client.ClientId,
-                    IsValid = false
-                };
-                commentToAdd = (TblComment)_core.Comment.Add(commentToAdd).Entity;
-                _core.Comment.Save();
-                TblTopicCommentRel rel = new TblTopicCommentRel
-                {
-                    TopicId = TopicId,
-                    CommentId = commentToAdd.CommentId
-                };
-                _core.TopicCommentRel.Add(rel);
-                _core.TopicCommentRel.Save();
-                return View();
+                    var ipUser = Request.HttpContext.Connection.RemoteIpAddress;
+                    TblComment addComment = new TblComment();
+                    addComment.Body = comment.Body;
+                    addComment.ClientId = SelectUser().ClientId;
+                    addComment.DateCreated = DateTime.Now;
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.Claims.Last().Value != "user")
+                        {
+                            addComment.IsValid = true;
+                        }
+                    }
+                    db.Comment.Add(addComment);
+                    db.Comment.Save();
+                    TblTopicCommentRel addCommentRel = new TblTopicCommentRel();
+                    addCommentRel.TopicId = comment.TopicId;
+                    addCommentRel.CommentId = addComment.CommentId;
+                    db.TopicCommentRel.Add(addCommentRel);
+                    db.TopicCommentRel.Save();
+                    return await Task.FromResult(PartialView());
+                }
+                return await Task.FromResult(PartialView(comment));
             }
             catch
             {
-                return Redirect("/404.html");
+                return await Task.FromResult(Redirect("ErrorPage"));
             }
         }
 
         public IActionResult NewForum()
         {
             return View();
+        }
+        [HttpPost]
+        [PermissionChecker("user,employee,admin")]
+        public async Task<IActionResult> NewForum(AddTopicVm topic)
+        {
+            if (ModelState.IsValid)
+            {
+                TblTopic tblTopic = new TblTopic();
+                tblTopic.Title = topic.Title;
+                tblTopic.Body = topic.Body;
+                tblTopic.DateCreated = DateTime.Now;
+                tblTopic.ClientId = SelectUser().ClientId;
+                tblTopic.VoteCount = 0;
+                if (User.Identity.IsAuthenticated)
+                {
+                    if (User.Claims.Last().Value != "user")
+                    {
+                        tblTopic.IsValid = true;
+                    }
+                }
+                db.Topic.Add(tblTopic);
+                db.Topic.Save();
+                return await Task.FromResult(Redirect("/Forum?addForum=true"));
+            }
+            return View(topic);
         }
     }
 }

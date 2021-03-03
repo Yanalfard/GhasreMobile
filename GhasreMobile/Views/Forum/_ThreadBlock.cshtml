@@ -1,8 +1,8 @@
-﻿@model VmTopic
+﻿@model TblTopic
 <div class="forum-block">
     <div class="content">
         <div class="rowr">
-            <a href="/Forum/ForumView/@Model.TopicId"><h5 class="link-text">@Model.Title</h5></a>
+            <a href="/ForumView/@Model.TopicId/@Model.Title.Replace(" ","-")"><h5 class="link-text">@Model.Title</h5></a>
             <div class="rowr uk-margin-auto-right">
                 <span class="uk-margin-small-left text-2">@Model.Client.Name</span>
                 <span class="text-3">@(Model.DateCreated.HasValue ? Model.DateCreated.Value.DateToShamsi() : "")</span>
@@ -16,7 +16,7 @@
         <div class="action">
             <span class="row">
                 <span uk-icon="ratio:.72;icon:chatbox-ellipses-outline"></span>
-                <span> @Model.Comments.Count </span>
+                <span>  @Model.TblTopicCommentRel.Where(i => i.Comment.IsValid).ToList().Count  </span>
             </span>
             <span class="link-text" uk-icon="ratio:.72;icon:arrow-redo-outline"></span>
         </div>

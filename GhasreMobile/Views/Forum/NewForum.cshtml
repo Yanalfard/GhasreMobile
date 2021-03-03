@@ -1,19 +1,27 @@
-﻿@{
+﻿@model AddTopicVm
+@{
     ViewData["Title"] = "Index";
     ViewData["Single"] = true;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="mat-card col">
+<form id="addTopic" class="mat-card col" action="/Forum/NewForum" method="post">
     <h3 class="uk-margin-bottom">
         موضوع جدید
     </h3>
     <div class="fg-col">
-        <label class="fg-label">متن شما</label>
-        <textarea class="entry"></textarea>
+        <label class="fg-label">موضوع </label>
+        <input type="text" asp-for="Title" class="entry" />
+        <span class="text-danger" asp-validation-for="Title"></span>
+
+    </div>
+    <div class="fg-col">
+        <label class="fg-label">متن </label>
+        <textarea class="entry" asp-for="Body"></textarea>
+        <span class="text-danger" asp-validation-for="Body"></span>
     </div>
     <div class="rowr g-3">
-        <button class="btn btn-primary">ثبت</button>
-        <button class="btn btn-secondary">لغو</button>
+        <button class="btn btn-primary" onclick="LoadingRun('#addTopic')">ثبت</button>
+        <a href="/Forum" class="btn btn-secondary">لغو</a>
     </div>
-</div>
+</form>
