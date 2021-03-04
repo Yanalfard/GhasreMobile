@@ -1,4 +1,7 @@
 ﻿@model TblSpecialOffer
+@{
+    var raiting = (Model.Product.TblRate.Count > 0) ? (Model.Product.TblRate.Sum(i => i.Rate) / Model.Product.TblRate.Count) : 0;
+}
 <div class="product-express">
     <div class="head">
         <h3>پیشنهاد ویژه</h3>
@@ -22,31 +25,52 @@
         </ul>
     </div>
     <div class="body">
-        <img src="~/st/r/phones/p3.jpg" alt="" />
+        <a href="/Product/@Model.ProductId/@Model.Product.Name.Replace(" ","-")">
+            <img src="~/Images/ProductMain/@Model.Product.MainImage" alt="" />
+        </a>
         <div class="star">
             <label>
-                <span>4.4</span>
+                <span>@raiting</span>
                 <span uk-icon="icon:star;ratio:.9"></span>
             </label>
-            <span>(2445)</span>
+            <span>(@Model.Product.TblRate.Count)</span>
         </div>
         <ul class="colours">
-            <li style="background-color:#000"></li>
-            <li style="background-color:#ccc"></li>
-            <li style="background-color: #fff;border: 1px black solid;"></li>
-            <li style="background-color: #E05421"></li>
+            @foreach (var item in Model.Product.TblColor.Where(i => i.Count > 0))
+            {
+                @if (item.ColorCode.ToLower() == "#fff" || item.ColorCode.ToLower() == "#ffffff")
+                {
+                    <li style="background-color: @item.ColorCode;border: 1px black solid;"></li>
+                }
+                else
+                {
+                    <li style="background-color:@item.ColorCode"></li>
+                }
+            }
         </ul>
-        <a href="#" class="link-text">
+        <a href="/Product/@Model.ProductId/@Model.Product.Name.Replace(" ","-")" class="link-text">
             <h3 class="name" dir="rtl">
-                گوشی موبایل Iphone X دو سیمکارته
+                @Model.Product.Name
             </h3>
         </a>
-        <span class="discount">
-            <span>4,680,000</span>
-        </span>
-        <span class="price">
-            <span class="t">ريال</span>
-            <span>3,999,000</span>
-        </span>
+
+        @if (Model.Product.PriceAfterDiscount == 0)
+        {
+            <span class="price">
+                <span class="t">ريال</span>
+                <span>@Model.Product.PriceAfterDiscount.Value.ToString("#,0")</span>
+            </span>
+        }
+        else
+        {
+            <span class="discount">
+                <span>@Model.Product.PriceBeforeDiscount.Value.ToString("#,0")</span>
+            </span>
+            <span class="price">
+                <span class="t">ريال</span>
+                <span>@Model.Product.PriceAfterDiscount.Value.ToString("#,0")</span>
+            </span>
+        }
+
     </div>
 </div>

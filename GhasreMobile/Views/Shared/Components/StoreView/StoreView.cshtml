@@ -1,0 +1,39 @@
+﻿@model IEnumerable<TblStore>
+
+<div swap="swAffiliates" class="affiliates mat mat-border col">
+    <div class="mat-pad uk-padding-remove-bottom">
+        <h3 class="uk-margin-remove uk-padding-remove">
+            شعب ما
+        </h3>
+    </div>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                <a href="/StoreView/@item.StoreId/@item.Name.Replace(" ","-")">
+                    <h4>
+                        @item.Name
+                    </h4>
+                    <label>@item.Address</label>
+                    <div class="tel">
+                        <span uk-icon="call-outline">@item.TellNo</span>
+                    </div>
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+
+
+<div style="display:none">
+    @foreach (var item in Model)
+    {
+        <mymap>
+            <storeid>@item.StoreId</storeid>
+            <lat>@item.Lat</lat>
+            <lon>@item.Lon</lon>
+            <name>@item.Name.Replace(" ", "-")</name>
+            <address>@item.Address</address>
+        </mymap>
+    }
+</div>

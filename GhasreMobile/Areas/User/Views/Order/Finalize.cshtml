@@ -4,6 +4,8 @@
     ViewData["Single"] = true;
     ViewData["NoNav"] = true;
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
+
+    string discountType = ViewBag.typeDiscount.ToString();
 }
 
 @if (Model.Any())
@@ -22,17 +24,8 @@
 
         <partial name="_Cart" model="Model" />
 
-        <div class="mat-card">
-            <h4 class="uk-margin-small-bottom">
-                کد تخفیف
-            </h4>
-            <form asp-action="CheckDiscount" asp-controller="Order" asp-area="User" class="rowr g-2">
-                <input type="text" placeholder="کد تخفیف را وارد کنید" class="entry flex-auto" name="" />
-                @*<button class="btn btn-primary unselectable"> CODEX 64%</button>*@
-                <button class="btn btn-dashed">اعمال</button>
-            </form>
-            <div class="fg-col"> <label class="text-danger">کد تخفیف صحیح نمی باشد</label></div>
-        </div>
+        @await Component.InvokeAsync("CheckDiscountUser")
+       
 
         <div class="mat-card">
             <h4 class="uk-margin-small-bottom">
@@ -97,3 +90,4 @@
     </div>
 
 }
+

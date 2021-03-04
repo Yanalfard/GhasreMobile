@@ -1,0 +1,58 @@
+﻿@model DiscountVm
+@{ 
+ string discountType = ViewBag.typeDiscount.ToString();
+}
+
+<div class="mat-card">
+    <h4 class="uk-margin-small-bottom">
+        کد تخفیف
+    </h4>
+    <form action="/User/Order/CheckDiscount" method="post" class="rowr g-2">
+        <input type="text" placeholder="کد تخفیف را وارد کنید" class="entry flex-auto" asp-for="Name" required />
+        @*<button class="btn btn-primary unselectable"> CODEX 64%</button>*@
+        <button class="btn btn-dashed">اعمال</button>
+        <div class="fg-col"> <span class="text-danger" asp-validation-for="Name"></span></div>
+    </form>
+    @if (discountType != "")
+    {
+        switch (discountType)
+        {
+            case "Success":
+                {
+                    <div class="uk-alert uk-alert-success">
+                        <p class="uk-text-success">کد با موفقیت اعمال شد</p>
+                    </div>
+                    break;
+                }
+            case "1":
+                {
+                    <div class="uk-alert uk-alert-danger">
+                        <p class="uk-text-danger">تاریخ تخفیف اتمام یافته است</p>
+                    </div>
+                    break;
+                }
+            case "2":
+                {
+                    <div class="uk-alert uk-alert-danger">
+                        <p class="uk-text-danger">تعداد تخفیف به اتمام رسیده است</p>
+                    </div>
+                    break;
+                }
+            case "3":
+                {
+                    <div class="uk-alert uk-alert-danger">
+                        <p class="uk-text-danger">کد تخفیف موجود نیست</p>
+                    </div>
+                    break;
+                }
+        }
+    }
+</div>
+
+<script>
+    function CheckDiscount() {
+        $("input").val("");
+        //UIkit.notification('پیام شما ثبت شد');
+        LoadingEnd();
+    }
+</script>

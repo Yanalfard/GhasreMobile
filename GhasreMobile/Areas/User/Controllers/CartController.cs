@@ -55,6 +55,7 @@ namespace GhasreMobile.Areas.User.Controllers
                         });
                     }
                 }
+               
                 return View(list);
             }
             catch
@@ -108,7 +109,7 @@ namespace GhasreMobile.Areas.User.Controllers
         [Route("User/Bookmarks")]
         public IActionResult Bookmarks()
         {
-            List<TblProduct> list = db.BookMark.Get(i => i.ClientId == SelectUser().ClientId).Select(i=>i.Product).ToList();
+            List<TblProduct> list = db.BookMark.Get(i => i.ClientId == SelectUser().ClientId).Select(i => i.Product).ToList();
             return View(list);
         }
 
