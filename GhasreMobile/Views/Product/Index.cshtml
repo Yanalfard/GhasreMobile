@@ -66,11 +66,22 @@
                                    onchange="comparisonChanged(this)"
                                    type="checkbox" onclick="AddToCompare(@Model.ProductId)" />
                         </label>
-                        <label class="action @((ViewBag.IsBookMark)?"checked":"")" uk-tooltip="افزودن به لیست علاقه مندی ها" uk-icon="bookmark-outline">
-                            <input name="favourites"
-                                   onchange="favouritesChanged(this)"
-                                   type="checkbox" />
-                        </label>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <label class="action @((ViewBag.IsBookMark)?"checked":"")" uk-tooltip="افزودن به لیست علاقه مندی ها" uk-icon="bookmark-outline">
+                                <input name="favourites"
+                                       onchange="favouritesChanged(this)"
+                                       type="checkbox" />
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="action" onclick="window.location='/Login'" uk-tooltip="افزودن به لیست علاقه مندی ها" uk-icon="bookmark-outline">
+                                <input name="favourites" type="checkbox" />
+                            </label>
+                        }
+
+
                     </div>
                     <div class="right">
                         <button class="action" uk-tooltip="اشتراک گذاری" onclick="share(window.location.href)"
@@ -168,10 +179,23 @@
             }
             else
             {
-                <button class="button" onclick="alertWhenReady(@Model.ProductId)">
-                    <span>موجود شد به من اطلاع بده</span>
-                    <span uk-icon="notifications"></span>
-                </button>
+
+            
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <button class="button" onclick="alertWhenReady(@Model.ProductId)">
+                        <span>موجود شد به من اطلاع بده</span>
+                        <span uk-icon="notifications"></span>
+                    </button>
+                }
+                else
+                {
+                    <button class="button" onclick="window.location='/Login'">
+                        <span>موجود شد به من اطلاع بده</span>
+                        <span uk-icon="notifications"></span>
+                    </button>
+                }
+
             }
 
         </div>
@@ -277,20 +301,6 @@
             });
         }
 
-
-        function alertWhenReady(id) {
-            $.ajax({
-                url: '/Product/AlertWhenReady/',
-                data: { id: id },
-            }).done(function (result) {
-                if (result == "true") {
-                    UIkit.notification('بعد از موجود شدن محصول اطلاع رسانی خواهد شد');
-                }
-                else {
-                    UIkit.notification('شما در صف اطلاع رسانی قرار دارید');
-                }
-            })
-        }
 
 
         function favouritesChanged(sender) {

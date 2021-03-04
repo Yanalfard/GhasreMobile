@@ -30,10 +30,9 @@ namespace GhasreMobile.Controllers
             return list.Count;
         }
         // GET: api/Shop/5
-        [HttpGet("{id}/{colorId}")]
-        public int Get(int id, int colorId)
+        [HttpGet("{id}")]
+        public int Get(int id)
         {
-            TblColor selectedColor = db.Color.GetById(colorId);
             List<CompareItemVm> list = new List<CompareItemVm>();
             var Session = HttpContext.Session.GetComplexData<List<CompareItemVm>>("Compare");
             if (Session != null)
@@ -51,8 +50,6 @@ namespace GhasreMobile.Controllers
                     Brand = product.MainImage,
                     PriceBeforeDiscount = product.PriceBeforeDiscount,
                     PriceAfterDiscount = product.PriceAfterDiscount,
-                    ColorID= selectedColor.ColorId,
-                    ColorName=selectedColor.Name
                 });
             }
             HttpContext.Session.SetComplexData("Compare", list);

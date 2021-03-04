@@ -11,7 +11,6 @@ namespace DataLayer.Models
         {
             TblTopicCommentRel = new HashSet<TblTopicCommentRel>();
         }
-
         [Key]
         public int TopicId { get; set; }
         [Required]
@@ -25,7 +24,6 @@ namespace DataLayer.Models
         public int ClientId { get; set; }
         public int VoteCount { get; set; }
         public bool IsValid { get; set; }
-
         [ForeignKey(nameof(ClientId))]
         [InverseProperty(nameof(TblClient.TblTopic))]
         public virtual TblClient Client { get; set; }

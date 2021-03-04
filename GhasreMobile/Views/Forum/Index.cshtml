@@ -1,13 +1,11 @@
-﻿
+﻿@model IEnumerable<TblTopic>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "تالار گفتگو";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Styles{
-
     <link href="~/css/pages/forum.min.css" rel="stylesheet" />
-
 }
 
 @section Aside{
@@ -24,14 +22,51 @@
 }
 
 <nav class="breadcrumb uk-padding-remove">
-    <a href="">تالار گفتگو</a>
-    <a href="" class="active">صفحه اصلی</a>
+    <a href="#">تالار گفتگو</a>
+    <a href="#" class="active">صفحه اصلی</a>
 </nav>
 
 <div role="none" id="swNewForum"></div>
-
+@if (Context.Request.Query["addForum"].ToString() == "true")
+{
+    <div class="uk-alert uk-alert-success">
+        <p class="help-block">پیام شما ثبت شد و بعد از بررسی در تالار گفتوگو قرار خواهد گرفت</p>
+    </div>
+}
 <div class="threads col">
-    <partial name="_ThreadBlock" />
-    <partial name="_ThreadBlock" />
-    <partial name="_ThreadBlock" />
+    @foreach (var item in Model)
+    {
+        <partial name="_ThreadBlock" model="item" />
+    }
 </div>
+
+@section Scripts{
+    <script src="~/js/BjaxLib.js"></script>
+
+    <script>
+        $.get('https://www.cloudflare.com/cdn-cgi/trace',
+            function (data) {
+                console.log(data);
+                console.log(data.split('ip=')[1].split('ts')[0]);
+            });
+        function VoteUp(val) {
+            var result = Bjax("/Forum/VoteUp?id=", val, "SP");
+            if (result) {
+                var vote = document.getElementById('Vote' + val);
+                vote.innerText = parseInt(vote.innerText) + 1;
+            } else {
+                window.location = "";
+            }
+        }
+        function VoteDown(val) {
+            var result = Bjax("/Forum/VoteDown?id=", val, "SP");
+            if (result) {
+                var vote = document.getElementById('Vote' + val);
+                vote.innerText = parseInt(vote.innerText) - 1;
+            } else {
+                window.location = "";
+            }
+        }
+    </script>
+
+}

@@ -14,12 +14,12 @@
     <a href="/Product/@Model.ProductId/@Model.Name.Replace(" ","-")" class="link-text">
         <img src="~/Images/ProductMain/@Model.MainImage" alt="" width="200" height="200" />
     </a>
-    <a href="/Product" class="link-text">
+    <a href="/Product/@Model.ProductId/@Model.Name.Replace(" ","-")" class="link-text">
         <h3 class="name" dir="rtl">
             @Model.Name
         </h3>
     </a>
-    <a href="/Search" class="category link-text">@Model.Catagory.Name </a>
+    <a href="/Search?catId=@Model.CatagoryId" class="category link-text">@Model.Catagory.Name </a>
     @if (Model.TblColor.Sum(i => i.Count) > 0)
     {
         @if (Model.PriceAfterDiscount == 0)
@@ -42,13 +42,27 @@
     }
     else
     {
-        <div class="unavailable">
-            <span>
-                <span></span>
-                ناموجود
-            </span>
-            <button href="/" uk-tooltip="موجود شد خبر بده" class="link-text" uk-icon="notifications-outline"></button>
-        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="unavailable">
+                <span>
+                    <span></span>
+                    ناموجود
+                </span>
+                <button onclick="alertWhenReady(@Model.ProductId)" uk-tooltip="موجود شد خبر بده" class="link-text" uk-icon="notifications-outline"></button>
+            </div>
+        }
+        else
+        {
+            <div class="unavailable">
+                <span>
+                    <span></span>
+                    ناموجود
+                </span>
+                <button onclick="window.location='/Login'" uk-tooltip="موجود شد خبر بده" class="link-text" uk-icon="notifications-outline"></button>
+            </div>
+        }
+
     }
 
 

@@ -12,7 +12,6 @@ namespace DataLayer.ViewModels
         public string Brand { get; set; }
         public long? PriceBeforeDiscount { get; set; }
         public long? PriceAfterDiscount { get; set; }
-        public int ColorID { get; set; }
-        public string ColorName { get; set; }
+
     }
 }

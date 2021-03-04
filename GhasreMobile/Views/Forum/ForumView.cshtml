@@ -1,7 +1,8 @@
-﻿
+﻿@model TblTopic
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = " تالار گفتگو- " + Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["TopicId"] = Model.TopicId;
 }
 
 @section Styles{
@@ -13,49 +14,52 @@
 @section Aside{
 
   
-    @await Component.InvokeAsync("AdView") 
+@await Component.InvokeAsync("AdView") 
 @await Component.InvokeAsync("AdView")
 }
 
 <nav class="breadcrumb uk-padding-remove">
-    <a href="">تالار گفتگو</a>
-    <a href="" class="active">صفحه اصلی</a>
+    <a href="/Forum">تالار گفتگو</a>
+    <a href="/" class="active">صفحه اصلی</a>
 </nav>
 
 <div class="forum-block">
-    <div class="content">
+    <form  id="ajaxresultSendCommentTopic" class="content" action="/Forum/SendComment" method="post"
+          data-ajax="true"
+          data-ajax-method="POST"
+          data-ajax-mode="replace"
+          data-ajax-complete="SendCommentTopic()"
+          data-ajax-update="#ajaxresultSendCommentTopic">
+        <input type="hidden" asp-for="TopicId" value="@Model.TopicId" />
         <div class="rowr">
-            <h5>نام این پست یا همان تاپیک</h5>
+            <h5>@Model.Title</h5>
             <div class="rowr uk-margin-auto-right">
-                <span class="uk-margin-small-left text-2">مهتاب دادسرشت</span>
-                <span class="text-2">1399/01/05</span>
+                <span class="uk-margin-small-left text-2">@Model.Client.Name</span>
+                <span class="text-2">@(Model.DateCreated.HasValue ? Model.DateCreated.Value.DateToShamsi() : "")</span>
             </div>
         </div>
         <div class="forum-body" uk-lightbox>
-            <a class="image-container" href="~/st/r/ads/a4.jpg">
-                <img src="~/st/r/ads/a4.jpg" alt="" />
-            </a>
             <p dir="rtl">
-                می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است.
+                @Model.Body
             </p>
             <div class="fg-col uk-margin-medium-top">
-                <textarea class="entry" placeholder="نظر شما..."></textarea>
+                <textarea name="Body" id="Body"  class="entry" placeholder="نظر شما..." required></textarea>
             </div>
         </div>
         <div class="action uk-margin-small-top">
             <span class="row uk-margin-auto-top">
                 <span uk-icon="ratio:.8;icon:chatbox-ellipses-outline"></span>
-                <span> 13 </span>
+                <span> @Model.TblTopicCommentRel.Where(i=>i.Comment.IsValid).ToList().Count </span>
             </span>
             <a class="link-text  uk-margin-auto-top" href="" uk-icon="ratio:.8;icon:arrow-redo-outline"></a>
             <button class="btn btn-dashed uk-margin-auto-top uk-margin-auto-left">ثبت نظر</button>
         </div>
-    </div>
+    </form>
     <div class="controls">
         <div class="col">
-            <button class="link-text" uk-icon="chevron-up"></button>
-            <label>432</label>
-            <button class="link-text" uk-icon="chevron-down"></button>
+            <button class="link-text" uk-icon="chevron-up" onclick="VoteUp(@Model.TopicId);"></button>
+            <label id="Vote@(Model.TopicId)">@Model.VoteCount</label>
+            <button class="link-text" uk-icon="chevron-down" onclick="VoteDown(@Model.TopicId);"></button>
         </div>
     </div>
 </div>
@@ -63,14 +67,45 @@
 <div class="comment-section mat-card">
     <h3 class="uk-margin-bottom">نظرات کاربران</h3>
     <ul>
-        <li>
-            <partial name="_RepliableComment" />
-        </li>
-        <li>
-            <partial name="_RepliableComment" />
-        </li>
-        <li>
-            <partial name="_RepliableComment" />
-        </li>
+        @foreach (var item in Model.TblTopicCommentRel.Where(i => i.Comment.IsValid))
+        {
+            <li>
+                <partial name="_RepliableComment" model="item.Comment" />
+            </li>
+        }
     </ul>
 </div>
+
+
+@section Scripts{
+    <script src="~/js/BjaxLib.js"></script>
+
+    <script>
+
+        function SendCommentTopic() {
+            $("textarea").val("");
+            UIkit.notification('پیام شما ثبت شد');
+            LoadingEnd();
+        }
+
+        function VoteUp(val) {
+            var result = Bjax("/Forum/VoteUp?id=", val, "SP");
+            if (result) {
+                var vote = document.getElementById('Vote' + val);
+                vote.innerText = parseInt(vote.innerText) + 1;
+            } else {
+                window.location = "";
+            }
+        }
+        function VoteDown(val) {
+            var result = Bjax("/Forum/VoteDown?id=", val, "SP");
+            if (result) {
+                var vote = document.getElementById('Vote' + val);
+                vote.innerText = parseInt(vote.innerText) - 1;
+            } else {
+                window.location = "";
+            }
+        }
+    </script>
+
+}

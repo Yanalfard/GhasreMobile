@@ -14,5 +14,6 @@ namespace DataLayer.ViewModels
         public double Rate { get; set; }
         public int ProductId { get; set; }
         public int BlogId { get; set; }
+        public int TopicId { get; set; }
     }
 }
