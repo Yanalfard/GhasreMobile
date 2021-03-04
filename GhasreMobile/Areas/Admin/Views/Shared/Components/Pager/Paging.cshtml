@@ -37,7 +37,7 @@
         {
             <li class="page-item">
                 <a href="@Url.Action(Model.Action, Model.GetRouteValueForPage(this.Model.PageIndex - 1))" aria-label="Previous" class="page-link">
-                    <span aria-hidden="true"><span class="icon-holder" uk-icon="caret-back-outline"></span></span>
+                    <span aria-hidden="true"><span class="icon-holder" uk-icon="caret-forward-outline"></span></span>
                     @*<span aria-hidden="true">></span>*@
                     @* &laquo; *@
                 </a>
@@ -63,7 +63,7 @@
         {
             <li class="page-item">
                 <a href="@Url.Action(Model.Action, Model.GetRouteValueForPage(this.Model.PageIndex + 1))" aria-label="Next" class="page-link">
-                    <span aria-hidden="true"><span class="icon-holder" uk-icon="caret-forward-outline"></span></span>
+                    <span aria-hidden="true"><span class="icon-holder" uk-icon="caret-back-outline"></span></span>
                     @* &raquo; *@
                 </a>
             </li>

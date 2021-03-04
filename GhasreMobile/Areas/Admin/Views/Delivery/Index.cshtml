@@ -47,7 +47,7 @@
                                     @if (!item.IsAccepted)
                                     {
                                         <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="تایید کردن">
-                                            <span onclick="ChangeStatus(@item.DeliveryId)" uk-icon="checkmark-circle-outline"></span>
+                                            <span onclick="ChangeStatus(@item.DeliveryId)" class="text-success" uk-icon="checkmark-circle-outline"></span>
                                         </span>
                                     }
                                     else
