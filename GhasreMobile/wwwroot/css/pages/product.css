@@ -350,9 +350,15 @@ backdrop-filter: saturate(80%);
   .cart .button {
     background-color: #96027E;
     padding: 6px 8px;
-    -moz-border-radius: 6px 0 0 6px;
-    -webkit-border-radius: 6px 0 0 6px;
-    border-radius: 6px 0 0 6px; }
+    -moz-border-radius: 6px 6px 6px 6px;
+    -webkit-border-radius: 6px 6px 6px 6px;
+    border-radius: 6px 6px 6px 6px;
+    -moz-transition: all ease 0.2s;
+    -o-transition: all ease 0.2s;
+    -webkit-transition: all ease 0.2s;
+    transition: all ease 0.2s; }
+  .cart .button:hover {
+    background-color: #be03a0; }
 
 .section-nav {
   position: relative;

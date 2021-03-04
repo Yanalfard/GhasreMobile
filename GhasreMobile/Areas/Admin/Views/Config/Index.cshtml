@@ -1,0 +1,67 @@
+﻿@model DataLayer.ViewModels.ConfigVm
+@{
+    ViewData["Title"] = "تنظیمات سایت";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div class="card-header bg-white">
+            </div>
+            <div id="card-table" class="card-body flex-div">
+                <form class="form-row mt-3 fixed overflow-auto" asp-action="Index" asp-controller="Config" asp-area="Admin"
+                      data-ajax="true"
+                      data-ajax-method="POST"
+                      data-ajax-mode="replace"
+                      data-ajax-complete="EndCatagoryCreate()"
+                      data-ajax-update="#ajaxresult">
+                    <div class="form-group col-lg-12">
+                        <label>هزینه ارسال با پست: </label>
+                        <input asp-for="HazineErsalBaPost" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left" placeholder="مثال: 19,000">
+                        <br /><span class="text-danger" asp-validation-for="HazineErsalBaPost"></span>
+                    </div>
+                    <div class="form-group col-lg-12 mt-lg-3">
+                        <label>هزینه ارسال با تیپاکس و چاپار</label>
+                        <input asp-for="HazineErsalBaTipaxChapare" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left" placeholder="مثال: 28,000">
+                        <br /><span class="text-danger" asp-validation-for="HazineErsalBaTipaxChapare"></span>
+                    </div>
+                    <div class="form-group col-lg-12 mt-lg-3">
+                        <label>هزینه ارسال با پست:</label>
+                        <input asp-for="HazineErsalPeyk" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left" placeholder="مثال: 28,000">
+                        <br /><span class="text-danger" asp-validation-for="HazineErsalPeyk"></span>
+                    </div>
+                    <div class="form-group col-lg-12 mt-lg-3">
+                        <label>تماس با ما:</label>
+                        <textarea asp-for="TamasBaMa" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
+                        <br /><span class="text-danger" asp-validation-for="TamasBaMa"></span>
+                    </div>
+                    <div class="form-group col-lg-12 mt-lg-3">
+                        <label>درباره ما:</label>
+                        <textarea asp-for="DarbareyeMa" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
+                        <br /><span class="text-danger" asp-validation-for="DarbareyeMa"></span>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-sm text-white">ثبت تغییرات<span class="icon-holder uk-margin-small-right" uk-icon="create-outline"></span></button>
+
+                </form>
+            </div>
+
+            <div class="card-footer bg-white text-left">
+                <nav aria-label="Page navigation example">
+                    @*@await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Script{
+    <script>
+        $(function () {
+            $('#TamasBaMa').ckeditor();
+            $('#DarbareyeMa').ckeditor();
+        });
+    </script>
+    <script src="~/Validate/jquery.validate.min.js"></script>
+    <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
+}

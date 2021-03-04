@@ -123,8 +123,7 @@ backdrop-filter: saturate(80%);
     .star-container .star-cb-group > input + label:hover:before {
       font-family: 'timesr';
       content: '★';
-      color: #fc0;
-      text-shadow: 0 0 1px #333; }
+      color: #fc0; }
   .star-container .star-cb-group > .star-cb-clear + label {
     text-indent: -9999px;
     width: .5em;
@@ -138,8 +137,7 @@ backdrop-filter: saturate(80%);
   .star-container .star-cb-group:hover > input + label:hover ~ label:before,
   .star-container .star-cb-group:hover > input + label:hover:before {
     content: '★';
-    color: #fc0;
-    text-shadow: 0 0 1px #333; }
+    color: #fc0; }
 
 button, .btn, a, a:hover .js-upload, input[type=file] {
   cursor: pointer;
@@ -1805,3 +1803,7 @@ div[role=none][id] {
     color: #96027E; }
   .user-navigation a.active {
     border-left: 4px #96027E solid; }
+
+.anchor-within-page {
+  position: absolute;
+  margin-top: -174px; }

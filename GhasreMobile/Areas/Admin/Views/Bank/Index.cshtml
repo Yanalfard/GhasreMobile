@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "بانک";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div class="card-header bg-white">
+                
+            </div>
+            <div id="card-table" class="card-body flex-div">
+                <div class="table-responsive flex">
+                    <table class="table fixed">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>کد</th>
+                                <th>نام</th>
+                                <th>شماره</th>
+                                <th>مبلغ</th>
+                                <th>تاریخ</th>
+                                <th>وضعیت</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1020566</td>
+                                <td>علی رضایی</td>
+                                <td>09140000000</td>
+                                <td>20000000</td>
+                                <td>1399</td>
+                                <td>
+                                    <span class="text-success">واریز</span>
+                                    <span class="text-warning">برداشت</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                    @*@await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
