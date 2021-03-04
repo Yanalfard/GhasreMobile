@@ -348,7 +348,12 @@
     .button {
         background-color: #96027E;
         padding: 6px 8px;
-        @include border-radius(6px,0,0,6px);
+        @include border-radius(6px,6px,6px,6px);
+        @include trans(.2s);
+    }
+
+    .button:hover {
+        background-color: lighten(#96027E,8%);
     }
 }
 

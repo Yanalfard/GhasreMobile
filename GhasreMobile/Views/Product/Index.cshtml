@@ -77,7 +77,7 @@
                                 uk-icon="share-social-outline"></button>
                         @*<label class="action" uk-tooltip="فعال کردن اعلان ها" uk-icon="notifications-outline">
                                 <input name="notifications"
-                                       onchange="notificationsChanged(this)"
+                                       onchange="notificationschanged(this)"
                                        type="checkbox" />
                             </label>*@
                     </div>
@@ -170,6 +170,7 @@
             {
                 <button class="button" onclick="alertWhenReady(@Model.ProductId)">
                     <span>موجود شد به من اطلاع بده</span>
+                    <span uk-icon="notifications"></span>
                 </button>
             }
 
@@ -181,17 +182,19 @@
 </div>
 
 <nav class="section-nav">
-    <a href="">بررسی تخصصی</a>
-    <a href="">جزئیات فنی</a>
-    <a href="">نظر خریداران محصول</a>
+    <a href="#analisis">بررسی تخصصی</a>
+    <a href="#specs">جزئیات فنی</a>
+    <a href="#comments">نظر خریداران محصول</a>
 </nav>
 
 <div class="mat-card gap-t">
+    <a href="#" name="analisis" class="anchor-within-page"></a>
     @Html.Raw(Model.DescriptionLongHtml)
 </div>
 
 <div class="details col mat-card gap-t">
-    <h3 dir="rtl">جزئیات فنی</h3>
+    <a href="#" name="specs" class="anchor-within-page"></a>
+    <h3 dir="rtl" class="uk-margin-remove-top">جزئیات فنی</h3>
     <table dir="rtl">
         <tbody>
             @foreach (var item in Model.TblProductPropertyRel)
@@ -215,7 +218,8 @@
 @if (Model.TblProductCommentRel.Any())
 {
     <div class="comment-section mat-card gap-t">
-        <h3 class="uk-margin-bottom">نظرات کاربران</h3>
+        <a href="#" name="comments" class="anchor-within-page"></a>
+        <h3 class="uk-margin-bottom uk-margin-remove-top">نظرات کاربران</h3>
         <ul>
             @foreach (var item in Model.TblProductCommentRel.Where(i => i.Comment.IsValid))
             {
@@ -243,7 +247,7 @@
     <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
 
 </div>
-<input type="text" class="hidden" name="ProductId" id="ProductId" value="@Model.ProductId" />
+<input type="text" class="uk-display-none" name="ProductId" id="ProductId" value="@Model.ProductId" />
 @section Scripts{
 
     <script>

@@ -68,7 +68,6 @@ $checked-color: #fc0;
                 font-family: 'timesr'; // make sure ★ appears correctly
                 content: '★';
                 color: $checked-color;
-                text-shadow: 0 0 1px #333;
             }
         }
         /* the hidden clearer */
@@ -92,7 +91,6 @@ $checked-color: #fc0;
         &:hover > input + label:hover:before {
             content: '★';
             color: $checked-color;
-            text-shadow: 0 0 1px #333;
         }
     }
 }
