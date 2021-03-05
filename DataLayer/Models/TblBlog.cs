@@ -20,7 +20,7 @@ namespace DataLayer.Models
         [Required(ErrorMessage ="عنوان پست را وارد کنید")]
         [StringLength(200,ErrorMessage ="عنوان کوتاه تری وارد کنید")]
         public string Title { get; set; }
-        [Required(ErrorMessage ="لطفا توضبحات کوتاه را وارد کنید")]
+        [Required(ErrorMessage ="لطفا توضبحات  را وارد کنید")]
         [StringLength(500,ErrorMessage ="توضیحات کوتاه پست را وارد کنید")]
         public string Description { get; set; }
         [Required(ErrorMessage ="توضیحات کامل پست را وارد کنید")]

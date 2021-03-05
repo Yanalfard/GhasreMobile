@@ -1,17 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GhasreMobile.Utilities;
+using Microsoft.AspNetCore.Mvc;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataLayer.Models;
+using ReflectionIT.Mvc.Paging;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [PermissionChecker("admin")]
     public class BankController : Controller
     {
-        [Area("Admin")]
-        public IActionResult Index()
+        Core _core = new Core();
+
+        [HttpGet]
+        public IActionResult Index(int page = 1)
         {
-            return View();
+            IEnumerable<TblWallet> wallets = PagingList.Create(_core.Wallet.Get(), 30, page);
+            return View(wallets);
         }
     }
 }

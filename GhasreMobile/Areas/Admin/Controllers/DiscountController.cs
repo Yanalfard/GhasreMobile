@@ -44,11 +44,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return View(discountt);
         }
 
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             return ViewComponent("DiscountEditAdmin", new { id = id });
         }
 
+        [HttpPost]
         public IActionResult Edit(TblDiscount Editdiscount, int Till)
         {
             if (ModelState.IsValid)

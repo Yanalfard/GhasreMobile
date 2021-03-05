@@ -21,5 +21,8 @@ namespace DataLayer.ViewModels
 
         [Required(ErrorMessage = "لطفا هزینه ارسال با پیک را کامل کنید")]
         public int HazineErsalPeyk { get; set; }
+
+        [Required(ErrorMessage = "لطفا توضیحات نمایندگی را کامل کنید")]
+        public string StoreDescription { get; set; }
     }
 }
