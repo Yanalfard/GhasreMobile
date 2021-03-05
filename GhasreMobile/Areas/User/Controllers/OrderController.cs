@@ -15,6 +15,12 @@ namespace GhasreMobile.Areas.User.Controllers
     {
         // History
         Core db = new Core();
+        TblClient SelectUser()
+        {
+            int userId = Convert.ToInt32(User.Claims.First().Value);
+            TblClient selectUser = db.Client.GetById(userId);
+            return selectUser;
+        }
         public IActionResult Index()
         {
             return View();
@@ -60,24 +66,37 @@ namespace GhasreMobile.Areas.User.Controllers
                 var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
                 DiscountVm discount = new DiscountVm();
                 long sumList = (long)list.Sum(i => i.Sum);
+                discount.Balance = SelectUser().Balance;
                 if (selectedDiscount != null)
                 {
                     discount.Discount = selectedDiscount.Discount;
+                    discount.DiscountPrice = selectedDiscount.DiscountPrice;
                     discount.DiscountId = selectedDiscount.DiscountId;
                     discount.Name = selectedDiscount.Name;
+                    discount.SumWithDiscount = selectedDiscount.SumWithDiscount;
                     discount.Sum = selectedDiscount.Sum;
                     if (selectedDiscount.Discount != 0)
                     {
                         discount.Sum = sumList - (long)(Math.Floor((double)(sumList * selectedDiscount.Discount / 100)));
+                        discount.SumWithDiscount = sumList - (long)(Math.Floor((double)(sumList * selectedDiscount.Discount / 100)));
+                        discount.DiscountPrice = sumList - discount.Sum;
                     }
                     else
                     {
                         discount.Sum = sumList;
+                        discount.SumWithDiscount = sumList;
                     }
                 }
                 else
                 {
                     discount.Sum = sumList;
+                    discount.SumWithDiscount -= sumList;
+
+                }
+                discount.SumWithDiscount -= SelectUser().Balance;
+                if (discount.SumWithDiscount <= 0)
+                {
+                    discount.SumWithDiscount = 0;
                 }
                 HttpContext.Session.SetComplexData("Discount", discount);
                 return View(list);
@@ -113,6 +132,7 @@ namespace GhasreMobile.Areas.User.Controllers
                         var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
                         selectedDiscount.Discount = getDiscount.Discount;
                         selectedDiscount.Name = getDiscount.Name;
+                        selectedDiscount.DiscountId = getDiscount.DiscountId;
                         HttpContext.Session.SetComplexData("Discount", selectedDiscount);
                     }
                 }
@@ -124,6 +144,14 @@ namespace GhasreMobile.Areas.User.Controllers
             }
             return PartialView(discoun);
 
+        }
+
+
+
+        public IActionResult FinalVerfity()
+        {
+            DiscountVm selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+            return PartialView(selectedDiscount);
         }
 
     }

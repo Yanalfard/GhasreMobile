@@ -180,7 +180,7 @@
             else
             {
 
-            
+
                 @if (User.Identity.IsAuthenticated)
                 {
                     <button class="button" onclick="alertWhenReady(@Model.ProductId)">
@@ -221,14 +221,17 @@
     <h3 dir="rtl" class="uk-margin-remove-top">جزئیات فنی</h3>
     <table dir="rtl">
         <tbody>
-            @foreach (var item in Model.TblProductPropertyRel.Where(i => i.Value != null))
+            @if (Model.TblProductPropertyRel.Any())
             {
-                @if (item.Value != null)
+                @foreach (var item in Model.TblProductPropertyRel.Where(i => i.Value != null))
                 {
-                    <tr>
-                        <td>@item.Property.Name</td>
-                        <td>@item.Value</td>
-                    </tr>
+                    @if (item.Value != null)
+                    {
+                        <tr>
+                            <td>@item.Property.Name</td>
+                            <td>@item.Value</td>
+                        </tr>
+                    }
                 }
             }
 
