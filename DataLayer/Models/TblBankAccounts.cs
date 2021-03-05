@@ -18,7 +18,7 @@ namespace DataLayer.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage ="لطفا نام بانک را وارد نمایید")]
-        [MaxLength(100,ErrorMessage ="لطفا نام معتبری وارد کنید")]
+        [MaxLength(100,ErrorMessage ="لطفا نام بانک معتبری وارد کنید")]
         public string BankName { get; set; }
 
         public bool IsActive { get; set; }

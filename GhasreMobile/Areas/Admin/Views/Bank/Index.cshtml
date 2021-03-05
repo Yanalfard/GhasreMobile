@@ -1,14 +1,17 @@
-﻿
+﻿@model IEnumerable<DataLayer.Models.TblWallet>
+
 @{
     ViewData["Title"] = "بانک";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+@using GhasreMobile.Utilities
+
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
         <div class="card flex-div border-0 main-shadow">
             <div class="card-header bg-white">
-                
+
             </div>
             <div id="card-table" class="card-body flex-div">
                 <div class="table-responsive flex">
@@ -24,17 +27,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1020566</td>
-                                <td>علی رضایی</td>
-                                <td>09140000000</td>
-                                <td>20000000</td>
-                                <td>1399</td>
-                                <td>
-                                    <span class="text-success">واریز</span>
-                                    <span class="text-warning">برداشت</span>
-                                </td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.WalletId</td>
+                                    <td>@item.Client.Name</td>
+                                    <td>@item.Client.TellNo</td>
+                                    <td>@item.Amount.ToString("#,0")</td>
+                                    <td>@item.Date.AllToShamsi()</td>
+                                    <td>
+                                        @if (item.IsDeposit)
+                                        {
+                                            <span class="text-success">واریز</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-warning">برداشت</span>
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -42,7 +55,7 @@
 
             <div class="card-footer bg-white">
                 <nav aria-label="Page navigation example">
-                    @*@await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
                 </nav>
             </div>
         </div>

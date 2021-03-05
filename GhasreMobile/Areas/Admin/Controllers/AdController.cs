@@ -53,11 +53,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return View(ad);
         }
 
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             return ViewComponent("AdEditAdmin", new { id = id });
         }
 
+        [HttpPost]
         public async Task<IActionResult> EditAsync(TblAd ad, IFormFile file)
         {
             if (ModelState.IsValid)

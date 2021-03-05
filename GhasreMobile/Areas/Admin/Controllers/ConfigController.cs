@@ -26,6 +26,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             config.HazineErsalBaPost = Convert.ToInt32(configs.Where(c => c.Key == "HazineErsalBaPost").Single().Value);
             config.HazineErsalBaTipaxChapare = Convert.ToInt32(configs.Where(c => c.Key == "HazineErsalBaTipax/Chapare").Single().Value);
             config.HazineErsalPeyk = Convert.ToInt32(configs.Where(c => c.Key == "HazineErsalPeyk").Single().Value);
+            config.StoreDescription = configs.Where(c => c.Key == "StoreDescription").Single().Value;
             return View(config);
         }
 
@@ -41,18 +42,21 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 TblConfig ConfigHazineErsalBaPost = configs.Where(c => c.Key == "HazineErsalBaPost").Single();
                 TblConfig ConfigHazineErsalBaTipaxChapare = configs.Where(c => c.Key == "HazineErsalBaTipax/Chapare").Single();
                 TblConfig ConfigHazineErsalPeyk = configs.Where(c => c.Key == "HazineErsalPeyk").Single();
+                TblConfig ConfigStoreDescription = configs.Where(c => c.Key == "StoreDescription").Single();
 
                 ConfigDarbareyeMa.Value = configVm.DarbareyeMa;
                 ConfigHazineErsalBaPost.Value = configVm.HazineErsalBaPost.ToString();
                 ConfigHazineErsalBaTipaxChapare.Value = configVm.HazineErsalBaTipaxChapare.ToString();
                 ConfigTamasBaMa.Value = configVm.TamasBaMa;
                 ConfigHazineErsalPeyk.Value = configVm.HazineErsalPeyk.ToString();
+                ConfigStoreDescription.Value = configVm.StoreDescription;
 
                 _core.Config.Update(ConfigDarbareyeMa);
                 _core.Config.Update(ConfigTamasBaMa);
                 _core.Config.Update(ConfigHazineErsalBaPost);
                 _core.Config.Update(ConfigHazineErsalBaTipaxChapare);
                 _core.Config.Update(ConfigHazineErsalPeyk);
+                _core.Config.Update(ConfigStoreDescription);
 
                 _core.Config.Save();
             }

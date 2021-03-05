@@ -24,6 +24,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return ViewComponent("AlbumShowAdmin", new { id = id });
         }
 
+        [HttpPost]
         public IActionResult DeleteImage(int id)
         {
             TblImage image = _core.Image.GetById(id);
