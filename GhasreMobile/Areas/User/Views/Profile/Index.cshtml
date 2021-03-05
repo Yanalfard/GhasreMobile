@@ -1,6 +1,6 @@
 ﻿@model TblClient
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = " پنل کاربری  " + Model.Name;
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
 }
 
@@ -48,17 +48,10 @@
     </div>
 </div>
 
-<partial name="_OrderStatus"/>
+<partial name="_OrderStatus" />
 
-@{
-    var list = new List<TblNotification>() {
-        new TblNotification() { Message = "این یک مسژ می باشد ها ها ها" , IsSeen = false},
-        new TblNotification() { Message = "این یک مسژ می باشد ها ها ها" , IsSeen = true},
-        new TblNotification() { Message = "این یک مسژ می باشد ها ها ها" , IsSeen = true}
-    };
-}
+<partial name="_Notifications" model="Model.TblNotificationClient" />
 
-<partial name="_Notifications" model="list" />
 
 
 <div id="ModalChangeName" uk-modal>

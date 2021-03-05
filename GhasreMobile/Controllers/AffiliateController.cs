@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataLayer.Models;
+using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace GhasreMobile.Controllers
         private Core db = new Core();
         public IActionResult Index()
         {
-            return View(db.Store.Get());
+            TblConfig vonfig = db.Config.Get(i => i.Key == "StoreDescription").Single();
+            return View(vonfig);
         }
         [Route("StoreView/{id}/{name}")]
         public IActionResult StoreView(int id,string name)

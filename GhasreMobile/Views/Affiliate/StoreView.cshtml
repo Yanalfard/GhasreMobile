@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Index";
+﻿@model TblStore
+@{
+    ViewData["Title"] = "نمایندگی ها";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,60 +13,7 @@
 
 @section Aside{
 
-    <div swap="swAffiliates" class="affiliates mat mat-border col">
-        <div class="mat-pad uk-padding-remove-bottom">
-            <h3 class="uk-margin-remove uk-padding-remove">
-                شعب ما
-            </h3>
-        </div>
-        <ul>
-            <li>
-                <a href="">
-                    <h4>
-                        عباسی
-                    </h4>
-                    <label>روبروی کلانتری</label>
-                    <div class="tel">
-                        <span uk-icon="call-outline">36554895</span>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <h4>
-                        عباسی
-                    </h4>
-                    <label>روبروی کلانتری</label>
-                    <div class="tel">
-                        <span uk-icon="call-outline">36554895</span>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <h4>
-                        عباسی
-                    </h4>
-                    <label>روبروی کلانتری</label>
-                    <div class="tel">
-                        <span uk-icon="call-outline">36554895</span>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <h4>
-                        عباسی
-                    </h4>
-                    <label>روبروی کلانتری</label>
-                    <div class="tel">
-                        <span uk-icon="call-outline">36554895</span>
-                    </div>
-                </a>
-            </li>
-        </ul>
-    </div>
-
+    @await Component.InvokeAsync("StoreView")
 }
 
 <nav class="breadcrumb uk-padding-remove">
@@ -75,31 +23,12 @@
 
 <div class="mat-card">
     <h3>
-        شعبه ولیعصر
+        @Model.Name
     </h3>
     <p>
-        شعب ماگفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه
+        @Html.Raw(Model.Body)
     </p>
-    <ul>
-        <li>
-            <span>TEXT</span>
-        </li>
-        <li>
-            <span>TEXT</span>
-        </li>
-        <li>
-            <span>TEXT</span>
-        </li>
-        <li>
-            <span>TEXT</span>
-        </li>
-        <li>
-            <span>TEXT</span>
-        </li>
-        <li>
-            <span>TEXT</span>
-        </li>
-    </ul>
+
 </div>
 
 <div id="map" class="uk-box-shadow-medium">
@@ -107,6 +36,13 @@
 </div>
 
 <div role="none" id="swAffiliates"></div>
+
+<input type="hidden" id="lat" value="@Model.Lat" />
+<input type="hidden" id="lon" value="@Model.Lon" />
+<input type="hidden" id="Name" value="@Model.Name" />
+<input type="hidden" id="Address" value="@Model.Address" />
+
+
 
 @section Scripts{
 
@@ -130,21 +66,18 @@
         var theMarker = {};
 
         theMarker = L.marker(
-            [38.07674409597339, 46.29700302496196],
+            [$("#lat").val(), $("#lon").val()],
             { icon: customIcon }
         )
             .addTo(map).bindPopup(
                 `
-                            <div class="aff-marker">
-                                <h4>شعبه شهناز</h4>
-                                <p>
-                                    این یک آدرس می باش. آدرس یک شعبه که در هحله سضناز قرار دارد. این متن برای تست و به صورت کاملا آربیتری نوشته شده است
-                                </p>
-                                <a href="" dir="rtl">
-                                    مشاهده
-                                </a>
-                            </div>
-                            `
+                                        <div class="aff-marker">
+                                            <h4>${$("#Name").val()}</h4>
+                                            <p>
+${$("#Address").val()}
+                                            </p>
+                                        </div>
+                                        `
             ).openPopup();
 
     </script>

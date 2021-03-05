@@ -21,10 +21,11 @@ namespace GhasreMobile.Areas.User.Controllers
         }
 
         // Make order
-        public IActionResult Finalize()
+        public IActionResult Finalize(string type = "")
         {
             try
             {
+                ViewBag.typeDiscount = type;
                 List<ShopCartItemVm> list = new List<ShopCartItemVm>();
                 var sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
                 if (sessions != null)
@@ -56,6 +57,29 @@ namespace GhasreMobile.Areas.User.Controllers
                         });
                     }
                 }
+                var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                DiscountVm discount = new DiscountVm();
+                long sumList = (long)list.Sum(i => i.Sum);
+                if (selectedDiscount != null)
+                {
+                    discount.Discount = selectedDiscount.Discount;
+                    discount.DiscountId = selectedDiscount.DiscountId;
+                    discount.Name = selectedDiscount.Name;
+                    discount.Sum = selectedDiscount.Sum;
+                    if (selectedDiscount.Discount != 0)
+                    {
+                        discount.Sum = sumList - (long)(Math.Floor((double)(sumList * selectedDiscount.Discount / 100)));
+                    }
+                    else
+                    {
+                        discount.Sum = sumList;
+                    }
+                }
+                else
+                {
+                    discount.Sum = sumList;
+                }
+                HttpContext.Session.SetComplexData("Discount", discount);
                 return View(list);
             }
             catch
@@ -65,10 +89,41 @@ namespace GhasreMobile.Areas.User.Controllers
         }
 
 
-
-        public IActionResult CheckDiscount(TblDiscount discoun)
+        [HttpPost]
+        public IActionResult CheckDiscount(DiscountVm discoun)
         {
-            return View(discoun);
+            if (ModelState.IsValid)
+            {
+                var type = "0";
+                bool isDiscount = db.Discount.Get(i => i.Name.Contains(discoun.Name)).Any();
+                if (isDiscount)
+                {
+                    TblDiscount getDiscount = db.Discount.Get(i => i.Name.Contains(discoun.Name)).Single();
+                    if (getDiscount.ValidTill < DateTime.Now)
+                    {
+                        type = "1";
+                    }
+                    else if (getDiscount.Count <= 0)
+                    {
+                        type = "2";
+                    }
+                    else
+                    {
+                        type = "Success";
+                        var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                        selectedDiscount.Discount = getDiscount.Discount;
+                        selectedDiscount.Name = getDiscount.Name;
+                        HttpContext.Session.SetComplexData("Discount", selectedDiscount);
+                    }
+                }
+                else
+                {
+                    type = "3";
+                }
+                return Redirect("/User/Order/Finalize?type=" + type.ToString());
+            }
+            return PartialView(discoun);
+
         }
 
     }

@@ -21,26 +21,26 @@ namespace GhasreMobile.Controllers
         }
         public IActionResult Index()
         {
-           // TblClient user = new TblClient();
-           // user.Name = "mr 11111111";
-           // user.TellNo = "111111111";
-           // TblClient user2 = new TblClient();
-           // user.Name = "mr 222222222";
-           // user.TellNo = "2222222";
+            // TblClient user = new TblClient();
+            // user.Name = "mr 11111111";
+            // user.TellNo = "111111111";
+            // TblClient user2 = new TblClient();
+            // user.Name = "mr 222222222";
+            // user.TellNo = "2222222";
 
-           // List<TblClient> list = new List<TblClient>();
-           // list.Add(user2);
-           // list.Add(user);
-           // var objComplex = new TblClient();
-           ////HttpContext.Session.SetObject("ComplexObject", list);
-           // HttpContext.Session.SetComplexData("ShopCart", list);
+            // List<TblClient> list = new List<TblClient>();
+            // list.Add(user2);
+            // list.Add(user);
+            // var objComplex = new TblClient();
+            ////HttpContext.Session.SetObject("ComplexObject", list);
+            // HttpContext.Session.SetComplexData("ShopCart", list);
             return View();
         }
 
         [Route("Contact")]
         public IActionResult Contact()
         {
-           // var objComplex = HttpContext.Session.GetObject<List<TblClient>>("ComplexObject");
+            // var objComplex = HttpContext.Session.GetObject<List<TblClient>>("ComplexObject");
             //var objComplex = HttpContext.Session.GetComplexData<List<TblClient>>("ShopCart");
             //List<TblClient> list = objComplex;
             //if (objComplex != null)
@@ -52,7 +52,7 @@ namespace GhasreMobile.Controllers
         [Route("About")]
         public IActionResult About()
         {
-            return View();
+            return View(db.Config.Get(i => i.Key == "DarbareyeMa").Single());
         }
         [Route("ErrorPage")]
         public async Task<IActionResult> ErrorPage()
@@ -81,7 +81,7 @@ namespace GhasreMobile.Controllers
                 }
                 return await Task.FromResult(PartialView(delivery));
             }
-            catch 
+            catch
             {
                 return await Task.FromResult(Redirect("ErrorPage"));
             }
