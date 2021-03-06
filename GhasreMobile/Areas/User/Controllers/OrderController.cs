@@ -23,7 +23,7 @@ namespace GhasreMobile.Areas.User.Controllers
         }
         public IActionResult Index()
         {
-            return View(db.Order.Get(i=>i.IsPayed));
+            return View(db.Order.Get(i=>i.IsPayed).OrderByDescending(i=>i.DateSubmited));
         }
 
         // Make order

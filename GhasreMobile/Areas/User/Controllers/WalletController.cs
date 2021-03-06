@@ -21,8 +21,9 @@ namespace GhasreMobile.Areas.User.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.Wallet = db.Wallet.Get(i => i.ClientId == SelectUser().ClientId);
-            return View(SelectUser().Balance);
+            List<TblWallet> list = db.Wallet.Get(i => i.ClientId == SelectUser().ClientId && i.IsFinaly == true).OrderByDescending(i => i.Date).ToList();
+            ViewBag.Balance = SelectUser().Balance;
+            return View(list);
         }
 
         public IActionResult Charge()

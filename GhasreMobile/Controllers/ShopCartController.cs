@@ -165,7 +165,7 @@ namespace GhasreMobile.Controllers
                 }
                 addOrder.Address = address;
                 addOrder.DateSubmited = DateTime.Now;
-                addOrder.FinalPrice = (int)selectedDiscount.SumWithDiscount;
+                addOrder.FinalPrice = (int)selectedDiscount.Sum;
                 addOrder.IsPayed = false;
                 addOrder.Status = 0;
                 addOrder.PaymentStatus = 0;
@@ -201,7 +201,7 @@ namespace GhasreMobile.Controllers
                 if (selectedDiscount.SumWithDiscount <= SelectUser().Balance)
                 {
                     TblWallet addWallet = new TblWallet();
-                    addWallet.Amount = (int)selectedDiscount.SumWithDiscount;
+                    addWallet.Amount = (int)selectedDiscount.Sum;
                     addWallet.Date = DateTime.Now;
                     addWallet.Description = "خرید";
                     addWallet.IsDeposit = false;
@@ -211,7 +211,7 @@ namespace GhasreMobile.Controllers
                     db.Wallet.Add(addWallet);
                     //db.Wallet.Save();
                     TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
-                    selectedClient.Balance -= selectedDiscount.SumWithDiscount;
+                    selectedClient.Balance -= selectedDiscount.Sum;
                     TblOrder selectedOrder = db.Order.GetById(addOrder.OrdeId);
                     selectedOrder.IsPayed = true;
                     db.Client.Update(selectedClient);
@@ -221,7 +221,7 @@ namespace GhasreMobile.Controllers
                 }
                 else
                 {
-                    long SumBalance = selectedDiscount.SumWithDiscount - SelectUser().Balance;
+                    long SumBalance = selectedDiscount.SumWithDiscount;
                     if (SumBalance < 1000)
                     {
                         SumBalance = 1000;

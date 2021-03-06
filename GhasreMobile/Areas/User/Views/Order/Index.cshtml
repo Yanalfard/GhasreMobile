@@ -37,17 +37,18 @@
                     }
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <td></td>
-                        <td>@Model.Sum(i => i.TblOrderDetail.Count)</td>
-                        <td></td>
-                        <td>@Model.Sum(i => i.FinalPrice).ToString("#,0") تومان</td>
-                    </tr>
+
                     <tr>
                         <td></td>
                         <td>هزینه ارسال</td>
                         <td></td>
-                        <td>@Model.Sum(i => i.SendPrice).Value.ToString("#,0")   تومان</td>
+                        <td>@item.SendPrice.Value.ToString("#,0")   تومان</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>@item.TblOrderDetail.Sum(i => i.Count)</td>
+                        <td>جمع کل</td>
+                        <td>@item.FinalPrice.ToString("#,0") تومان</td>
                     </tr>
                 </tfoot>
             </table>
