@@ -9,8 +9,10 @@ namespace DataLayer.ViewModels
     {
         [Display(Name = "مبلغ")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [Range(99999, Int32.MaxValue, ErrorMessage = "حداقل مبلغ شارژ 100000 هزار ریال می باشد")]
+        [Range(999, Int32.MaxValue, ErrorMessage = "حداقل مبلغ شارژ 100000 هزار ریال می باشد")]
+        [StringLength(11)]
         public int? Amount { get; set; }
+        public int? OrderId { get; set; }
     }
 
     public class WalletVm
