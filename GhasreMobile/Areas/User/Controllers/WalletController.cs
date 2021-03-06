@@ -40,7 +40,7 @@ namespace GhasreMobile.Areas.User.Controllers
                 addWallet.IsDeposit = true;
                 addWallet.IsFinaly = false;
                 addWallet.ClientId = SelectUser().ClientId;
-                addWallet.OrderId = addWallet.OrderId;
+                addWallet.OrderId = charge.OrderId;
                 db.Wallet.Add(addWallet);
                 db.Wallet.Save();
 

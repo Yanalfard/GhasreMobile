@@ -172,7 +172,6 @@ namespace GhasreMobile.Controllers
                 addOrder.PostalCode = "0";
                 addOrder.SendPrice = 0;
                 addOrder.SendStatus = 0;
-                addOrder.Status = 0;
                 addOrder.ClientId = SelectUser().ClientId;
                 db.Order.Add(addOrder);
                 db.Order.Save();
@@ -196,9 +195,9 @@ namespace GhasreMobile.Controllers
                         addOrderDetail.Price = (int)product.PriceAfterDiscount;
                     }
                     db.OrderDetail.Add(addOrderDetail);
-                    db.OrderDetail.Save();
 
                 }
+                db.OrderDetail.Save();
                 if (selectedDiscount.SumWithDiscount <= SelectUser().Balance)
                 {
                     TblWallet addWallet = new TblWallet();
@@ -210,7 +209,7 @@ namespace GhasreMobile.Controllers
                     addWallet.ClientId = SelectUser().ClientId;
                     addWallet.OrderId = addOrder.OrdeId;
                     db.Wallet.Add(addWallet);
-                    db.Wallet.Save();
+                    //db.Wallet.Save();
                     TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
                     selectedClient.Balance -= selectedDiscount.SumWithDiscount;
                     TblOrder selectedOrder = db.Order.GetById(addOrder.OrdeId);
@@ -218,6 +217,7 @@ namespace GhasreMobile.Controllers
                     db.Client.Update(selectedClient);
                     db.Order.Update(selectedOrder);
                     db.Client.Save();
+                    return View();
                 }
                 else
                 {
@@ -255,11 +255,29 @@ namespace GhasreMobile.Controllers
                     ViewBag.IsSuccess = true;
                     wallet.IsFinaly = true;
                     db.Wallet.Update(wallet);
-                    db.Wallet.Save();
                     TblClient selectedClient = db.Client.GetById(wallet.ClientId);
                     selectedClient.Balance += wallet.Amount;
                     db.Client.Update(selectedClient);
                     db.Client.Save();
+                    if (wallet.OrderId != null)
+                    {
+                        TblOrder selectedOrder = db.Order.GetById(wallet.OrderId);
+                        selectedOrder.IsPayed = true;
+                        db.Order.Update(selectedOrder);
+                        selectedClient.Balance -= selectedOrder.FinalPrice;
+                        db.Client.Update(selectedClient);
+                        db.Client.Save();
+                        TblWallet addWallet = new TblWallet();
+                        addWallet.Amount = selectedOrder.FinalPrice;
+                        addWallet.Date = DateTime.Now;
+                        addWallet.Description = "خرید";
+                        addWallet.IsDeposit = false;
+                        addWallet.IsFinaly = true;
+                        addWallet.ClientId = SelectUser().ClientId;
+                        addWallet.OrderId = wallet.OrderId;
+                        db.Wallet.Add(addWallet);
+                        db.Wallet.Save();
+                    }
                 }
 
             }
@@ -271,127 +289,5 @@ namespace GhasreMobile.Controllers
 
 
 
-        //[HttpPost]
-        //[PermissionChecker("user,employee,admin")]
-        //public ActionResult Payment()
-        //{
-        //    try
-        //    {
-        //        int userId = _users.GetAllUsers().Single(u => u.UserName == User.Identity.Name).UserID;
-        //        int sumPrice = Convert.ToInt32(PriceSum);
-        //        int Dis;
-        //        Dis = Convert.ToInt32(DiscountId);
-        //        Orders order = new Orders();
-        //        if (DiscountId != "0")
-        //        {
-        //            order.UserID = userId;
-        //            order.Date = DateTime.Now;
-        //            order.IsFinaly = false;
-        //            order.Sum = sumPrice;
-        //            order.DiscountId = Dis;
-        //        }
-        //        else
-        //        {
-        //            order.UserID = userId;
-        //            order.Date = DateTime.Now;
-        //            order.IsFinaly = false;
-        //            order.Sum = sumPrice;
-        //        }
-        //        _orders.InsertOrder(order);
-        //        var listDetails = getListOrder();
-        //        foreach (var item in listDetails)
-        //        {
-        //            _orderDetails.InsertOrderDetail(new OrderDetails()
-        //            {
-        //                Count = item.Count,
-        //                OrderID = order.OrderID,
-        //                Price = item.Price,
-        //                ProductID = item.ProductID,
-        //            });
-        //        }
-
-        //        if (DiscountId != "0")
-        //        {
-        //            int disId = Convert.ToInt32(DiscountId);
-        //            Discount discountToUpdate = _discount.GetDiscountById(disId);
-        //            discountToUpdate.Count--;
-        //            _discount.Save();
-        //        }
-        //        System.Net.ServicePointManager.Expect100Continue = false;
-        //        Zarin.PaymentGatewayImplementationServicePortTypeClient zp = new Zarin.PaymentGatewayImplementationServicePortTypeClient();
-        //        string Authority;
-
-        //        int Status = zp.PaymentRequest("5f648351-94a0-4b6d-ab96-3eef0d58a8b5", sumPrice, "نیو خرید ", "info@newkharid.com", "09339634557", ConfigurationManager.AppSettings["MyDomain"] + "/ShopCart/Verify/" + order.OrderID, out Authority);
-        //        if (Status == 100)
-        //        {
-        //            Response.Redirect("https://www.zarinpal.com/pg/StartPay/" + Authority);
-
-        //            ////test
-        //            //return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + Authority);
-        //        }
-        //        else
-        //        {
-        //            ViewBag.Error = "Error : " + Status;
-        //            return RedirectToAction("Verify");
-
-        //        }
-        //        //TODO : Online Payment
-        //        return null;
-        //    }
-        //    catch
-        //    {
-        //        return RedirectToAction("/ErrorPage/NotFound");
-        //    }
-        //}
-
-        //public ActionResult Verify(int id)
-        //{
-        //    try
-        //    {
-
-        //        Orders order = _orders.GetOrdersById(id);
-        //        if (Request.QueryString["Status"] != "" && Request.QueryString["Status"] != null && Request.QueryString["Authority"] != "" && Request.QueryString["Authority"] != null)
-        //        {
-        //            if (Request.QueryString["Status"].ToString().Equals("OK"))
-        //            {
-        //                int Amount = order.Sum;
-        //                long RefID;
-        //                System.Net.ServicePointManager.Expect100Continue = false;
-        //                Zarin.PaymentGatewayImplementationServicePortTypeClient zp = new Zarin.PaymentGatewayImplementationServicePortTypeClient();
-
-        //                int Status = zp.PaymentVerification("a282a431-19d8-43ee-ae50-e3d056519667", Request.QueryString["Authority"].ToString(), Amount, out RefID);
-        //                if (Status == 100)
-        //                {
-        //                    order.IsFinaly = true;
-        //                    ViewBag.IsSuccess = true;
-        //                    ViewBag.RefId = RefID;
-        //                    _orders.Save();
-        //                    // Response.Write("Success!! RefId: " + RefID);
-        //                    List<ShopCartItem> cart = Session["ShopCart"] as List<ShopCartItem>;
-        //                    cart.Clear();
-        //                    return Redirect("/UserPanel/Home/FactorView/" + id + "?FinalFactor=" + RefID);
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.Status = Status;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                Response.Write("Error! Authority: " + Request.QueryString["Authority"].ToString() + " Status: " + Request.QueryString["Status"].ToString());
-        //            }
-        //        }
-        //        else
-        //        {
-        //            Response.Write("Invalid Input");
-        //        }
-        //        return View();
-        //    }
-        //    catch
-        //    {
-        //        return RedirectToAction("/ErrorPage/NotFound");
-        //    }
-
-        //}
     }
 }
