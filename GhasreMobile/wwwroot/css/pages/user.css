@@ -211,8 +211,6 @@ backdrop-filter: saturate(80%);
   padding: 24px;
   display: grid;
   height: 124px;
-  min-width: 424px;
-  margin-left: auto;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas: "balance title" "a button";

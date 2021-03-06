@@ -446,7 +446,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     if (Value[i] == null)
                     {
                         propertyRel.PropertyId = PropertyId[i].Value;
-                        propertyRel.Value = null;
+                        propertyRel.Value = "";
                     }
                     else
                     {

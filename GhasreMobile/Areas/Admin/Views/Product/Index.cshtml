@@ -38,52 +38,53 @@
                                 <th>قیمت</th>
                                 <th>تاریخ افزودن</th>
                                 <th>پیشنهاد ویژه</th>
-                                <th>عملیات</th>
                                 <th>وضعیت موجودی</th>
+                                <th>عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
-                                    <td>@item.ProductId</td>
-                                    <td>@item.Name</td>
-                                    <td>
-                                        @if (item.PriceAfterDiscount == 0)
-                                        {
-                                            <span>@item.PriceBeforeDiscount.Value.ToString("#,0 تومان")</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="text-danger">@item.PriceAfterDiscount.Value.ToString("#,0 تومان") تخفیف دار</span>
-                                        }
-                                    </td>
-                                    <td>@item.DateCreated.Value.AllToShamsi()</td>
-                                    <td>
-                                        @if (item.TblSpecialOffer.Count == 0)
-                                        {
-                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن به پیشنهاد ویژه">
-                                                <a onclick="SpecialOffer(@item.ProductId)" class="text-primary" data-toggle="modal" data-target="#modalSave" uk-icon="bookmark-outline"></a>
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="text-danger" data-placement="top" data-toggle="tooltip" title="" data-original-title="به پیشنهاد ویژه">
-                                                @item.TblSpecialOffer.First().Discount% تا تاریخ @item.TblSpecialOffer.First().ValidTill.AllToShamsi()
-                                            </span>
-                                        }
-                                    </td>
-                                    <td>
-                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
-                                            <a href="/Admin/Product/Edit/@item.ProductId" class="text-primary" uk-icon="create-outline"></a>
+                            <tr>
+                                <td>@item.ProductId</td>
+                                <td>@item.Name</td>
+                                <td>
+                                    @if (item.PriceAfterDiscount == 0)
+                                    {
+                                        <span>@item.PriceBeforeDiscount.Value.ToString("#,0 تومان")</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger">@item.PriceAfterDiscount.Value.ToString("#,0 تومان") تخفیف دار</span>
+                                    }
+                                </td>
+                                <td>@item.DateCreated.Value.AllToShamsi()</td>
+                                <td>
+                                    @if (item.TblSpecialOffer.Count == 0)
+                                    {
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن به پیشنهاد ویژه">
+                                            <a onclick="SpecialOffer(@item.ProductId)" class="text-primary" data-toggle="modal" data-target="#modalSave" uk-icon="bookmark-outline"></a>
                                         </span>
-                                    </td>
-                                    <td>
-                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="وضعیت موجودی">
-                                            <a onclick="Stock(@item.ProductId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="document-text"></a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger" data-placement="top" data-toggle="tooltip" title="" data-original-title="به پیشنهاد ویژه">
+                                            @item.TblSpecialOffer.First().Discount% تا تاریخ @item.TblSpecialOffer.First().ValidTill.AllToShamsi()
                                         </span>
-                                    </td>
-                                </tr>
+                                    }
+                                </td>
+                                <td>
+                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="وضعیت موجودی">
+                                        <a onclick="Stock(@item.ProductId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="document-text"></a>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                        <a href="/Admin/Product/Edit/@item.ProductId" class="text-primary" uk-icon="create-outline"></a>
+                                    </span>
+                                </td>
+
+                            </tr>
                             }
                         </tbody>
                     </table>
