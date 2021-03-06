@@ -168,6 +168,18 @@ namespace GhasreMobile.Controllers
                 addOrder.Status = 0;
                 db.Order.Add(addOrder);
                 db.Order.Save();
+                foreach (var item in sessions)
+                {
+                    TblOrderDetail addOrderDetail = new TblOrderDetail();
+                    addOrderDetail.ClientId= SelectUser().ClientId;
+                    addOrderDetail.Count = item.Count;
+                    addOrderDetail.FinalOrderId = addOrder.OrdeId;
+                    addOrderDetail.ProductId = item.ProductID;
+                    //addOrderDetail.Price = item.;
+                    db.OrderDetail.Add(addOrderDetail);
+                    db.OrderDetail.Save();
+
+                }
                 if (selectedDiscount.SumWithDiscount <= SelectUser().Balance)
                 {
                     TblWallet addWallet = new TblWallet();

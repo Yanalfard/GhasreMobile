@@ -90,7 +90,7 @@ namespace GhasreMobile.Areas.User.Controllers
                 else
                 {
                     discount.Sum = sumList;
-                    discount.SumWithDiscount -= sumList;
+                    discount.SumWithDiscount = sumList;
 
                 }
                 discount.SumWithDiscount -= SelectUser().Balance;
