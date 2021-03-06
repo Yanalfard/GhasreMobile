@@ -1,14 +1,14 @@
 ﻿@model DiscountVm
 @if (Model != null)
 {
-    <form action="/ShopCart/Payment" method="post">
+    <form action="/ShopCart/Payment" id="mainForm" class="col g-3" method="post">
         <div class="mat-card">
             <h4 class="uk-margin-small-bottom">
                 انتخاب آدرس
             </h4>
             <div class="fg-col">
                 <label class="fg-label">آدرس</label>
-                <textarea class="entry" name="address"  required></textarea>
+                <textarea class="entry" name="address" required></textarea>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <hr class="uk-divider-icon uk-margin" />
+        <hr class="uk-divider-icon uk-margin-small" />
 
         <div class="mat-card col">
             <h3>
@@ -45,25 +45,25 @@
             <p class="uk-alert uk-alert-warning">
                 مشتری محترم، لطفا دقت کنید مبلغ پرداخت شده غیر قابل عودت می باشد، لطفا قبل از خرید اطمینان حاصل فرمایید
             </p>
-            <div class="basket-factor box-shadow">
-                <div class="profit-amount">تخفیف  : <i>@Model.DiscountPrice.ToString("#,0") تومان </i></div>
-                <div class="main-payment">مبلغ کل : <i>@Model.Sum.ToString("#,0") تومان</i> </div>
-                <div class="main-payment">موجودی کیف پول شما  : <i>@Model.Balance.ToString("#,0") تومان</i> </div>
-                <div class="final-payment">مبلغ قابل پرداخت : <i>@Model.SumWithDiscount.ToString("#,0") تومان</i></div>
-            </div>
 
-            <div class="rowr">
-                @*<h3 class="row g-1">
-                        <span>
-                            تومان
-                        </span>
-                       @Model.Sum.ToString("#,0")
-                    </h3>*@
 
-                @*<a href="" class="mini-wallet uk-margin-auto-right">
-                        <label>ثبت و پرداخت نهایی</label>
-                    </a>*@
-                <input type="submit" name="name" value="ثبت و پرداخت نهایی" class="mini-wallet uk-margin-auto-right" />
+            <div class="rowr" onclick="document.getElementById('mainForm').submit()">
+
+                <div class="basket-factor box-shadow">
+                    <div class="profit-amount">تخفیف  : <span>@Model.DiscountPrice.ToString("#,0") تومان </span></div>
+                    <div class="main-payment">مبلغ کل : <span>@Model.Sum.ToString("#,0") تومان</span> </div>
+                    <div class="main-payment">موجودی کیف پول شما  : <span>@Model.Balance.ToString("#,0") تومان</span> </div>
+                    <div class="final-payment">مبلغ قابل پرداخت : <span>@Model.SumWithDiscount.ToString("#,0") تومان</span></div>
+                </div>
+
+                <button type="submit" class="mini-wallet uk-margin-auto-top uk-margin-auto-right">
+                    <span class="label">کیف پول</span>
+                    <span class="rowr">
+                        460,000
+                        <span>تومان</span>
+                    </span>
+                </button>
+
             </div>
         </div>
     </form>

@@ -255,8 +255,10 @@ backdrop-filter: saturate(80%);
   -moz-box-shadow: rgba(0, 0, 0, 0.16) 0 8px 12px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0 8px 12px;
   box-shadow: rgba(0, 0, 0, 0.16) 0 8px 12px;
+  border: 0;
+  outline: 0;
   padding: 10px;
-  min-width: 110px;
+  min-width: 124px;
   cursor: pointer;
   background: #ff649c;
   background: -moz-linear-gradient(45deg, #ff649c 0%, #960a96 100%);
@@ -266,7 +268,7 @@ backdrop-filter: saturate(80%);
   .mini-wallet * {
     cursor: pointer;
     color: #fff; }
-  .mini-wallet label {
+  .mini-wallet .label {
     margin-bottom: 4px;
     font-size: 12px;
     margin-left: auto; }

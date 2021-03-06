@@ -224,8 +224,10 @@ $aside-width: 142px;
     @include border-radius(8px,8px,8px,8px);
     @include column;
     @include shadow-medium;
+    border: 0;
+    outline: 0;
     padding: 10px;
-    min-width: 110px;
+    min-width: 124px;
     cursor: pointer;
     //-
     background: rgb(255,100,156);
@@ -239,7 +241,7 @@ $aside-width: 142px;
         color: #fff;
     }
 
-    label {
+    .label {
         margin-bottom: 4px;
         font-size: 12px;
         margin-left: auto;
