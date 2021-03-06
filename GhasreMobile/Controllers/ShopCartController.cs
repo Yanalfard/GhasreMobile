@@ -13,6 +13,12 @@ namespace GhasreMobile.Controllers
     public class ShopCartController : Controller
     {
         Core db = new Core();
+        TblClient SelectUser()
+        {
+            int userId = Convert.ToInt32(User.Claims.First().Value);
+            TblClient selectUser = db.Client.GetById(userId);
+            return selectUser;
+        }
         public IActionResult Index()
         {
             try
@@ -142,7 +148,69 @@ namespace GhasreMobile.Controllers
             return View();
         }
 
+        public IActionResult Payment(string radio, string address)
+        {
+            List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
+            DiscountVm selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+            if (selectedDiscount != null)
+            {
+                TblOrder addOrder = new TblOrder();
+                addOrder.DiscountId = selectedDiscount.DiscountId;
+                addOrder.Address = address;
+                addOrder.DateSubmited = DateTime.Now;
+                addOrder.FinalPrice = (int)selectedDiscount.SumWithDiscount;
+                addOrder.IsPayed = false;
+                addOrder.Status = 0;
+                addOrder.PaymentStatus = 0;
+                addOrder.PostalCode = "0";
+                addOrder.SendPrice = 0;
+                addOrder.SendStatus = 0;
+                addOrder.Status = 0;
+                db.Order.Add(addOrder);
+                db.Order.Save();
+                foreach (var item in sessions)
+                {
+                    TblOrderDetail addOrderDetail = new TblOrderDetail();
+                    addOrderDetail.ClientId= SelectUser().ClientId;
+                    addOrderDetail.Count = item.Count;
+                    addOrderDetail.FinalOrderId = addOrder.OrdeId;
+                    addOrderDetail.ProductId = item.ProductID;
+                    //addOrderDetail.Price = item.;
+                    db.OrderDetail.Add(addOrderDetail);
+                    db.OrderDetail.Save();
 
+                }
+                if (selectedDiscount.SumWithDiscount <= SelectUser().Balance)
+                {
+                    TblWallet addWallet = new TblWallet();
+                    addWallet.Amount = (int)selectedDiscount.SumWithDiscount;
+                    addWallet.Date = DateTime.Now;
+                    addWallet.Description = "خرید";
+                    addWallet.IsDeposit = false;
+                    addWallet.IsFinaly = true;
+                    addWallet.ClientId = SelectUser().ClientId;
+                    db.Wallet.Add(addWallet);
+                    db.Wallet.Save();
+                    TblClient selectedClient=db.Client.GetById(SelectUser().ClientId);
+                    selectedClient.Balance -= selectedDiscount.SumWithDiscount;
+                    TblOrder selectedOrder = db.Order.GetById(addOrder.OrdeId);
+                    selectedOrder.IsPayed = true;
+                    db.Client.Update(selectedClient);
+                    db.Order.Update(selectedOrder);
+                    db.Client.Save();
+                }
+                else
+                {
+                    long SumBalance = selectedDiscount.SumWithDiscount - SelectUser().Balance;
+                    if (SumBalance < 10000)
+                    {
+                        SumBalance = 10000;
+                    }
+                    //////چک شود که بعد شارژ کیف پول جنس رو تایید کند
+                }
+            }
+            return View();
+        }
 
         [Route("OnlinePayment/{id}")]
         public IActionResult OnlinePayment(int id)

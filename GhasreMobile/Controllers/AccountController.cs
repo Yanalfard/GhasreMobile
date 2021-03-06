@@ -29,6 +29,16 @@ namespace GhasreMobile.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.Claims.Last().Value == "user") {
+                    return Redirect("/User/Profile");
+                }
+                else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
+                {
+                    return Redirect("/Admin/Home");
+                }
+            }
             return await Task.FromResult(View());
         }
         [Route("Login")]
@@ -89,6 +99,17 @@ namespace GhasreMobile.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.Claims.Last().Value == "user")
+                {
+                    return Redirect("/User/Profile");
+                }
+                else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
+                {
+                    return Redirect("/Admin/Home");
+                }
+            }
             return await Task.FromResult(View());
         }
         [HttpPost]
