@@ -244,7 +244,7 @@ namespace DataLayer.Models
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.TblOrderDetail)
-                    .HasForeignKey(d => d.OrderId)
+                    .HasForeignKey(d => d.FinalOrderId)
                     .HasConstraintName("FK_TblOrderDetail_TblOrder");
 
                 entity.HasOne(d => d.Product)

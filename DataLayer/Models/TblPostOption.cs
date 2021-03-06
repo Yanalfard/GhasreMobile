@@ -9,9 +9,10 @@ namespace DataLayer.Models
     {
         [Key]
         public int PostOptionId { get; set; }
-        [Required]
-        [StringLength(500)]
+        [Required(ErrorMessage ="نحوه ارسال اجباری میباشد")]
+        [MaxLength(100,ErrorMessage ="نحوه ارسال مناسب وارد کنید")]
         public string Name { get; set; }
-        public int Price { get; set; }
+        [Required(ErrorMessage ="هزینه ارسال اجباری میباشد")]
+        public int? Price { get; set; }
     }
 }
