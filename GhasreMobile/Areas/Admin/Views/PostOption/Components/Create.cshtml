@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataLayer.Models.TblPostOption> 
+﻿@model DataLayer.Models.TblPostOption
 <div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
         افزودن
@@ -7,16 +7,21 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form>
+<form asp-action="Create" asp-controller="PostOption" method="post"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="EndCatagoryCreate()"
+      data-ajax-update="#ajaxresult">
     <div class="modal-body">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label>نحوه ارسال</label>
-                <input class="form-control form-control-sm" placeholder="مثال: ارسال با تیپاکس">
+                <input asp-for="Name" class="form-control form-control-sm" placeholder="مثال: ارسال با تیپاکس">
             </div>
             <div class="form-group col-md-6">
                 <label>قیمت (تومان)</label>
-                <input class="form-control form-control-sm" placeholder="مثال: 20000">
+                <input asp-for="Price" class="form-control form-control-sm" placeholder="مثال: 20000">
             </div>
         </div>
     </div>
@@ -24,3 +29,6 @@
         <button type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
     </div>
 </form>
+
+<script src="~/Validate/jquery.validate.min.js"></script>
+<script src="~/Validate/jquery.validate.unobtrusive.js"></script>
