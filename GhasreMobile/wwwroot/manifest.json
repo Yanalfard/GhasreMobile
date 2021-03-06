@@ -4,7 +4,7 @@
   "name": "قصر موبایل",
   "short_name": "قصر موبایل",
   "display": "standalone",
-  "start_url": "/Home/Index",
+  "start_url": "/",
   "background_color": "#FFFFFF",
   "theme_color": "#810081",
   "orientation": "portrait-primary",

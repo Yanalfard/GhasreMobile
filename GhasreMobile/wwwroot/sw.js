@@ -44,6 +44,8 @@ self.addEventListener('fetch', (evt) => {
                             || evt.request.url.includes('/fonts/')
                             || evt.request.url.includes('/js/')
                             || evt.request.url.includes('/st/')
+                            || evt.request.url.includes('/Images/')
+                            || evt.request.url.includes('/Validate/')
                             || evt.request.url.includes('/dy/')) {
                             return caches.open(staticCacheName).then(cache => {
                                 cache.put(evt.request.url, fetchRes.clone());
