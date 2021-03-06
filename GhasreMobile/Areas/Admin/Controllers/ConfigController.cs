@@ -27,6 +27,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             config.HazineErsalBaTipaxChapare = Convert.ToInt32(configs.Where(c => c.Key == "HazineErsalBaTipax/Chapare").Single().Value);
             config.HazineErsalPeyk = Convert.ToInt32(configs.Where(c => c.Key == "HazineErsalPeyk").Single().Value);
             config.StoreDescription = configs.Where(c => c.Key == "StoreDescription").Single().Value;
+            config.SagfePost = configs.Where(c => c.Key == "SagfePost").Single().Value;
             return View(config);
         }
 
@@ -43,6 +44,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 TblConfig ConfigHazineErsalBaTipaxChapare = configs.Where(c => c.Key == "HazineErsalBaTipax/Chapare").Single();
                 TblConfig ConfigHazineErsalPeyk = configs.Where(c => c.Key == "HazineErsalPeyk").Single();
                 TblConfig ConfigStoreDescription = configs.Where(c => c.Key == "StoreDescription").Single();
+                TblConfig ConfigSagfePost = configs.Where(c => c.Key == "SagfePost").Single();
 
                 ConfigDarbareyeMa.Value = configVm.DarbareyeMa;
                 ConfigHazineErsalBaPost.Value = configVm.HazineErsalBaPost.ToString();
@@ -50,6 +52,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 ConfigTamasBaMa.Value = configVm.TamasBaMa;
                 ConfigHazineErsalPeyk.Value = configVm.HazineErsalPeyk.ToString();
                 ConfigStoreDescription.Value = configVm.StoreDescription;
+                ConfigSagfePost.Value = configVm.SagfePost;
 
                 _core.Config.Update(ConfigDarbareyeMa);
                 _core.Config.Update(ConfigTamasBaMa);
@@ -57,6 +60,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.Config.Update(ConfigHazineErsalBaTipaxChapare);
                 _core.Config.Update(ConfigHazineErsalPeyk);
                 _core.Config.Update(ConfigStoreDescription);
+                _core.Config.Update(ConfigSagfePost);
 
                 _core.Config.Save();
             }

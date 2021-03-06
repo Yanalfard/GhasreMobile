@@ -17,7 +17,7 @@ namespace DataLayer.Models
         public string Description { get; set; }
         public int ClientId { get; set; }
         public bool IsFinaly { get; set; }
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
 
         [ForeignKey(nameof(ClientId))]
         [InverseProperty(nameof(TblClient.TblWallet))]

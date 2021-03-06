@@ -24,5 +24,8 @@ namespace DataLayer.ViewModels
 
         [Required(ErrorMessage = "لطفا توضیحات نمایندگی را کامل کنید")]
         public string StoreDescription { get; set; }
+
+        [Required(ErrorMessage = "لطفا سقف هزینه ارسال رایگان را وارد کنید")]
+        public string SagfePost { get; set; }
     }
 }

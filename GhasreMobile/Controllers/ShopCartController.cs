@@ -155,7 +155,14 @@ namespace GhasreMobile.Controllers
             if (selectedDiscount != null)
             {
                 TblOrder addOrder = new TblOrder();
-                addOrder.DiscountId = selectedDiscount.DiscountId;
+                if (selectedDiscount.DiscountId == 0)
+                {
+                    addOrder.DiscountId = null;
+                }
+                else
+                {
+                    addOrder.DiscountId = selectedDiscount.DiscountId;
+                }
                 addOrder.Address = address;
                 addOrder.DateSubmited = DateTime.Now;
                 addOrder.FinalPrice = (int)selectedDiscount.SumWithDiscount;
@@ -171,12 +178,23 @@ namespace GhasreMobile.Controllers
                 db.Order.Save();
                 foreach (var item in sessions)
                 {
+                    var product = db.Product.Get().Where(p => p.ProductId == item.ProductID).Select(p => new
+                    {
+                        p.PriceAfterDiscount,
+                        p.PriceBeforeDiscount,
+                    }).Single();
                     TblOrderDetail addOrderDetail = new TblOrderDetail();
-                    //addOrderDetail.ClientId= SelectUser().ClientId;
                     addOrderDetail.Count = item.Count;
-                    addOrderDetail.OrderId = addOrder.OrdeId;
+                    addOrderDetail.FinalOrderId = addOrder.OrdeId;
                     addOrderDetail.ProductId = item.ProductID;
-                    //addOrderDetail.Price = item.;
+                    if (product.PriceAfterDiscount == 0)
+                    {
+                        addOrderDetail.Price = (int)product.PriceBeforeDiscount;
+                    }
+                    else
+                    {
+                        addOrderDetail.Price = (int)product.PriceAfterDiscount;
+                    }
                     db.OrderDetail.Add(addOrderDetail);
                     db.OrderDetail.Save();
 
@@ -190,9 +208,10 @@ namespace GhasreMobile.Controllers
                     addWallet.IsDeposit = false;
                     addWallet.IsFinaly = true;
                     addWallet.ClientId = SelectUser().ClientId;
+                    addWallet.OrderId = addOrder.OrdeId;
                     db.Wallet.Add(addWallet);
                     db.Wallet.Save();
-                    TblClient selectedClient=db.Client.GetById(SelectUser().ClientId);
+                    TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
                     selectedClient.Balance -= selectedDiscount.SumWithDiscount;
                     TblOrder selectedOrder = db.Order.GetById(addOrder.OrdeId);
                     selectedOrder.IsPayed = true;
@@ -203,11 +222,15 @@ namespace GhasreMobile.Controllers
                 else
                 {
                     long SumBalance = selectedDiscount.SumWithDiscount - SelectUser().Balance;
-                    if (SumBalance < 10000)
+                    if (SumBalance < 1000)
                     {
-                        SumBalance = 10000;
+                        SumBalance = 1000;
                     }
-                    //////چک شود که بعد شارژ کیف پول جنس رو تایید کند
+                    ChargeWalletVm charge = new ChargeWalletVm();
+                    int Amount = (int)SumBalance;
+                    int OrderId = addOrder.OrdeId;
+                    return Redirect("/User/Wallet/ChargeWallet?Amount=" + Amount + "&OrderId=" + OrderId);
+                    //return Redirect("/User/Wallet/ChargeWallet/" + charge);
                 }
             }
             return View();

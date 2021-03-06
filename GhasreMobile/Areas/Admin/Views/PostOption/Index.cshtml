@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DataLayer.Models.TblPostOption>
 @{
     ViewData["Title"] = "گزینه های پست";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -24,29 +24,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>تیپاکس</td>
-                                <td>
-                                    145200 <span> تومان</span>
-                                </td>
-                                <td>
-                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
-                                        <a id="Edit" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
-                                    </span>
-                                </td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>
+                                       @item.Price.Value.ToString("#,0 تومان")
+                                    </td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                            <a onclick="Edit(@item.PostOptionId)"  data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <!--end list region-->
-            @*<div class="card-footer bg-white">
+            <div class="card-footer bg-white">
                     <nav aria-label="Page navigation example">
                         @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
                     </nav>
-                </div>*@
+                </div>
         </div>
     </div>
 </div>
+
+@section Script{ 
+<script>
+
+    $("#Create").click(function () {
+        $.get("/Admin/PostOption/Create", function (result) {
+            $(".modal-content").html(result);
+        });
+    });
+
+    function Edit(id) {
+        $.get("/Admin/PostOption/Edit/" + id, function (result) {
+            $(".modal-content").html(result);
+        });
+    }
+</script>
+}
 
