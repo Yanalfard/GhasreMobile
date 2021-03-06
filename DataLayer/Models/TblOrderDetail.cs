@@ -9,18 +9,14 @@ namespace DataLayer.Models
     {
         [Key]
         public int OrderDetailId { get; set; }
-        public int ClientId { get; set; }
         public int ProductId { get; set; }
         public int Count { get; set; }
         public long Price { get; set; }
-        public int? FinalOrderId { get; set; }
+        public int? OrderId { get; set; }
 
-        [ForeignKey(nameof(ClientId))]
-        [InverseProperty(nameof(TblClient.TblOrderDetail))]
-        public virtual TblClient Client { get; set; }
-        [ForeignKey(nameof(FinalOrderId))]
+        [ForeignKey(nameof(OrderId))]
         [InverseProperty(nameof(TblOrder.TblOrderDetail))]
-        public virtual TblOrder FinalOrder { get; set; }
+        public virtual TblOrder Order { get; set; }
         [ForeignKey(nameof(ProductId))]
         [InverseProperty(nameof(TblProduct.TblOrderDetail))]
         public virtual TblProduct Product { get; set; }
