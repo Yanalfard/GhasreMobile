@@ -42,19 +42,19 @@
 </div>
 <div class="modal-footer justify-content-end">
     <label>قیمت:</label>
-    @if (@Model.First().Product.PriceAfterDiscount != 0)
+    @if (Model.First().Product.PriceAfterDiscount != 0)
     {
-        <input id="Price-@Model.First().Product.ProductId" class="form-control form-control-sm col-md-2" placeholder="مثال:50000 ريال" value="@Model.First().Product.PriceAfterDiscount">
+        <input id="Price-@Model.First().Product.ProductId" class="form-control form-control-sm col-md-2 PriceInput" placeholder="مثال:50000 ريال" value="@Model.First().Product.PriceAfterDiscount">
     }
     else
     {
-        <input id="Price-@Model.First().ProductId" class="form-control form-control-sm col-md-2" placeholder="مثال:50000 ريال" value="@Model.First().Product.PriceBeforeDiscount">
+        <input id="Price-@Model.First().ProductId" class="form-control form-control-sm col-md-2 PriceInput" placeholder="مثال:50000" value="@Model.First().Product.PriceBeforeDiscount">
     }
 
     <button onclick="EditPrice(@Model.First().ProductId, $('#Price-@Model.First().ProductId').val())" class="btn btn-sm btn-success ml-md-4">ثبت</button>
 </div>
 
-
+<script src="~/AdminStaticFile/Input_Formatting_Currency.js"></script>
 <script>
     function EditStoke(id, count) {
         $.post("/Admin/Product/EditStoke?Id=" + id + "&count=" + count, function () {
@@ -62,8 +62,13 @@
         });
     }
     function EditPrice(Id, Price) {
-        $.post("/Admin/Product/EditPrice?Id=" + Id + "&Price=" + Price, function () {
+        $.post("/Admin/Product/EditPrice?Id=" + Id + "&Price=" + Price.replaceAll(",",""), function () {
             UIkit.notification("قیمت محصول بروز شد");
         });
     }
+
+    $(".PriceInput").change(function () {
+        $(this).val($(this).val().replaceAll(",", ""));
+    });
+
 </script>

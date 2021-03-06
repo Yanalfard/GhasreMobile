@@ -37,7 +37,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
 
             TblProductImageRel imageRel = _core.ProductImageRel.Get(ir => ir.ImageId == image.ImageId).SingleOrDefault();
-            _core.ProductImageRel.GetById(imageRel);
+            _core.ProductImageRel.DeleteById(imageRel);
+            _core.ProductImageRel.Save();
             _core.Image.Delete(image);
             _core.ProductImageRel.Save();
             _core.Image.Save();
