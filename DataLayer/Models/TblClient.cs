@@ -15,7 +15,7 @@ namespace DataLayer.Models
             TblNotificationClient = new HashSet<TblNotification>();
             TblNotificationSender = new HashSet<TblNotification>();
             TblOnlineOrder = new HashSet<TblOnlineOrder>();
-            TblOrderDetail = new HashSet<TblOrderDetail>();
+            TblOrder = new HashSet<TblOrder>();
             TblRate = new HashSet<TblRate>();
             TblTicket = new HashSet<TblTicket>();
             TblTopic = new HashSet<TblTopic>();
@@ -55,8 +55,6 @@ namespace DataLayer.Models
         [InverseProperty("Client")]
         public virtual ICollection<TblOnlineOrder> TblOnlineOrder { get; set; }
         [InverseProperty("Client")]
-        public virtual ICollection<TblOrderDetail> TblOrderDetail { get; set; }
-        [InverseProperty("Client")]
         public virtual ICollection<TblRate> TblRate { get; set; }
         [InverseProperty("Client")]
         public virtual ICollection<TblTicket> TblTicket { get; set; }
@@ -65,7 +63,7 @@ namespace DataLayer.Models
         [InverseProperty("Client")]
         public virtual ICollection<TblWallet> TblWallet { get; set; }
 
-        [InverseProperty("Order")]
+        [InverseProperty("Client")]
         public virtual ICollection<TblOrder> TblOrder { get; set; }
     }
 }

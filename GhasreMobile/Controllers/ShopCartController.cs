@@ -174,7 +174,7 @@ namespace GhasreMobile.Controllers
                     TblOrderDetail addOrderDetail = new TblOrderDetail();
                     //addOrderDetail.ClientId= SelectUser().ClientId;
                     addOrderDetail.Count = item.Count;
-                    addOrderDetail.FinalOrderId = addOrder.OrdeId;
+                    addOrderDetail.OrderId = addOrder.OrdeId;
                     addOrderDetail.ProductId = item.ProductID;
                     //addOrderDetail.Price = item.;
                     db.OrderDetail.Add(addOrderDetail);

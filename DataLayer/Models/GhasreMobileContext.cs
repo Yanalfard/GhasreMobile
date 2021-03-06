@@ -242,9 +242,9 @@ namespace DataLayer.Models
 
                 entity.Property(e => e.Count).HasDefaultValueSql("((1))");
 
-                entity.HasOne(d => d.FinalOrder)
+                entity.HasOne(d => d.Order)
                     .WithMany(p => p.TblOrderDetail)
-                    .HasForeignKey(d => d.FinalOrderId)
+                    .HasForeignKey(d => d.OrderId)
                     .HasConstraintName("FK_TblOrderDetail_TblOrder");
 
                 entity.HasOne(d => d.Product)

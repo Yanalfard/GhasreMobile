@@ -38,7 +38,7 @@ namespace DataLayer.Models
         [ForeignKey(nameof(DiscountId))]
         [InverseProperty(nameof(TblDiscount.TblOrder))]
         public virtual TblDiscount Discount { get; set; }
-        [InverseProperty("FinalOrder")]
+        [InverseProperty("Order")]
         public virtual ICollection<TblOrderDetail> TblOrderDetail { get; set; }
         [InverseProperty("Order")]
         public virtual ICollection<TblWallet> TblWallet { get; set; }
