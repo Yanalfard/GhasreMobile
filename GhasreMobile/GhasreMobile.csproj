@@ -51,6 +51,7 @@
     <Folder Include="wwwroot\Images\ProductAlbum\" />
     <Folder Include="wwwroot\Images\ProductMain\" />
     <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\st\m\" />
   </ItemGroup>
 
   <ItemGroup>
