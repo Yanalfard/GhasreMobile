@@ -155,7 +155,14 @@ namespace GhasreMobile.Controllers
             if (selectedDiscount != null)
             {
                 TblOrder addOrder = new TblOrder();
-                addOrder.DiscountId = selectedDiscount.DiscountId;
+                if (selectedDiscount.DiscountId == 0)
+                {
+                    addOrder.DiscountId = null;
+                }
+                else
+                {
+                    addOrder.DiscountId = selectedDiscount.DiscountId;
+                }
                 addOrder.Address = address;
                 addOrder.DateSubmited = DateTime.Now;
                 addOrder.FinalPrice = (int)selectedDiscount.SumWithDiscount;
@@ -178,7 +185,7 @@ namespace GhasreMobile.Controllers
                     }).Single();
                     TblOrderDetail addOrderDetail = new TblOrderDetail();
                     addOrderDetail.Count = item.Count;
-                    addOrderDetail.OrderId = addOrder.OrdeId;
+                    addOrderDetail.FinalOrderId = addOrder.OrdeId;
                     addOrderDetail.ProductId = item.ProductID;
                     if (product.PriceAfterDiscount == 0)
                     {
@@ -204,7 +211,7 @@ namespace GhasreMobile.Controllers
                     addWallet.OrderId = addOrder.OrdeId;
                     db.Wallet.Add(addWallet);
                     db.Wallet.Save();
-                    TblClient selectedClient=db.Client.GetById(SelectUser().ClientId);
+                    TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
                     selectedClient.Balance -= selectedDiscount.SumWithDiscount;
                     TblOrder selectedOrder = db.Order.GetById(addOrder.OrdeId);
                     selectedOrder.IsPayed = true;
@@ -220,9 +227,10 @@ namespace GhasreMobile.Controllers
                         SumBalance = 1000;
                     }
                     ChargeWalletVm charge = new ChargeWalletVm();
-                    charge.Amount = (int)SumBalance;
-                    charge.OrderId = addOrder.OrdeId;
-                    return Redirect("/User/Wallet/Charge/" + charge);
+                    int Amount = (int)SumBalance;
+                    int OrderId = addOrder.OrdeId;
+                    return Redirect("/User/Wallet/ChargeWallet?Amount=" + Amount + "&OrderId=" + OrderId);
+                    //return Redirect("/User/Wallet/ChargeWallet/" + charge);
                 }
             }
             return View();

@@ -29,8 +29,7 @@ namespace GhasreMobile.Areas.User.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public IActionResult Charge(ChargeWalletVm charge)
+        public IActionResult ChargeWallet(ChargeWalletVm charge)
         {
             if (ModelState.IsValid)
             {
