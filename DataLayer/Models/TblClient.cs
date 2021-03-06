@@ -64,5 +64,8 @@ namespace DataLayer.Models
         public virtual ICollection<TblTopic> TblTopic { get; set; }
         [InverseProperty("Client")]
         public virtual ICollection<TblWallet> TblWallet { get; set; }
+
+        [InverseProperty("Order")]
+        public virtual ICollection<TblOrder> TblOrder { get; set; }
     }
 }

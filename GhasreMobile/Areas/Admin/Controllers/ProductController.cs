@@ -150,7 +150,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             {
                                 TblProductPropertyRel propertyRel = new TblProductPropertyRel();
                                 propertyRel.PropertyId = PropertyId[i].Value;
-                                propertyRel.Value = Value[i];
+                                if (Value[i] != null)
+                                {
+                                    propertyRel.Value = Value[i];
+                                }
+                                else
+                                {
+                                    propertyRel.Value = "";
+                                }
+                                
                                 propertyRel.ProductId = NewProduct.ProductId;
                                 _core.ProductPropertyRel.Add(propertyRel);
                             }

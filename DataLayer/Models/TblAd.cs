@@ -11,7 +11,7 @@ namespace DataLayer.Models
         public int AdId { get; set; }
         [Required]
         public string Link { get; set; }
-        
+        [Required]
         public string Image { get; set; }
         public int PositionId { get; set; }
         [StringLength(500)]

@@ -20,17 +20,17 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (!string.IsNullOrEmpty(TellNo) && OrderId == 0)
             {
-                IEnumerable<TblOrder> Orders = PagingList.Create(_core.OrderDetail.Get(od => od.Client.TellNo.Contains(TellNo)).Select(od => od.FinalOrder), 30, page);
+                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(od => od.Client.TellNo.Contains(TellNo)), 30, page);
                 return View(Orders);
             }
             if (!string.IsNullOrEmpty(TellNo) && OrderId != 0)
             {
-                IEnumerable<TblOrder> Orders = PagingList.Create(_core.OrderDetail.Get(od => od.Client.TellNo.Contains(TellNo) && od.FinalOrder.OrdeId == OrderId).Select(od => od.FinalOrder), 30, page);
+                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(od => od.Client.TellNo.Contains(TellNo) && od.OrdeId == OrderId), 30, page);
                 return View(Orders);
             }
             else
             {
-                IEnumerable<TblOrder> Orders = PagingList.Create(_core.OrderDetail.Get(od => od.FinalOrder.OrdeId == OrderId).Select(od => od.FinalOrder), 30, page);
+                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(od => od.OrdeId == OrderId), 30, page);
                 return View(Orders);
             }
         }
