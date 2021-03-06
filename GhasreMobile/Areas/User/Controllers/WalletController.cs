@@ -29,8 +29,7 @@ namespace GhasreMobile.Areas.User.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public IActionResult Charge(ChargeWalletVm charge)
+        public IActionResult ChargeWallet(ChargeWalletVm charge)
         {
             if (ModelState.IsValid)
             {
@@ -41,6 +40,7 @@ namespace GhasreMobile.Areas.User.Controllers
                 addWallet.IsDeposit = true;
                 addWallet.IsFinaly = false;
                 addWallet.ClientId = SelectUser().ClientId;
+                addWallet.OrderId = addWallet.OrderId;
                 db.Wallet.Add(addWallet);
                 db.Wallet.Save();
 
