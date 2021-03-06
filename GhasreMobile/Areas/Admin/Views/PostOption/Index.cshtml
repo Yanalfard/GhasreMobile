@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "گزینه های پست";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div class="card-header bg-white">
+                    <div class="pt-2">
+                        <button id="Create" data-toggle="modal" data-target="#modalSave" class="btn btn-success btn-sm">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+                    </div>
+            </div>
+            <!--list region-->
+            <div id="card-table" class="card-body flex-div">
+                <div class="table-responsive flex">
+                    <table class="table fixed">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">نحوه ارسال</th>
+                                <th scope="col">قیمت</th>
+                                <th scope="col">عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>تیپاکس</td>
+                                <td>
+                                    145200 <span> تومان</span>
+                                </td>
+                                <td>
+                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                        <a id="Edit" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!--end list region-->
+            @*<div class="card-footer bg-white">
+                    <nav aria-label="Page navigation example">
+                        @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+                    </nav>
+                </div>*@
+        </div>
+    </div>
+</div>
+
