@@ -166,12 +166,13 @@ namespace GhasreMobile.Controllers
                 addOrder.SendPrice = 0;
                 addOrder.SendStatus = 0;
                 addOrder.Status = 0;
+                addOrder.ClientId = SelectUser().ClientId;
                 db.Order.Add(addOrder);
                 db.Order.Save();
                 foreach (var item in sessions)
                 {
                     TblOrderDetail addOrderDetail = new TblOrderDetail();
-                    addOrderDetail.ClientId= SelectUser().ClientId;
+                    //addOrderDetail.ClientId= SelectUser().ClientId;
                     addOrderDetail.Count = item.Count;
                     addOrderDetail.FinalOrderId = addOrder.OrdeId;
                     addOrderDetail.ProductId = item.ProductID;
