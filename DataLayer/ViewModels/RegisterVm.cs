@@ -7,6 +7,11 @@ namespace DataLayer.ViewModels
 {
     public class RegisterVm: CaptchaVm
     {
+        [Display(Name = "نام ")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [MaxLength(25, ErrorMessage = "تعداد کاراکتر بیشتر است")]
+        [StringLength(25)]
+        public string Name { get; set; }
         [Display(Name = "شماره تلفن")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MinLength(11, ErrorMessage = "تعداد کاراکتر کم است")]

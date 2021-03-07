@@ -164,7 +164,7 @@
                             </div>
                         </div>
                     }
-                    else if (User.Claims.Last().Value == "employee")
+                    else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
                     {
                         <a href="" class="profile">
                             <span>پروفایل</span>
@@ -175,27 +175,7 @@
                             <div class="mat-card">
                                 <ul class="col g-2">
                                     <li>
-                                        <a class="link-text" href="/Admin/Home">پروفایل</a>
-                                    </li>
-                                    <li>
-                                        <a class="link-text" href="/LogOut">خروج</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    }
-                    else if (User.Claims.Last().Value == "admin")
-                    {
-                        <a href="" class="profile">
-                            <span>پروفایل</span>
-                            <span uk-icon="person-circle-outline"></span>
-                        </a>
-
-                        <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
-                            <div class="mat-card">
-                                <ul class="col g-2">
-                                    <li>
-                                        <a class="link-text" href="/Admin/Home">پروفایل</a>
+                                        <a class="link-text" href="/Admin/">پنل مدیریت</a>
                                     </li>
                                     <li>
                                         <a class="link-text" href="/LogOut">خروج</a>

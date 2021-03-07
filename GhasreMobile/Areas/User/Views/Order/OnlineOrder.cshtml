@@ -1,19 +1,28 @@
-﻿@{
+﻿@model OnlineOrderVm
+
+@{
     ViewData["Title"] = "تایید خرید";
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
+    string OnlineOrder = ViewBag.OnlineOrder.ToString();
 }
+<form class="request mat-card" action="OnlineOrder" method="post">
+    @if (OnlineOrder != "")
+    {
+        <div class="uk-alert uk-alert-success">
+            <p class="uk-text-success">سفارش شما ثبت شد و بعد از تائید، کارشناسان  ما با شما تماس میگیرند</p>
+        </div>
+    }
 
-<form class="request mat-card">
     <h3 class="uk-margin-bottom">سفارش آنلاین</h3>
     <div class="fg-col">
         <label for="TelNo" class="fg-label">تیتر</label>
-        <input id="TelNo" name="TelNo" type="tel" class="entry" value="" />
-        <span class="text-danger"></span>
+        <input id="Title" name="Title" asp-for="Title" type="text" class="entry" />
+        <span class="text-danger" asp-validation-for="Title"></span>
     </div>
     <div class="fg-col">
         <label for="Message" class="fg-label">توضیحات</label>
-        <textarea id="Message" name="Message" placeholder="..." class="entry"></textarea>
-        <span class="text-danger"></span>
+        <textarea id="Body" asp-for="Body" name="Body" placeholder="..." class="entry"></textarea>
+        <span class="text-danger" asp-validation-for="Body"></span>
     </div>
     <div class="rowr">
         <button class="btn btn-primary">ارسال سفارش</button>

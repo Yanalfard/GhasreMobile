@@ -92,25 +92,61 @@
                     <a href="/Blog">وبلاگ ها</a>
                     <a href="/Gallery">گالری</a>
                 </nav>
-                <a href="" class="profile">
-                    <span>پروفایل</span>
-                    <span uk-icon="person-circle-outline"></span>
-                </a>
-                <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
-                    <div class="mat-card">
-                        <ul class="col g-2">
-                            <li>
-                                <a class="link-text" href="/User/Profile">پروفایل</a>
-                            </li>
-                            <li>
-                                <a class="link-text" href="/User/Cart">سبد خرید</a>
-                            </li>
-                            <li>
-                                <a class="link-text" href="/LogOut">خروج</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @if (User.Claims.Last().Value == "user")
+                    {
+                        <a href="" class="profile">
+                            <span>پروفایل</span>
+                            <span uk-icon="person-circle-outline"></span>
+                        </a>
+
+                        <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
+                            <div class="mat-card">
+                                <ul class="col g-2">
+                                    <li>
+                                        <a class="link-text" href="/User/Profile">پروفایل</a>
+                                    </li>
+                                    <li>
+                                        <a class="link-text" href="/User/Cart">سبد خرید</a>
+                                    </li>
+                                    <li>
+                                        <a class="link-text" href="/LogOut">خروج</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
+                    {
+                        <a href="" class="profile">
+                            <span>پروفایل</span>
+                            <span uk-icon="person-circle-outline"></span>
+                        </a>
+
+                        <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
+                            <div class="mat-card">
+                                <ul class="col g-2">
+                                    <li>
+                                        <a class="link-text" href="/Admin/">پنل مدیریت</a>
+                                    </li>
+                                    <li>
+                                        <a class="link-text" href="/LogOut">خروج</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <a href="/Login" class="profile">
+                        <span>ورود</span>
+                        <span uk-icon="person-circle-outline"></span>
+                    </a>
+                }
+
+
             </div>
         </div>
     </div>
