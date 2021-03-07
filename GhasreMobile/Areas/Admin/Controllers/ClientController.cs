@@ -43,11 +43,35 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int ClientId, string Name, int RoleId)
+        public IActionResult Edit(int ClientId, string Name, int RoleId, int Balance)
         {
             TblClient client = _core.Client.GetById(ClientId);
             client.Name = Name;
             client.RoleId = RoleId;
+            if (client.Balance < Balance)
+            {
+                TblWallet wallet = new TblWallet();
+                wallet.IsDeposit = true;
+                wallet.ClientId = ClientId;
+                wallet.Date = DateTime.Now;
+                wallet.Amount = Balance - (int)client.Balance;
+                wallet.Description = "شارژ حساب توسط مدیر";
+                wallet.IsFinaly = true;
+                _core.Wallet.Add(wallet);
+                _core.Wallet.Save();
+            }
+            if (client.Balance > Balance)
+            {
+                TblWallet wallet = new TblWallet();
+                wallet.IsDeposit = false;
+                wallet.IsFinaly = true;
+                wallet.ClientId = ClientId;
+                wallet.Date = DateTime.Now;
+                wallet.Amount = (int)client.Balance - Balance;
+                wallet.Description = "برداشت از حساب توسط مدیر";
+                _core.Wallet.Add(wallet);
+                _core.Wallet.Save();
+            }
             _core.Client.Update(client);
             _core.Client.Save();
             return Redirect("/Admin/client");

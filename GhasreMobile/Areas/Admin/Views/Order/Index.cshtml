@@ -38,7 +38,6 @@
                                 <th>کد سفارش</th>
                                 <th>تاریخ ثبت سفارش</th>
                                 <th>وضعیت</th>
-                                <th>نحوه پرداخت</th>
                                 <th>جزئیات</th>
                                 <th>عملیات</th>
                             </tr>
@@ -61,22 +60,6 @@
                                         else if (item.Status == 2)
                                         {
                                             <span class="text-success">تکمیل شده</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (item.PaymentStatus == 0)
-                                        {
-                                            <span>پرداخت آنلاین</span>
-
-                                        }
-                                        else if (item.PaymentStatus == 1)
-                                        {
-                                            <span>پرداخت درب منزل یا در محل فروشگاه</span>
-
-                                        }
-                                        else if (item.PaymentStatus == 2)
-                                        {
-                                            <span>کارت به کارت و ارسال رسید پرداخت</span>
                                         }
                                     </td>
                                     <td>

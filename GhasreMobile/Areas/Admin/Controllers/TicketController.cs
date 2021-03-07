@@ -42,11 +42,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         public IActionResult SendMassage(int ClientId, string Body)
         {
+            IEnumerable<TblTicket> tickets = _core.Ticket.Get(t => t.ClientId == ClientId);
+            foreach (var item in tickets)
+            {
+                TblTicket ticketuser = _core.Ticket.GetById(item.TicketId);
+                ticketuser.IsAnswerd = true;
+                _core.Ticket.Update(ticketuser);
+                _core.Ticket.Save();
+            }
             TblTicket ticket = new TblTicket();
             ticket.DateSubmited = DateTime.Now;
             ticket.ClientId = ClientId;
             ticket.IsAnswer = true;
-            ticket.IsAnswerd = true;
+            ticket.IsAnswerd = false;
             ticket.Body = Body;
             _core.Ticket.Add(ticket);
             _core.Ticket.Save();
