@@ -1,4 +1,4 @@
-﻿@model long
+﻿@model IEnumerable<TblWallet>
 @{
     ViewData["Title"] = "Index";
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
@@ -12,11 +12,11 @@
         شارژ
     </a>
     <div class="balance">
-        <label class="bal">@Model.ToString("#,0")</label>
+        <label class="bal">@ViewBag.Balance.ToString("#,0")</label>
         <span class="t">ریال</span>
     </div>
 </div>
-@{ 
+@*@{ 
     List<TblWallet> list = ViewBag.Wallet as List<TblWallet>;
-}
-<partial name="_TransactionHistory" model="list" />
+}*@
+<partial name="_TransactionHistory" model="Model" />

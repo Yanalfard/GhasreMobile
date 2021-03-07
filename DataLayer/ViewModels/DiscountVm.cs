@@ -16,5 +16,8 @@ namespace DataLayer.ViewModels
         public long Sum { get; set; }
         public long SumWithDiscount { get; set; }
         public long Balance { get; set; }
+        public int PostPrice { get; set; }
+        public int PostPriceId { get; set; }
+        public int SagfePost { get; set; }
     }
 }
