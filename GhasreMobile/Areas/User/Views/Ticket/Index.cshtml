@@ -16,10 +16,12 @@
         </ul>
     </div>
     <form asp-action="SendTicket" class="foot">
-        <input type="text" class="entry" asp-for="Title" />
-        <span class="uk-text-danger" asp-validation-for="Title"></span>
-        <textarea type="text" class="entry" asp-for="Body"></textarea>
-        <span class="uk-text-danger" asp-validation-for="Body"></span>
+        <div class="col flex-auto g-1">
+            <input type="text" placeholder="موضوع" class="entry" asp-for="Title" />
+            <span class="uk-text-danger" asp-validation-for="Title"></span>
+            <textarea type="text" placeholder="توضیحات" class="entry" asp-for="Body"></textarea>
+            <span class="uk-text-danger" asp-validation-for="Body"></span>
+        </div>
         <button class="send" uk-icon="send"></button>
     </form>
 </div>

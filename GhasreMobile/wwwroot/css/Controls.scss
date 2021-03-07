@@ -1309,6 +1309,10 @@ $background-highlight: #eee;
         @include mat-padding;
         @include column;
 
+        > a {
+            display: flex;
+        }
+
         .star {
             position: absolute;
             left: 12px;

@@ -611,6 +611,14 @@ $aside-width: 142px;
         }
     }
 
+    > .body {
+        direction: rtl;
+
+        * {
+            direction: ltr !important;
+        }
+    }
+
     .body {
         padding: 0;
         background-color: #fafafa;
@@ -646,7 +654,13 @@ $aside-width: 142px;
                     .text {
                         margin: 10px 0 8px 0;
                         color: $Text-2;
+                        text-align: right;
                     }
+                }
+
+                .ticket-block.gray {
+                    background-color: #f1f1f1;
+                    border-right: $primary solid 3px;
                 }
             }
 
