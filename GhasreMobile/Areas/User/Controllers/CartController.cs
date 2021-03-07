@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace GhasreMobile.Areas.User.Controllers
 {
     [Area("User")]
+
     public class CartController : Controller
     {
         Core db = new Core();

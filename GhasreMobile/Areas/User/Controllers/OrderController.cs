@@ -197,9 +197,28 @@ namespace GhasreMobile.Areas.User.Controllers
             return Redirect("/User/Order/Finalize");
         }
 
-        public IActionResult OnlineOrder()
+        public IActionResult OnlineOrder(string type = "")
         {
+            ViewBag.OnlineOrder = type;
             return View();
+        }
+        [HttpPost]
+        public IActionResult OnlineOrder(OnlineOrderVm online)
+        {
+            if (ModelState.IsValid)
+            {
+                TblOnlineOrder AddOnlineOrder = new TblOnlineOrder();
+                AddOnlineOrder.ClientId = SelectUser().ClientId;
+                AddOnlineOrder.Body = online.Body;
+                AddOnlineOrder.DateSubmited = DateTime.Now;
+                AddOnlineOrder.IsRead = false;
+                AddOnlineOrder.Title = online.Title;
+                db.OnlineOrder.Add(AddOnlineOrder);
+                db.OnlineOrder.Save();
+                var type = "true";
+                return Redirect("/User/Order/OnlineOrder?type=" + type.ToString());
+            }
+            return View(online);
         }
 
 

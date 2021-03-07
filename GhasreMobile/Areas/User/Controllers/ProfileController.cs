@@ -24,6 +24,14 @@ namespace GhasreMobile.Areas.User.Controllers
         }
         public IActionResult Index()
         {
+            List<TblNotification> list = db.Notification.Get(i => i.ClientId == SelectUser().ClientId).ToList();
+            ViewBag.Notification = list;
+            foreach (var item in list.Where(i => i.IsSeen == false))
+            {
+                item.IsSeen = true;
+                db.Notification.Update(item);
+            }
+            db.Notification.Save();
             return View(SelectUser());
         }
 

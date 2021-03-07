@@ -48,9 +48,12 @@
     </div>
 </div>
 
-<partial name="_OrderStatus" />
+<partial name="_OrderStatus" model="Model.TblOrder" />
+@{ 
+    List<TblNotification> list = ViewBag.Notification as List<TblNotification>;
+}
 
-<partial name="_Notifications" model="Model.TblNotificationClient" />
+<partial name="_Notifications" model="list" />
 
 
 

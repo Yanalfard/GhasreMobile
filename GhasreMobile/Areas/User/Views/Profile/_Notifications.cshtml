@@ -8,7 +8,7 @@
         </h4>
         @foreach (var notification in Model.OrderByDescending(x => x.NotificationId))
         {
-            <div class="comment @((!notification.IsSeen) ? "unseen" : "")">
+            <div class="comment @((notification.IsSeen) ? "" : "unseen")">
                 <p>
                     @notification.Message
                 </p>

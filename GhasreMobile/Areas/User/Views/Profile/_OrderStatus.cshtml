@@ -1,18 +1,25 @@
-﻿<div class="procedure mat-card">
-    <div class="circles">
-        <div class="step done">
-            <div class="circle"></div>
-            <span class="name">آماده سازی</span>
+﻿@model IEnumerable<TblOrder>
+@foreach (var item in Model.OrderByDescending(i=>i.DateSubmited))
+{
+    <div class="procedure mat-card">
+        <div>
+            <label class="date">شماره فاکتور #@item.OrdeId  </label>
         </div>
-        <div class="line done"></div>
-        <div class="step doing">
-            <div class="circle"></div>
-            <span class="name">در حال انتقال</span>
-        </div>
-        <div class="line"></div>
-        <div class="step ">
-            <div class="circle"></div>
-            <span class="name">تحویل داده شد</span>
+        <div class="circles">
+            <div class="step @((item.Status == 0) ? "doing" : (item.Status == 1) ? "done" : (item.Status == 2) ? "done" : "")">
+                <div class="circle"></div>
+                <span class="name">آماده سازی</span>
+            </div>
+            <div class="line @((item.Status == 0) ? "" : (item.Status == 1) ? "done" : (item.Status == 2) ? "done" : "")"></div>
+            <div class="step @((item.Status == 0) ? "" : (item.Status == 1) ? "doing" : (item.Status == 2) ? "done" : "")">
+                <div class="circle"></div>
+                <span class="name">در حال انتقال</span>
+            </div>
+            <div class="line @((item.Status == 0) ? "" : (item.Status == 1) ? "" : (item.Status == 2) ? "done" : "")"></div>
+            <div class="step @((item.Status == 0) ? "" : (item.Status == 1) ? "" : (item.Status == 2) ? "doing" : "done")">
+                <div class="circle"></div>
+                <span class="name">تحویل داده شد</span>
+            </div>
         </div>
     </div>
-</div>
+}
