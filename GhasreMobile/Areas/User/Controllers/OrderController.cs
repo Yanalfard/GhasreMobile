@@ -154,5 +154,11 @@ namespace GhasreMobile.Areas.User.Controllers
             return PartialView(selectedDiscount);
         }
 
+        public IActionResult OnlineOrder()
+        {
+            return View();
+        }
+
+
     }
 }
