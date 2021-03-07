@@ -1,0 +1,7 @@
+﻿@model IEnumerable<TblTicket>
+@foreach (var item in Model)
+{
+    <li>
+        <partial name="_TicketBlock" model="item" />
+    </li>
+}

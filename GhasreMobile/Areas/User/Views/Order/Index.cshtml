@@ -24,6 +24,7 @@
                     <tr>
                         <th>نام محصول</th>
                         <th>تعداد</th>
+                        <th>رنگ</th>
                         <th>فی</th>
                         <th>قیمت</th>
                     </tr>
@@ -36,6 +37,7 @@
                                 <a href="/Product/@j.ProductId/@j.Product.Name.Replace(" ","-")" class="link-text">@j.Product.Name</a>
                             </td>
                             <td>@j.Count</td>
+                            <td>@j.ColorId</td>
                             <td>@j.Price</td>
                             <td>@((j.Count* j.Price).ToString("#,0")) تومان</td>
                         </tr>
