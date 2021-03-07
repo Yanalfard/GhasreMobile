@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "تایید خرید";
+    Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
+}
+
+<form class="request mat-card">
+    <h3 class="uk-margin-bottom">سفارش آنلاین</h3>
+    <div class="fg-col">
+        <label for="TelNo" class="fg-label">تیتر</label>
+        <input id="TelNo" name="TelNo" type="tel" class="entry" value="" />
+        <span class="text-danger"></span>
+    </div>
+    <div class="fg-col">
+        <label for="Message" class="fg-label">توضیحات</label>
+        <textarea id="Message" name="Message" placeholder="..." class="entry"></textarea>
+        <span class="text-danger"></span>
+    </div>
+    <div class="rowr">
+        <button class="btn btn-primary">ارسال سفارش</button>
+    </div>
+</form>

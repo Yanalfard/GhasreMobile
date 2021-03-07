@@ -197,5 +197,11 @@ namespace GhasreMobile.Areas.User.Controllers
             return Redirect("/User/Order/Finalize");
         }
 
+        public IActionResult OnlineOrder()
+        {
+            return View();
+        }
+
+
     }
 }
