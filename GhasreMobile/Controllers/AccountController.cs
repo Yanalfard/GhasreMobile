@@ -36,7 +36,7 @@ namespace GhasreMobile.Controllers
                 }
                 else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
                 {
-                    return Redirect("/Admin/Home");
+                    return Redirect("/Admin");
                 }
             }
             return await Task.FromResult(View());
@@ -107,7 +107,7 @@ namespace GhasreMobile.Controllers
                 }
                 else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
                 {
-                    return Redirect("/Admin/Home");
+                    return Redirect("/Admin");
                 }
             }
             return await Task.FromResult(View());
@@ -137,6 +137,7 @@ namespace GhasreMobile.Controllers
                         addUser.IsActive = false;
                         addUser.Password = PasswordHelper.EncodePasswordMd5(register.Password);
                         addUser.TellNo = register.TellNo;
+                        addUser.Name = register.Name;
                         db.Client.Add(addUser);
                         db.Client.Save();
                         string message = addUser.Auth;

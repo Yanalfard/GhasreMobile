@@ -17,6 +17,11 @@
         ثبت نام
     </h3>
     <div class="fg-col">
+        <label class="fg-label">نام </label>
+        <input class="entry" type="tel" asp-for="Name" placeholder="...." />
+        <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+    <div class="fg-col">
         <label class="fg-label">شماره تلفن</label>
         <input class="entry" type="tel" asp-for="TellNo" placeholder="09............" />
         <span class="text-danger" asp-validation-for="TellNo"></span>
