@@ -24,7 +24,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             else
             {
-                IEnumerable<TblOnlineOrder> onlineOrders = PagingList.Create(_core.OnlineOrder.Get(), 30, page);
+                IEnumerable<TblOnlineOrder> onlineOrders = PagingList.Create(_core.OnlineOrder.Get().OrderByDescending(od=>od.OnlineOrderId), 30, page);
                 return View(onlineOrders);
             }
 

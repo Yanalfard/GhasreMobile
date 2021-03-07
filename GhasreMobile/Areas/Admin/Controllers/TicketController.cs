@@ -20,17 +20,17 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
             if (SearchInputId != 0)
             {
-                IEnumerable<TblTicket> SearchIdtickets = PagingList.Create(_core.Ticket.Get(s => s.TicketId == SearchInputId), 30, page);
+                IEnumerable<TblTicket> SearchIdtickets = PagingList.Create(_core.Ticket.Get(s => s.TicketId == SearchInputId), 40, page);
                 return View(SearchIdtickets);
             }
 
             if (!string.IsNullOrEmpty(SearchInputTelNo))
             {
-                IEnumerable<TblTicket> SearchTelNo = PagingList.Create(_core.Ticket.Get(t => t.Client.TellNo.Contains(SearchInputTelNo)), 30, page);
+                IEnumerable<TblTicket> SearchTelNo = PagingList.Create(_core.Ticket.Get(t => t.Client.TellNo.Contains(SearchInputTelNo)), 40, page);
                 return View(SearchInputTelNo);
             }
 
-            IEnumerable<TblTicket> tickets = PagingList.Create(_core.Ticket.Get(), 30, page);
+            IEnumerable<TblTicket> tickets = PagingList.Create(_core.Ticket.Get().OrderByDescending(t => t.TicketId), 40, page);
             return View(tickets);
 
         }

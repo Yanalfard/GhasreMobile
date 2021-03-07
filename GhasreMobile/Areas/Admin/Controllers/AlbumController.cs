@@ -16,7 +16,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblAlbum> albums = PagingList.Create(_core.Album.Get(), 30, page);
+            IEnumerable<TblAlbum> albums = PagingList.Create(_core.Album.Get().OrderByDescending(o => o.AlbumId), 30, page);
             return View(albums);
         }
         public IActionResult Show(int id)

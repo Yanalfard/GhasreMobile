@@ -19,12 +19,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (!string.IsNullOrEmpty(Search))
             {
-                IEnumerable<TblDelivery> deliveries = PagingList.Create(_core.Delivery.Get(d=>d.TellNo.Contains(Search)), 30, page);
+                IEnumerable<TblDelivery> deliveries = PagingList.Create(_core.Delivery.Get(d=>d.TellNo.Contains(Search)), 40, page);
                 return View(deliveries);
             }
             else
             {
-                IEnumerable<TblDelivery> deliveries = PagingList.Create(_core.Delivery.Get(), 30, page);
+                IEnumerable<TblDelivery> deliveries = PagingList.Create(_core.Delivery.Get().OrderByDescending(d=>d.DeliveryId), 40, page);
                 return View(deliveries);
             }
         }

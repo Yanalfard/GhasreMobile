@@ -19,8 +19,17 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblWallet> wallets = PagingList.Create(_core.Wallet.Get(), 30, page);
+            IEnumerable<TblWallet> wallets = PagingList.Create(_core.Wallet.Get().OrderByDescending(o => o.WalletId), 30, page);
             return View(wallets);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _core.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

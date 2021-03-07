@@ -30,7 +30,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             else
             {
-                IEnumerable<TblClient> clients = PagingList.Create(_core.Client.Get(), 40, page);
+                IEnumerable<TblClient> clients = PagingList.Create(_core.Client.Get().OrderByDescending(b => b.ClientId), 40, page);
                 return View(clients);
             }
 
