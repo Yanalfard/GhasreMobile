@@ -24,7 +24,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(Search))
             {
-                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => !c.IsDeleted), 30, page);
+                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => !c.IsDeleted).OrderByDescending(p=>p.ProductId), 30, page);
                 return View(products);
             }
             else

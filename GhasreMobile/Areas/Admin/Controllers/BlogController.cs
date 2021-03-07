@@ -27,7 +27,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             else
             {
-                IEnumerable<TblBlog> blogs = PagingList.Create(_core.Blog.Get(), 30, page);
+                IEnumerable<TblBlog> blogs = PagingList.Create(_core.Blog.Get().OrderByDescending(b=>b.BlogId), 30, page);
 
                 return View(blogs);
             }

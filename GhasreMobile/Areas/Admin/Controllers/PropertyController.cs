@@ -17,7 +17,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page=1)
         {
-            IEnumerable<TblProperty> properties = PagingList.Create(_core.Property.Get(), 10, page);
+            IEnumerable<TblProperty> properties = PagingList.Create(_core.Property.Get().OrderByDescending(p=>p.PropertyId), 10, page);
             return View(properties);
         }
 

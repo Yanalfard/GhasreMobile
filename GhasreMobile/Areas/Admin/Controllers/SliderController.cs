@@ -20,7 +20,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblBannerAndSlide> AllSlider = PagingList.Create(_core.BannerAndSlide.Get(), 30, page);
+            IEnumerable<TblBannerAndSlide> AllSlider = PagingList.Create(_core.BannerAndSlide.Get().OrderByDescending(bas=>bas.BannerAndSlideId), 30, page);
             return View(AllSlider);
         }
 

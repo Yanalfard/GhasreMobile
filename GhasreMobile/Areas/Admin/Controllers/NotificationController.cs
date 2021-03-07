@@ -26,7 +26,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             else
             {
-                IEnumerable<TblNotification> notifications = PagingList.Create(_core.Notification.Get(), 50, page);
+                IEnumerable<TblNotification> notifications = PagingList.Create(_core.Notification.Get().OrderByDescending(n=>n.NotificationId), 50, page);
                 return View(notifications);
             }
 

@@ -17,7 +17,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblBrand> brands = PagingList.Create(_core.Brand.Get(), 10, page);
+            IEnumerable<TblBrand> brands = PagingList.Create(_core.Brand.Get().OrderByDescending(b => b.BrandId), 30, page);
             return View(brands);
         }
 

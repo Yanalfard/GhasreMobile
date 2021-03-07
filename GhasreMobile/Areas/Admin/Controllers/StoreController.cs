@@ -21,12 +21,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (!string.IsNullOrEmpty(Search))
             {
-                IEnumerable<TblStore> stores = PagingList.Create(_core.Store.Get(s => s.Name.Contains(Search)), 30, page);
+                IEnumerable<TblStore> stores = PagingList.Create(_core.Store.Get(s => s.Name.Contains(Search)), 40, page);
                 return View(stores);
             }
             else
             {
-                IEnumerable<TblStore> stores = PagingList.Create(_core.Store.Get(), 30, page);
+                IEnumerable<TblStore> stores = PagingList.Create(_core.Store.Get().OrderByDescending(s=>s.StoreId), 40, page);
                 return View(stores);
             }
         }

@@ -17,7 +17,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblPostOption> postOptions = PagingList.Create(_core.PostOption.Get(), 30, page);
+            IEnumerable<TblPostOption> postOptions = PagingList.Create(_core.PostOption.Get().OrderByDescending(p=>p.PostOptionId), 30, page);
             return View(postOptions);
         }
         [HttpGet]

@@ -18,7 +18,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblRegularQuestion> regularQuestions = PagingList.Create(_core.RegularQuestion.Get(), 40, page);
+            IEnumerable<TblRegularQuestion> regularQuestions = PagingList.Create(_core.RegularQuestion.Get().OrderByDescending(rq=>rq.RegularQuestionId), 40, page);
             return View(regularQuestions);
         }
 

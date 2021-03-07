@@ -20,17 +20,22 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (!string.IsNullOrEmpty(TellNo) && OrderId == 0)
             {
-                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(od => od.Client.TellNo.Contains(TellNo)), 30, page);
+                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(od => od.Client.TellNo.Contains(TellNo)), 40, page);
                 return View(Orders);
             }
             if (!string.IsNullOrEmpty(TellNo) && OrderId != 0)
             {
-                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(od => od.Client.TellNo.Contains(TellNo) && od.OrdeId == OrderId), 30, page);
+                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(od => od.Client.TellNo.Contains(TellNo) && od.OrdeId == OrderId), 40, page);
+                return View(Orders);
+            }
+            else if (string.IsNullOrEmpty(TellNo) && OrderId != 0)
+            {
+                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(o=>o.OrdeId==OrderId), 40, page);
                 return View(Orders);
             }
             else
             {
-                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(od => od.OrdeId == OrderId), 30, page);
+                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get().OrderByDescending(o=>o.OrdeId), 40, page);
                 return View(Orders);
             }
         }
