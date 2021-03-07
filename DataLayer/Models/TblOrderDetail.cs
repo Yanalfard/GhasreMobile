@@ -13,6 +13,7 @@ namespace DataLayer.Models
         public int Count { get; set; }
         public long Price { get; set; }
         public int? FinalOrderId { get; set; }
+        public int? ColorId { get; set; }
 
         [ForeignKey(nameof(FinalOrderId))]
         [InverseProperty(nameof(TblOrder.TblOrderDetail))]

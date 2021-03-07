@@ -99,6 +99,7 @@ namespace GhasreMobile.Controllers
                     }
             }
             HttpContext.Session.SetComplexData("ShopCart", listShop);
+
             return Redirect(ReturnUrl);
         }
 
@@ -168,10 +169,10 @@ namespace GhasreMobile.Controllers
                 addOrder.FinalPrice = (int)selectedDiscount.Sum;
                 addOrder.IsPayed = false;
                 addOrder.Status = 0;
-                addOrder.PaymentStatus = 0;
+                addOrder.PaymentStatus = (int)selectedDiscount.DiscountPrice;
                 addOrder.PostalCode = "0";
-                addOrder.SendPrice = 0;
-                addOrder.SendStatus = 0;
+                addOrder.SendPrice = selectedDiscount.PostPrice;
+                addOrder.SendStatus = selectedDiscount.PostPriceId;
                 addOrder.ClientId = SelectUser().ClientId;
                 db.Order.Add(addOrder);
                 db.Order.Save();
@@ -186,6 +187,7 @@ namespace GhasreMobile.Controllers
                     addOrderDetail.Count = item.Count;
                     addOrderDetail.FinalOrderId = addOrder.OrdeId;
                     addOrderDetail.ProductId = item.ProductID;
+                    addOrderDetail.ColorId = item.ColorID;
                     if (product.PriceAfterDiscount == 0)
                     {
                         addOrderDetail.Price = (int)product.PriceBeforeDiscount;
@@ -258,6 +260,7 @@ namespace GhasreMobile.Controllers
                     TblClient selectedClient = db.Client.GetById(wallet.ClientId);
                     selectedClient.Balance += wallet.Amount;
                     db.Client.Update(selectedClient);
+
                     db.Client.Save();
                     if (wallet.OrderId != null)
                     {
@@ -276,8 +279,27 @@ namespace GhasreMobile.Controllers
                         addWallet.ClientId = SelectUser().ClientId;
                         addWallet.OrderId = wallet.OrderId;
                         db.Wallet.Add(addWallet);
+                        if (selectedOrder.DiscountId != null)
+                        {
+                            TblDiscount selectedDiscount = db.Discount.GetById(selectedOrder.DiscountId);
+                            selectedDiscount.Count--;
+                            db.Discount.Update(selectedDiscount);
+                        }
+                        List<TblOrderDetail> list = db.OrderDetail.Get(i => i.FinalOrderId == wallet.OrderId).ToList();
+                        foreach (var item in list)
+                        {
+                            TblColor colors = db.Color.GetById(item.ColorId);
+                            if (colors.Count > 0 && colors.Count >= item.Count)
+                            {
+                                colors.Count -= colors.Count;
+                                db.Color.Update(colors);
+                            }
+                        }
                         db.Wallet.Save();
                     }
+                    List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
+                    DiscountVm discount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                    HttpContext.Session.Clear();
                 }
 
             }

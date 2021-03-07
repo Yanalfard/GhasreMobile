@@ -110,6 +110,8 @@ namespace GhasreMobile.Areas.User.Controllers
                 {
                     discount.Sum += discount.PostPrice;
                     discount.SumWithDiscount += discount.PostPrice;
+                    TblPostOption selectPost = db.PostOption.GetById(discount.PostPriceId);
+                    discount.PostPrice = (int)selectPost.Price;
                 }
                 else
                 {
