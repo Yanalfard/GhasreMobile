@@ -17,22 +17,17 @@
                 روش های ارسال
             </h4>
             <div class="fg-col">
-                <label class="radio">
-                    <span>ارسال با پیک</span>
-                    <input id="radio" name="radio" checked class="uk-radio" value="سیب" type="radio">
-                </label>
-                <label class="radio">
-                    <span>ارسال با پست</span>
-                    <input id="radio" name="radio" class="uk-radio" value="موز" type="radio">
-                </label>
-                <label class="radio">
-                    <span>ارسال با چاپاره</span>
-                    <input id="radio" name="radio" class="uk-radio" value="هلو" type="radio">
-                </label>
-                <label class="radio">
-                    <span>ارسال با تیپاکس</span>
-                    <input id="radio" name="radio" class="uk-radio" value="آلبالو" type="radio">
-                </label>
+                @{
+                    List<TblPostOption> list = ViewBag.ListPostOption as List<TblPostOption>;
+                }
+                @foreach (var item in list)
+                {
+                    <label class="radio">
+                        <span>@item.Name</span>
+                        <input id="radio" name="radio" @((list.ToList().IndexOf(item) == 0 ? "checked" : "")) class="uk-radio @item.PostOptionId" value="@item.PostOptionId" type="radio">
+                        <span>@item.Price.Value.ToString("#,0")</span>
+                    </label>
+                }
             </div>
         </div>
 
@@ -47,10 +42,11 @@
             </p>
 
 
-            <div class="rowr" >
+            <div class="rowr">
 
                 <div class="basket-factor box-shadow">
                     <div class="profit-amount">تخفیف  : <span>@Model.DiscountPrice.ToString("#,0") تومان </span></div>
+                    <div class="profit-amount">هزینه ارسال  : <span>@Model.PostPrice.ToString("#,0") تومان </span><span>(   فاکتور بالای @Model.SagfePost.ToString("#,0")   شامل هزینه نمی باشد   )</span></div>
                     <div class="main-payment">مبلغ کل : <span>@Model.Sum.ToString("#,0") تومان</span> </div>
                     <div class="main-payment">موجودی کیف پول شما  : <span>@Model.Balance.ToString("#,0") تومان</span> </div>
                     <div class="final-payment">مبلغ قابل پرداخت : <span>@Model.SumWithDiscount.ToString("#,0") تومان</span></div>
@@ -66,4 +62,16 @@
             </div>
         </div>
     </form>
+    <input type="hidden" name="PostPriceId" id="PostPriceId" value="@Model.PostPriceId" />
 }
+
+
+<script>
+
+    $("#mainForm input[type=radio]").change(function () {
+        var id = $(this).val();
+        window.location.href = "/User/Order/SetPost/" + id;
+    });
+
+    $("."+@Model.PostPriceId).prop("checked", true);
+</script>

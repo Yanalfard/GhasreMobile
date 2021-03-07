@@ -23,7 +23,7 @@ namespace GhasreMobile.Areas.User.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return View(db.Order.Get(i=>i.IsPayed).OrderByDescending(i=>i.DateSubmited));
         }
 
         // Make order
@@ -67,14 +67,19 @@ namespace GhasreMobile.Areas.User.Controllers
                 DiscountVm discount = new DiscountVm();
                 long sumList = (long)list.Sum(i => i.Sum);
                 discount.Balance = SelectUser().Balance;
+                int SagfePost = Convert.ToInt32(db.Config.Get(i => i.Key == "SagfePost").Single().Value);
+
                 if (selectedDiscount != null)
                 {
+                    discount.PostPrice = selectedDiscount.PostPrice;
                     discount.Discount = selectedDiscount.Discount;
                     discount.DiscountPrice = selectedDiscount.DiscountPrice;
                     discount.DiscountId = selectedDiscount.DiscountId;
                     discount.Name = selectedDiscount.Name;
                     discount.SumWithDiscount = selectedDiscount.SumWithDiscount;
                     discount.Sum = selectedDiscount.Sum;
+                    discount.PostPriceId = selectedDiscount.PostPriceId;
+                    discount.SagfePost = selectedDiscount.SagfePost;
                     if (selectedDiscount.Discount != 0)
                     {
                         discount.Sum = sumList - (long)(Math.Floor((double)(sumList * selectedDiscount.Discount / 100)));
@@ -91,12 +96,26 @@ namespace GhasreMobile.Areas.User.Controllers
                 {
                     discount.Sum = sumList;
                     discount.SumWithDiscount = sumList;
-
+                    TblPostOption selectPost = db.PostOption.Get().First();
+                    discount.PostPrice = (int)selectPost.Price;
+                    discount.SagfePost = SagfePost;
+                    discount.PostPriceId = selectPost.PostOptionId;
                 }
                 discount.SumWithDiscount -= SelectUser().Balance;
                 if (discount.SumWithDiscount <= 0)
                 {
                     discount.SumWithDiscount = 0;
+                }
+                if (SagfePost >= discount.Sum)
+                {
+                    discount.Sum += discount.PostPrice;
+                    discount.SumWithDiscount += discount.PostPrice;
+                    TblPostOption selectPost = db.PostOption.GetById(discount.PostPriceId);
+                    discount.PostPrice = (int)selectPost.Price;
+                }
+                else
+                {
+                    discount.PostPrice = 0;
                 }
                 HttpContext.Session.SetComplexData("Discount", discount);
                 return View(list);
@@ -130,9 +149,15 @@ namespace GhasreMobile.Areas.User.Controllers
                     {
                         type = "Success";
                         var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                        //int SagfePost = Convert.ToInt32(db.Config.Get(i => i.Key == "SagfePost").Single().Value);
+
                         selectedDiscount.Discount = getDiscount.Discount;
                         selectedDiscount.Name = getDiscount.Name;
                         selectedDiscount.DiscountId = getDiscount.DiscountId;
+                        // TblPostOption selectPost = db.PostOption.Get().First();
+                        selectedDiscount.PostPrice = selectedDiscount.PostPrice;
+                        selectedDiscount.SagfePost = selectedDiscount.SagfePost;
+                        selectedDiscount.PostPriceId = selectedDiscount.PostPriceId;
                         HttpContext.Session.SetComplexData("Discount", selectedDiscount);
                     }
                 }
@@ -150,9 +175,33 @@ namespace GhasreMobile.Areas.User.Controllers
 
         public IActionResult FinalVerfity()
         {
+            ViewBag.ListPostOption = db.PostOption.Get().ToList();
             DiscountVm selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
             return PartialView(selectedDiscount);
         }
+        public IActionResult SetPost(int id)
+        {
+            TblPostOption selectPost = db.PostOption.GetById(id);
+            if (selectPost != null)
+            {
+                var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                //int SagfePost = Convert.ToInt32(db.Config.Get(i => i.Key == "SagfePost").Single().Value);
+                //selectedDiscount.Discount = getDiscount.Discount;
+                //selectedDiscount.Name = getDiscount.Name;
+                //selectedDiscount.DiscountId = getDiscount.DiscountId;
+                selectedDiscount.PostPrice = (int)selectPost.Price;
+                //  selectedDiscount.SagfePost = selectedDiscount.SagfePost;
+                selectedDiscount.PostPriceId = selectPost.PostOptionId;
+                HttpContext.Session.SetComplexData("Discount", selectedDiscount);
+            }
+            return Redirect("/User/Order/Finalize");
+        }
+
+        public IActionResult OnlineOrder()
+        {
+            return View();
+        }
+
 
     }
 }
