@@ -119,6 +119,7 @@
                     <tr>
                         <th>نام محصول</th>
                         <th>تعداد</th>
+                        <th>رنگ</th>
                         <th>قیمت</th>
                     </tr>
                 </thead>
@@ -128,6 +129,7 @@
                         <tr>
                             <td>@item.Product.Name</td>
                             <td>@item.Count</td>
+                            <td>@item.Color.Name</td>
                             <td>
                                 @if (item.Product.PriceAfterDiscount != 0)
                                 {

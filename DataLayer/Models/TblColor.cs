@@ -7,6 +7,11 @@ namespace DataLayer.Models
 {
     public partial class TblColor
     {
+        public TblColor()
+        {
+            TblOrderDetail = new HashSet<TblOrderDetail>();
+        }
+
         [Key]
         public int ColorId { get; set; }
         [Required]
@@ -20,5 +25,7 @@ namespace DataLayer.Models
         [ForeignKey(nameof(ProductId))]
         [InverseProperty(nameof(TblProduct.TblColor))]
         public virtual TblProduct Product { get; set; }
+        [InverseProperty("Color")]
+        public virtual ICollection<TblOrderDetail> TblOrderDetail { get; set; }
     }
 }

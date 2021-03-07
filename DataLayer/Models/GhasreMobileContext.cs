@@ -56,9 +56,10 @@ namespace DataLayer.Models
         public virtual DbSet<TblWallet> TblWallet { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-           .UseLazyLoadingProxies()
-           .UseSqlServer("Data Source=103.216.62.27;Initial Catalog=GhasreMobile;User ID=Yanal;Password=1710ahmad.fard");
+           => optionsBuilder
+          .UseLazyLoadingProxies()
+          .UseSqlServer("Data Source=103.216.62.27;Initial Catalog=GhasreMobile;User ID=Yanal;Password=1710ahmad.fard");
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -242,7 +243,12 @@ namespace DataLayer.Models
 
                 entity.Property(e => e.Count).HasDefaultValueSql("((1))");
 
-                entity.HasOne(d => d.Order)
+                //entity.HasOne(d => d.Color)
+                //    .WithMany(p => p.TblOrderDetail)
+                //    .HasForeignKey(d => d.ColorId)
+                //    .HasConstraintName("FK_TblOrderDetail_TblColor");
+
+                entity.HasOne(d => d.FinalOrder)
                     .WithMany(p => p.TblOrderDetail)
                     .HasForeignKey(d => d.FinalOrderId)
                     .HasConstraintName("FK_TblOrderDetail_TblOrder");
@@ -402,7 +408,6 @@ namespace DataLayer.Models
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.TblWallet)
                     .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TblWallet_TblOrder");
             });
 

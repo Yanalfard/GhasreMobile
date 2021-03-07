@@ -15,9 +15,12 @@ namespace DataLayer.Models
         public int? FinalOrderId { get; set; }
         public int? ColorId { get; set; }
 
+        [ForeignKey(nameof(ColorId))]
+        [InverseProperty(nameof(TblColor.TblOrderDetail))]
+        public virtual TblColor Color { get; set; }
         [ForeignKey(nameof(FinalOrderId))]
         [InverseProperty(nameof(TblOrder.TblOrderDetail))]
-        public virtual TblOrder Order { get; set; }
+        public virtual TblOrder FinalOrder { get; set; }
         [ForeignKey(nameof(ProductId))]
         [InverseProperty(nameof(TblProduct.TblOrderDetail))]
         public virtual TblProduct Product { get; set; }
