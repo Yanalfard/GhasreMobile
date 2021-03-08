@@ -1,6 +1,5 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "تماس با ما";
     ViewData["Single"] = true;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,80 +9,82 @@
     <link href="~/css/pages/index.min.css" rel="stylesheet" />
 
 }
-
+<div class="mat-card">
+   
+    @await Component.InvokeAsync("TamasBaMaInContactView")
+</div>
 <div class="main-contact">
 
     <div class="left">
         <!-- #region Contact -->
         @*<form class="request mat-card">
-            <h3 class="uk-margin-bottom">تماس با ما</h3>
-            <div class="fg-col">
-                <label for="TelNo" class="fg-label">شماره تلفن</label>
-                <input id="TelNo" name="TelNo" type="tel" class="entry" value="" />
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col">
-                <label for="Name" class="fg-label">نام و نام خانوادگی</label>
-                <input id="Name" name="Name" type="text" class="entry" value="" />
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col">
-                <label for="Message" class="fg-label">پیغام شما</label>
-                <textarea id="Message" name="Message" class="entry"></textarea>
-                <span class="text-danger"></span>
-            </div>
-            <div class="rowr">
-                <button class="btn btn-primary">ارسال پیام</button>
-            </div>
-        </form>*@
+                <h3 class="uk-margin-bottom">تماس با ما</h3>
+                <div class="fg-col">
+                    <label for="TelNo" class="fg-label">شماره تلفن</label>
+                    <input id="TelNo" name="TelNo" type="tel" class="entry" value="" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col">
+                    <label for="Name" class="fg-label">نام و نام خانوادگی</label>
+                    <input id="Name" name="Name" type="text" class="entry" value="" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="fg-col">
+                    <label for="Message" class="fg-label">پیغام شما</label>
+                    <textarea id="Message" name="Message" class="entry"></textarea>
+                    <span class="text-danger"></span>
+                </div>
+                <div class="rowr">
+                    <button class="btn btn-primary">ارسال پیام</button>
+                </div>
+            </form>*@
 
         <!-- #endregion -->
-
         <!-- #region Sellers -->
 
-        <a href="" class="telegram">
-            <img src="~/st/r/Telegram.png" alt="" />
+        <a href="@ViewBag.Telegram" class="telegram">
+            <img src="~/st/r/Telegram.png" alt="قصر موبایل" />
         </a>
-        <a href="" class="instagram">
-            <img src="~/st/r/Instagram.png" alt="" />
+        <a href="@ViewBag.Instagram" class="instagram">
+            <img src="~/st/r/Instagram.png" alt="قصر موبایل" />
         </a>
 
-        <div class="sellers mat-card">
-            <h3>مدیران فروش</h3>
-            <ul>
-                <li>
-                    <label>نام و نام خانوادگی</label>
-                    <div class="rowr">
-                        <span>33860896</span>
-                    </div>
-                </li>
-                <li>
-                    <label>نام و نام خانوادگی</label>
-                    <div class="rowr">
-                        <span>33860896</span>
-                    </div>
-                </li>
-                <li>
-                    <label>نام و نام خانوادگی</label>
-                    <div class="rowr">
-                        <span>33860896</span>
-                    </div>
-                </li>
-                <li>
-                    <label>نام و نام خانوادگی</label>
-                    <div class="rowr">
-                        <span>33860896</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        @*<div class="sellers mat-card">
+                <h3>مدیران فروش</h3>
+                <ul>
+                    <li>
+                        <label>نام و نام خانوادگی</label>
+                        <div class="rowr">
+                            <span>33860896</span>
+                        </div>
+                    </li>
+                    <li>
+                        <label>نام و نام خانوادگی</label>
+                        <div class="rowr">
+                            <span>33860896</span>
+                        </div>
+                    </li>
+                    <li>
+                        <label>نام و نام خانوادگی</label>
+                        <div class="rowr">
+                            <span>33860896</span>
+                        </div>
+                    </li>
+                    <li>
+                        <label>نام و نام خانوادگی</label>
+                        <div class="rowr">
+                            <span>33860896</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>*@
 
         <!-- #endregion -->
 
     </div>
 
     <div class="right">
-      
+
         <!-- #region Request -->
         @await Component.InvokeAsync("DeliveryInContactView")
         <!-- #endregion -->
