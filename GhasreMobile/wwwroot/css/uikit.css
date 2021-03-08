@@ -4658,9 +4658,15 @@ select.uk-form-width-xsmall {
   font-size: 1.25rem;
   line-height: 1.4;
   cursor: pointer;
-  -moz-border-radius: 16px 16px 16px 16px;
-  -webkit-border-radius: 16px 16px 16px 16px;
-  border-radius: 16px 16px 16px 16px; }
+  border-right: #96027E solid 3px !important;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  -moz-box-shadow: rgba(0, 0, 0, 0.12) 0 2px 8px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.12) 0 2px 8px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 2px 8px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px; }
 
 * + .uk-notification-message {
   margin-top: 10px; }
@@ -4669,7 +4675,7 @@ select.uk-form-width-xsmall {
  * Adopts `uk-close`
  ========================================================================== */
 .uk-notification-close {
-  display: none;
+  display: none !important;
   position: absolute;
   top: 20px;
   left: 15px; }

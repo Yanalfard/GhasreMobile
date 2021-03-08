@@ -1555,67 +1555,80 @@ footer {
   .breadcrumb .active {
     color: #333; }
 
-.comment-section h3 {
-  font-size: 20px;
-  color: #333; }
-
-.comment-section ul {
-  display: flex;
-  flex-direction: column;
-  grid-gap: 12px;
-  margin-top: 0; }
-
-.comment-section .comment {
-  background: #F8F8F8;
-  border: #e9e9e9 1px solid;
-  -moz-border-radius: 4px 4px 4px 4px;
-  -webkit-border-radius: 4px 4px 4px 4px;
-  border-radius: 4px 4px 4px 4px;
-  display: flex;
-  flex-direction: column; }
-  @media only screen and (min-device-width: 420px) {
-    .comment-section .comment {
-      padding: 12px; } }
-  @media only screen and (max-device-width: 420px) {
-    .comment-section .comment {
-      padding: 8px; } }
-  .comment-section .comment .head {
+.comment-section {
+  position: relative; }
+  .comment-section h3 {
+    font-size: 20px;
+    color: #333; }
+  .comment-section ul {
     display: flex;
-    flex-direction: row-reverse; }
-    .comment-section .comment .head h5 {
-      font-size: 16px;
-      color: #333; }
-    .comment-section .comment .head .date {
-      direction: rtl;
-      margin-right: auto;
-      color: #999;
-      font-size: 13px; }
-  .comment-section .comment p {
-    margin: 8px 0;
-    color: #666;
-    font-size: 14px; }
-  .comment-section .comment .action {
-    display: flex;
-    flex-direction: row; }
-  .comment-section .comment .text {
+    flex-direction: column;
+    grid-gap: 12px;
+    margin-top: 0; }
+  .comment-section > ul {
+    position: relative; }
+  .comment-section .comment {
+    background: #F8F8F8;
+    border: #e9e9e9 1px solid;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
     display: flex;
     flex-direction: column; }
-    .comment-section .comment .text .entry {
-      background: #fff; }
-  .comment-section .comment ul {
-    padding-right: 20px;
-    padding-left: 0; }
-    .comment-section .comment ul li .comment {
-      padding: 0;
-      border: 0; }
-      .comment-section .comment ul li .comment .head h5 {
+    @media only screen and (min-device-width: 420px) {
+      .comment-section .comment {
+        padding: 12px; } }
+    @media only screen and (max-device-width: 420px) {
+      .comment-section .comment {
+        padding: 8px; } }
+    .comment-section .comment .head {
+      display: flex;
+      flex-direction: row-reverse; }
+      .comment-section .comment .head h5 {
+        font-size: 16px;
+        color: #333; }
+      .comment-section .comment .head .date {
+        direction: rtl;
+        margin-right: auto;
+        color: #999;
         font-size: 13px; }
-      .comment-section .comment ul li .comment .head .date {
-        font-size: 11px; }
-      .comment-section .comment ul li .comment p {
-        margin: 6px 0;
-        color: #666;
-        font-size: 13px; }
+    .comment-section .comment p {
+      margin: 8px 0;
+      color: #666;
+      font-size: 14px; }
+    .comment-section .comment .action {
+      display: flex;
+      flex-direction: row;
+      /*border-bottom: $mat-border-color 1px solid;*/ }
+    .comment-section .comment .text {
+      display: flex;
+      flex-direction: column; }
+      .comment-section .comment .text .entry {
+        background: #fff; }
+    .comment-section .comment ul {
+      padding-right: 16px;
+      padding-left: 0; }
+      .comment-section .comment ul li .comment {
+        padding: 0;
+        border: 0; }
+        .comment-section .comment ul li .comment .head {
+          padding-top: 24px; }
+          .comment-section .comment ul li .comment .head h5 {
+            font-size: 14px; }
+          .comment-section .comment ul li .comment .head .date {
+            font-size: 11px; }
+        .comment-section .comment ul li .comment .head::before {
+          content: "";
+          height: 1px;
+          background: #e9e9e9;
+          position: absolute;
+          left: 0;
+          right: 0;
+          margin-top: -20px; }
+        .comment-section .comment ul li .comment p {
+          margin: 6px 0;
+          color: #666;
+          font-size: 13px; }
 
 @media only screen and (max-width: 542px) {
   .comment-section h3 {

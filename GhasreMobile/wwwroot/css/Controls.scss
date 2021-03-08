@@ -1731,6 +1731,7 @@ footer {
 }
 
 .comment-section {
+    position: relative;
 
     h3 {
         font-size: 20px;
@@ -1741,6 +1742,10 @@ footer {
         @include column;
         grid-gap: 12px;
         margin-top: 0;
+    }
+
+    > ul {
+        position: relative;
     }
 
     .comment {
@@ -1774,6 +1779,7 @@ footer {
 
         .action {
             @include row;
+            /*border-bottom: $mat-border-color 1px solid;*/
         }
 
         .text {
@@ -1785,7 +1791,7 @@ footer {
         }
 
         ul {
-            padding-right: 20px;
+            padding-right: 16px;
             padding-left: 0;
 
             li {
@@ -1794,14 +1800,25 @@ footer {
                     border: 0;
 
                     .head {
+                        padding-top: 24px;
 
                         h5 {
-                            font-size: 13px;
+                            font-size: 14px;
                         }
 
                         .date {
                             font-size: 11px;
                         }
+                    }
+
+                    .head::before {
+                        content: "";
+                        height: 1px;
+                        background: $mat-border-color;
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        margin-top: -20px;
                     }
 
                     p {
