@@ -9,11 +9,18 @@
           data-ajax-mode="replace"
           data-ajax-complete="SendCommentBlog()"
           data-ajax-update="#ajaxresultSendCommentBlog">
-        <textarea class="entry" asp-for="Body"></textarea>
+        <textarea class="entry" asp-for="Body" maxlength="300"></textarea>
         <span class="text-danger" asp-validation-for="Body"></span>
         <input type="hidden" id="BlogId" asp-for="BlogId" name="BlogId" />
         <div class="rowr uk-margin-small-top">
-            <button type="submit" class="btn btn-dashed uk-margin-auto-top" onclick="LoadingRun('#ajaxresultSendCommentBlog')">ثبت نظر</button>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <button type="submit" class="btn btn-dashed uk-margin-auto-top" onclick="LoadingRun('#ajaxresultSendCommentBlog')">ثبت نظر</button>
+            }
+            else
+            {
+                <a href="/Login" class="btn btn-dashed uk-margin-auto-top" onclick="LoadingRun('#ajaxresultSendCommentBlog')">ثبت نظر</a>
+            }
         </div>
     </form>
 </div>
