@@ -1,20 +1,14 @@
 ﻿@model TblTicket
-<form class="ticket-block">
+<form class="ticket-block @((Model.IsAnswer || Model.IsAnswerd ? "gray" : ""))">
     <div class="top">
+        <label class="name">
+            @Model.Title
+        </label>
         <span class="date">
             @Model.DateSubmited.Value.DateToShamsi()
         </span>
     </div>
-    <p class="text @((Model.IsAnswer || Model.IsAnswerd ? "uk-text-left" : "")) ">
-        <span>
-            موضوع:
-        </span>
-        @Model.Title
-    </p>
-    <p class="text @((Model.IsAnswer || Model.IsAnswerd ? "uk-text-left" : ""))">
-        <span>
-            متن:
-        </span>
+    <p class="text" dir="rtl">
         @Model.Body
     </p>
 </form>
