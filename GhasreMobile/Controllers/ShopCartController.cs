@@ -99,7 +99,11 @@ namespace GhasreMobile.Controllers
                     }
             }
             HttpContext.Session.SetComplexData("ShopCart", listShop);
-
+            int sumCount = listShop.Sum(i => i.Count);
+            if (sumCount <= 0)
+            {
+                return Redirect("/");
+            }
             return Redirect(ReturnUrl);
         }
 

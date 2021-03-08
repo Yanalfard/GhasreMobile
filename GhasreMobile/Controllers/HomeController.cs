@@ -40,17 +40,16 @@ namespace GhasreMobile.Controllers
         [Route("Contact")]
         public IActionResult Contact()
         {
-            ViewBag.Instagram = db.Config.Get(i => i.Key == "LinkInsta").Single().Value;
-            ViewBag.Telegram = db.Config.Get(i => i.Key == "LinkTelegram").Single().Value;
+            ViewBag.Instagram = db.Config.Get(i => i.Key == "LinkInsta").SingleOrDefault().Value;
+            ViewBag.Telegram = db.Config.Get(i => i.Key == "LinkTelegram").SingleOrDefault().Value;
             return View();
         }
         [Route("About")]
         public IActionResult About()
         {
-            return View(db.Config.Get(i => i.Key == "DarbareyeMa").Single());
+            return View(db.Config.Get(i => i.Key == "DarbareyeMa").SingleOrDefault());
         }
-        [Route("ErrorPage")]
-        public async Task<IActionResult> ErrorPage()
+        public async Task<IActionResult> Error()
         {
             return await Task.FromResult(View());
         }

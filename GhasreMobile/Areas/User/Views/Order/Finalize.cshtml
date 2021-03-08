@@ -6,6 +6,7 @@
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
 
     string discountType = ViewBag.typeDiscount.ToString();
+    string FinalTextKharid = ViewBag.FinalTextKharid.ToString();
 }
 
 @if (Model.Any())
@@ -15,11 +16,14 @@
         <div class="mat-card">
             <div class="rowr uk-margin-small-bottom">
                 <h3 class="uk-h2 uk-margin-auto-left">
-                    تایید خرید
+                    تائید خرید
                 </h3>
                 <img src="~/st/r/logo.jpg" height="48" width="48" alt="" />
             </div>
-            صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.
+            @*@{
+                    TblConfig list = ViewBag.FinalTextKharid as TblConfig;
+                }*@
+            @Html.Raw(FinalTextKharid)
         </div>
 
         <partial name="_Cart" model="Model" />
@@ -30,18 +34,16 @@
 
         </div>
     </div>
-
+    @section Scripts{
+        <script>
+            $('#FinalVerfity').load('/User/Order/FinalVerfity');
+            //$('#FinalTextKharid').load('/User/Order/FinalTextKharid');
+        </script>
+    }
 }
-@section Scripts{
+else
+{
     <script>
-        $('#FinalVerfity').load('/User/Order/FinalVerfity');
-
-
-        $("#radio").click(function () {
-
-            alert("3");
-            //// This will redirect to the value, relative to the current path
-            //location.href = $(this).val();
-        });
+        window.location.href = "/";
     </script>
 }

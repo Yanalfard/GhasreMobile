@@ -8,10 +8,10 @@
                 <h3>گالری</h3>
             </a>
         </div>
-        <div class="grid" uk-lightbox>
+        <div class="grid">
             @foreach (var item in Model)
             {
-                <a href="~/Images/ProductAlbum/@item.Image" data-caption="@item.Album.Name"><img src="~/Images/ProductAlbum/@item.Image" alt="" /></a>
+                <a href="/AlbumView/@item.AlbumId/@item.Album.Name" ><img src="~/Images/ProductAlbum/@item.Image" alt="" /></a>
             }
         </div>
         <div class="row">

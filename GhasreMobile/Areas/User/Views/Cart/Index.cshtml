@@ -4,5 +4,15 @@
     Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
 }
 
-<partial name="_Cart" model="Model" />
-<a href="/User/Order/Finalize" class="btn btn-primary uk-margin-auto-left">نهایی سازی خرید</a>
+@if (Model.Any())
+{
+    <partial name="_Cart" model="Model" />
+    <a href="/User/Order/Finalize" class="btn btn-primary uk-margin-auto-left">نهایی سازی خرید</a>
+
+}
+else
+{
+    <script>
+        window.location.href = "/";
+    </script>
+}

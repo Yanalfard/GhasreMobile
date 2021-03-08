@@ -345,7 +345,7 @@ namespace GhasreMobile.Controllers
             try
             {
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-                return Redirect("/");
+                return await Task.FromResult(Redirect("/"));
             }
             catch
             {

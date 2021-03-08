@@ -4,8 +4,18 @@
     Layout = "_ShopCartLayout.cshtml";
 }
 
+@if (Model.Any())
+{
 
-<partial name="_Cart" model="Model" />
+    <partial name="_Cart" model="Model" />
 
-<a href="/Login" class="btn btn-primary uk-margin-auto-left">ورود برای تکمیل خرید</a>
+    <a href="/Login" class="btn btn-primary uk-margin-auto-left">ورود برای تکمیل خرید</a>
 
+
+}
+else
+{
+    <script>
+        window.location.href = "/";
+    </script>
+}

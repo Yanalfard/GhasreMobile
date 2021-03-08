@@ -25,7 +25,7 @@
                     <label class="radio">
                         <span>@item.Name</span>
                         <input id="radio" name="radio" @((list.ToList().IndexOf(item) == 0 ? "checked" : "")) class="uk-radio @item.PostOptionId" value="@item.PostOptionId" type="radio">
-                        <span>@item.Price.Value.ToString("#,0")</span>
+                        @*<span>@item.Price.Value.ToString("#,0")</span>*@
                     </label>
                 }
             </div>
@@ -37,9 +37,6 @@
             <h3>
                 پرداخت
             </h3>
-            <p class="uk-alert uk-alert-warning">
-                مشتری محترم، لطفا دقت کنید مبلغ پرداخت شده غیر قابل عودت می باشد، لطفا قبل از خرید اطمینان حاصل فرمایید
-            </p>
 
 
             <div class="rowr">

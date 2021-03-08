@@ -1,6 +1,7 @@
 ﻿@model DiscountVm
 @{ 
  string discountType = ViewBag.typeDiscount.ToString();
+ string discountDarsad = ViewBag.discountDarsad.ToString();
 }
 
 <div class="mat-card">
@@ -20,7 +21,7 @@
             case "Success":
                 {
                     <div class="uk-alert uk-alert-success">
-                        <p class="uk-text-success">کد با موفقیت اعمال شد</p>
+                        <p class="uk-text-success">مقدار @discountDarsad% تخفیف با موفقیت اعمال شد</p>
                     </div>
                     break;
                 }
