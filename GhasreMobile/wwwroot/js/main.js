@@ -52,10 +52,10 @@ function share(url, title = "قصر موبایل", text = "فروشگاه موب
             title: title,
             text: text,
             url: url
-        }).then(() => {
-            console.log();
-        }).catch(() => {
-            copy(text, 'لینک اشتراک کپی شد');
+        }).then((e) => {
+            console.log(e)
+        }).catch((e) => {
+            console.log(e)
         });
     }
     else {
