@@ -1,13 +1,14 @@
-﻿<div class="ticket-block">
+﻿@model TblTicket
+<form class="ticket-block @((Model.IsAnswer || Model.IsAnswerd ? "gray" : ""))">
     <div class="top">
         <label class="name">
-            نام و نام خانوادگی
+            @Model.Title
         </label>
         <span class="date">
-            1399/08/08
+            @Model.DateSubmited.Value.DateToShamsi()
         </span>
     </div>
-    <p class="text">
-        تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند.
+    <p class="text" dir="rtl">
+        @Model.Body
     </p>
-</div>
+</form>

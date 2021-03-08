@@ -48,7 +48,7 @@ namespace GhasreMobile.Areas.User.Controllers
                 #region Online Payment
 
                 var payment = new ZarinpalSandbox.Payment((int)charge.Amount);
-                var res = payment.PaymentRequest("شارژ کیف پول", "https://localhost:44371/OnlinePayment/" + addWallet.WalletId, "Info@topLearn.Com", "09197070750");
+                var res = payment.PaymentRequest("شارژ کیف پول", "https://localhost:44371/OnlinePayment/" + addWallet.WalletId, "Info@mehdi.Com", "09357035985");
 
                 if (res.Result.Status == 100)
                 {

@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = Model.Name;
     ViewData["Single"] = true;
+    ViewData["Keywords"] = string.Join(',', Model.TblProductKeywordRel.Select(i => i.Keyword.Name));
+    //ViewData["Description"] = Model.Name "-" Model.Brand.Name - Model.Catagory.Name;
 }
 
 @section Styles{

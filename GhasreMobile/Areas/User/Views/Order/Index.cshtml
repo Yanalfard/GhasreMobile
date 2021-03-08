@@ -17,13 +17,15 @@
                         </th>
                         <th></th>
                         <th></th>
+                        <th></th>
                         <th>
-                            <label class="date">شماره فاکتور @item.OrdeId#  </label>
+                            <label class="text-3">شماره فاکتور @item.OrdeId#  </label>
                         </th>
                     </tr>
                     <tr>
                         <th>نام محصول</th>
                         <th>تعداد</th>
+                        <th>رنگ</th>
                         <th>فی</th>
                         <th>قیمت</th>
                     </tr>
@@ -36,29 +38,31 @@
                                 <a href="/Product/@j.ProductId/@j.Product.Name.Replace(" ","-")" class="link-text">@j.Product.Name</a>
                             </td>
                             <td>@j.Count</td>
+                            <td>@j.ColorId</td>
                             <td>@j.Price</td>
-                            <td>@((j.Count* j.Price).ToString("#,0")) تومان</td>
+                            <td>@((j.Count * j.Price).ToString("#,0")) تومان</td>
                         </tr>
                     }
                 </tbody>
                 <tfoot>
                     <tr>
+                        <td dir="rtl">
+                            <span>تخفیف:</span>
+                            @item.PaymentStatus.ToString("#,0") تومان
+                        </td>
+                        <td dir="rtl">
+                            <span>تعداد:</span>
+                            @item.TblOrderDetail.Sum(i => i.Count)
+                        </td>
+                        <td dir="rtl">
+                            <span>هزینه ارسال:</span>
+                            @item.SendPrice.Value.ToString("#,0") تومان
+                        </td>
                         <td></td>
-                        <td>تخفیف </td>
-                        <td></td>
-                        <td>@item.PaymentStatus.ToString("#,0")   تومان</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>هزینه ارسال</td>
-                        <td></td>
-                        <td>@item.SendPrice.Value.ToString("#,0")   تومان</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>@item.TblOrderDetail.Sum(i => i.Count)</td>
-                        <td>جمع کل</td>
-                        <td>@item.FinalPrice.ToString("#,0") تومان</td>
+                        <td class="uk-text-success">
+                            <span>جمع کل:</span>
+                            @item.FinalPrice.ToString("#,0") تومان
+                        </td>
                     </tr>
                 </tfoot>
             </table>

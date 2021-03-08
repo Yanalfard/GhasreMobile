@@ -525,6 +525,11 @@ backdrop-filter: saturate(80%);
   font-size: 18px;
   color: #333; }
 
+.tickets > .body {
+  direction: rtl; }
+  .tickets > .body * {
+    direction: ltr !important; }
+
 .tickets .body {
   padding: 0;
   background-color: #fafafa;
@@ -555,7 +560,11 @@ backdrop-filter: saturate(80%);
           color: #999; }
       .tickets .body ul li .ticket-block .text {
         margin: 10px 0 8px 0;
-        color: #666; }
+        color: #666;
+        text-align: right; }
+    .tickets .body ul li .ticket-block.gray {
+      background-color: #f1f1f1;
+      border-right: #96027E solid 3px; }
     .tickets .body ul li:last-child .ticket-block {
       border: 0; }
 

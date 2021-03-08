@@ -1255,6 +1255,8 @@ textarea {
   @media only screen and (max-device-width: 420px) {
     .product-express .body {
       padding: 8px; } }
+  .product-express .body > a {
+    display: flex; }
   .product-express .body .star {
     position: absolute;
     left: 12px;
