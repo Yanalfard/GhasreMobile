@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace GhasreMobile.Areas.User.Controllers
 {
     [Area("User")]
-
+    [PermissionChecker("user,employee,admin")]
     public class CartController : Controller
     {
         Core db = new Core();

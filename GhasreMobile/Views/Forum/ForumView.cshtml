@@ -13,9 +13,9 @@
 
 @section Aside{
 
-  
-@await Component.InvokeAsync("AdView") 
-@await Component.InvokeAsync("AdView")
+
+    @await Component.InvokeAsync("AdView")
+    @await Component.InvokeAsync("AdView")
 }
 
 <nav class="breadcrumb uk-padding-remove">
@@ -24,7 +24,7 @@
 </nav>
 
 <div class="forum-block">
-    <form  id="ajaxresultSendCommentTopic" class="content" action="/Forum/SendComment" method="post"
+    <form id="ajaxresultSendCommentTopic" class="content" action="/Forum/SendComment" method="post"
           data-ajax="true"
           data-ajax-method="POST"
           data-ajax-mode="replace"
@@ -43,16 +43,25 @@
                 @Model.Body
             </p>
             <div class="fg-col uk-margin-medium-top">
-                <textarea name="Body" id="Body"  class="entry" placeholder="نظر شما..." required></textarea>
+                <textarea name="Body" id="Body" class="entry" placeholder="نظر شما..." maxlength="300" required></textarea>
             </div>
         </div>
         <div class="action uk-margin-small-top">
             <span class="row uk-margin-auto-top">
                 <span uk-icon="ratio:.8;icon:chatbox-ellipses-outline"></span>
-                <span> @Model.TblTopicCommentRel.Where(i=>i.Comment.IsValid).ToList().Count </span>
+                <span> @Model.TblTopicCommentRel.Where(i => i.Comment.IsValid).ToList().Count </span>
             </span>
             <a class="link-text  uk-margin-auto-top" href="" uk-icon="ratio:.8;icon:arrow-redo-outline"></a>
-            <button class="btn btn-dashed uk-margin-auto-top uk-margin-auto-left">ثبت نظر</button>
+
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <button class="btn btn-dashed uk-margin-auto-top uk-margin-auto-left">ثبت نظر</button>
+            }
+            else
+            {
+                <a href="/Login" class="btn btn-dashed uk-margin-auto-top uk-margin-auto-left">ثبت نظر</a>
+            }
         </div>
     </form>
     <div class="controls">
@@ -67,7 +76,7 @@
 <div class="comment-section mat-card">
     <h3 class="uk-margin-bottom">نظرات کاربران</h3>
     <ul>
-        @foreach (var item in Model.TblTopicCommentRel.Where(i => i.Comment.IsValid))
+        @foreach (var item in Model.TblTopicCommentRel.Where(i => i.Comment.IsValid && i.Comment.ParentId == null).OrderByDescending(i => i.CommentId))
         {
             <li>
                 <partial name="_RepliableComment" model="item.Comment" />

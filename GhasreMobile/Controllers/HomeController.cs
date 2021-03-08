@@ -40,13 +40,8 @@ namespace GhasreMobile.Controllers
         [Route("Contact")]
         public IActionResult Contact()
         {
-            // var objComplex = HttpContext.Session.GetObject<List<TblClient>>("ComplexObject");
-            //var objComplex = HttpContext.Session.GetComplexData<List<TblClient>>("ShopCart");
-            //List<TblClient> list = objComplex;
-            //if (objComplex != null)
-            //{
-            //    //list = sessions;
-            //}
+            ViewBag.Instagram = db.Config.Get(i => i.Key == "LinkInsta").Single().Value;
+            ViewBag.Telegram = db.Config.Get(i => i.Key == "LinkTelegram").Single().Value;
             return View();
         }
         [Route("About")]

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace GhasreMobile.Areas.User.Controllers
 {
     [Area("User")]
+    [PermissionChecker("user,employee,admin")]
     public class ProfileController : Controller
     {
         private Core db = new Core();

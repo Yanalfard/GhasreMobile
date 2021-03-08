@@ -17,10 +17,10 @@ namespace GhasreMobile.Controllers
         {
             return View(db.Album.Get());
         }
-
-        public IActionResult AlbumView()
+        [Route("AlbumView/{id}/{name}")]
+        public IActionResult AlbumView(int id, string name)
         {
-            return View();
+            return View(db.Album.GetById(id));
         }
 
     }
