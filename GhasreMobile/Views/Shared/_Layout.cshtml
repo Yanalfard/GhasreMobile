@@ -330,7 +330,6 @@
     <script src="~/Validate/jquery.unobtrusive-ajax.min.js"></script>
 
 
-
     <script>
         function reply(commentId) {
             // آیدی کامنتی که بهش پاسخ داریم میدیم رو میزارم تو یه اینپوت
@@ -452,21 +451,6 @@
             }).done(function (res) {
                 $("#showOrder").html(res);
             });
-        }
-        /////
-        function share(text, title) {
-
-            if (navigator.share) {
-                navigator.share({
-                    title: title || 'قصر موبایل',
-                    url: text
-                }).then(() => {
-                    console.log('لینک به اشتراک گذاشته شد');
-                }).catch(() => copy(text, 'لینک اشتراک کپی شد'));
-            } else {
-                copy(text, 'لینک اشتراک کپی شد');
-            }
-
         }
 
         function copy(text, message) {
