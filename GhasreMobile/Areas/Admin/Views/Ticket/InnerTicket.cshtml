@@ -62,7 +62,7 @@
             </div>
             <form class="card-footer bg-white form-row" asp-action="SendMassage" asp-controller="Ticket" asp-area="Admin">
                 <input type="hidden" value="@Model.Last().ClientId" name="ClientId" />
-                <textarea class="form-control col-md-10 textarea-fix-height-50" name="Body"></textarea>
+                <textarea required class="form-control col-md-10 textarea-fix-height-50" name="Body"></textarea>
                 <div class="uk-margin-auto uk-margin-auto-vertical">
                     <button type="submit" class="btn btn-success btn-sm text-white float-left uk-margin-auto-bottom mr-2 mt-2 mt-md-0" onclick="">ارسال پیام <span uk-icon="paper-plane-outline"></span></button>
                 </div>

@@ -53,6 +53,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblTicket ticket = new TblTicket();
             ticket.DateSubmited = DateTime.Now;
             ticket.ClientId = ClientId;
+            ticket.Title = "Admin";
             ticket.IsAnswer = true;
             ticket.IsAnswerd = false;
             ticket.Body = Body;
