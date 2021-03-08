@@ -1,5 +1,6 @@
 ﻿using DataLayer.Models;
 using DataLayer.ViewModels;
+using GhasreMobile.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace GhasreMobile.Areas.User.Controllers
 {
     [Area("User")]
+    [PermissionChecker("user,employee,admin")]
     public class WalletController : Controller
     {
         Core db = new Core();

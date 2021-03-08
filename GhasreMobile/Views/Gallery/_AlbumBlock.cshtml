@@ -1,16 +1,16 @@
 ﻿@model TblAlbum
 <div class="albumBlock mat col uk-overflow-hidden">
     <div uk-lightbox>
-        <a href="~/Images/ProductAlbum/@Model.TblImage.FirstOrDefault().Image" data-caption="نام">
+        <a href="~/Images/ProductAlbum/@Model.TblImage.FirstOrDefault().Image" data-caption="@Model.Name">
             <img src="~/Images/ProductAlbum/@Model.TblImage.FirstOrDefault().Image" alt="" />
         </a>
         @foreach (var item in Model.TblImage)
         {
-            <a href="~/Images/ProductAlbum/@item.Image" data-caption="نام"></a>
+            <a href="~/Images/ProductAlbum/@item.Image" data-caption="@Model.Name"></a>
         }
     </div>
     <div class="mat-pad col">
-        <h2 class="uk-h5"><a href="/Gallery/AlbumView" class="link-text">@Model.Name</a></h2>
+        <h2 class="uk-h5"><a href="/AlbumView/@Model.AlbumId/@Model.Name" class="link-text">@Model.Name</a></h2>
         @*<label class="uk-h6 text-3 uk-margin-small-top">4 شنبه 20 آبان</label>*@
     </div>
 </div>

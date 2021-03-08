@@ -1,6 +1,6 @@
 ﻿@model TblStore
 @{
-    ViewData["Title"] = "نمایندگی ها";
+    ViewData["Title"] = "نمایندگی ها شعبه- " + Model.Name ;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,8 +17,8 @@
 }
 
 <nav class="breadcrumb uk-padding-remove">
-    <a href="">شعب ما</a>
-    <a href="" class="active">شعبه ولیعصر</a>
+    <a href="/Affiliate">شعب ما</a>
+    <a href="#" class="active"> @Model.Name</a>
 </nav>
 
 <div class="mat-card">
