@@ -65,6 +65,10 @@ namespace GhasreMobile.Areas.User.Controllers
                         });
                     }
                 }
+                else
+                {
+                    return Redirect("/");
+                }
                 var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
                 DiscountVm discount = new DiscountVm();
                 long sumList = (long)list.Sum(i => i.Sum);

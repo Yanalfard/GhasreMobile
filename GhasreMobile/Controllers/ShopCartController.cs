@@ -25,7 +25,7 @@ namespace GhasreMobile.Controllers
             {
                 List<ShopCartItemVm> list = new List<ShopCartItemVm>();
                 var sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
-                if (sessions != null)
+                if (sessions != null && sessions.Count > 0)
                 {
                     List<ShopCartItem> listShop = (List<ShopCartItem>)sessions;
 
@@ -53,6 +53,10 @@ namespace GhasreMobile.Controllers
                             Sum = product.PriceAfterDiscount == 0 ? item.Count * product.PriceBeforeDiscount : product.PriceAfterDiscount * item.Count,
                         });
                     }
+                }
+                else
+                {
+                    return Redirect("/");
                 }
                 return View(list);
             }
@@ -99,11 +103,11 @@ namespace GhasreMobile.Controllers
                     }
             }
             HttpContext.Session.SetComplexData("ShopCart", listShop);
-            int sumCount = listShop.Sum(i => i.Count);
-            if (sumCount <= 0)
+            if (listShop.Count == 0)
             {
                 return Redirect("/");
             }
+
             return Redirect(ReturnUrl);
         }
 

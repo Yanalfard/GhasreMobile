@@ -32,14 +32,14 @@
         </div>
         <dl class="datalist uk-margin-small-right flex-auto">
             <dt>نام و نام خانوادگی</dt>
-            <dd>
+            <dd dir="ltr">
                 @if (string.IsNullOrEmpty(Model.Name))
                 {
-                    <a href="#ModalChangeName" class="link-text" uk-toggle>نام و نام خانوادگی</a>
+                    <a href="#ModalChangeName" class="link-text uk-margin-small-right" uk-toggle uk-tooltip="ویرایش نام" uk-icon="create-outline"></a><span>نام و نام خانوادگی</span>
                 }
                 else
                 {
-                    <a  class="link-text">@Model.Name</a>
+                    <a href="#ModalChangeName" class="link-text uk-margin-small-right" uk-toggle uk-tooltip="ویرایش نام" uk-icon="create-outline"></a><span>@Model.Name</span>
                 }
             </dd>
             <dt>شماره تلفن</dt>
@@ -57,22 +57,17 @@
 
 <div id="ModalChangeName" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
-        <form>
+        <form action="/User/Profile/EditName" method="post">
             <h3 class="uk-margin-remove-bottom">
                 ویرایش نام
             </h3>
-
-            @*  <p class="uk-margin-small-top text-2">
-            برای ثبت سفارش و استفاده از برخی امکانات سایت مانند تالار گفتگو، پشتیبانی و... لازم است نام و نام خانوادگی خود را وارد نمایید.
-        </p>*@
-
             <div class="fg-col">
                 <label class="fg-label">نام و نام خانوادگی</label>
-                <input type="text" class="entry" value="" />
+                <input type="text" name="Name" class="entry" value="@Model.Name" required />
                 <span class="text-danger"></span>
             </div>
             <div class="action uk-margin-medium-top">
-                <button class="btn btn-primary">تایید</button>
+                <button class="btn btn-primary">ویرایش</button>
             </div>
         </form>
     </div>
