@@ -51,8 +51,8 @@
                 <span uk-icon="ratio:.8;icon:chatbox-ellipses-outline"></span>
                 <span> @Model.TblTopicCommentRel.Where(i => i.Comment.IsValid).ToList().Count </span>
             </span>
-            <a class="link-text  uk-margin-auto-top" href="" uk-icon="ratio:.8;icon:arrow-redo-outline"></a>
 
+            <a class="link-text uk-margin-auto-top" href="javascript:share(location.href,'@Model.Title')" uk-tooltip="اشتراک گذاری" uk-icon="ratio:.8;icon:share-social-outline"></a>
 
             @if (User.Identity.IsAuthenticated)
             {
@@ -62,13 +62,14 @@
             {
                 <a href="/Login" class="btn btn-dashed uk-margin-auto-top uk-margin-auto-left">ثبت نظر</a>
             }
+
         </div>
     </form>
     <div class="controls">
         <div class="col">
-            <button class="link-text" uk-icon="chevron-up" onclick="VoteUp(@Model.TopicId);"></button>
+            <button class="link-text up" uk-icon="chevron-up" onclick="VoteUp(@Model.TopicId);"></button>
             <label id="Vote@(Model.TopicId)">@Model.VoteCount</label>
-            <button class="link-text" uk-icon="chevron-down" onclick="VoteDown(@Model.TopicId);"></button>
+            <button class="link-text down" uk-icon="chevron-down" onclick="VoteDown(@Model.TopicId);"></button>
         </div>
     </div>
 </div>
@@ -98,6 +99,33 @@
         }
 
         function VoteUp(val) {
+
+            //#region buts
+            var vote = document.getElementById('Vote' + val);
+            const up = vote.parentElement.querySelector('.up');
+            const down = vote.parentElement.querySelector('.down');
+           
+            //#endregion
+
+            //#region localStorage
+
+            let cacheVote = votelist.filter(vote => vote.id === val)[0];
+
+            if (cacheVote?.isUp) return;
+            up.classList.remove('link-active');
+            down.classList.remove('link-active');
+
+            if (cacheVote)
+                votelist.splice(votelist.indexOf(cacheVote), 1);
+
+            up.classList.add('link-active');
+
+            votelist.push({ id: val, isUp: true });
+            // update local storage
+            localStorage.setItem(votelistKey, JSON.stringify(votelist));
+
+            //#endregion
+
             var result = Bjax("/Forum/VoteUp?id=", val, "SP");
             if (result) {
                 var vote = document.getElementById('Vote' + val);
@@ -106,15 +134,57 @@
                 window.location = "";
             }
         }
+
         function VoteDown(val) {
+
+            //#region buts
+            var vote = document.getElementById('Vote' + val);
+            const up = vote.parentElement.querySelector('.up');
+            const down = vote.parentElement.querySelector('.down');
+           
+            //#endregion
+
+            //#region localStorage
+
+            let cacheVote = votelist.filter(vote => vote.id === val)[0];
+
+            if (!cacheVote?.isUp) return;
+            up.classList.remove('link-active');
+            down.classList.remove('link-active');
+
+            if (cacheVote)
+                votelist.splice(votelist.indexOf(cacheVote), 1);
+
+            down.classList.add('link-active');
+
+            votelist.push({ id: val, isUp: false });
+            // update local storage
+            localStorage.setItem(votelistKey, JSON.stringify(votelist));
+
+            //#endregion
+
             var result = Bjax("/Forum/VoteDown?id=", val, "SP");
             if (result) {
-                var vote = document.getElementById('Vote' + val);
                 vote.innerText = parseInt(vote.innerText) - 1;
             } else {
                 window.location = "";
             }
         }
+
+        // Vote List
+        const votelistKey = "votelist";
+        // [{id,isUp},{5,true}]
+        let votelist = JSON.parse(localStorage.getItem(votelistKey)) || [];
+        let currentVote = votelist?.filter(x => x.id == @Model.TopicId)[0];
+
+        if (currentVote.isUp) {
+            const up = document.querySelector('.up');
+            up.classList.add('link-active');
+        } else {
+            const down = document.querySelector('.down');
+            down.classList.add('link-active');
+        }
+
     </script>
 
 }
