@@ -51,8 +51,8 @@
                 <span uk-icon="ratio:.8;icon:chatbox-ellipses-outline"></span>
                 <span> @Model.TblTopicCommentRel.Where(i => i.Comment.IsValid).ToList().Count </span>
             </span>
-            <a class="link-text  uk-margin-auto-top" href="" uk-icon="ratio:.8;icon:arrow-redo-outline"></a>
 
+            <a class="link-text uk-margin-auto-top" href="javascript:share(location.href,'@Model.Title')" uk-tooltip="اشتراک گذاری" uk-icon="ratio:.8;icon:share-social-outline"></a>
 
             @if (User.Identity.IsAuthenticated)
             {
@@ -62,8 +62,7 @@
             {
                 <a href="/Login" class="btn btn-dashed uk-margin-auto-top uk-margin-auto-left">ثبت نظر</a>
             }
-            <a class="link-text uk-margin-auto-top" href="javascript:share(location.href,'@Model.Title')" uk-tooltip="اشتراک گذاری" uk-icon="ratio:.8;icon:share-social-outline"></a>
-            <button class="btn btn-dashed uk-margin-auto-top uk-margin-auto-left">ثبت نظر</button>
+
         </div>
     </form>
     <div class="controls">
