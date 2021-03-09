@@ -23,43 +23,66 @@ namespace GhasreMobile.Areas.User.Controllers
             TblClient selectUser = db.Client.GetById(userId);
             return selectUser;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<TblNotification> list = db.Notification.Get(i => i.ClientId == SelectUser().ClientId).ToList();
-            ViewBag.Notification = list;
-            foreach (var item in list.Where(i => i.IsSeen == false))
+            try
             {
-                item.IsSeen = true;
-                db.Notification.Update(item);
+                List<TblNotification> list = db.Notification.Get(i => i.ClientId == SelectUser().ClientId).ToList();
+                ViewBag.Notification = list;
+                foreach (var item in list.Where(i => i.IsSeen == false))
+                {
+                    item.IsSeen = true;
+                    db.Notification.Update(item);
+                }
+                db.Notification.Save();
+                return await Task.FromResult(View(SelectUser()));
             }
-            db.Notification.Save();
-            return View(SelectUser());
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
         public async Task<IActionResult> ChangePassword()
         {
-            return await Task.FromResult(View());
+           
+            try
+            {
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         [HttpPost]
         public async Task<IActionResult> ChangePasswordAsync(ResetChangePasswordVm change)
         {
-            if (ModelState.IsValid)
+            try
             {
-                TblClient updateUser = db.Client.GetById(SelectUser().ClientId);
-                string pass = PasswordHelper.EncodePasswordMd5(change.OldPassword);
-                if (pass != updateUser.Password)
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("OldPassword", "رمز قدیمی اشتباه است");
+                    TblClient updateUser = db.Client.GetById(SelectUser().ClientId);
+                    string pass = PasswordHelper.EncodePasswordMd5(change.OldPassword);
+                    if (pass != updateUser.Password)
+                    {
+                        ModelState.AddModelError("OldPassword", "رمز قدیمی اشتباه است");
+                    }
+                    else
+                    {
+                        updateUser.Password = PasswordHelper.EncodePasswordMd5(change.Password);
+                        db.Client.Update(updateUser);
+                        db.Client.Save();
+                        return await Task.FromResult(Redirect("/User/Profile/Index?ResetPass=true"));
+                    }
                 }
-                else
-                {
-                    updateUser.Password = PasswordHelper.EncodePasswordMd5(change.Password);
-                    db.Client.Update(updateUser);
-                    db.Client.Save();
-                    return await Task.FromResult(Redirect("/User/Profile/Index?ResetPass=true"));
-                }
+                return await Task.FromResult(PartialView("ChangePassword", change));
             }
-            return await Task.FromResult(PartialView("ChangePassword", change));
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+          
         }
         public string ShowImage()
         {
@@ -68,13 +91,20 @@ namespace GhasreMobile.Areas.User.Controllers
             return selectedClient.MainImage;
         }
         [HttpPost]
-        public IActionResult EditName(string name)
+        public async Task<IActionResult> EditName(string name)
         {
-            TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
-            selectedClient.Name = name;
-            db.Client.Update(selectedClient);
-            db.Client.Save();
-            return RedirectToAction("Index");
+            try
+            {
+                TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
+                selectedClient.Name = name;
+                db.Client.Update(selectedClient);
+                db.Client.Save();
+                return await Task.FromResult(RedirectToAction("Index"));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         public async Task<string> UploadImage(TblClient client)
         {
@@ -104,14 +134,14 @@ namespace GhasreMobile.Areas.User.Controllers
                     selectedClient.MainImage = client.MainImage;
                     db.Client.Update(selectedClient);
                     db.Client.Save();
-                    return "true";
+                    return await Task.FromResult("true");
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                result = ex.Message;
+                return await Task.FromResult("false");
             }
-            return "false";
+            return await Task.FromResult("false");
         }
     }
 }

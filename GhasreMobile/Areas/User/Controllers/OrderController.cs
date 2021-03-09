@@ -22,13 +22,20 @@ namespace GhasreMobile.Areas.User.Controllers
             TblClient selectUser = db.Client.GetById(userId);
             return selectUser;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(db.Order.Get(i=>i.IsPayed).OrderByDescending(i=>i.DateSubmited));
+            try
+            {
+                return await Task.FromResult(View(db.Order.Get(i => i.IsPayed).OrderByDescending(i => i.DateSubmited)));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
         // Make order
-        public IActionResult Finalize(string type = "")
+        public async Task<IActionResult> Finalize(string type = "")
         {
             try
             {
@@ -67,7 +74,7 @@ namespace GhasreMobile.Areas.User.Controllers
                 }
                 else
                 {
-                    return Redirect("/");
+                    return await Task.FromResult(Redirect("/"));
                 }
                 var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
                 DiscountVm discount = new DiscountVm();
@@ -128,107 +135,136 @@ namespace GhasreMobile.Areas.User.Controllers
                 }
                 HttpContext.Session.SetComplexData("Discount", discount);
                 ViewBag.discountDarsad = discount.Discount;
-                return View(list);
+                return await Task.FromResult(View(list));
             }
             catch
             {
-                return RedirectToAction("/ErrorPage/NotFound");
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 
 
         [HttpPost]
-        public IActionResult CheckDiscount(DiscountVm discoun)
+        public async Task<IActionResult> CheckDiscount(DiscountVm discoun)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var type = "0";
-                bool isDiscount = db.Discount.Get(i => i.Name.Contains(discoun.Name)).Any();
-                if (isDiscount)
+                if (ModelState.IsValid)
                 {
-                    TblDiscount getDiscount = db.Discount.Get(i => i.Name.Contains(discoun.Name)).Single();
-                    if (getDiscount.ValidTill < DateTime.Now)
+                    var type = "0";
+                    bool isDiscount = db.Discount.Get(i => i.Name.Contains(discoun.Name)).Any();
+                    if (isDiscount)
                     {
-                        type = "1";
-                    }
-                    else if (getDiscount.Count <= 0)
-                    {
-                        type = "2";
+                        TblDiscount getDiscount = db.Discount.Get(i => i.Name.Contains(discoun.Name)).Single();
+                        if (getDiscount.ValidTill < DateTime.Now)
+                        {
+                            type = "1";
+                        }
+                        else if (getDiscount.Count <= 0)
+                        {
+                            type = "2";
+                        }
+                        else
+                        {
+                            type = "Success";
+                            var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                            //int SagfePost = Convert.ToInt32(db.Config.Get(i => i.Key == "SagfePost").Single().Value);
+
+                            selectedDiscount.Discount = getDiscount.Discount;
+                            selectedDiscount.Name = getDiscount.Name;
+                            selectedDiscount.DiscountId = getDiscount.DiscountId;
+                            // TblPostOption selectPost = db.PostOption.Get().First();
+                            selectedDiscount.PostPrice = selectedDiscount.PostPrice;
+                            selectedDiscount.SagfePost = selectedDiscount.SagfePost;
+                            selectedDiscount.PostPriceId = selectedDiscount.PostPriceId;
+                            HttpContext.Session.SetComplexData("Discount", selectedDiscount);
+                        }
                     }
                     else
                     {
-                        type = "Success";
-                        var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
-                        //int SagfePost = Convert.ToInt32(db.Config.Get(i => i.Key == "SagfePost").Single().Value);
-
-                        selectedDiscount.Discount = getDiscount.Discount;
-                        selectedDiscount.Name = getDiscount.Name;
-                        selectedDiscount.DiscountId = getDiscount.DiscountId;
-                        // TblPostOption selectPost = db.PostOption.Get().First();
-                        selectedDiscount.PostPrice = selectedDiscount.PostPrice;
-                        selectedDiscount.SagfePost = selectedDiscount.SagfePost;
-                        selectedDiscount.PostPriceId = selectedDiscount.PostPriceId;
-                        HttpContext.Session.SetComplexData("Discount", selectedDiscount);
+                        type = "3";
                     }
+                    return await Task.FromResult(Redirect("/User/Order/Finalize?type=" + type.ToString()));
                 }
-                else
-                {
-                    type = "3";
-                }
-                return Redirect("/User/Order/Finalize?type=" + type.ToString());
+                return await Task.FromResult(PartialView(discoun));
             }
-            return PartialView(discoun);
-
-        }
-
-
-
-        public IActionResult FinalVerfity()
-        {
-            ViewBag.ListPostOption = db.PostOption.Get().ToList();
-            DiscountVm selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
-            return PartialView(selectedDiscount);
-        }
-        public IActionResult SetPost(int id)
-        {
-            TblPostOption selectPost = db.PostOption.GetById(id);
-            if (selectPost != null)
+            catch
             {
-                var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
-                //int SagfePost = Convert.ToInt32(db.Config.Get(i => i.Key == "SagfePost").Single().Value);
-                //selectedDiscount.Discount = getDiscount.Discount;
-                //selectedDiscount.Name = getDiscount.Name;
-                //selectedDiscount.DiscountId = getDiscount.DiscountId;
-                selectedDiscount.PostPrice = (int)selectPost.Price;
-                //  selectedDiscount.SagfePost = selectedDiscount.SagfePost;
-                selectedDiscount.PostPriceId = selectPost.PostOptionId;
-                HttpContext.Session.SetComplexData("Discount", selectedDiscount);
+                return await Task.FromResult(Redirect("404.html"));
             }
-            return Redirect("/User/Order/Finalize");
         }
 
-        public IActionResult OnlineOrder(string type = "")
+
+
+        public async Task<IActionResult> FinalVerfity()
         {
-            ViewBag.OnlineOrder = type;
-            return View();
+            try
+            {
+                ViewBag.ListPostOption = db.PostOption.Get().ToList();
+                DiscountVm selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                return await Task.FromResult(PartialView(selectedDiscount));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
+        public async Task<IActionResult> SetPost(int id)
+        {
+            try
+            {
+                TblPostOption selectPost = db.PostOption.GetById(id);
+                if (selectPost != null)
+                {
+                    var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                    selectedDiscount.PostPrice = (int)selectPost.Price;
+                    selectedDiscount.PostPriceId = selectPost.PostOptionId;
+                    HttpContext.Session.SetComplexData("Discount", selectedDiscount);
+                }
+                return await Task.FromResult(Redirect("/User/Order/Finalize"));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
+
+        public async Task<IActionResult> OnlineOrder(string type = "")
+        {
+            try
+            {
+                ViewBag.OnlineOrder = type;
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         [HttpPost]
-        public IActionResult OnlineOrder(OnlineOrderVm online)
+        public async Task<IActionResult> OnlineOrder(OnlineOrderVm online)
         {
-            if (ModelState.IsValid)
+            try
             {
-                TblOnlineOrder AddOnlineOrder = new TblOnlineOrder();
-                AddOnlineOrder.ClientId = SelectUser().ClientId;
-                AddOnlineOrder.Body = online.Body;
-                AddOnlineOrder.DateSubmited = DateTime.Now;
-                AddOnlineOrder.IsRead = false;
-                AddOnlineOrder.Title = online.Title;
-                db.OnlineOrder.Add(AddOnlineOrder);
-                db.OnlineOrder.Save();
-                var type = "true";
-                return Redirect("/User/Order/OnlineOrder?type=" + type.ToString());
+                if (ModelState.IsValid)
+                {
+                    TblOnlineOrder AddOnlineOrder = new TblOnlineOrder();
+                    AddOnlineOrder.ClientId = SelectUser().ClientId;
+                    AddOnlineOrder.Body = online.Body;
+                    AddOnlineOrder.DateSubmited = DateTime.Now;
+                    AddOnlineOrder.IsRead = false;
+                    AddOnlineOrder.Title = online.Title;
+                    db.OnlineOrder.Add(AddOnlineOrder);
+                    db.OnlineOrder.Save();
+                    var type = "true";
+                    return Redirect("/User/Order/OnlineOrder?type=" + type.ToString());
+                }
+                return await Task.FromResult(View(online));
             }
-            return View(online);
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
     }

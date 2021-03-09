@@ -70,7 +70,7 @@ namespace GhasreMobile
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/404.html");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -83,7 +83,9 @@ namespace GhasreMobile
             //        await next();
             //    }
             //});
+            #region 
             app.UseStatusCodePagesWithReExecute("/404.html");
+            #endregion
             app.UseSession();
             app.UseAuthentication();
             app.UseStaticFiles();

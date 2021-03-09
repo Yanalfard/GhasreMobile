@@ -19,39 +19,54 @@ namespace GhasreMobile.Controllers
             TblClient selectUser = db.Client.GetById(userId);
             return selectUser;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            // TblClient user = new TblClient();
-            // user.Name = "mr 11111111";
-            // user.TellNo = "111111111";
-            // TblClient user2 = new TblClient();
-            // user.Name = "mr 222222222";
-            // user.TellNo = "2222222";
-
-            // List<TblClient> list = new List<TblClient>();
-            // list.Add(user2);
-            // list.Add(user);
-            // var objComplex = new TblClient();
-            ////HttpContext.Session.SetObject("ComplexObject", list);
-            // HttpContext.Session.SetComplexData("ShopCart", list);
-            return View();
+            try
+            {
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
         [Route("Contact")]
-        public IActionResult Contact()
+        public async Task<IActionResult> Contact()
         {
-            ViewBag.Instagram = db.Config.Get(i => i.Key == "LinkInsta").SingleOrDefault().Value;
-            ViewBag.Telegram = db.Config.Get(i => i.Key == "LinkTelegram").SingleOrDefault().Value;
-            return View();
+            try
+            {
+                ViewBag.Instagram = db.Config.Get(i => i.Key == "LinkInsta").SingleOrDefault().Value;
+                ViewBag.Telegram = db.Config.Get(i => i.Key == "LinkTelegram").SingleOrDefault().Value;
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         [Route("About")]
-        public IActionResult About()
+        public async Task<IActionResult> About()
         {
-            return View(db.Config.Get(i => i.Key == "DarbareyeMa").SingleOrDefault());
+            try
+            {
+                return await Task.FromResult(View(db.Config.Get(i => i.Key == "DarbareyeMa").SingleOrDefault()));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         public async Task<IActionResult> Error()
         {
-            return await Task.FromResult(View());
+            try
+            {
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
         [HttpPost]
@@ -77,7 +92,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 
@@ -110,7 +125,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 

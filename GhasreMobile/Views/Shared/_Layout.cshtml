@@ -290,10 +290,8 @@
                         </li>
                     </ul>
                     <div class="media">
-                        <a href="/"><img src="~/st/v/footer/Instagram.svg" alt="" /></a>
-                        <a href="/"><img src="~/st/v/footer/Telegram.svg" alt="" /></a>
-                        <a href="/"><img src="~/st/v/footer/Linkedin.svg" alt="" /></a>
-                        <a href="/"><img src="~/st/v/footer/Titter.svg" alt="" /></a>
+                        
+                        @await Component.InvokeAsync("TelegramInstaView")
                     </div>
                 </div>
             </div>

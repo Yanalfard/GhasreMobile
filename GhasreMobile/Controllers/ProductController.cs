@@ -43,7 +43,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 
@@ -88,45 +88,59 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 
         [PermissionChecker("user,employee,admin")]
         public async Task<string> BookMark(int id)
         {
-            if (db.BookMark.Get().Any(i => i.ProductId == id && i.ClientId == SelectUser().ClientId))
+            try
             {
-                TblBookMark deleteBookMark = db.BookMark.Get(i => i.ProductId == id && i.ClientId == SelectUser().ClientId).Single();
-                db.BookMark.Delete(deleteBookMark);
-                db.BookMark.Save();
+                if (db.BookMark.Get().Any(i => i.ProductId == id && i.ClientId == SelectUser().ClientId))
+                {
+                    TblBookMark deleteBookMark = db.BookMark.Get(i => i.ProductId == id && i.ClientId == SelectUser().ClientId).Single();
+                    db.BookMark.Delete(deleteBookMark);
+                    db.BookMark.Save();
+                    return await Task.FromResult("false");
+                }
+                else
+                {
+                    TblBookMark addBookMark = new TblBookMark();
+                    addBookMark.ClientId = SelectUser().ClientId;
+                    addBookMark.ProductId = id;
+                    db.BookMark.Add(addBookMark);
+                    db.BookMark.Save();
+                    return await Task.FromResult("true");
+                }
+            }
+            catch
+            {
                 return await Task.FromResult("false");
             }
-            else
-            {
-                TblBookMark addBookMark = new TblBookMark();
-                addBookMark.ClientId = SelectUser().ClientId;
-                addBookMark.ProductId = id;
-                db.BookMark.Add(addBookMark);
-                db.BookMark.Save();
-                return await Task.FromResult("true");
-            }
+           
 
         }
         [PermissionChecker("user,employee,admin")]
         public async Task<string> AlertWhenReady(int id)
         {
-            if (!db.AlertWhenReady.Get().Any(i => i.ProductId == id && i.ClientId == SelectUser().ClientId))
+            try
             {
-                TblAlertWhenReady addAlertWhenReady = new TblAlertWhenReady();
-                addAlertWhenReady.ClientId = SelectUser().ClientId;
-                addAlertWhenReady.ProductId = id;
-                db.AlertWhenReady.Add(addAlertWhenReady);
-                db.AlertWhenReady.Save();
-                return await Task.FromResult("true");
+                if (!db.AlertWhenReady.Get().Any(i => i.ProductId == id && i.ClientId == SelectUser().ClientId))
+                {
+                    TblAlertWhenReady addAlertWhenReady = new TblAlertWhenReady();
+                    addAlertWhenReady.ClientId = SelectUser().ClientId;
+                    addAlertWhenReady.ProductId = id;
+                    db.AlertWhenReady.Add(addAlertWhenReady);
+                    db.AlertWhenReady.Save();
+                    return await Task.FromResult("true");
+                }
+                return await Task.FromResult("false");
             }
-            return await Task.FromResult("false");
-
+            catch
+            {
+                return await Task.FromResult("false");
+            }
         }
     }
 }
