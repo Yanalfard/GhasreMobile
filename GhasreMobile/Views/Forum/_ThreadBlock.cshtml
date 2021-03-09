@@ -18,14 +18,14 @@
                 <span uk-icon="ratio:.72;icon:chatbox-ellipses-outline"></span>
                 <span>  @Model.TblTopicCommentRel.Where(i => i.Comment.IsValid).ToList().Count  </span>
             </span>
-            <span class="link-text" uk-icon="ratio:.72;icon:arrow-redo-outline"></span>
+            <span class="link-text" onclick="share(`https://localhost:44371/ForumView/@Model.TopicId/@Model.Title`,'@Model.Title')" uk-tooltip="اشتراک گذاری" uk-icon="ratio:.72;icon:share-social-outline"></span>
         </div>
     </div>
     <div class="controls">
         <div class="col">
-            <button class="link-text" uk-icon="chevron-up" onclick="VoteUp(@Model.TopicId);"></button>
+            <button class="link-text up" uk-icon="chevron-up" onclick="VoteUp(@Model.TopicId);"></button>
             <label id="Vote@(Model.TopicId)">@Model.VoteCount</label>
-            <button class="link-text" uk-icon="chevron-down" onclick="VoteDown(@Model.TopicId);"></button>
+            <button class="link-text down" uk-icon="chevron-down" onclick="VoteDown(@Model.TopicId);"></button>
         </div>
     </div>
     

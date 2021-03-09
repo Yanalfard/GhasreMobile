@@ -32,6 +32,7 @@ namespace GhasreMobile.Areas.User.Controllers
         {
             try
             {
+                ViewBag.FinalTextKharid = db.Config.Get(i => i.Key == "FinalTextKharid").SingleOrDefault().Value;
                 ViewBag.typeDiscount = type;
                 List<ShopCartItemVm> list = new List<ShopCartItemVm>();
                 var sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
@@ -63,6 +64,10 @@ namespace GhasreMobile.Areas.User.Controllers
                             Sum = product.PriceAfterDiscount == 0 ? item.Count * product.PriceBeforeDiscount : product.PriceAfterDiscount * item.Count,
                         });
                     }
+                }
+                else
+                {
+                    return Redirect("/");
                 }
                 var selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
                 DiscountVm discount = new DiscountVm();
@@ -97,10 +102,13 @@ namespace GhasreMobile.Areas.User.Controllers
                 {
                     discount.Sum = sumList;
                     discount.SumWithDiscount = sumList;
-                    TblPostOption selectPost = db.PostOption.Get().First();
-                    discount.PostPrice = (int)selectPost.Price;
-                    discount.SagfePost = SagfePost;
-                    discount.PostPriceId = selectPost.PostOptionId;
+                    TblPostOption selectPost = db.PostOption.Get().FirstOrDefault();
+                    if (selectPost != null)
+                    {
+                        discount.PostPrice = (int)selectPost.Price;
+                        discount.SagfePost = SagfePost;
+                        discount.PostPriceId = selectPost.PostOptionId;
+                    }
                 }
                 discount.SumWithDiscount -= SelectUser().Balance;
                 if (discount.SumWithDiscount <= 0)
@@ -119,6 +127,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     discount.PostPrice = 0;
                 }
                 HttpContext.Session.SetComplexData("Discount", discount);
+                ViewBag.discountDarsad = discount.Discount;
                 return View(list);
             }
             catch
@@ -221,7 +230,6 @@ namespace GhasreMobile.Areas.User.Controllers
             }
             return View(online);
         }
-
 
     }
 }

@@ -4858,7 +4858,8 @@ select.uk-form-width-xsmall {
     font-size: 1.25rem;
     line-height: 1.4;
     cursor: pointer;
-    @include border-radius(16px,16px,16px,16px);
+    border-right: $primary solid 3px!important;
+    @include mat;
 }
 
 * + .uk-notification-message {
@@ -4868,7 +4869,7 @@ select.uk-form-width-xsmall {
  * Adopts `uk-close`
  ========================================================================== */
 .uk-notification-close {
-    display: none;
+    display: none !important;
     position: absolute;
     top: 20px;
     left: 15px;

@@ -153,6 +153,9 @@
                     else
                     {
                         <li>
+                            <input type="hidden" name="ProductColorId" id="ProductColorId" value="@item.ColorId" />
+                        </li>
+                        <li>
                             <div class="clr" onclick="selectColour(this)">
                                 <span>@item.Name</span>
                                 <strong style="background-color: @item.ColorCode"></strong>

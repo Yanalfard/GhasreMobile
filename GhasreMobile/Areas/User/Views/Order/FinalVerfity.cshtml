@@ -23,7 +23,7 @@
                 @foreach (var item in list)
                 {
                     <label class="radio">
-                        <span>@item.Name</span>
+                        <span>@item.Name (@item.Price.Value.ToString("#,0"))</span>
                         <input id="radio" name="radio" @((list.ToList().IndexOf(item) == 0 ? "checked" : "")) class="uk-radio @item.PostOptionId" value="@item.PostOptionId" type="radio">
                         <span>@item.Price.Value.ToString("#,0")</span>
                     </label>
@@ -34,17 +34,13 @@
         <hr class="uk-divider-icon uk-margin-small" />
 
         <div class="mat-card col">
-            <h3>
+            <h3 class="uk-margin-bottom">
                 پرداخت
             </h3>
-            <p class="uk-alert uk-alert-warning">
-                مشتری محترم، لطفا دقت کنید مبلغ پرداخت شده غیر قابل عودت می باشد، لطفا قبل از خرید اطمینان حاصل فرمایید
-            </p>
 
+            <div class="col">
 
-            <div class="rowr">
-
-                <div class="basket-factor box-shadow">
+                <div class="item-list box-shadow uk-margin-small-bottom">
                     <div class="profit-amount">تخفیف  : <span>@Model.DiscountPrice.ToString("#,0") تومان </span></div>
                     <div class="profit-amount">هزینه ارسال  : <span>@Model.PostPrice.ToString("#,0") تومان </span><span>(   فاکتور بالای @Model.SagfePost.ToString("#,0")   شامل هزینه نمی باشد   )</span></div>
                     <div class="main-payment">مبلغ کل : <span>@Model.Sum.ToString("#,0") تومان</span> </div>
@@ -52,11 +48,8 @@
                     <div class="final-payment">مبلغ قابل پرداخت : <span>@Model.SumWithDiscount.ToString("#,0") تومان</span></div>
                 </div>
 
-                <button type="submit" class="mini-wallet uk-margin-auto-top uk-margin-auto-right">
-                    <span class="label">ثبت و پرداخت </span>
-                    <span class="rowr">
-                        <span></span>
-                    </span>
+                <button type="submit" class="btn btn-primary uk-margin-auto-top uk-margin-auto-left">
+                    ثبت و پرداخت
                 </button>
 
             </div>

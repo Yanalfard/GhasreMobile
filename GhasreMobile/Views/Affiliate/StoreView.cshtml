@@ -28,7 +28,16 @@
     <p>
         @Html.Raw(Model.Body)
     </p>
-
+    <div class="rowr g-3">
+        <button class="btn btn-secondary" onclick="share(location.href,'@Model.Name')">
+            <span>اشتراک گذاری</span>
+            <span uk-icon="share-social-outline"></span>
+        </button>
+        <a class="btn btn-secondary" href="tel:@Model.TellNo">
+            <span>@Model.TellNo</span>
+            <span uk-icon="call-outline"></span>
+        </a>
+    </div>
 </div>
 
 <div id="map" class="uk-box-shadow-medium">
@@ -67,17 +76,9 @@
 
         theMarker = L.marker(
             [$("#lat").val(), $("#lon").val()],
-            { icon: customIcon }
-        )
+            { icon: customIcon })
             .addTo(map).bindPopup(
-                `
-                                        <div class="aff-marker">
-                                            <h4>${$("#Name").val()}</h4>
-                                            <p>
-${$("#Address").val()}
-                                            </p>
-                                        </div>
-                                        `
+                `<div class="aff-marker"><h4>${$("#Name").val()}</h4><p>${$("#Address").val()}</p></div>`
             ).openPopup();
 
     </script>

@@ -681,3 +681,12 @@ backdrop-filter: saturate(80%);
   background-color: rgba(150, 2, 126, 0.08); }
   .comment.unseen p {
     color: #96027E; }
+
+.item-list {
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
+  border: 1px #e9e9e9 solid; }
+  .item-list > * {
+    padding: 12px;
+    border-bottom: 1px #e9e9e9 solid; }

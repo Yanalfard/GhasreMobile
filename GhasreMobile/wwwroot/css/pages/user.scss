@@ -833,3 +833,13 @@ $aside-width: 142px;
         color: $primary;
     }
 }
+
+.item-list {
+    @include border-def-radius;
+    border: 1px $mat-border-color solid;
+
+    > * {
+        padding: 12px;
+        border-bottom: 1px $mat-border-color solid;
+    }
+}
