@@ -104,7 +104,7 @@
             var vote = document.getElementById('Vote' + val);
             const up = vote.parentElement.querySelector('.up');
             const down = vote.parentElement.querySelector('.down');
-           
+
             //#endregion
 
             //#region localStorage
@@ -131,7 +131,7 @@
                 var vote = document.getElementById('Vote' + val);
                 vote.innerText = parseInt(vote.innerText) + 1;
             } else {
-                window.location = "";
+                UIkit.notification('ابتدا وارد سایت شوید');
             }
         }
 
@@ -141,14 +141,16 @@
             var vote = document.getElementById('Vote' + val);
             const up = vote.parentElement.querySelector('.up');
             const down = vote.parentElement.querySelector('.down');
-           
+
             //#endregion
 
             //#region localStorage
 
             let cacheVote = votelist.filter(vote => vote.id === val)[0];
 
-            if (!cacheVote?.isUp) return;
+            if (cacheVote)
+                if (!cacheVote.isUp) return;
+
             up.classList.remove('link-active');
             down.classList.remove('link-active');
 
@@ -167,7 +169,7 @@
             if (result) {
                 vote.innerText = parseInt(vote.innerText) - 1;
             } else {
-                window.location = "";
+                UIkit.notification('ابتدا وارد سایت شوید');
             }
         }
 

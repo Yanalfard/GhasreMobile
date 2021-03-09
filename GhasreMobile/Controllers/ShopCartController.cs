@@ -19,7 +19,7 @@ namespace GhasreMobile.Controllers
             TblClient selectUser = db.Client.GetById(userId);
             return selectUser;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
@@ -56,13 +56,13 @@ namespace GhasreMobile.Controllers
                 }
                 else
                 {
-                    return Redirect("/");
+                    return await Task.FromResult(Redirect("/"));
                 }
-                return View(list);
+                return await Task.FromResult(View(list));
             }
             catch
             {
-                return RedirectToAction("/ErrorPage/NotFound");
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 
