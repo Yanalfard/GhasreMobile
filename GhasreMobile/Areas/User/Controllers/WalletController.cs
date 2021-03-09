@@ -28,9 +28,18 @@ namespace GhasreMobile.Areas.User.Controllers
             return View(list);
         }
 
-        public IActionResult Charge()
+        public async Task<IActionResult> Charge()
         {
-            return View();
+           
+            try
+            {
+                return await Task.FromResult(View());
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+
         }
         public async Task<IActionResult> ChargeWallet(ChargeWalletVm charge)
         {
