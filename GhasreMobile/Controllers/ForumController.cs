@@ -13,66 +13,95 @@ namespace GhasreMobile.Controllers
     public class ForumController : Controller
     {
         private Core db;
+        public ForumController()
+        {
+            db = new Core();
+        }
         TblClient SelectUser()
         {
             int userId = Convert.ToInt32(User.Claims.First().Value);
             TblClient selectUser = db.Client.GetById(userId);
             return selectUser;
         }
-        public ForumController()
-        {
-            db = new Core();
-        }
-        public IActionResult Index()
-        {
-            return View(db.Topic.Get(i => i.IsValid));
-        }
-        [Route("ForumView/{id}/{name}")]
-        public IActionResult ForumView(int id, string name)
+       
+        public async Task<IActionResult> Index()
         {
             try
             {
-                return View(db.Topic.GetById(id));
+                return View(db.Topic.Get(i => i.IsValid));
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
+        [Route("ForumView/{id}/{name}")]
+        public async Task<IActionResult> ForumView(int id, string name)
+        {
+            try
+            {
+                return await Task.FromResult(View(db.Topic.GetById(id)));
             }
             catch
             {
-                return Redirect("ErrorPage");
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 
-        public IActionResult ThreadBlock(VmTopic topic)
+        public async Task<IActionResult> ThreadBlock(VmTopic topic)
         {
-            return PartialView("_ThreadBlock", topic);
+            try
+            {
+                return await Task.FromResult(PartialView("_ThreadBlock", topic));
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+           
         }
 
         [HttpPost]
-        public IActionResult VoteUp(int id)
+        public async Task<IActionResult> VoteUp(int id)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                TblTopic topic = db.Topic.GetById(id);
-                topic.VoteCount++;
-                bool res = db.Topic.Update(topic);
-                db.Topic.Save();
-                return Ok(true);
+                if (User.Identity.IsAuthenticated)
+                {
+                    TblTopic topic = db.Topic.GetById(id);
+                    topic.VoteCount++;
+                    bool res = db.Topic.Update(topic);
+                    db.Topic.Save();
+                    return Ok(true);
+                }
+                return await Task.FromResult(Ok(false));
             }
-
-            return Ok(false);
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+         
         }
         [HttpPost]
 
-        public IActionResult VoteDown(int id)
+        public async Task<IActionResult> VoteDown(int id)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                TblTopic topic = db.Topic.GetById(id);
-                topic.VoteCount--;
-                db.Topic.Update(topic);
-                db.Topic.Save();
-                return Ok(true);
+                if (User.Identity.IsAuthenticated)
+                {
+                    TblTopic topic = db.Topic.GetById(id);
+                    topic.VoteCount--;
+                    db.Topic.Update(topic);
+                    db.Topic.Save();
+                    return await Task.FromResult(Ok(true));
+                }
+                return await Task.FromResult(Ok(false));
             }
-
-            return Ok(false);
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         [HttpPost]
         [PermissionChecker("user,employee,admin")]
@@ -107,38 +136,53 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 
-        public IActionResult NewForum()
+        public async Task<IActionResult> NewForum()
         {
-            return View();
+            try
+            {
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         [HttpPost]
         [PermissionChecker("user,employee,admin")]
         public async Task<IActionResult> NewForum(AddTopicVm topic)
         {
-            if (ModelState.IsValid)
+            try
             {
-                TblTopic tblTopic = new TblTopic();
-                tblTopic.Title = topic.Title;
-                tblTopic.Body = topic.Body;
-                tblTopic.DateCreated = DateTime.Now;
-                tblTopic.ClientId = SelectUser().ClientId;
-                tblTopic.VoteCount = 0;
-                if (User.Identity.IsAuthenticated)
+                if (ModelState.IsValid)
                 {
-                    if (User.Claims.Last().Value != "user")
+                    TblTopic tblTopic = new TblTopic();
+                    tblTopic.Title = topic.Title;
+                    tblTopic.Body = topic.Body;
+                    tblTopic.DateCreated = DateTime.Now;
+                    tblTopic.ClientId = SelectUser().ClientId;
+                    tblTopic.VoteCount = 0;
+                    if (User.Identity.IsAuthenticated)
                     {
-                        tblTopic.IsValid = true;
+                        if (User.Claims.Last().Value != "user")
+                        {
+                            tblTopic.IsValid = true;
+                        }
                     }
+                    db.Topic.Add(tblTopic);
+                    db.Topic.Save();
+                    return await Task.FromResult(Redirect("/Forum?addForum=true"));
                 }
-                db.Topic.Add(tblTopic);
-                db.Topic.Save();
-                return await Task.FromResult(Redirect("/Forum?addForum=true"));
+                return await Task.FromResult(View(topic));
             }
-            return View(topic);
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+         
         }
     }
 }

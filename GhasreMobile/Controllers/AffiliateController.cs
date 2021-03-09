@@ -20,7 +20,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return Redirect("404.html");
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
         [Route("StoreView/{id}/{name}")]
@@ -32,7 +32,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return Redirect("404.html");
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 
