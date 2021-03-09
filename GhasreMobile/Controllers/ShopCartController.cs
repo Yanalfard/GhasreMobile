@@ -54,10 +54,6 @@ namespace GhasreMobile.Controllers
                         });
                     }
                 }
-                else
-                {
-                    return await Task.FromResult(Redirect("/"));
-                }
                 return await Task.FromResult(View(list));
             }
             catch
@@ -66,52 +62,59 @@ namespace GhasreMobile.Controllers
             }
         }
 
-        public IActionResult UpDownCount(int id, int colorId, string command, string ReturnUrl = "/")
+        public async Task<IActionResult> UpDownCount(int id, int colorId, string command, string ReturnUrl = "/")
         {
-            TblColor selectedProduct = db.Color.GetById(colorId);
-            var listShop = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
-            var index = listShop.FindIndex(p => p.ColorID == colorId);
-            switch (command)
+            try
             {
-                case "up":
-                    {
-                        if (selectedProduct != null)
+                TblColor selectedProduct = db.Color.GetById(colorId);
+                var listShop = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
+                var index = listShop.FindIndex(p => p.ColorID == colorId);
+                switch (command)
+                {
+                    case "up":
                         {
-                            int count = selectedProduct.Count - listShop[index].Count;
-                            if (count > 0 && selectedProduct.ProductId == id && selectedProduct.ColorId == colorId)
+                            if (selectedProduct != null)
                             {
-                                listShop[index].Count += 1;
+                                int count = selectedProduct.Count - listShop[index].Count;
+                                if (count > 0 && selectedProduct.ProductId == id && selectedProduct.ColorId == colorId)
+                                {
+                                    listShop[index].Count += 1;
+                                }
                             }
+                            break;
                         }
-                        break;
-                    }
-                case "down":
-                    {
-                        listShop[index].Count -= 1;
-                        if (listShop[index].Count == 0)
+                    case "down":
                         {
-                            listShop.RemoveAt(index);
+                            listShop[index].Count -= 1;
+                            if (listShop[index].Count == 0)
+                            {
+                                listShop.RemoveAt(index);
+                            }
+                            break;
                         }
-                        break;
-                    }
-                case "delete":
-                    {
+                    case "delete":
+                        {
 
-                        listShop.RemoveAt(index);
+                            listShop.RemoveAt(index);
 
-                        break;
-                    }
+                            break;
+                        }
+                }
+                HttpContext.Session.SetComplexData("ShopCart", listShop);
+                if (listShop != null && listShop.Count == 0)
+                {
+                    return Redirect("/");
+                }
+                return await Task.FromResult(Redirect(ReturnUrl));
             }
-            HttpContext.Session.SetComplexData("ShopCart", listShop);
-            if (listShop.Count == 0)
+            catch
             {
-                return Redirect("/");
+                return await Task.FromResult(Redirect("404.html"));
             }
 
-            return Redirect(ReturnUrl);
         }
 
-        public IActionResult Comparison()
+        public async Task<IActionResult> Comparison()
         {
             try
             {
@@ -140,184 +143,196 @@ namespace GhasreMobile.Controllers
                     }
 
                 }
-
-
                 VmComparison vm = new VmComparison(features.Distinct().ToList(), productFeatures, list);
-
-                return View(vm);
+                return await Task.FromResult(View(vm));
             }
             catch
             {
-                return RedirectToAction("/ErrorPage/NotFound");
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 
-        public IActionResult Bookmarks()
+        public async Task<IActionResult> Bookmarks()
         {
-            return View();
+            try
+            {
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
-        public IActionResult Payment(string radio, string address)
+        public async Task<IActionResult> Payment(string radio, string address)
         {
-            List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
-            DiscountVm selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
-            if (selectedDiscount != null)
+            try
             {
-                TblOrder addOrder = new TblOrder();
-                if (selectedDiscount.DiscountId == 0)
+                List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
+                DiscountVm selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                if (selectedDiscount != null)
                 {
-                    addOrder.DiscountId = null;
-                }
-                else
-                {
-                    addOrder.DiscountId = selectedDiscount.DiscountId;
-                }
-                addOrder.Address = address;
-                addOrder.DateSubmited = DateTime.Now;
-                addOrder.FinalPrice = (int)selectedDiscount.Sum;
-                addOrder.IsPayed = false;
-                addOrder.Status = 0;
-                addOrder.PaymentStatus = (int)selectedDiscount.DiscountPrice;
-                addOrder.PostalCode = "0";
-                addOrder.SendPrice = selectedDiscount.PostPrice;
-                addOrder.SendStatus = selectedDiscount.PostPriceId;
-                addOrder.ClientId = SelectUser().ClientId;
-                db.Order.Add(addOrder);
-                db.Order.Save();
-                foreach (var item in sessions)
-                {
-                    var product = db.Product.Get().Where(p => p.ProductId == item.ProductID).Select(p => new
+                    TblOrder addOrder = new TblOrder();
+                    if (selectedDiscount.DiscountId == 0)
                     {
-                        p.PriceAfterDiscount,
-                        p.PriceBeforeDiscount,
-                    }).Single();
-                    TblOrderDetail addOrderDetail = new TblOrderDetail();
-                    addOrderDetail.Count = item.Count;
-                    addOrderDetail.FinalOrderId = addOrder.OrdeId;
-                    addOrderDetail.ProductId = item.ProductID;
-                    addOrderDetail.ColorId = item.ColorID;
-                    if (product.PriceAfterDiscount == 0)
-                    {
-                        addOrderDetail.Price = (int)product.PriceBeforeDiscount;
+                        addOrder.DiscountId = null;
                     }
                     else
                     {
-                        addOrderDetail.Price = (int)product.PriceAfterDiscount;
+                        addOrder.DiscountId = selectedDiscount.DiscountId;
                     }
-                    db.OrderDetail.Add(addOrderDetail);
-
-                }
-                db.OrderDetail.Save();
-                if (selectedDiscount.SumWithDiscount <= SelectUser().Balance)
-                {
-                    TblWallet addWallet = new TblWallet();
-                    addWallet.Amount = (int)selectedDiscount.Sum;
-                    addWallet.Date = DateTime.Now;
-                    addWallet.Description = "خرید";
-                    addWallet.IsDeposit = false;
-                    addWallet.IsFinaly = true;
-                    addWallet.ClientId = SelectUser().ClientId;
-                    addWallet.OrderId = addOrder.OrdeId;
-                    db.Wallet.Add(addWallet);
-                    //db.Wallet.Save();
-                    TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
-                    selectedClient.Balance -= selectedDiscount.Sum;
-                    TblOrder selectedOrder = db.Order.GetById(addOrder.OrdeId);
-                    selectedOrder.IsPayed = true;
-                    db.Client.Update(selectedClient);
-                    db.Order.Update(selectedOrder);
-                    db.Client.Save();
-                    return View();
-                }
-                else
-                {
-                    long SumBalance = selectedDiscount.SumWithDiscount;
-                    if (SumBalance < 1000)
+                    addOrder.Address = address;
+                    addOrder.DateSubmited = DateTime.Now;
+                    addOrder.FinalPrice = (int)selectedDiscount.Sum;
+                    addOrder.IsPayed = false;
+                    addOrder.Status = 0;
+                    addOrder.PaymentStatus = (int)selectedDiscount.DiscountPrice;
+                    addOrder.PostalCode = "0";
+                    addOrder.SendPrice = selectedDiscount.PostPrice;
+                    addOrder.SendStatus = selectedDiscount.PostPriceId;
+                    addOrder.ClientId = SelectUser().ClientId;
+                    db.Order.Add(addOrder);
+                    db.Order.Save();
+                    foreach (var item in sessions)
                     {
-                        SumBalance = 1000;
+                        var product = db.Product.Get().Where(p => p.ProductId == item.ProductID).Select(p => new
+                        {
+                            p.PriceAfterDiscount,
+                            p.PriceBeforeDiscount,
+                        }).Single();
+                        TblOrderDetail addOrderDetail = new TblOrderDetail();
+                        addOrderDetail.Count = item.Count;
+                        addOrderDetail.FinalOrderId = addOrder.OrdeId;
+                        addOrderDetail.ProductId = item.ProductID;
+                        addOrderDetail.ColorId = item.ColorID;
+                        if (product.PriceAfterDiscount == 0)
+                        {
+                            addOrderDetail.Price = (int)product.PriceBeforeDiscount;
+                        }
+                        else
+                        {
+                            addOrderDetail.Price = (int)product.PriceAfterDiscount;
+                        }
+                        db.OrderDetail.Add(addOrderDetail);
+
                     }
-                    ChargeWalletVm charge = new ChargeWalletVm();
-                    int Amount = (int)SumBalance;
-                    int OrderId = addOrder.OrdeId;
-                    return Redirect("/User/Wallet/ChargeWallet?Amount=" + Amount + "&OrderId=" + OrderId);
-                    //return Redirect("/User/Wallet/ChargeWallet/" + charge);
-                }
-            }
-            return View();
-        }
-
-        [Route("OnlinePayment/{id}")]
-        public IActionResult OnlinePayment(int id)
-        {
-            if (HttpContext.Request.Query["Status"] != "" &&
-                HttpContext.Request.Query["Status"].ToString().ToLower() == "ok"
-                && HttpContext.Request.Query["Authority"] != "")
-            {
-                string authority = HttpContext.Request.Query["Authority"];
-
-                var wallet = db.Wallet.GetById(id);
-
-                var payment = new ZarinpalSandbox.Payment(wallet.Amount);
-                var res = payment.Verification(authority).Result;
-                if (res.Status == 100)
-                {
-                    ViewBag.code = res.RefId;
-                    ViewBag.IsSuccess = true;
-                    wallet.IsFinaly = true;
-                    db.Wallet.Update(wallet);
-                    TblClient selectedClient = db.Client.GetById(wallet.ClientId);
-                    selectedClient.Balance += wallet.Amount;
-                    db.Client.Update(selectedClient);
-
-                    db.Client.Save();
-                    if (wallet.OrderId != null)
+                    db.OrderDetail.Save();
+                    if (selectedDiscount.SumWithDiscount <= SelectUser().Balance)
                     {
-                        TblOrder selectedOrder = db.Order.GetById(wallet.OrderId);
-                        selectedOrder.IsPayed = true;
-                        db.Order.Update(selectedOrder);
-                        selectedClient.Balance -= selectedOrder.FinalPrice;
-                        db.Client.Update(selectedClient);
-                        db.Client.Save();
                         TblWallet addWallet = new TblWallet();
-                        addWallet.Amount = selectedOrder.FinalPrice;
+                        addWallet.Amount = (int)selectedDiscount.Sum;
                         addWallet.Date = DateTime.Now;
                         addWallet.Description = "خرید";
                         addWallet.IsDeposit = false;
                         addWallet.IsFinaly = true;
                         addWallet.ClientId = SelectUser().ClientId;
-                        addWallet.OrderId = wallet.OrderId;
+                        addWallet.OrderId = addOrder.OrdeId;
                         db.Wallet.Add(addWallet);
-                        if (selectedOrder.DiscountId != null)
-                        {
-                            TblDiscount selectedDiscount = db.Discount.GetById(selectedOrder.DiscountId);
-                            selectedDiscount.Count--;
-                            db.Discount.Update(selectedDiscount);
-                        }
-                        List<TblOrderDetail> list = db.OrderDetail.Get(i => i.FinalOrderId == wallet.OrderId).ToList();
-                        foreach (var item in list)
-                        {
-                            TblColor colors = db.Color.GetById(item.ColorId);
-                            if (colors.Count > 0 && colors.Count >= item.Count)
-                            {
-                                colors.Count -= colors.Count;
-                                db.Color.Update(colors);
-                            }
-                        }
-                        db.Wallet.Save();
+                        //db.Wallet.Save();
+                        TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
+                        selectedClient.Balance -= selectedDiscount.Sum;
+                        TblOrder selectedOrder = db.Order.GetById(addOrder.OrdeId);
+                        selectedOrder.IsPayed = true;
+                        db.Client.Update(selectedClient);
+                        db.Order.Update(selectedOrder);
+                        db.Client.Save();
+                        return View();
                     }
-                    List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
-                    DiscountVm discount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
-                    HttpContext.Session.Clear();
+                    else
+                    {
+                        long SumBalance = selectedDiscount.SumWithDiscount;
+                        if (SumBalance < 1000)
+                        {
+                            SumBalance = 1000;
+                        }
+                        ChargeWalletVm charge = new ChargeWalletVm();
+                        int Amount = (int)SumBalance;
+                        int OrderId = addOrder.OrdeId;
+                        return Redirect("/User/Wallet/ChargeWallet?Amount=" + Amount + "&OrderId=" + OrderId);
+                        //return Redirect("/User/Wallet/ChargeWallet/" + charge);
+                    }
                 }
-
+                return await Task.FromResult(View());
             }
-
-            return View();
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
+        [Route("OnlinePayment/{id}")]
+        public async Task<IActionResult> OnlinePayment(int id)
+        {
+            try
+            {
+                if (HttpContext.Request.Query["Status"] != "" &&
+                    HttpContext.Request.Query["Status"].ToString().ToLower() == "ok"
+                    && HttpContext.Request.Query["Authority"] != "")
+                {
+                    string authority = HttpContext.Request.Query["Authority"];
 
+                    var wallet = db.Wallet.GetById(id);
 
+                    var payment = new ZarinpalSandbox.Payment(wallet.Amount);
+                    var res = payment.Verification(authority).Result;
+                    if (res.Status == 100)
+                    {
+                        ViewBag.code = res.RefId;
+                        ViewBag.IsSuccess = true;
+                        wallet.IsFinaly = true;
+                        db.Wallet.Update(wallet);
+                        TblClient selectedClient = db.Client.GetById(wallet.ClientId);
+                        selectedClient.Balance += wallet.Amount;
+                        db.Client.Update(selectedClient);
 
+                        db.Client.Save();
+                        if (wallet.OrderId != null)
+                        {
+                            TblOrder selectedOrder = db.Order.GetById(wallet.OrderId);
+                            selectedOrder.IsPayed = true;
+                            db.Order.Update(selectedOrder);
+                            selectedClient.Balance -= selectedOrder.FinalPrice;
+                            db.Client.Update(selectedClient);
+                            db.Client.Save();
+                            TblWallet addWallet = new TblWallet();
+                            addWallet.Amount = selectedOrder.FinalPrice;
+                            addWallet.Date = DateTime.Now;
+                            addWallet.Description = "خرید";
+                            addWallet.IsDeposit = false;
+                            addWallet.IsFinaly = true;
+                            addWallet.ClientId = SelectUser().ClientId;
+                            addWallet.OrderId = wallet.OrderId;
+                            db.Wallet.Add(addWallet);
+                            if (selectedOrder.DiscountId != null)
+                            {
+                                TblDiscount selectedDiscount = db.Discount.GetById(selectedOrder.DiscountId);
+                                selectedDiscount.Count--;
+                                db.Discount.Update(selectedDiscount);
+                            }
+                            List<TblOrderDetail> list = db.OrderDetail.Get(i => i.FinalOrderId == wallet.OrderId).ToList();
+                            foreach (var item in list)
+                            {
+                                TblColor colors = db.Color.GetById(item.ColorId);
+                                if (colors.Count > 0 && colors.Count >= item.Count)
+                                {
+                                    colors.Count -= colors.Count;
+                                    db.Color.Update(colors);
+                                }
+                            }
+                            db.Wallet.Save();
+                        }
+                        List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
+                        DiscountVm discount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                        HttpContext.Session.Clear();
+                    }
 
+                }
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
     }
 }

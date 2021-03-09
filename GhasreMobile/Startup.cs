@@ -83,7 +83,9 @@ namespace GhasreMobile
             //        await next();
             //    }
             //});
+            #region 
             app.UseStatusCodePagesWithReExecute("/404.html");
+            #endregion
             app.UseSession();
             app.UseAuthentication();
             app.UseStaticFiles();

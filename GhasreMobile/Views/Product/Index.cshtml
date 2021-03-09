@@ -108,7 +108,14 @@
         </div>
     </div>
     <div class="pr-content col">
-        <div class="body">
+        <div class="body col">
+            @if (Model.IsFractional)
+            {
+                <label class="uk-alert uk-alert-success uk-margin-remove-bottom uk-margin-small-top uk-margin-auto-left uk-padding-small">
+                    فروش اقساطی
+                </label>
+            }
+
             @Html.Raw(Model.DescriptionShortHtml)
         </div>
         <div class="price">
@@ -228,9 +235,9 @@
         <tbody>
             @if (Model.TblProductPropertyRel.Any())
             {
-                @foreach (var item in Model.TblProductPropertyRel.Where(i => i.Value != null))
+                @foreach (var item in Model.TblProductPropertyRel.Where(i => i.Value != ""))
                 {
-                    @if (item.Value != null)
+                    @if (item.Value != "")
                     {
                         <tr>
                             <td>@item.Property.Name</td>
@@ -239,7 +246,6 @@
                     }
                 }
             }
-
         </tbody>
     </table>
 </div>

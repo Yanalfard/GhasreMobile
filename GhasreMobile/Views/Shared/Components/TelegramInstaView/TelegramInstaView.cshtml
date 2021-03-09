@@ -1,0 +1,13 @@
+﻿@model IEnumerable<TblConfig>
+
+@foreach (var item in Model)
+{
+    @if (item.Key == "LinkTelegram")
+    {
+        <a href="@item.Value"><img src="~/st/v/footer/Instagram.svg" alt="قصر موبایل" /></a>
+    }
+    @if (item.Key == "LinkInsta")
+    {
+        <a href="@item.Value"><img src="~/st/v/footer/Telegram.svg" alt="قصر موبایل" /></a>
+    }
+}

@@ -21,7 +21,7 @@ namespace GhasreMobile.Areas.User.Controllers
             TblClient selectUser = db.Client.GetById(userId);
             return selectUser;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
@@ -57,21 +57,17 @@ namespace GhasreMobile.Areas.User.Controllers
                         });
                     }
                 }
-                else
-                {
-                    return Redirect("/");
-                }
 
-                return View(list);
+                return await Task.FromResult(View(list));
             }
             catch
             {
-                return RedirectToAction("/ErrorPage/NotFound");
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 
         [Route("User/Comparison")]
-        public IActionResult Comparison()
+        public async Task<IActionResult> Comparison()
         {
             try
             {
@@ -100,23 +96,27 @@ namespace GhasreMobile.Areas.User.Controllers
                     }
 
                 }
-
-
                 VmComparison vm = new VmComparison(features.Distinct().ToList(), productFeatures, list);
-
-                return View(vm);
+                return await Task.FromResult(View(vm));
             }
             catch
             {
-                return RedirectToAction("/ErrorPage/NotFound");
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 
         [Route("User/Bookmarks")]
-        public IActionResult Bookmarks()
+        public async Task<IActionResult> Bookmarks()
         {
-            List<TblProduct> list = db.BookMark.Get(i => i.ClientId == SelectUser().ClientId).Select(i => i.Product).ToList();
-            return View(list);
+            try
+            {
+                List<TblProduct> list = db.BookMark.Get(i => i.ClientId == SelectUser().ClientId).Select(i => i.Product).ToList();
+                return await Task.FromResult(View(list));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
 
