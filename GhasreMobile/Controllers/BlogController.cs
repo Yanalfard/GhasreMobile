@@ -21,14 +21,27 @@ namespace GhasreMobile.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return await Task.FromResult(View(db.Blog.Get()));
+            try
+            {
+                return await Task.FromResult(View(db.Blog.Get()));
+            }
+            catch
+            {
+                return Redirect("404.html");
+            }
         }
         [Route("ViewBlog/{id}/{title}")]
         public async Task<IActionResult> ViewBlog(int id, string title)
         {
-            return await Task.FromResult(View(db.Blog.GetById(id)));
+            try
+            {
+                return await Task.FromResult(View(db.Blog.GetById(id)));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
-
         [HttpPost]
         [PermissionChecker("user,employee,admin")]
         public async Task<IActionResult> SendComment(SendCommentVm comment)
@@ -62,7 +75,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
 

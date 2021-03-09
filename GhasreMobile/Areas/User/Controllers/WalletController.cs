@@ -32,34 +32,42 @@ namespace GhasreMobile.Areas.User.Controllers
         {
             return View();
         }
-        public IActionResult ChargeWallet(ChargeWalletVm charge)
+        public async Task<IActionResult> ChargeWallet(ChargeWalletVm charge)
         {
-            if (ModelState.IsValid)
+            try
             {
-                TblWallet addWallet = new TblWallet();
-                addWallet.Amount = (int)charge.Amount;
-                addWallet.Date = DateTime.Now;
-                addWallet.Description = "شارژ حساب";
-                addWallet.IsDeposit = true;
-                addWallet.IsFinaly = false;
-                addWallet.ClientId = SelectUser().ClientId;
-                addWallet.OrderId = charge.OrderId;
-                db.Wallet.Add(addWallet);
-                db.Wallet.Save();
-
-                #region Online Payment
-
-                var payment = new ZarinpalSandbox.Payment((int)charge.Amount);
-                var res = payment.PaymentRequest("شارژ کیف پول", "https://localhost:44371/OnlinePayment/" + addWallet.WalletId, "Info@mehdi.Com", "09357035985");
-
-                if (res.Result.Status == 100)
+                if (ModelState.IsValid)
                 {
-                    return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + res.Result.Authority);
+                    TblWallet addWallet = new TblWallet();
+                    addWallet.Amount = (int)charge.Amount;
+                    addWallet.Date = DateTime.Now;
+                    addWallet.Description = "شارژ حساب";
+                    addWallet.IsDeposit = true;
+                    addWallet.IsFinaly = false;
+                    addWallet.ClientId = SelectUser().ClientId;
+                    addWallet.OrderId = charge.OrderId;
+                    db.Wallet.Add(addWallet);
+                    db.Wallet.Save();
+
+                    #region Online Payment
+
+                    var payment = new ZarinpalSandbox.Payment((int)charge.Amount);
+                    var res = payment.PaymentRequest("شارژ کیف پول", "https://localhost:44371/OnlinePayment/" + addWallet.WalletId, "Info@mehdi.Com", "09357035985");
+
+                    if (res.Result.Status == 100)
+                    {
+                        return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + res.Result.Authority);
+                    }
+                    return null;
+                    #endregion
                 }
-                return null;
-                #endregion
+                return await Task.FromResult(View(charge));
             }
-            return View(charge);
+            catch (Exception)
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+           
         }
     }
 }
