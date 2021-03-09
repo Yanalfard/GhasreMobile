@@ -27,5 +27,11 @@ namespace DataLayer.ViewModels
 
         [Required(ErrorMessage = "لطفا سقف هزینه ارسال رایگان را وارد کنید")]
         public string SagfePost { get; set; }
+
+        [Required(ErrorMessage = "لطفا متن خرید نهایی را وارد کنید")]
+        public string FinalTextKharid { get; set; }
+
+        [Required(ErrorMessage = "لطفا درباره ما کوتاه را وارد کنید")]
+        public string ShortDarbareyeMa { get; set; }
     }
 }

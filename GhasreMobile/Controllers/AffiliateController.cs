@@ -11,15 +11,29 @@ namespace GhasreMobile.Controllers
     public class AffiliateController : Controller
     {
         private Core db = new Core();
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            TblConfig vonfig = db.Config.Get(i => i.Key == "StoreDescription").Single();
-            return View(vonfig);
+            try
+            {
+                TblConfig vonfig = db.Config.Get(i => i.Key == "StoreDescription").Single();
+                return await Task.FromResult(View(vonfig));
+            }
+            catch
+            {
+                return Redirect("404.html");
+            }
         }
         [Route("StoreView/{id}/{name}")]
-        public IActionResult StoreView(int id,string name)
+        public async Task<IActionResult> StoreView(int id, string name)
         {
-            return View(db.Store.GetById(id));
+            try
+            {
+                return await Task.FromResult(View(db.Store.GetById(id)));
+            }
+            catch
+            {
+                return Redirect("404.html");
+            }
         }
 
     }

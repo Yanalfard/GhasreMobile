@@ -46,7 +46,7 @@
                                             </span>
                                         }
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف نظر">
-                                            <a onclick="" class="text-danger" uk-icon="trash"></a>
+                                            <a onclick="Delete(@item.CommentId)" class="text-danger" uk-icon="trash"></a>
                                         </span>
                                     </td>
                                 </tr>
@@ -76,6 +76,12 @@
 
         function Success(Id) {
             $.post("/Admin/Comment/ChangeStatus/" + Id, function () {
+                window.location.reload();
+            });
+        }
+
+        function Delete(id) {
+            $.post("/Admin/Comment/Delete/" + id, function () {
                 window.location.reload();
             });
         }

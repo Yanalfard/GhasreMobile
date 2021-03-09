@@ -67,6 +67,15 @@ namespace GhasreMobile.Areas.User.Controllers
             string Image = selectedClient.MainImage;
             return selectedClient.MainImage;
         }
+        [HttpPost]
+        public IActionResult EditName(string name)
+        {
+            TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
+            selectedClient.Name = name;
+            db.Client.Update(selectedClient);
+            db.Client.Save();
+            return RedirectToAction("Index");
+        }
         public async Task<string> UploadImage(TblClient client)
         {
             string result = string.Empty;

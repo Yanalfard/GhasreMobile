@@ -27,8 +27,9 @@ namespace GhasreMobile.Areas.User.Controllers
             {
                 List<ShopCartItemVm> list = new List<ShopCartItemVm>();
                 var sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
-                if (sessions != null)
+                if (sessions != null && sessions.Count > 0)
                 {
+
                     List<ShopCartItem> listShop = (List<ShopCartItem>)sessions;
 
                     foreach (var item in listShop)
@@ -56,7 +57,11 @@ namespace GhasreMobile.Areas.User.Controllers
                         });
                     }
                 }
-               
+                else
+                {
+                    return Redirect("/");
+                }
+
                 return View(list);
             }
             catch

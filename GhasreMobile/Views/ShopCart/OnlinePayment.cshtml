@@ -1,28 +1,23 @@
 ﻿
 @{
     ViewData["Title"] = "نتیجه پرداخت";
+    ViewData["Single"] = true;
 }
 
-
-<nav aria-label="breadcrumb">
-    <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">قصر موبایل </a></li>
-        <li class="breadcrumb-item active" aria-current="page">نتیجه پرداخت</li>
-    </ul>
-</nav>
-
-<div class="container">
-    @if (ViewBag.IsSuccess == true)
-    {
-        <div class="alert alert-success">
-            <h2>پرداخت با موفقیت انجام شد</h2>
-            <p> کد پیگیری : @ViewBag.Code</p>
-        </div>
-    }
-    else
-    {
-        <div class="uk-alert uk-alert-danger">
-            <h2>پرداخت با شکست مواجه شد</h2>
-        </div>
-    }
+<div class="container uk-margin-auto-bottom mat-pad" style="height:50vh">
+    <div class="">
+        @if (ViewBag.IsSuccess == true)
+        {
+            <div class="uk-alert uk-alert-success">
+                <h2>پرداخت با موفقیت انجام شد</h2>
+                <p> کد پیگیری : @ViewBag.Code</p>
+            </div>
+        }
+        else
+        {
+            <div class="uk-alert uk-alert-danger">
+                <h2>پرداخت با شکست مواجه شد</h2>
+            </div>
+        }
+    </div>
 </div>

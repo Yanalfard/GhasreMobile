@@ -32,12 +32,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 OrderCancelCount = orders.Where(o => !o.IsPayed).Count(),
                 OnlineOrderCount = _core.OnlineOrder.Get().Count(),
                 allTicketCount = tickets.Count(),
-                AllNotificationCount=_core.Notification.Get().Count(),
+                AllNotificationCount = _core.Notification.Get().Count(),
                 IsSeenTicketCount = tickets.Where(t => t.IsAnswerd).Count(),
                 NotSeenTicketCount = tickets.Where(t => !t.IsAnswerd).Count(),
                 AllTopicCount = _core.Topic.Get().Count(),
                 AllPostCount = _core.Blog.Get().Count(),
-                AllRegularQuestionCount = _core.RegularQuestion.Get().Count()
+                AllRegularQuestionCount = _core.RegularQuestion.Get().Count(),
+                AllNotIsValidComment = _core.Comment.Get(c => !c.IsValid).Count()
             });
         }
     }
