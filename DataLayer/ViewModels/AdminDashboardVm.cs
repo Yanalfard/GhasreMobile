@@ -21,6 +21,7 @@ namespace DataLayer.ViewModels
         public int AllPostCount { get; set; }
         public int AllNotificationCount { get; set; }
         public int AllRegularQuestionCount { get; set; }
+        public int AllNotIsValidComment { get; set; }
 
     }
 }

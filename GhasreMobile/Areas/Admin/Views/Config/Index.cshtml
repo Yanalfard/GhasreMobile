@@ -47,9 +47,19 @@
                         <br /><span class="text-danger" asp-validation-for="DarbareyeMa"></span>
                     </div>
                     <div class="form-group col-lg-12 mt-lg-3">
+                        <label>درباره ما کوتاه در فوتر سایت:</label>
+                        <input asp-for="ShortDarbareyeMa" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="...">
+                        <br /><span class="text-danger" asp-validation-for="ShortDarbareyeMa"></span>
+                    </div>
+                    <div class="form-group col-lg-12 mt-lg-3">
                         <label>توضیحات شعب:</label>
                         <textarea asp-for="StoreDescription" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
                         <br /><span class="text-danger" asp-validation-for="StoreDescription"></span>
+                    </div>
+                    <div class="form-group col-lg-12 mt-lg-3">
+                        <label>توضیحات آخرین مرحله خرید:</label>
+                        <textarea asp-for="FinalTextKharid" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
+                        <br /><span class="text-danger" asp-validation-for="FinalTextKharid"></span>
                     </div>
                     <button type="submit" class="btn btn-success btn-sm text-white">ثبت تغییرات<span class="icon-holder uk-margin-small-right" uk-icon="create-outline"></span></button>
                 </form>

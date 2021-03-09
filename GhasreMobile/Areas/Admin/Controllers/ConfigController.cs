@@ -28,6 +28,9 @@ namespace GhasreMobile.Areas.Admin.Controllers
             config.HazineErsalPeyk = Convert.ToInt32(configs.Where(c => c.Key == "HazineErsalPeyk").Single().Value);
             config.StoreDescription = configs.Where(c => c.Key == "StoreDescription").Single().Value;
             config.SagfePost = configs.Where(c => c.Key == "SagfePost").Single().Value;
+            config.FinalTextKharid = configs.Where(c => c.Key == "FinalTextKharid").Single().Value;
+            config.ShortDarbareyeMa = configs.Where(c => c.Key == "ShortDarbareyeMa").Single().Value;
+
             return View(config);
         }
 
@@ -45,6 +48,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 TblConfig ConfigHazineErsalPeyk = configs.Where(c => c.Key == "HazineErsalPeyk").Single();
                 TblConfig ConfigStoreDescription = configs.Where(c => c.Key == "StoreDescription").Single();
                 TblConfig ConfigSagfePost = configs.Where(c => c.Key == "SagfePost").Single();
+                TblConfig ConfigFinalTextKharid = configs.Where(c => c.Key == "FinalTextKharid").Single();
+                TblConfig ConfigShortDarbareyeMa = configs.Where(c => c.Key == "ShortDarbareyeMa").Single();
 
                 ConfigDarbareyeMa.Value = configVm.DarbareyeMa;
                 ConfigHazineErsalBaPost.Value = configVm.HazineErsalBaPost.ToString();
@@ -53,6 +58,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 ConfigHazineErsalPeyk.Value = configVm.HazineErsalPeyk.ToString();
                 ConfigStoreDescription.Value = configVm.StoreDescription;
                 ConfigSagfePost.Value = configVm.SagfePost;
+                ConfigFinalTextKharid.Value = configVm.FinalTextKharid;
+                ConfigShortDarbareyeMa.Value = configVm.ShortDarbareyeMa;
 
                 _core.Config.Update(ConfigDarbareyeMa);
                 _core.Config.Update(ConfigTamasBaMa);
@@ -61,6 +68,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.Config.Update(ConfigHazineErsalPeyk);
                 _core.Config.Update(ConfigStoreDescription);
                 _core.Config.Update(ConfigSagfePost);
+                _core.Config.Update(ConfigFinalTextKharid);
+                _core.Config.Update(ConfigShortDarbareyeMa);
 
                 _core.Config.Save();
             }

@@ -18,13 +18,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblComment> comments = PagingList.Create(_core.Comment.Get().OrderByDescending(c=>!c.IsValid), 30, page);
+            IEnumerable<TblComment> comments = PagingList.Create(_core.Comment.Get().OrderByDescending(c => !c.IsValid), 30, page);
             return View(comments);
         }
 
         public IActionResult Info(int id)
         {
             return ViewComponent("CommentInfoAdmin", new { id = id });
+        }
+
+        public void Delete(int id)
+        {
+            _core.Comment.DeleteById(id);
+            _core.Comment.Save();
         }
 
         [HttpPost]
