@@ -71,6 +71,9 @@
                                         <span class="text-danger" data-placement="top" data-toggle="tooltip" title="" data-original-title="به پیشنهاد ویژه">
                                             @item.TblSpecialOffer.First().Discount% تا تاریخ @item.TblSpecialOffer.First().ValidTill.AllToShamsi()
                                         </span>
+                                        <span onclick="CancelSpecialOffer(@item.ProductId)" class="btn btn-danger btn-sm text-white" data-placement="top" data-toggle="tooltip" title="" data-original-title="به پیشنهاد ویژه">
+                                            لغو پیشنهاد ویژه
+                                        </span>
                                     }
                                 </td>
                                 <td>
@@ -118,6 +121,12 @@
         function SpecialOffer(id) {
             $.get("/Admin/Product/SpecialOffer/" + id, function (result) {
                 $(".modal-content").html(result);
+            });
+        }
+
+        function CancelSpecialOffer(id) {
+            $.post("/Admin/SpecialOffer/Remove/" + id, function () {
+                window.location.reload();
             });
         }
 

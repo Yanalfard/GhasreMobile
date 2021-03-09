@@ -14,8 +14,8 @@ namespace DataLayer.Models
 
         [Key]
         public int AlbumId { get; set; }
-        [Required]
-        [StringLength(100)]
+        [Required(ErrorMessage ="نام اجباری میباشد")]
+        [StringLength(100,ErrorMessage ="نام مناسب وارد کنید")]
         public string Name { get; set; }
 
         [InverseProperty("Album")]

@@ -36,6 +36,9 @@
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
                                             <a onclick="Edit(@item.RegularQuestionId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
                                         </span>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
+                                            <a onclick="Delete(@item.RegularQuestionId)" class="text-danger" uk-icon="trash"></a>
+                                        </span>
                                     </td>
                                 </tr>
                             }
@@ -78,5 +81,12 @@
                 $(".modal-content").html(result);
             });
         }
+
+        function Delete(id) {
+            $.post("/Admin/RegularQuestion/Delete/" + id, function () {
+                window.location.reload();
+            });
+        }
+
     </script>
 }

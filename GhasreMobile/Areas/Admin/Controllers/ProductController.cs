@@ -294,9 +294,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(TblProduct product,
                                                 List<string> Keywords,
-                                                List<string> Colors,
-                                                List<string> ColorName,
-                                                List<int> ColorsCounts,
                                                 List<int?> PropertyId,
                                                 List<string> Value,
                                                 IFormFile MainImage,
@@ -419,25 +416,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         _core.ProductImageRel.Add(imageRel);
                         _core.ProductImageRel.Save();
                     }
-                }
-                if (ColorName.Count > 0)
-                {
-                    IEnumerable<TblColor> LastColors = _core.Color.Get(c => c.ProductId == EditProduct.ProductId);
-                    foreach (var item in LastColors)
-                    {
-                        _core.Color.DeleteById(item.ColorId);
-                    }
-                    _core.Color.Save();
-                    for (int i = 0; i < ColorName.Count; i++)
-                    {
-                        TblColor color = new TblColor();
-                        color.ColorCode = Colors[i];
-                        color.Name = ColorName[i];
-                        color.ProductId = product.ProductId;
-                        color.Count = ColorsCounts[i];
-                        _core.Color.Add(color);
-                    }
-                    _core.Color.Save();
                 }
                 for (int i = 0; i < PropertyId.Count; i++)
                 {

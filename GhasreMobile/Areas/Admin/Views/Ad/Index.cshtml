@@ -70,5 +70,11 @@
             });
         }
 
+        function Delete(id) {
+            $.post("/Admin/Ad/Delete/" + id, function () {
+                window.location.reload();
+            });
+        }
+
     </script>
 }

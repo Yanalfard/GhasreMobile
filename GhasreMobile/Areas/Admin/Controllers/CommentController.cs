@@ -27,10 +27,18 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return ViewComponent("CommentInfoAdmin", new { id = id });
         }
 
-        public void Delete(int id)
+        public string Delete(int id)
         {
-            _core.Comment.DeleteById(id);
-            _core.Comment.Save();
+            if (_core.Comment.Get(c => c.ParentId == id).Count() > 0)
+            {
+                return "شما نمیتوانید این نظر را حذف کنید. پاسخی برای کامنت ثبت شده است";
+            }
+            else
+            {
+                _core.Comment.DeleteById(id);
+                _core.Comment.Save();
+                return "true";
+            }
         }
 
         [HttpPost]

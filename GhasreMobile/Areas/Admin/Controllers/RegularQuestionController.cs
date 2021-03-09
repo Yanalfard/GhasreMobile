@@ -65,6 +65,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return ViewComponent("RegularQuestionInfoAdmin", new { id = id });
         }
 
+        [HttpPost]
+        public void Delete(int id)
+        {
+            _core.RegularQuestion.DeleteById(id);
+            _core.RegularQuestion.Save();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -73,5 +80,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+    
+    
     }
 }

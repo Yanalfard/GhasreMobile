@@ -15,9 +15,9 @@ namespace DataLayer.Models
         [Required(ErrorMessage ="شماره تماس فروشگاه را وارد کنید")]
         [StringLength(11,ErrorMessage ="شماره تماس معتبر وارد کنید")]
         public string TellNo { get; set; }
-        [StringLength(50,ErrorMessage ="موقعیت جغرافیایی فروشگاه را وارد کنید")]
+        [Required(ErrorMessage ="موقعیت جغرافیایی فروشگاه را وارد کنید")]
         public string Lat { get; set; }
-        [StringLength(50, ErrorMessage = "موقعیت جغرافیایی فروشگاه را وارد کنید")]
+        [Required(ErrorMessage = "موقعیت جغرافیایی فروشگاه را وارد کنید")]
         public string Lon { get; set; }
         [StringLength(500)]
         public string MainImage { get; set; }
