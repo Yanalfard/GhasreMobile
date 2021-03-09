@@ -106,7 +106,7 @@
                 var vote = document.getElementById('Vote' + val);
                 vote.innerText = parseInt(vote.innerText) + 1;
             } else {
-                window.location = "";
+                UIkit.notification('ابتدا وارد سایت شوید');
             }
         }
 
@@ -123,7 +123,9 @@
 
             let cacheVote = votelist.filter(vote => vote.id === val)[0];
 
-            if (!cacheVote?.isUp) return;
+            if (cacheVote)
+                if (!cacheVote.isUp) return;
+
             up.classList.remove('link-active');
             down.classList.remove('link-active');
 
@@ -142,7 +144,7 @@
             if (result) {
                 vote.innerText = parseInt(vote.innerText) - 1;
             } else {
-                window.location = "";
+                UIkit.notification('ابتدا وارد سایت شوید');
             }
         }
     </script>
