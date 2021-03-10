@@ -33,5 +33,11 @@ namespace DataLayer.ViewModels
 
         [Required(ErrorMessage = "لطفا درباره ما کوتاه را وارد کنید")]
         public string ShortDarbareyeMa { get; set; }
+
+        [Required(ErrorMessage = "لطفا لینک اینستا را وارد کنید را وارد کنید")]
+        public string LinkInsta { get; set; }
+
+        [Required(ErrorMessage = "لطفا لینک تلگرم را وارد کنید را وارد کنید")]
+        public string LinkTelegram { get; set; }
     }
 }

@@ -21,11 +21,18 @@ namespace GhasreMobile.Areas.User.Controllers
             TblClient selectUser = db.Client.GetById(userId);
             return selectUser;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<TblWallet> list = db.Wallet.Get(i => i.ClientId == SelectUser().ClientId && i.IsFinaly == true).OrderByDescending(i => i.Date).ToList();
-            ViewBag.Balance = SelectUser().Balance;
-            return View(list);
+            try
+            {
+                List<TblWallet> list = db.Wallet.Get(i => i.ClientId == SelectUser().ClientId && i.IsFinaly == true).OrderByDescending(i => i.Date).ToList();
+                ViewBag.Balance = SelectUser().Balance;
+                return await Task.FromResult(View(list));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
         public async Task<IActionResult> Charge()
@@ -61,7 +68,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     #region Online Payment
 
                     var payment = new ZarinpalSandbox.Payment((int)charge.Amount);
-                    var res = payment.PaymentRequest("شارژ کیف پول", "https://localhost:44371/OnlinePayment/" + addWallet.WalletId, "Info@mehdi.Com", "09357035985");
+                    var res = payment.PaymentRequest("شارژ کیف پول", "http://gasremobile2004.com/OnlinePayment/" + addWallet.WalletId, "Info@mehdi.Com", "09357035985");
 
                     if (res.Result.Status == 100)
                     {

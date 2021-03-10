@@ -13,14 +13,28 @@ namespace GhasreMobile.Controllers
     {
         Core db = new Core();
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(db.Album.Get());
+            try
+            {
+                return await Task.FromResult(View(db.Album.Get()));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         [Route("AlbumView/{id}/{name}")]
-        public IActionResult AlbumView(int id, string name)
+        public async Task<IActionResult> AlbumView(int id, string name)
         {
-            return View(db.Album.GetById(id));
+            try
+            {
+                return await Task.FromResult(View(db.Album.GetById(id)));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
 
     }

@@ -21,30 +21,52 @@ namespace GhasreMobile.Areas.User.Controllers
             TblClient selectUser = db.Client.GetById(userId);
             return selectUser;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            try
+            {
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         public async Task<IActionResult> AllTicket()
         {
-            return await Task.FromResult(ViewComponent("AllTicketUser", new { id = SelectUser().ClientId }));
+            try
+            {
+                return await Task.FromResult(ViewComponent("AllTicketUser", new { id = SelectUser().ClientId }));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         [HttpPost]
         public async Task<IActionResult> SendTicket(SendTicketVm sendTicket)
         {
-            if (ModelState.IsValid)
+            try
             {
-                TblTicket addTicket = new TblTicket();
-                addTicket.Title = sendTicket.Title;
-                addTicket.Body= sendTicket.Body;
-                addTicket.DateSubmited= DateTime.Now;
-                addTicket.ClientId= SelectUser().ClientId;
-                db.Ticket.Add(addTicket);
-                db.Ticket.Save();
-                return await Task.FromResult(RedirectToAction("Index"));
 
+                if (ModelState.IsValid)
+                {
+                    TblTicket addTicket = new TblTicket();
+                    addTicket.Title = sendTicket.Title;
+                    addTicket.Body = sendTicket.Body;
+                    addTicket.DateSubmited = DateTime.Now;
+                    addTicket.ClientId = SelectUser().ClientId;
+                    db.Ticket.Add(addTicket);
+                    db.Ticket.Save();
+                    return await Task.FromResult(RedirectToAction("Index"));
+
+                }
+                return await Task.FromResult(View(sendTicket));
             }
-            return await Task.FromResult(View(sendTicket));
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
     }
 }

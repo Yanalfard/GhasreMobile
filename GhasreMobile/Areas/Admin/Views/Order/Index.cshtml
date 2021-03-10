@@ -79,6 +79,9 @@
                                             <span data-placement="top" data-toggle="tooltip" title="" data-original-title="تکمیل سفارش">
                                                 <a onclick="DoneOrder(@item.OrdeId)" class="text-success" uk-icon="checkmark-done-outline"></a>
                                             </span>
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="برگشت برای ارسال">
+                                                <a onclick="ChangeSendOrderStatus(@item.OrdeId)" class="text-success" uk-icon="close-circle-outline"></a>
+                                            </span>
                                         }
                                         else if (item.Status == 2)
                                         {
@@ -129,6 +132,12 @@
             var OrderId = $("#SearchInputId").val();
             var TellNo = $("#SearchInputUserPhone").val();
             window.location.href = "/Admin/Order?OrderId=" + OrderId + "&TellNo=" + TellNo;
+        }
+
+        function ChangeSendOrderStatus(id) {
+            $.post("/Admin/Order/ChangeSendOrderStatus/" + id, function () {
+                window.location.reload();
+            });
         }
 
     </script>

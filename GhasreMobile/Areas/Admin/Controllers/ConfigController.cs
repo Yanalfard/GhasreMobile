@@ -30,7 +30,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
             config.SagfePost = configs.Where(c => c.Key == "SagfePost").Single().Value;
             config.FinalTextKharid = configs.Where(c => c.Key == "FinalTextKharid").Single().Value;
             config.ShortDarbareyeMa = configs.Where(c => c.Key == "ShortDarbareyeMa").Single().Value;
-
+            config.LinkInsta = configs.Where(c => c.Key == "LinkInsta").Single().Value;
+            config.LinkTelegram = configs.Where(c => c.Key == "LinkTelegram").Single().Value;
             return View(config);
         }
 
@@ -50,6 +51,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 TblConfig ConfigSagfePost = configs.Where(c => c.Key == "SagfePost").Single();
                 TblConfig ConfigFinalTextKharid = configs.Where(c => c.Key == "FinalTextKharid").Single();
                 TblConfig ConfigShortDarbareyeMa = configs.Where(c => c.Key == "ShortDarbareyeMa").Single();
+                TblConfig ConfigLinkInsta = configs.Where(c => c.Key == "LinkInsta").Single();
+                TblConfig ConfigLinkTelegram = configs.Where(c => c.Key == "LinkTelegram").Single();
 
                 ConfigDarbareyeMa.Value = configVm.DarbareyeMa;
                 ConfigHazineErsalBaPost.Value = configVm.HazineErsalBaPost.ToString();
@@ -60,6 +63,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 ConfigSagfePost.Value = configVm.SagfePost;
                 ConfigFinalTextKharid.Value = configVm.FinalTextKharid;
                 ConfigShortDarbareyeMa.Value = configVm.ShortDarbareyeMa;
+                ConfigLinkInsta.Value = configVm.LinkInsta;
+                ConfigLinkTelegram.Value = configVm.LinkTelegram;
 
                 _core.Config.Update(ConfigDarbareyeMa);
                 _core.Config.Update(ConfigTamasBaMa);
@@ -70,6 +75,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.Config.Update(ConfigSagfePost);
                 _core.Config.Update(ConfigFinalTextKharid);
                 _core.Config.Update(ConfigShortDarbareyeMa);
+                _core.Config.Update(ConfigLinkInsta);
+                _core.Config.Update(ConfigLinkTelegram);
 
                 _core.Config.Save();
             }

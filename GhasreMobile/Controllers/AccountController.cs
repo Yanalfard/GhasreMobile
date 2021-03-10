@@ -29,17 +29,26 @@ namespace GhasreMobile.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login()
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.Claims.Last().Value == "user") {
-                    return Redirect("/User/Profile");
-                }
-                else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
+                if (User.Identity.IsAuthenticated)
                 {
-                    return Redirect("/Admin");
+                    if (User.Claims.Last().Value == "user")
+                    {
+                        return Redirect("/User/Profile");
+                    }
+                    else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
+                    {
+                        return Redirect("/Admin");
+                    }
                 }
+                return await Task.FromResult(View());
             }
-            return await Task.FromResult(View());
+            catch (Exception)
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+
         }
         [Route("Login")]
         [HttpPost]
@@ -91,7 +100,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
 
         }
@@ -99,18 +108,25 @@ namespace GhasreMobile.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register()
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (User.Claims.Last().Value == "user")
+                if (User.Identity.IsAuthenticated)
                 {
-                    return Redirect("/User/Profile");
+                    if (User.Claims.Last().Value == "user")
+                    {
+                        return Redirect("/User/Profile");
+                    }
+                    else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
+                    {
+                        return Redirect("/Admin");
+                    }
                 }
-                else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
-                {
-                    return Redirect("/Admin");
-                }
+                return await Task.FromResult(View());
             }
-            return await Task.FromResult(View());
+            catch (Exception)
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         [HttpPost]
         [Route("Register")]
@@ -153,14 +169,22 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
 
         }
         [Route("ForgotPassword")]
         public async Task<IActionResult> ForgotPassword()
         {
-            return await Task.FromResult(View());
+            try
+            {
+                return await Task.FromResult(View());
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+
         }
         [HttpPost]
         [Route("ForgotPassword")]
@@ -191,16 +215,23 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
         [Route("RestorePassword/{tell}")]
         public async Task<IActionResult> RestorePassword(string tell)
         {
-            return await Task.FromResult(View(new ActiveVm()
+            try
             {
-                Tell = tell
-            }));
+                return await Task.FromResult(View(new ActiveVm()
+                {
+                    Tell = tell
+                }));
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         [HttpPost]
         [Route("RestorePassword/{tell}")]
@@ -236,19 +267,25 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
-
-
         }
         [Route("ChangePassword/{tell}/{auth}")]
         public async Task<IActionResult> ChangePassword(string tell, string auth)
         {
-            return await Task.FromResult(View(new ChangePasswordVm()
+            try
             {
-                Tell = tell,
-                Auth = auth
-            }));
+                return await Task.FromResult(View(new ChangePasswordVm()
+                {
+                    Tell = tell,
+                    Auth = auth
+                }));
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+           
         }
         [Route("ChangePassword/{tell}/{auth}")]
         [HttpPost]
@@ -284,17 +321,24 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
 
         }
         [Route("Verify/{tellNo}")]
         public async Task<IActionResult> Verify(string tellNo)
         {
-            return await Task.FromResult(View(new ActiveVm()
+            try
             {
-                Tell = tellNo
-            }));
+                return await Task.FromResult(View(new ActiveVm()
+                {
+                    Tell = tellNo
+                }));
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
         }
         [Route("Verify/{tellNo}")]
         [HttpPost]
@@ -336,7 +380,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
         [Route("LogOut")]
@@ -349,7 +393,7 @@ namespace GhasreMobile.Controllers
             }
             catch
             {
-                return await Task.FromResult(Redirect("ErrorPage"));
+                return await Task.FromResult(Redirect("404.html"));
             }
         }
     }

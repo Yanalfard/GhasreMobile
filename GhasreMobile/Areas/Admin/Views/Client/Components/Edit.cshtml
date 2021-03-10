@@ -22,34 +22,35 @@
             </div>
             <div class="form-group col-md-3">
                 <label>تعیین نقش</label>
-                @{ 
+                @{
                     IEnumerable<DataLayer.Models.TblRole> roles = ViewBag.Roles;
                 }
-            <select class="form-control form-control-sm" name="RoleId">
-                @foreach (var item in roles)
-                {
-                    if (item.RoleId == Model.RoleId)
+                <select class="form-control form-control-sm" name="RoleId">
+                    @foreach (var item in roles)
                     {
-                        <option selected value="@item.RoleId">@item.Title</option>
+                        if (item.RoleId == Model.RoleId)
+                        {
+                            <option selected value="@item.RoleId">@item.Title</option>
+                        }
+                        else
+                        {
+                            <option value="@item.RoleId">@item.Title</option>
+                        }
                     }
-                    else
-                    {
-                        <option value="@item.RoleId">@item.Title</option>
-                    }
-                }
-            </select>
+                </select>
             </div>
         </div>
         <hr />
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label>شماره تماس</label>
-                <input value="@Model.TellNo" class="form-control form-control-sm" placeholder="09145416" disabled>
+                <input value="@Model.TellNo" class="form-control form-control-sm"  placeholder="09145416" disabled>
                 <input type="hidden" asp-for="TellNo" />
             </div>
             <div class="form-group col-md-3">
                 <label>کیف پول</label>
-                <input asp-for="Balance" class="form-control form-control-sm" placeholder="840000">
+                @*<input asp-for="Balance" class="form-control form-control-sm PriceInput" placeholder="840000">*@
+                @Html.TextBoxFor(model => model.Balance, new { @class = "form-control form-control-sm" })
             </div>
 
             <div class="form-group col-md-3">

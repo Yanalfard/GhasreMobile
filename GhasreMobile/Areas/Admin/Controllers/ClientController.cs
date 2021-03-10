@@ -48,6 +48,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblClient client = _core.Client.GetById(ClientId);
             client.Name = Name;
             client.RoleId = RoleId;
+            client.Balance = Balance;
             if (client.Balance < Balance)
             {
                 TblWallet wallet = new TblWallet();

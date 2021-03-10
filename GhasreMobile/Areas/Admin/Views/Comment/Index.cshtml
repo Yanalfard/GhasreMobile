@@ -81,8 +81,12 @@
         }
 
         function Delete(id) {
-            $.post("/Admin/Comment/Delete/" + id, function () {
-                window.location.reload();
+            $.post("/Admin/Comment/Delete/" + id, function (result) {
+                if (result == "true") {
+                    window.location.reload();
+                } else {
+                    UIkit.notification({ message: result });
+                }
             });
         }
 

@@ -17,7 +17,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblSpecialOffer> SpecialOffers = PagingList.Create(_core.SpecialOffer.Get().OrderByDescending(so=>so.SpecialOfferId), 40, page);
+            IEnumerable<TblSpecialOffer> SpecialOffers = PagingList.Create(_core.SpecialOffer.Get().OrderByDescending(so => so.SpecialOfferId), 40, page);
             return View(SpecialOffers);
         }
 
@@ -43,6 +43,18 @@ namespace GhasreMobile.Areas.Admin.Controllers
             _core.SpecialOffer.Save();
         }
 
+        public void Remove(int id)
+        {
+            if (_core.SpecialOffer.Get(s => s.ProductId == id).Count() > 0)
+            {
+                IEnumerable<TblSpecialOffer> specialOffers = _core.SpecialOffer.Get(s => s.ProductId == id);
+                foreach (var item in specialOffers)
+                {
+                    _core.SpecialOffer.Delete(item);
+                }
+                _core.SpecialOffer.Save();
+            }
+        }
 
         protected override void Dispose(bool disposing)
         {

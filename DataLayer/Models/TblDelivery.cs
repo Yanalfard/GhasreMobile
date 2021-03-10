@@ -9,13 +9,14 @@ namespace DataLayer.Models
     {
         [Key]
         public int DeliveryId { get; set; }
-        [Required]
-        [StringLength(150)]
+        [Required(ErrorMessage ="نام را وارد کنید")]
+        [StringLength(150,ErrorMessage ="نام مناسب وارد کنید")]
         public string Name { get; set; }
-        [Required]
-        [StringLength(20)]
+        [Required(ErrorMessage ="شماره تماس را وارد کنید")]
+        [StringLength(11,ErrorMessage ="شماره تماس مناسب وارد کنید")]
+        [MinLength(11, ErrorMessage = "شماره تماس مناسب وارد کنید")]
         public string TellNo { get; set; }
-        [Required]
+        [Required(ErrorMessage ="لطفا ادرس را وارد کنید")]
         [StringLength(500)]
         public string Address { get; set; }
         [StringLength(500)]

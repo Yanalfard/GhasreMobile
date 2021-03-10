@@ -30,12 +30,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             else if (string.IsNullOrEmpty(TellNo) && OrderId != 0)
             {
-                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(o=>o.OrdeId==OrderId), 40, page);
+                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(o => o.OrdeId == OrderId), 40, page);
                 return View(Orders);
             }
             else
             {
-                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get().OrderByDescending(o=>o.OrdeId), 40, page);
+                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get().OrderByDescending(o => o.OrdeId), 40, page);
                 return View(Orders);
             }
         }
@@ -61,6 +61,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
             _core.Order.Save();
         }
 
+        public void ChangeSendOrderStatus(int id)
+        {
+            TblOrder Order = _core.Order.GetById(id);
+            Order.Status = 0;
+            _core.Order.Update(Order);
+            _core.Order.Save();
+        }
 
         protected override void Dispose(bool disposing)
         {

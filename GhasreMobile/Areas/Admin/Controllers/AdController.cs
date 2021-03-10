@@ -94,6 +94,18 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return View(ad);
         }
 
+        [HttpPost]
+        public void Delete(int id)
+        {
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Ad", _core.Ad.GetById(id).Image);
+
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+            _core.Ad.DeleteById(id);
+            _core.Ad.Save();
+        }
 
         protected override void Dispose(bool disposing)
         {
