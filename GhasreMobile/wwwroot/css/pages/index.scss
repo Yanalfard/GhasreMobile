@@ -213,3 +213,8 @@ $album-width: 290px;
         }
     }
 }
+
+.map-card {
+    height: 360px;
+    @include border-def-radius;
+}

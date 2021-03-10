@@ -45,6 +45,7 @@ namespace GhasreMobile.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
+
         [Route("About")]
         public async Task<IActionResult> About()
         {
@@ -57,6 +58,20 @@ namespace GhasreMobile.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
+
+        [Route("Policies")]
+        public async Task<IActionResult> Policies()
+        {
+            try
+            {
+                return await Task.FromResult(View(db.Config.Get(i => i.Key == "Gavanin").SingleOrDefault()));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
+
         public async Task<IActionResult> Error()
         {
             try

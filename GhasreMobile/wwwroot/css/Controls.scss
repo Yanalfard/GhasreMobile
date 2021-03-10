@@ -1680,8 +1680,7 @@ footer {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto auto auto auto;
                 grid-gap: 18px;
-
-                .intro {
+                /*.intro {
                     border-left: 0;
                 }
 
@@ -1689,6 +1688,9 @@ footer {
                     padding-left: 0;
                     border-left: 0;
                     margin-left: 0;
+                }*/
+                .intro {
+                    display: none;
                 }
 
                 .certificates {

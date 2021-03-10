@@ -8,9 +8,70 @@
 @section Styles{
 
     <link href="~/css/pages/index.min.css" rel="stylesheet" />
+    <link href="~/css/leaflet.css" rel="stylesheet" />
 
 }
 
 <div class="mat-card">
-    @Html.Raw(Model.Value)
+    @if (string.IsNullOrEmpty(Model.Value))
+    {
+        <h1 class="uk-alert uk-text-center">
+            درباره ما
+        </h1>
+    }
+    else
+    {
+        @Html.Raw(Model.Value)
+    }
 </div>
+
+<div id="map" class="map-card uk-margin-top uk-box-shadow-medium">
+
+</div>
+
+<div id="swAffiliates" role="none"></div>
+
+@section Scripts{
+
+    <script src="~/js/leaflet.js"></script>
+
+    <script>
+        var map = L.map('map').setView([38.07674409597339, 46.29700302496196], 10);
+
+        L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+
+        var iconSetting = L.Icon.extend({
+            options: {
+                iconSize: [32, 32],
+                iconAnchor: [16, -8]
+            }
+        });
+
+        var customIcon = new iconSetting({ iconUrl: '/marker.svg' });
+
+        for (var i = 0; i < $("mymap").length; i++) {
+            var theMarker = {};
+
+            theMarker = L.marker(
+                [$("mymap lat")[i].innerHTML, $("mymap lon")[i].innerHTML],
+                { icon: customIcon }
+            )
+                .addTo(map).bindPopup(
+                    `
+                                                    <div class="aff-marker">
+                                                        <h4>${$('mymap name')[i].innerHTML}</h4>
+                                                        <p>
+                            ${$('mymap address')[i].innerHTML}
+                                                        </p>
+                                                        <a href="/StoreView/${$("mymap storeid")[i].innerHTML}/${$("mymap name")[i].innerHTML}" dir="rtl">
+                                                            مشاهده
+                                                        </a>
+                                                    </div>
+                                                    `
+                );
+
+        }
+    </script>
+
+}
