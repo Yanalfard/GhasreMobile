@@ -42,6 +42,11 @@
                         <br /><span class="text-danger" asp-validation-for="TamasBaMa"></span>
                     </div>
                     <div class="form-group col-lg-12 mt-lg-3">
+                        <label>قوانین سایت:</label>
+                        <textarea asp-for="Gavanin" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
+                        <br /><span class="text-danger" asp-validation-for="Gavanin"></span>
+                    </div>
+                    <div class="form-group col-lg-12 mt-lg-3">
                         <label>درباره ما:</label>
                         <textarea asp-for="DarbareyeMa" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
                         <br /><span class="text-danger" asp-validation-for="DarbareyeMa"></span>
@@ -95,6 +100,7 @@
             $('#TamasBaMa').ckeditor();
             $('#DarbareyeMa').ckeditor();
             $('#StoreDescription').ckeditor();
+            $('#Gavanin').ckeditor();
         });
     </script>
     <script src="~/Validate/jquery.validate.min.js"></script>
