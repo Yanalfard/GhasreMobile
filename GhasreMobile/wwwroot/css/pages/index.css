@@ -257,9 +257,6 @@ backdrop-filter: saturate(80%);
 
 .map-card {
   height: 360px;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
   -moz-border-radius: 4px 4px 4px 4px;
   -webkit-border-radius: 4px 4px 4px 4px;
   border-radius: 4px 4px 4px 4px; }

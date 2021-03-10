@@ -8,6 +8,7 @@
 @section Styles{
 
     <link href="~/css/pages/index.min.css" rel="stylesheet" />
+    <link href="~/css/leaflet.css" rel="stylesheet" />
 
 }
 
@@ -58,16 +59,16 @@
             )
                 .addTo(map).bindPopup(
                     `
-                                                <div class="aff-marker">
-                                                    <h4>${$('mymap name')[i].innerHTML}</h4>
-                                                    <p>
-                        ${$('mymap address')[i].innerHTML}
-                                                    </p>
-                                                    <a href="/StoreView/${$("mymap storeid")[i].innerHTML}/${$("mymap name")[i].innerHTML}" dir="rtl">
-                                                        مشاهده
-                                                    </a>
-                                                </div>
-                                                `
+                                                    <div class="aff-marker">
+                                                        <h4>${$('mymap name')[i].innerHTML}</h4>
+                                                        <p>
+                            ${$('mymap address')[i].innerHTML}
+                                                        </p>
+                                                        <a href="/StoreView/${$("mymap storeid")[i].innerHTML}/${$("mymap name")[i].innerHTML}" dir="rtl">
+                                                            مشاهده
+                                                        </a>
+                                                    </div>
+                                                    `
                 );
 
         }
