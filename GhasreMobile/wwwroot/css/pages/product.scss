@@ -29,6 +29,20 @@
 
         .border {
             border: solid 1px $mat-border-color;
+            position: relative;
+
+            .fraction {
+                border: 1px solid transparentize($primary,.48);
+                @include border-def-radius;
+                color: $primary;
+                padding: 3px 6px;
+                display: flex;
+                position: absolute;
+                font-size: 10px;
+                left: 8px;
+                top: 8px;
+                z-index: 50;
+            }
 
             .slider {
                 margin: auto;
