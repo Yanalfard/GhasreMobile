@@ -51,6 +51,7 @@ namespace GhasreMobile.Controllers
         {
             try
             {
+                ViewBag.Store = db.Store.Get();
                 return await Task.FromResult(View(db.Config.Get(i => i.Key == "DarbareyeMa").SingleOrDefault()));
             }
             catch
@@ -71,7 +72,18 @@ namespace GhasreMobile.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
-
+        [Route("Questions")]
+        public async Task<IActionResult> Questions()
+        {
+            try
+            {
+                return await Task.FromResult(View(db.RegularQuestion.Get()));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
         public async Task<IActionResult> Error()
         {
             try

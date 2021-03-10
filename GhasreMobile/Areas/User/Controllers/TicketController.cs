@@ -55,6 +55,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     addTicket.Title = sendTicket.Title;
                     addTicket.Body = sendTicket.Body;
                     addTicket.DateSubmited = DateTime.Now;
+                    addTicket.IsAnswerd = false;
                     addTicket.ClientId = SelectUser().ClientId;
                     db.Ticket.Add(addTicket);
                     db.Ticket.Save();
