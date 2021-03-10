@@ -1,0 +1,25 @@
+﻿@model TblConfig
+@{
+    ViewData["Title"] = "قوانین سایت";
+    ViewData["Single"] = true;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+
+    <link href="~/css/pages/index.min.css" rel="stylesheet" />
+
+}
+
+<div class="mat-card">
+    @if (string.IsNullOrEmpty(Model.Value))
+    {
+        <h1 class="uk-alert uk-text-center">
+            قوانین سایت
+        </h1>
+    }
+    else
+    {
+        @Html.Raw(Model.Value)
+    }
+</div>

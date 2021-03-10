@@ -213,3 +213,11 @@ $album-width: 290px;
         }
     }
 }
+
+.map-card {
+    height: 360px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    @include border-def-radius;
+}

@@ -1521,13 +1521,18 @@ footer {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto;
-    grid-gap: 18px; }
+    grid-gap: 18px;
+    /*.intro {
+                    border-left: 0;
+                }
+
+                .intro {
+                    padding-left: 0;
+                    border-left: 0;
+                    margin-left: 0;
+                }*/ }
     footer .uk-container .grid .intro {
-      border-left: 0; }
-    footer .uk-container .grid .intro {
-      padding-left: 0;
-      border-left: 0;
-      margin-left: 0; }
+      display: none; }
     footer .uk-container .grid .certificates {
       margin-bottom: 32px; }
       footer .uk-container .grid .certificates .slideshow {

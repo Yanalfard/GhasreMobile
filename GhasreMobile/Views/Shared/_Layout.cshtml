@@ -266,7 +266,10 @@
                             <a href="/Affiliate">مشاهده نمایندگی ها</a>
                         </li>
                         <li>
-                            <a href="">پشتیبانی و تیکت</a>
+                            <a href="@(User.Identity.IsAuthenticated ? "/User/Ticket" : "/Login")">پشتیبانی و تیکت</a>
+                        </li>
+                        <li>
+                            <a href="/Policies">قوانین سایت</a>
                         </li>
                     </ul>
                 </div>
@@ -297,8 +300,8 @@
             </div>
             <hr class="uk-margin-medium-top" />
             <p class="uk-text-center text-4">
-                کلیه حقوق این سایت متعلق به شرکت قصر موبایل می باشد، طراحی و توسعه توسط
-                <strong><a href="https://arvintavco.com">شرکت ایده پرداز آروین تاو</a></strong>
+                کلیه حقوق این سایت متعلق به قصر موبایل می باشد، طراحی و توسعه توسط
+                <strong><a href="https://arvintavco.com">ایده پرداز آروین تاو</a></strong>
             </p>
         </div>
     </footer>
@@ -326,7 +329,6 @@
     <script src="~/Validate/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
     <script src="~/Validate/jquery.unobtrusive-ajax.min.js"></script>
-
 
     <script>
         function reply(commentId) {

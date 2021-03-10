@@ -1,4 +1,4 @@
-const staticCacheName = 'site-static-v0.0.2';
+const staticCacheName = 'site-static-v0.0.3';
 const isOnline = navigator.onLine;
 
 const assets = [
@@ -31,6 +31,8 @@ self.addEventListener('activate', (evt) => {
 self.addEventListener('fetch', (evt) => {
 
     if (!(evt.request.url.indexOf('http') === 0)) return;
+
+    if (evt.request.url.includes('a.tile.openstreetmap.org')) return;
 
     try {
         evt.respondWith(
