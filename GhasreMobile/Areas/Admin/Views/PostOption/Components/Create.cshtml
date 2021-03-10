@@ -21,7 +21,8 @@
             </div>
             <div class="form-group col-md-6">
                 <label>قیمت (تومان)</label>
-                <input asp-for="Price" class="form-control form-control-sm PriceInput" placeholder="مثال: 20000">
+                <input asp-for="Price" class="form-control form-control-sm" placeholder="مثال: 20000">
+                <span id="InputPrice" class="text-success"></span>
             </div>
         </div>
     </div>
@@ -29,12 +30,7 @@
         <button type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
     </div>
 </form>
-
+@*<script src="~/js/AddComaa.js"></script>*@
 <script src="~/Validate/jquery.validate.min.js"></script>
 <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
-<script src="~/AdminStaticFile/Input_Formatting_Currency.js"></script>
-<script>
-    $(".PriceInput").change(function () {
-        $(this).val($(this).val().replaceAll(",", ""));
-    });
-</script>
+

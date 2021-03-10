@@ -49,6 +49,12 @@
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
                                             <a onclick="Edit(@item.ClientId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
                                         </span>
+                                        @if (item.RoleId == 1)
+                                        {
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ورود به عنوان این کاربر">
+                                                <a onclick="LoginAsUser(@item.ClientId)" class="text-primary" uk-icon="log-in"></a>
+                                            </span>
+                                        }
                                     </td>
                                 </tr>
                             }
@@ -68,7 +74,6 @@
 </div>
 
 @section Script{
-
     <script>
         function Edit(id) {
             $.get("/Admin/Client/Edit/" + id, function (result) {
@@ -83,6 +88,13 @@
             window.location.href = "/Admin/Client?page=1&Name=" + SearchInputName + "&TelNo=" + SearchInputTelNo;
         }
 
+
+        function LoginAsUser(id) {
+            $("#overlay").fadeIn(300);
+            $.post("/Admin/Client/LoginAsUser/" + id, function () {
+                window.location.href = "/";
+            });
+        }
 
     </script>
 }

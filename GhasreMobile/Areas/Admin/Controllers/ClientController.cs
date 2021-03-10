@@ -7,6 +7,10 @@ using GhasreMobile.Utilities;
 using DataLayer.Models;
 using Services.Services;
 using ReflectionIT.Mvc.Paging;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -78,6 +82,31 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return Redirect("/Admin/client");
         }
 
+        public async Task<IActionResult> LoginAsUser(int id)
+        {
+
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            TblClient client = _core.Client.GetById(id);
+
+            var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.NameIdentifier,client.ClientId.ToString()),
+                        new Claim(ClaimTypes.Name,client.TellNo),
+                        new Claim(ClaimTypes.Role,_core.Role.GetById(client.RoleId).Name.Trim()),
+                    };
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+
+            var properties = new AuthenticationProperties
+            {
+                IsPersistent = false
+            };
+            await HttpContext.SignInAsync(principal, properties);
+
+            return await Task.FromResult(Redirect("/"));
+
+        }
 
         protected override void Dispose(bool disposing)
         {
@@ -87,5 +116,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
