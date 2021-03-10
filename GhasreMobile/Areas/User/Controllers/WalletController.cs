@@ -68,7 +68,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     #region Online Payment
 
                     var payment = new ZarinpalSandbox.Payment((int)charge.Amount);
-                    var res = payment.PaymentRequest("شارژ کیف پول", "http://gasremobile2004.com/OnlinePayment/" + addWallet.WalletId, "Info@mehdi.Com", "09357035985");
+                    var res = payment.PaymentRequest("شارژ کیف پول", "https://gasremobile2004.com/OnlinePayment/" + addWallet.WalletId, "gasremobile2004@gmail.Com", "09357035985");
 
                     if (res.Result.Status == 100)
                     {

@@ -25,12 +25,30 @@
     }
 </div>
 
+
 <div id="map" class="map-card uk-margin-top uk-box-shadow-medium">
 
 </div>
 
 <div id="swAffiliates" role="none"></div>
 
+
+@{
+
+    List<TblStore> list = ViewBag.Store as List<TblStore>;
+}
+<div style="display:none">
+    @foreach (var item in list)
+    {
+        <mymap>
+            <storeid>@item.StoreId</storeid>
+            <lat>@item.Lat</lat>
+            <lon>@item.Lon</lon>
+            <name>@item.Name.Replace(" ", "-")</name>
+            <address>@item.Address</address>
+        </mymap>
+    }
+</div>
 @section Scripts{
 
     <script src="~/js/leaflet.js"></script>
@@ -59,16 +77,16 @@
             )
                 .addTo(map).bindPopup(
                     `
-                                                    <div class="aff-marker">
-                                                        <h4>${$('mymap name')[i].innerHTML}</h4>
-                                                        <p>
-                            ${$('mymap address')[i].innerHTML}
-                                                        </p>
-                                                        <a href="/StoreView/${$("mymap storeid")[i].innerHTML}/${$("mymap name")[i].innerHTML}" dir="rtl">
-                                                            مشاهده
-                                                        </a>
-                                                    </div>
-                                                    `
+                                            <div class="aff-marker">
+                                                <h4>${$('mymap name')[i].innerHTML}</h4>
+                                                <p>
+                    ${$('mymap address')[i].innerHTML}
+                                                </p>
+                                                <a href="/StoreView/${$("mymap storeid")[i].innerHTML}/${$("mymap name")[i].innerHTML}" dir="rtl">
+                                                    مشاهده
+                                                </a>
+                                            </div>
+                                            `
                 );
 
         }

@@ -257,7 +257,7 @@
                             <a href="/">خانه</a>
                         </li>
                         <li>
-                            <a href="/#faq">سوالات متداول</a>
+                            <a href="/Questions">سوالات متداول</a>
                         </li>
                         <li>
                             <a href="/Contact">تماس با ما</a>
@@ -275,9 +275,7 @@
                 </div>
                 <div class="intro">
                     <h4>معرفی سایت</h4>
-                    <p>
-                        می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است.
-                    </p>
+                    @await Component.InvokeAsync("ShortDarbareyeMaView")
                 </div>
                 <div class="contact">
                     <h4>تماس با ما</h4>
@@ -293,7 +291,6 @@
                         </li>
                     </ul>
                     <div class="media">
-                        
                         @await Component.InvokeAsync("TelegramInstaView")
                     </div>
                 </div>

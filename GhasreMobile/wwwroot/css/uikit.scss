@@ -84,6 +84,10 @@ body {
     min-height: 100vh;
 }
 
+.height {
+    height: calc(100vh - calc(#{$nav-header-height} + 400px))
+}
+
 /*#region Space */
 
 
