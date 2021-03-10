@@ -69,11 +69,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAsync(TblStore store, IFormFile MainImage)
+        public async Task<IActionResult> EditAsync(TblStore store, IFormFile Image)
         {
             if (ModelState.IsValid)
             {
-                if (MainImage != null)
+                if (Image != null)
                 {
                     var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Store", store.MainImage);
 
@@ -82,15 +82,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         System.IO.File.Delete(imagePath);
                     }
 
-                    store.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
+                    store.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(Image.FileName);
                     string savePath = Path.Combine(
                                             Directory.GetCurrentDirectory(), "wwwroot/Images/Store", store.MainImage
                                         );
 
                     using (var stream = new FileStream(savePath, FileMode.Create))
                     {
-                        await MainImage.CopyToAsync(stream);
+                        await Image.CopyToAsync(stream);
                     };
+                }
+                else
+                {
+
                 }
                 _core.Store.Update(store);
                 _core.Store.Save();
