@@ -16,6 +16,8 @@ namespace DataLayer.ViewModels
         public long? Sum { get; set; }
         public int ColorID { get; set; }
         public string ColorName { get; set; }
+        public bool? IsFractional { get; set; }
+
 
     }
 }

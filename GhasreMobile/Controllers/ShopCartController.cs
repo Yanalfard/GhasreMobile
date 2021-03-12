@@ -163,7 +163,7 @@ namespace GhasreMobile.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
-
+        [PermissionChecker("user,employee,admin")]
         public async Task<IActionResult> Payment(string radio, string address)
         {
             try

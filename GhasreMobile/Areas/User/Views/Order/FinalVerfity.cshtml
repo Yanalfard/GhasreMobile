@@ -51,15 +51,20 @@
                 <button type="submit" class="btn btn-primary uk-margin-auto-top uk-margin-auto-left">
                     ثبت و پرداخت
                 </button>
-
+                @if (Model.IsFractional == true)
+                {
+                    <a href="/User/Order/Fractional" class="btn btn-primary uk-margin-auto-top uk-margin-auto-left">
+                        خرید اقساطی
+                    </a>
+                }
             </div>
         </div>
     </form>
+
     <input type="hidden" name="PostPriceId" id="PostPriceId" value="@Model.PostPriceId" />
-}
 
 
-<script>
+    <script>
 
     $("#mainForm input[type=radio]").change(function () {
         var id = $(this).val();
@@ -67,4 +72,8 @@
     });
 
     $("."+@Model.PostPriceId).prop("checked", true);
-</script>
+    </script>
+
+}
+
+

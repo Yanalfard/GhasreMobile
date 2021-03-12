@@ -1,0 +1,69 @@
+﻿@model TblOrder
+@{
+    ViewData["Title"] = "پیش فاکتور فروش اقساطی ";
+    Layout = "/Areas/User/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col g-3">
+    @if (Model != null)
+    {
+        <table class="table mat-card" dir="rtl">
+            <thead>
+                <tr>
+                    <th>
+                        <label class="date">@Model.DateSubmited.DateToShamsi()</label>
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        <label class="text-3">شماره فاکتور @Model.OrdeId#  </label>
+                    </th>
+                </tr>
+                <tr>
+                    <th>نام محصول</th>
+                    <th>تعداد</th>
+                    <th>رنگ</th>
+                    <th>فی</th>
+                    <th>قیمت</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var j in Model.TblOrderDetail)
+                {
+                    <tr>
+                        <td>
+                            <a href="/Product/@j.ProductId/@j.Product.Name.Replace(" ","-")" class="link-text">@j.Product.Name</a>
+                        </td>
+                        <td>@j.Count</td>
+                        <td>@j.ColorId</td>
+                        <td>@j.Price</td>
+                        <td>@((j.Count * j.Price).ToString("#,0")) تومان</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td dir="rtl">
+                        <span>تخفیف:</span>
+                        @Model.PaymentStatus.ToString("#,0") تومان
+                    </td>
+                    <td dir="rtl">
+                        <span>تعداد:</span>
+                        @Model.TblOrderDetail.Sum(i => i.Count)
+                    </td>
+                    <td dir="rtl">
+                        <span>هزینه ارسال:</span>
+                        @Model.SendPrice.Value.ToString("#,0") تومان
+                    </td>
+                    <td></td>
+                    <td class="uk-text-success">
+                        <span>جمع کل:</span>
+                        @Model.FinalPrice.ToString("#,0") تومان
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    }
+
+</div>

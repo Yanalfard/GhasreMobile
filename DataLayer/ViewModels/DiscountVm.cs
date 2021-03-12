@@ -19,5 +19,7 @@ namespace DataLayer.ViewModels
         public int PostPrice { get; set; }
         public int PostPriceId { get; set; }
         public int SagfePost { get; set; }
+        public bool? IsFractional { get; set; }
+
     }
 }
