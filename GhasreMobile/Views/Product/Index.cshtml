@@ -95,10 +95,10 @@
                         <button class="action" uk-tooltip="اشتراک گذاری" onclick="share(window.location.href)"
                                 uk-icon="share-social-outline"></button>
                         @*<label class="action" uk-tooltip="فعال کردن اعلان ها" uk-icon="notifications-outline">
-                    <input name="notifications"
-                           onchange="notificationschanged(this)"
-                           type="checkbox" />
-                </label>*@
+                                <input name="notifications"
+                                       onchange="notificationschanged(this)"
+                                       type="checkbox" />
+                            </label>*@
                     </div>
                 </div>
             </div>
@@ -143,6 +143,8 @@
             <ul class="grid">
                 @foreach (var item in Model.TblColor.Where(i => i.Count > 0))
                 {
+                    System.Drawing.Color col = System.Drawing.ColorTranslator.FromHtml(item.ColorCode);
+                    bool isLight = col.R * 0.2126 + col.G * 0.7152 + col.B * 0.0722 > 255 / 2;
                     if ((Model.TblColor.ToList().IndexOf(item)) == 0)
                     {
                         <li>
@@ -151,7 +153,7 @@
                         <li>
                             <div class="clr active" onclick="selectColour(this)">
                                 <span>@item.Name</span>
-                                <strong style="background-color: @item.ColorCode"></strong>
+                                <strong style="background-color: @item.ColorCode; @(isLight ? "border:1px solid #333;" : "border:1px solid #ddd;")"></strong>
                                 <input type="hidden" name="ColorId" value="@item.ColorId" />
                             </div>
                         </li>
@@ -164,7 +166,7 @@
                         <li>
                             <div class="clr" onclick="selectColour(this)">
                                 <span>@item.Name</span>
-                                <strong style="background-color: @item.ColorCode"></strong>
+                                <strong style="background-color: @item.ColorCode; @(isLight ? "border:1px solid #333;" : "border:1px solid #ddd;")"></strong>
                                 <input type="hidden" name="ColorId" value="@item.ColorId" />
                             </div>
                         </li>

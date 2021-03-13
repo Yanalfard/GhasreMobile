@@ -33,6 +33,7 @@
 
             .fraction {
                 border: 1px solid transparentize($primary,.48);
+                background-color: #fff;
                 @include border-def-radius;
                 color: $primary;
                 padding: 3px 6px;
