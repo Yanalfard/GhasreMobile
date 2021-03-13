@@ -7,7 +7,7 @@
 @section Styles{
 
     <link href="~/css/pages/search.min.css" rel="stylesheet" />
-
+    <link href="~/datePersion/persianDatepicker-default.css" rel="stylesheet" />
 }
 
 @section Aside{
@@ -57,12 +57,12 @@
             <div class="rowr uk-child-width-1-2">
                 <div class="col">
                     <label class="fg-label text-4">از تاریخ</label>
-                    <input type="date" lang="fa" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" id="minDate" name="minDate" value="@ViewData["maxDate"]" />
+                    <input type="text" lang="fa" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="mm/dd/yyyy" id="minDate" name="minDate" value="@ViewData["minDate"]" />
                     <div class="text-danger"></div>
                 </div>
                 <div class="col">
                     <label class="fg-label text-4">تا تاریخ</label>
-                    <input type="date" lang="fa" class="entry" aria-label="priceTo" placeholder="تا" id="maxDate" name="maxDate" value="@ViewData["minDate"]" />
+                    <input type="text" lang="fa" class="entry" aria-label="priceTo" placeholder="mm/dd/yyyy" id="maxDate" name="maxDate" value="@ViewData["maxDate"]" />
                     <div class="text-danger"></div>
                 </div>
             </div>
@@ -124,15 +124,13 @@
 }
 
 @section Scripts{
-    @*<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.3.1021/styles/kendo.common.min.css" />
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.3.1021/styles/kendo.blueopal.min.css" />
-    <script src="~/js/kendo.all.min.js"></script>
+    <script src="~/datePersion/prism.js"></script>
+    <script src="~/datePersion/persianDatepicker.js"></script>
     <script>
-        $(document).ready(function () {
-
-            // create DatePicker from input HTML element
-            $("#minDate").kendoDatePicker();
-            $("#maxDate").kendoDatePicker();
+        $(function () {
+            //selectedBefor & selectedDate
+            $("#minDate").persianDatepicker();
+            $("#maxDate").persianDatepicker();
         });
-    </script>*@
+    </script>
 }
