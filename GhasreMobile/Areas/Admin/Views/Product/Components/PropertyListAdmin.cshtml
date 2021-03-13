@@ -1,34 +1,80 @@
-﻿@model IEnumerable<DataLayer.Models.TblProperty>
-@if (Model.Count() == 0)
-{
-    <div class="form-inline col-md-7">
-        <span>ویژگی وجود ندارد</span>
-    </div>
-}
-else
-{
-    foreach (var item in Model)
-    {
-<div id="Property" class="form-inline col-md-7 mt-2">
-    <label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">@item.Name:</label>
-    <input id="PropetryNameId" name="PropertyId" type="hidden" value="@item.PropertyId" />
-    @if (ViewBag.PropertyId != null)
-    {
-        if (item.TblProductPropertyRel.Where(pp => pp.PropertyId == item.PropertyId && pp.ProductId == (int)ViewBag.PropertyId).SingleOrDefault() == null)
-        {
-            <input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3">
-        }
-        else
-        {
-            <input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3" value="@item.TblProductPropertyRel.Where(pp => pp.PropertyId == item.PropertyId && pp.ProductId == (int)ViewBag.PropertyId).SingleOrDefault().Value">
-        }
+﻿@*@model IEnumerable<DataLayer.Models.TblProperty>*@
 
 
+
+
+<div class="modal-header">
+    <h6 class="modal-title" id="modalCenterTitle">
+        جزئیات
+    </h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body overflow-auto">
+    <ul class="d-flex">
+        <li class="col-4">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="id1">
+                <label class="form-check-label" for="id1">
+                    Default checkbox
+                </label>
+            </div>
+        </li>
+        <li class="col-4">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="id2">
+                <label class="form-check-label" for="id2">
+                    Default checkbox
+                </label>
+            </div>
+        </li>
+        <li class="col-4">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="id3">
+                <label class="form-check-label" for="id3">
+                    Default checkbox
+                </label>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="modal-footer justify-content-end">
+    <button type="submit" class="btn btn-success btn-sm text-white">ثبت<span class="icon-holder uk-margin-small-right" uk-icon="create-outline"></span></button>
+</div>
+
+
+
+@*@if (Model.Count() == 0)
+    {
+        <div class="form-inline col-md-7">
+            <span>ویژگی وجود ندارد</span>
+        </div>
     }
     else
     {
-        <input id="PropertyValue" name="Value" class="form-control form-control-sm">
-    }
-</div>
-    }
-}
+        foreach (var item in Model)
+        {
+            <div id="Property" class="form-inline col-md-7 mt-2">
+                <label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">@item.Name:</label>
+                <input id="PropetryNameId" name="PropertyId" type="hidden" value="@item.PropertyId" />
+                @if (ViewBag.PropertyId != null)
+                {
+                    if (item.TblProductPropertyRel.Where(pp => pp.PropertyId == item.PropertyId && pp.ProductId == (int)ViewBag.PropertyId).SingleOrDefault() == null)
+                    {
+                        <input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3">
+                    }
+                    else
+                    {
+                        <input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3" value="@item.TblProductPropertyRel.Where(pp => pp.PropertyId == item.PropertyId && pp.ProductId == (int)ViewBag.PropertyId).SingleOrDefault().Value">
+                    }
+
+
+                }
+                else
+                {
+                    <input id="PropertyValue" name="Value" class="form-control form-control-sm">
+                }
+            </div>
+        }
+    }*@
