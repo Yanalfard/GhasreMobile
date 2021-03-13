@@ -213,6 +213,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return await Task.FromResult(View(product));
         }
 
+        [HttpGet]
         public IActionResult PropertyList()
         {
             return ViewComponent("PropertyListAdmin");
