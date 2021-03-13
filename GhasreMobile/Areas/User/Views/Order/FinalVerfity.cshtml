@@ -25,7 +25,6 @@
                     <label class="radio">
                         <span>@item.Name (@item.Price.Value.ToString("#,0"))</span>
                         <input id="radio" name="radio" @((list.ToList().IndexOf(item) == 0 ? "checked" : "")) class="uk-radio @item.PostOptionId" value="@item.PostOptionId" type="radio">
-                        <span>@item.Price.Value.ToString("#,0")</span>
                     </label>
                 }
             </div>
@@ -48,16 +47,18 @@
                     <div class="final-payment">مبلغ قابل پرداخت : <span>@Model.SumWithDiscount.ToString("#,0") تومان</span></div>
                 </div>
 
-                <button type="submit" class="btn btn-primary uk-margin-auto-top uk-margin-auto-left">
-                    ثبت و پرداخت
-                </button>
-                @if (Model.IsFractional == true)
-                {
-                    <input type="hidden" name="IsFractional" id="IsFractional" />
-                    <button type="submit" id="btnIsFractional" class="btn btn-primary uk-margin-auto-top uk-margin-auto-left">
-                        خرید اقساطی
+                <div class="rowr g-3  uk-margin-auto-left uk-margin-small-top">
+                    <button type="submit" class="btn btn-primary uk-margin-auto-top">
+                        ثبت و پرداخت
                     </button>
-                }
+                    @if (Model.IsFractional == true)
+                    {
+                        <input type="hidden" name="IsFractional" id="IsFractional" />
+                        <button type="submit" id="btnIsFractional" class="btn btn-secondary uk-margin-auto-top">
+                            خرید اقساطی
+                        </button>
+                    }
+                </div>
             </div>
         </div>
     </form>

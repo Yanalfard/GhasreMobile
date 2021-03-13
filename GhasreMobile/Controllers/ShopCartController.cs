@@ -39,19 +39,26 @@ namespace GhasreMobile.Controllers
                             p.PriceBeforeDiscount,
                             p.Brand,
                         }).Single();
-                        list.Add(new ShopCartItemVm()
+                        ShopCartItemVm shop = new ShopCartItemVm();
+                        shop.Count = item.Count;
+                        shop.ProductID = item.ProductID;
+                        shop.ColorID = item.ColorID;
+                        shop.ColorName = db.Color.GetById(item.ColorID).Name;
+                        shop.Name = product.Name;
+                        shop.ImageName = product.MainImage;
+                        shop.PriceAfterDiscount = product.PriceAfterDiscount;
+                        shop.PriceBeforeDiscount = product.PriceBeforeDiscount;
+                        shop.Brand = product.Brand.Name;
+                        shop.Special = 0;
+                        shop.Sum = product.PriceAfterDiscount == 0 ? item.Count * product.PriceBeforeDiscount : product.PriceAfterDiscount * item.Count;
+                        TblSpecialOffer offer = db.SpecialOffer.Get(i => i.ProductId == item.ProductID && i.ValidTill >= DateTime.Now).SingleOrDefault();
+                        if (offer != null)
                         {
-                            Count = item.Count,
-                            ProductID = item.ProductID,
-                            ColorID = item.ColorID,
-                            ColorName = db.Color.GetById(item.ColorID).Name,
-                            Name = product.Name,
-                            ImageName = product.MainImage,
-                            PriceAfterDiscount = product.PriceAfterDiscount,
-                            PriceBeforeDiscount = product.PriceBeforeDiscount,
-                            Brand = product.Brand.Name,
-                            Sum = product.PriceAfterDiscount == 0 ? item.Count * product.PriceBeforeDiscount : product.PriceAfterDiscount * item.Count,
-                        });
+                            var Special = product.PriceAfterDiscount == 0 ? product.PriceBeforeDiscount : product.PriceAfterDiscount;
+                            shop.Special = Special - (long)(Math.Floor((double)(Special * offer.Discount / 100)));
+                            shop.Sum = shop.Sum - (long)(Math.Floor((double)(shop.Sum * offer.Discount / 100)));
+                        };
+                        list.Add(shop);
                     }
                 }
                 return await Task.FromResult(View(list));
@@ -211,14 +218,30 @@ namespace GhasreMobile.Controllers
                         addOrderDetail.FinalOrderId = addOrder.OrdeId;
                         addOrderDetail.ProductId = item.ProductID;
                         addOrderDetail.ColorId = item.ColorID;
-                        if (product.PriceAfterDiscount == 0)
+                        TblSpecialOffer offer = db.SpecialOffer.Get(i => i.ProductId == item.ProductID && i.ValidTill >= DateTime.Now).SingleOrDefault();
+                        if (offer != null)
                         {
-                            addOrderDetail.Price = (int)product.PriceBeforeDiscount;
+                            if (product.PriceAfterDiscount == 0)
+                            {
+                                addOrderDetail.Price = (int)product.PriceBeforeDiscount - (long)(Math.Floor((double)((int)product.PriceBeforeDiscount * offer.Discount / 100)));
+                            }
+                            else
+                            {
+                                addOrderDetail.Price = (int)product.PriceAfterDiscount - (long)(Math.Floor((double)((int)product.PriceAfterDiscount * offer.Discount / 100)));
+                            }
                         }
                         else
                         {
-                            addOrderDetail.Price = (int)product.PriceAfterDiscount;
+                            if (product.PriceAfterDiscount == 0)
+                            {
+                                addOrderDetail.Price = (int)product.PriceBeforeDiscount;
+                            }
+                            else
+                            {
+                                addOrderDetail.Price = (int)product.PriceAfterDiscount;
+                            }
                         }
+                       
                         db.OrderDetail.Add(addOrderDetail);
 
                     }
@@ -236,7 +259,7 @@ namespace GhasreMobile.Controllers
                             }
                         }
                         db.Color.Save();
-                        return await Task.FromResult(Redirect("/User/Order/Fractional/"+ addOrder.OrdeId));
+                        return await Task.FromResult(Redirect("/User/Order/Fractional/" + addOrder.OrdeId));
                     }
                     else
                     {

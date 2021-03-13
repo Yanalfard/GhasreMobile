@@ -93,7 +93,7 @@
                 <div uk-drop="boundary: .top; pos:bottom-justify; offset: 12; mode: none"
                      id="dropSearch">
                     <div class="drop-content mat-border mat col">
-                        <a href="">
+                        @*<a href="">
                             این یک <strong>گزینه</strong> می باشد
                         </a>
                         <a href="">
@@ -101,7 +101,7 @@
                         </a>
                         <a href="">
                             این یک <strong>گزینه</strong> می باشد
-                        </a>
+                        </a>*@
                     </div>
                 </div>
 
@@ -281,10 +281,7 @@
                     <h4>تماس با ما</h4>
                     <ul>
                         <li>
-                            <span>۰۲۱-۴۲۴۰۹۰۰۰</span>
-                        </li>
-                        <li>
-                            <span>تبریز - ولیعصر - سربالایی ولیعصر - خیابان حافظ</span>
+                            @await Component.InvokeAsync("ShortTamasBaMaView")
                         </li>
                         <li>
                             <a href="/Contact">اطلاعات بیشتر</a>
