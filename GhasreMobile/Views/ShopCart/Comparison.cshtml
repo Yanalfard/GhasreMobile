@@ -4,4 +4,15 @@
     Layout = "_ShopCartLayout.cshtml";
 }
 
-<partial name="_Comparison" model="Model" />
+
+@if (Model.Items.Count > 0)
+{
+    <partial name="_Comparison" model="Model" />
+}
+else
+{
+    <div class="mat-card details">
+        لیست مقایسه  شما خالیست
+    </div>
+}
+
