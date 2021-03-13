@@ -53,9 +53,10 @@
                 </button>
                 @if (Model.IsFractional == true)
                 {
-                    <a href="/User/Order/Fractional" class="btn btn-primary uk-margin-auto-top uk-margin-auto-left">
+                    <input type="hidden" name="IsFractional" id="IsFractional" />
+                    <button type="submit" id="btnIsFractional" class="btn btn-primary uk-margin-auto-top uk-margin-auto-left">
                         خرید اقساطی
-                    </a>
+                    </button>
                 }
             </div>
         </div>
@@ -65,7 +66,9 @@
 
 
     <script>
-
+        $('#btnIsFractional').click(function () {
+            $('#IsFractional').val("1");
+        })
     $("#mainForm input[type=radio]").change(function () {
         var id = $(this).val();
         window.location.href = "/User/Order/SetPost/" + id;

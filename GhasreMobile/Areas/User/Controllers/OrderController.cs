@@ -26,7 +26,19 @@ namespace GhasreMobile.Areas.User.Controllers
         {
             try
             {
-                return await Task.FromResult(View(db.Order.Get(i => i.IsPayed).OrderByDescending(i => i.DateSubmited)));
+                return await Task.FromResult(View(db.Order.Get(i => i.IsPayed && i.IsFractional == false).OrderByDescending(i => i.DateSubmited)));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
+
+        public async Task<IActionResult> Fractionals()
+        {
+            try
+            {
+                return await Task.FromResult(View(db.Order.Get(i => i.IsFractional == true && i.IsPayed == false).OrderByDescending(i => i.DateSubmited)));
             }
             catch
             {
@@ -278,64 +290,12 @@ namespace GhasreMobile.Areas.User.Controllers
             }
         }
 
-        public async Task<IActionResult> Fractional(string radio, string address)
+        public async Task<IActionResult> Fractional(int id)
         {
             try
             {
-                List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
-                DiscountVm selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
-                if (selectedDiscount != null)
-                {
-                    TblOrder addOrder = new TblOrder();
-                    if (selectedDiscount.DiscountId == 0)
-                    {
-                        addOrder.DiscountId = null;
-                    }
-                    else
-                    {
-                        addOrder.DiscountId = selectedDiscount.DiscountId;
-                    }
-                    addOrder.Address = address;
-                    addOrder.DateSubmited = DateTime.Now;
-                    addOrder.FinalPrice = (int)selectedDiscount.Sum;
-                    addOrder.IsPayed = false;
-                    addOrder.Status = 0;
-                    addOrder.PaymentStatus = (int)selectedDiscount.DiscountPrice;
-                    addOrder.PostalCode = "0";
-                    addOrder.SendPrice = selectedDiscount.PostPrice;
-                    addOrder.SendStatus = selectedDiscount.PostPriceId;
-                    addOrder.ClientId = SelectUser().ClientId;
-                    addOrder.IsFractional = true;
-                    db.Order.Add(addOrder);
-                    db.Order.Save();
-                    foreach (var item in sessions)
-                    {
-                        var product = db.Product.Get().Where(p => p.ProductId == item.ProductID).Select(p => new
-                        {
-                            p.PriceAfterDiscount,
-                            p.PriceBeforeDiscount,
-                        }).Single();
-                        TblOrderDetail addOrderDetail = new TblOrderDetail();
-                        addOrderDetail.Count = item.Count;
-                        addOrderDetail.FinalOrderId = addOrder.OrdeId;
-                        addOrderDetail.ProductId = item.ProductID;
-                        addOrderDetail.ColorId = item.ColorID;
-                        if (product.PriceAfterDiscount == 0)
-                        {
-                            addOrderDetail.Price = (int)product.PriceBeforeDiscount;
-                        }
-                        else
-                        {
-                            addOrderDetail.Price = (int)product.PriceAfterDiscount;
-                        }
-                        db.OrderDetail.Add(addOrderDetail);
-
-                    }
-                    db.OrderDetail.Save();
-                    HttpContext.Session.Clear();
-                    return await Task.FromResult(View(addOrder));
-                }
-                return await Task.FromResult(View());
+                HttpContext.Session.Clear();
+                return await Task.FromResult(View(db.Order.GetById(id)));
             }
             catch
             {
