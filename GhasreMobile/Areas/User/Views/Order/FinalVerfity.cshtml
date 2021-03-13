@@ -25,7 +25,6 @@
                     <label class="radio">
                         <span>@item.Name (@item.Price.Value.ToString("#,0"))</span>
                         <input id="radio" name="radio" @((list.ToList().IndexOf(item) == 0 ? "checked" : "")) class="uk-radio @item.PostOptionId" value="@item.PostOptionId" type="radio">
-                        <span>@item.Price.Value.ToString("#,0")</span>
                     </label>
                 }
             </div>

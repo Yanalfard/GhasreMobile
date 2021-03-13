@@ -23,7 +23,9 @@
             @*@{
                     TblConfig list = ViewBag.FinalTextKharid as TblConfig;
                 }*@
-            @Html.Raw(FinalTextKharid)
+            <p class="uk-margin-remove">
+                @Html.Raw(FinalTextKharid)
+            </p>
         </div>
 
         <partial name="_Cart" model="Model" />
