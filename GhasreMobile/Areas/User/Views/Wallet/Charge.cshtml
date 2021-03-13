@@ -13,7 +13,7 @@
     </p>
     <form asp-action="ChargeWallet" asp-controller="Wallet" asp-area="User">
         <div class="fg-col" dir="rtl">
-            <label class="fg-label">مبلغ شارژ <span class="text-3">(ريال)</span></label>
+            <label class="fg-label">مبلغ شارژ <span class="text-3">(تومان)</span></label>
             <input type="text" class="entry PriceInput" data-type='currency' />
             <input type="hidden" class="entry"  asp-for="Amount"/>
             <span class="text-danger" asp-validation-for="Amount"></span>

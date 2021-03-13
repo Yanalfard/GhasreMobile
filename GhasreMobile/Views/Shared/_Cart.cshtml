@@ -40,16 +40,32 @@
                     </td>
                     <td class="price">
                         <div class="col">
-                            @if (item.PriceAfterDiscount == 0)
+                            @if (item.Special == 0)
                             {
-                                <label> </label>
-                                <label> @item.PriceBeforeDiscount.Value.ToString("#,0")</label>
+                                @if (item.PriceAfterDiscount == 0)
+                                {
+                                    <label> </label>
+                                    <label> @item.PriceBeforeDiscount.Value.ToString("#,0")</label>
+                                }
+                                else
+                                {
+                                    <label> @item.PriceBeforeDiscount.Value.ToString("#,0")</label>
+                                    <label> @item.PriceAfterDiscount.Value.ToString("#,0")</label>
+                                }
                             }
                             else
                             {
-                                <label> @item.PriceBeforeDiscount.Value.ToString("#,0")</label>
-                                <label> @item.PriceAfterDiscount.Value.ToString("#,0")</label>
+                                @if (item.PriceAfterDiscount == 0)
+                                {
+                                    <label> @item.PriceBeforeDiscount.Value.ToString("#,0")</label>
+                                }
+                                else
+                                {
+                                    <label> @item.PriceAfterDiscount.Value.ToString("#,0")</label>
+                                }
+                                <label> @item.Special.Value.ToString("#,0")</label>
                             }
+
 
                         </div>
                     </td>
@@ -70,7 +86,7 @@
                 @Model.Sum(i => i.Sum).Value.ToString("#,0")
             </h3>
             <span>
-                ريال
+                تومان
             </span>
         </div>
     </div>

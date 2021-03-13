@@ -842,4 +842,8 @@ $aside-width: 142px;
         padding: 12px;
         border-bottom: 1px $mat-border-color solid;
     }
+
+    > *:last-child {
+        border: 0;
+    }
 }
