@@ -19,7 +19,7 @@
 
         <div class="fg-col">
             <div class="fg-label">نام محصول</div>
-            <input type="text" class="entry" name="name"  value="@ViewData["name"]"/>
+            <input type="text" class="entry" name="name" value="@ViewData["name"]" />
             <div class="text-danger"></div>
         </div>
         <input type="hidden" class="entry" name="q" value="" />
@@ -46,7 +46,23 @@
                     <div class="text-danger"></div>
                 </div>
                 <div class="col">
-                    <input type="number" class="entry" aria-label="priceTo" placeholder="تا" name="maxPrice"  value="@ViewData["maxPrice"]"/>
+                    <input type="number" class="entry" aria-label="priceTo" placeholder="تا" name="maxPrice" value="@ViewData["maxPrice"]" />
+                    <div class="text-danger"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fg-col">
+            <label class="fg-label">تاریخ ثبت</label>
+            <div class="rowr uk-child-width-1-2">
+                <div class="col">
+                    <label class="fg-label text-4">از تاریخ</label>
+                    <input type="date" lang="fa" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" name="minPrice" value="@ViewData["minPrice"]" />
+                    <div class="text-danger"></div>
+                </div>
+                <div class="col">
+                    <label class="fg-label text-4">تا تاریخ</label>
+                    <input type="date" lang="fa" class="entry" aria-label="priceTo" placeholder="تا" name="maxPrice" value="@ViewData["maxPrice"]" />
                     <div class="text-danger"></div>
                 </div>
             </div>
