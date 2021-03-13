@@ -301,7 +301,13 @@ namespace GhasreMobile.Areas.User.Controllers
             try
             {
                 HttpContext.Session.Clear();
-                return await Task.FromResult(View(db.Order.GetById(id)));
+                TblOrder order = db.Order.Get(i => i.OrdeId == id && i.ClientId == SelectUser().ClientId).SingleOrDefault();
+                if (order != null)
+                {
+                    ViewBag.KharidAgsady = db.Config.Get(i => i.Key == "KharidAgsady").SingleOrDefault();
+                    return await Task.FromResult(View(order));
+                }
+                return await Task.FromResult(Redirect("/"));
             }
             catch
             {

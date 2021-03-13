@@ -57,12 +57,12 @@
             <div class="rowr uk-child-width-1-2">
                 <div class="col">
                     <label class="fg-label text-4">از تاریخ</label>
-                    <input type="date" lang="fa" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" name="minPrice" value="@ViewData["minPrice"]" />
+                    <input type="date" lang="fa" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" id="minDate" name="minDate" value="@ViewData["maxDate"]" />
                     <div class="text-danger"></div>
                 </div>
                 <div class="col">
                     <label class="fg-label text-4">تا تاریخ</label>
-                    <input type="date" lang="fa" class="entry" aria-label="priceTo" placeholder="تا" name="maxPrice" value="@ViewData["maxPrice"]" />
+                    <input type="date" lang="fa" class="entry" aria-label="priceTo" placeholder="تا" id="maxDate" name="maxDate" value="@ViewData["minDate"]" />
                     <div class="text-danger"></div>
                 </div>
             </div>
@@ -73,8 +73,8 @@
             فقط کالا های موجود
         </label>
 
-         <label class="text-2 rowr uk-margin-small-bottom">
-            <input class="uk-checkbox" type="checkbox" name="fractional" />
+        <label class="text-2 rowr uk-margin-small-bottom">
+            <input class="uk-checkbox" type="checkbox" name="isFractional" />
             فقط فروش های اقساطی
         </label>
 
@@ -121,4 +121,18 @@
     <div class="loading">
         <img src="~/st/v/loading.svg" />
     </div>
+}
+
+@section Scripts{
+    @*<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.3.1021/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.3.1021/styles/kendo.blueopal.min.css" />
+    <script src="~/js/kendo.all.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            // create DatePicker from input HTML element
+            $("#minDate").kendoDatePicker();
+            $("#maxDate").kendoDatePicker();
+        });
+    </script>*@
 }
