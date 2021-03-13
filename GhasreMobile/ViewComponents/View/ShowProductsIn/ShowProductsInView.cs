@@ -14,7 +14,15 @@ namespace GhasreMobile.ViewComponents.View.ShowProductsIn
         private Core db = new Core();
         public async Task<IViewComponentResult> InvokeAsync(int id)
         {
-            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/ShowProductsInView/ShowProductsInView.cshtml", db.Product.Get(i => i.BrandId == id)));
+            List<TblProductKeywordRel> keysOfSelectedProduct = db.ProductKeywordRel.Get(i => i.ProductId == id).ToList();
+            List<TblProduct> productsResult = new List<TblProduct>();
+            List<TblProductKeywordRel> allKeys = new List<TblProductKeywordRel>();
+            foreach (TblProductKeywordRel i in keysOfSelectedProduct)
+            {
+                productsResult.AddRange(db.ProductKeywordRel.Get(j => j.KeywordId == i.KeywordId).Select(i => i.Product).ToList());
+            }
+            productsResult = productsResult.Distinct().ToList();
+            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/ShowProductsInView/ShowProductsInView.cshtml", productsResult));
         }
     }
 }
