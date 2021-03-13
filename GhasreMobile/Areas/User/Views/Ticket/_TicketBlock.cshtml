@@ -1,7 +1,7 @@
 ﻿@model TblTicket
-<form class="ticket-block @((Model.IsAnswer || Model.IsAnswerd ? "gray" : ""))">
+<form class="ticket-block @((Model.IsAnswer ? "gray" : ""))">
     <div class="top">
-        <label class="name " style=" @((Model.IsAnswer || Model.IsAnswerd ? "display:none" : ""))">
+        <label class="name " style=" @((Model.IsAnswer ? "display:none" : ""))">
             @Model.Title
         </label>
         <span class="date">

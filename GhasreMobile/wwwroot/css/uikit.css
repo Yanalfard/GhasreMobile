@@ -163,6 +163,9 @@ body {
   overflow: hidden !important;
   min-height: 100vh; }
 
+.height {
+  height: calc(100vh - calc(156px + 400px)); }
+
 /*#region Space */
 /* Phone landscape and bigger */
 @media (min-width: 320px) {

@@ -31,7 +31,7 @@ namespace DataLayer.Models
         public int PaymentStatus { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime DateSubmited { get; set; }
-
+        public bool? IsFractional { get; set; }
         [ForeignKey(nameof(ClientId))]
         [InverseProperty(nameof(TblClient.TblOrder))]
         public virtual TblClient Client { get; set; }

@@ -7,7 +7,7 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form asp-action="Create" asp-controller="Store" asp-area="Admin" method="post" enctype="multipart/form-data"
+<form asp-action="Edit" asp-controller="Store" asp-area="Admin" method="post" enctype="multipart/form-data"
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
@@ -30,7 +30,8 @@
         <label class="mt-2">تصویر اصلی</label>
         <br />
         <div class="custom-file col-md-7">
-            <input asp-for="MainImage" type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" onchange="inputChanged(this)">
+            <input asp-for="MainImage" type="hidden" />
+            <input name="Image" type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" onchange="inputChanged(this)">
             <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر</label>
         </div>
         <span class="text-danger" asp-validation-for="MainImage"></span>

@@ -36,15 +36,15 @@ namespace GhasreMobile.Controllers
                 List<TblProduct> list = db.Product.Get().ToList();
                 if (q != null)
                 {
-                    list = list.Where(i => i.SearchText.ToLowerInvariant().Contains(q.ToLowerInvariant()) || i.Name.ToLowerInvariant().Contains(q.ToLowerInvariant())).ToList();
+                    list = list.Where(i => i.SearchText.ToLower().Contains(q.ToLower()) || i.Name.ToLower().Contains(q.ToLower())).ToList();
                 }
                 if (name != null)
                 {
-                    list = list.Where(i => i.Name.ToLowerInvariant().Contains(name.ToLowerInvariant())).ToList();
+                    list = list.Where(i => i.Name.ToLower().Contains(name.ToLower())).ToList();
                 }
                 if (cat != null)
                 {
-                    list = list.Where(i => i.Catagory.Name.ToLowerInvariant().Contains(cat.ToLowerInvariant())).ToList();
+                    list = list.Where(i => i.Catagory.Name.ToLower().Contains(cat.ToLower())).ToList();
                 }
                 if (catId != 0)
                 {
@@ -52,7 +52,7 @@ namespace GhasreMobile.Controllers
                 }
                 if (brand != null)
                 {
-                    list = list.Where(i => i.Brand.Name.ToLowerInvariant().Contains(brand.ToLowerInvariant())).ToList();
+                    list = list.Where(i => i.Brand.Name.ToLower().Contains(brand.ToLower())).ToList();
                 }
                 if (brandId != 0)
                 {
@@ -60,7 +60,7 @@ namespace GhasreMobile.Controllers
                 }
                 if (color != null)
                 {
-                    list.AddRange(db.Color.Get(i => i.Name.ToLowerInvariant().Contains(color)).Select(i => i.Product).ToList());
+                    list.AddRange(db.Color.Get(i => i.Name.ToLower().Contains(color)).Select(i => i.Product).ToList());
                 }
                 if (colorIId != 0)
                 {
@@ -103,7 +103,7 @@ namespace GhasreMobile.Controllers
         public IActionResult LayoutSearch(string key)
         {
             if (key.Length <= 2) return Ok("Invalid Key");
-            var dbFake = db.Product.Get().Select(i => i.Name);
+            var dbFake = db.Product.Get().Select(i => i.Name.ToLower());
             return Json(dbFake.ToList().Where(i => i.Contains(key)));
         }
 

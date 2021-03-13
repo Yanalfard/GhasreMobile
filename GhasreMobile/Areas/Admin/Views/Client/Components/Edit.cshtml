@@ -25,19 +25,22 @@
                 @{
                     IEnumerable<DataLayer.Models.TblRole> roles = ViewBag.Roles;
                 }
-                <select class="form-control form-control-sm" name="RoleId">
-                    @foreach (var item in roles)
-                    {
-                        if (item.RoleId == Model.RoleId)
+                @if (User.Claims.Last().Value == "admin")
+                {
+                    <select class="form-control form-control-sm" name="RoleId">
+                        @foreach (var item in roles)
                         {
-                            <option selected value="@item.RoleId">@item.Title</option>
+                            if (item.RoleId == Model.RoleId)
+                            {
+                                <option selected value="@item.RoleId">@item.Title</option>
+                            }
+                            else
+                            {
+                                <option value="@item.RoleId">@item.Title</option>
+                            }
                         }
-                        else
-                        {
-                            <option value="@item.RoleId">@item.Title</option>
-                        }
-                    }
-                </select>
+                    </select>
+                }
             </div>
         </div>
         <hr />

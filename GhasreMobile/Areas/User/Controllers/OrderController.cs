@@ -26,7 +26,19 @@ namespace GhasreMobile.Areas.User.Controllers
         {
             try
             {
-                return await Task.FromResult(View(db.Order.Get(i => i.IsPayed).OrderByDescending(i => i.DateSubmited)));
+                return await Task.FromResult(View(db.Order.Get(i => i.IsPayed && i.IsFractional == false).OrderByDescending(i => i.DateSubmited)));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
+
+        public async Task<IActionResult> Fractionals()
+        {
+            try
+            {
+                return await Task.FromResult(View(db.Order.Get(i => i.IsFractional == true && i.IsPayed == false).OrderByDescending(i => i.DateSubmited)));
             }
             catch
             {
@@ -56,6 +68,7 @@ namespace GhasreMobile.Areas.User.Controllers
                             p.PriceAfterDiscount,
                             p.PriceBeforeDiscount,
                             p.Brand,
+                            p.IsFractional
                         }).Single();
                         list.Add(new ShopCartItemVm()
                         {
@@ -68,6 +81,7 @@ namespace GhasreMobile.Areas.User.Controllers
                             PriceAfterDiscount = product.PriceAfterDiscount,
                             PriceBeforeDiscount = product.PriceBeforeDiscount,
                             Brand = product.Brand.Name,
+                            IsFractional = product.IsFractional,
                             Sum = product.PriceAfterDiscount == 0 ? item.Count * product.PriceBeforeDiscount : product.PriceAfterDiscount * item.Count,
                         });
                     }
@@ -132,6 +146,15 @@ namespace GhasreMobile.Areas.User.Controllers
                 else
                 {
                     discount.PostPrice = 0;
+                }
+
+                if (list.Any(i => i.IsFractional == false))
+                {
+                    discount.IsFractional = false;
+                }
+                else
+                {
+                    discount.IsFractional = true;
                 }
                 HttpContext.Session.SetComplexData("Discount", discount);
                 ViewBag.discountDarsad = discount.Discount;
@@ -260,6 +283,19 @@ namespace GhasreMobile.Areas.User.Controllers
                     return Redirect("/User/Order/OnlineOrder?type=" + type.ToString());
                 }
                 return await Task.FromResult(View(online));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
+
+        public async Task<IActionResult> Fractional(int id)
+        {
+            try
+            {
+                HttpContext.Session.Clear();
+                return await Task.FromResult(View(db.Order.GetById(id)));
             }
             catch
             {

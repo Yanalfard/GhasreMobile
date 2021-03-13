@@ -1,21 +1,25 @@
 ﻿@model IEnumerable<TblBannerAndSlide>
 
-<div class="main-slideshow uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="ratio:16:7">
+@if (Model.Any())
+{
+    <div class="main-slideshow uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="ratio:16:7">
 
-    <ul class="uk-slideshow-items">
-        @foreach (var item in Model)
-        {
-            <li>
-                <a href="@item.Link"><img src="~/Images/Slider/@item.ImageUrl" alt="@item.Name" uk-cover></a>
-            </li>
-        }
-    </ul>
-    <div class="navigation uk-position-bottom-center uk-position-small">
-        <ul class="uk-dotnav">
+        <ul class="uk-slideshow-items">
             @foreach (var item in Model)
             {
-                <li uk-slideshow-item="@(Model.ToList().IndexOf(item))"><a href="#">@item.Name</a></li>
+                <li>
+                    <a href="@item.Link"><img src="~/Images/Slider/@item.ImageUrl" alt="@item.Name" uk-cover></a>
+                </li>
             }
         </ul>
+        <div class="navigation uk-position-bottom-center uk-position-small">
+            <ul class="uk-dotnav">
+                @foreach (var item in Model)
+                {
+                    <li uk-slideshow-item="@(Model.ToList().IndexOf(item))"><a href="#">@item.Name</a></li>
+                }
+            </ul>
+        </div>
     </div>
-</div>
+
+}

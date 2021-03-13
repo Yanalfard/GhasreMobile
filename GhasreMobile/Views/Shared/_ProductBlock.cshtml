@@ -11,10 +11,10 @@
     </div>
 
     <span class="people">(@Model.TblRate.Count)</span>
-    <a href="/Product/@Model.ProductId/@Model.Name.Replace(" ","-")" class="link-text">
+    <a href="/Product/@Model.ProductId/@Model.Name.Replace("/","").Replace(" ","-")" class="link-text">
         <img src="~/Images/ProductMain/@Model.MainImage" alt="" width="200" height="200" />
     </a>
-    <a href="/Product/@Model.ProductId/@Model.Name.Replace(" ","-")" class="link-text">
+    <a href="/Product/@Model.ProductId/@Model.Name.Replace("/","").Replace(" ","-")" class="link-text">
         <h3 class="name" dir="rtl">
             @Model.Name
         </h3>

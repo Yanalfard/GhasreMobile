@@ -163,11 +163,16 @@ namespace GhasreMobile.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
-
-        public async Task<IActionResult> Payment(string radio, string address)
+        [PermissionChecker("user,employee,admin")]
+        public async Task<IActionResult> Payment(string radio, string address, string IsFractional)
         {
             try
             {
+                bool fractional = false;
+                if (IsFractional == "1")
+                {
+                    fractional = true;
+                }
                 List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
                 DiscountVm selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
                 if (selectedDiscount != null)
@@ -191,6 +196,7 @@ namespace GhasreMobile.Controllers
                     addOrder.SendPrice = selectedDiscount.PostPrice;
                     addOrder.SendStatus = selectedDiscount.PostPriceId;
                     addOrder.ClientId = SelectUser().ClientId;
+                    addOrder.IsFractional = fractional;
                     db.Order.Add(addOrder);
                     db.Order.Save();
                     foreach (var item in sessions)
@@ -217,40 +223,59 @@ namespace GhasreMobile.Controllers
 
                     }
                     db.OrderDetail.Save();
-                    if (selectedDiscount.SumWithDiscount <= SelectUser().Balance)
+                    if (fractional)
                     {
-                        TblWallet addWallet = new TblWallet();
-                        addWallet.Amount = (int)selectedDiscount.Sum;
-                        addWallet.Date = DateTime.Now;
-                        addWallet.Description = "خرید";
-                        addWallet.IsDeposit = false;
-                        addWallet.IsFinaly = true;
-                        addWallet.ClientId = SelectUser().ClientId;
-                        addWallet.OrderId = addOrder.OrdeId;
-                        db.Wallet.Add(addWallet);
-                        //db.Wallet.Save();
-                        TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
-                        selectedClient.Balance -= selectedDiscount.Sum;
-                        TblOrder selectedOrder = db.Order.GetById(addOrder.OrdeId);
-                        selectedOrder.IsPayed = true;
-                        db.Client.Update(selectedClient);
-                        db.Order.Update(selectedOrder);
-                        db.Client.Save();
-                        return View();
+                        List<TblOrderDetail> list = db.OrderDetail.Get(i => i.FinalOrderId == addOrder.OrdeId).ToList();
+                        foreach (var item in list)
+                        {
+                            TblColor colors = db.Color.GetById(item.ColorId);
+                            if (colors.Count > 0 && colors.Count >= item.Count)
+                            {
+                                colors.Count -= colors.Count;
+                                db.Color.Update(colors);
+                            }
+                        }
+                        db.Color.Save();
+                        return await Task.FromResult(Redirect("/User/Order/Fractional/"+ addOrder.OrdeId));
                     }
                     else
                     {
-                        long SumBalance = selectedDiscount.SumWithDiscount;
-                        if (SumBalance < 1000)
+                        if (selectedDiscount.SumWithDiscount <= SelectUser().Balance)
                         {
-                            SumBalance = 1000;
+                            TblWallet addWallet = new TblWallet();
+                            addWallet.Amount = (int)selectedDiscount.Sum;
+                            addWallet.Date = DateTime.Now;
+                            addWallet.Description = "خرید";
+                            addWallet.IsDeposit = false;
+                            addWallet.IsFinaly = true;
+                            addWallet.ClientId = SelectUser().ClientId;
+                            addWallet.OrderId = addOrder.OrdeId;
+                            db.Wallet.Add(addWallet);
+                            //db.Wallet.Save();
+                            TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
+                            selectedClient.Balance -= selectedDiscount.Sum;
+                            TblOrder selectedOrder = db.Order.GetById(addOrder.OrdeId);
+                            selectedOrder.IsPayed = true;
+                            db.Client.Update(selectedClient);
+                            db.Order.Update(selectedOrder);
+                            db.Client.Save();
+                            return View();
                         }
-                        ChargeWalletVm charge = new ChargeWalletVm();
-                        int Amount = (int)SumBalance;
-                        int OrderId = addOrder.OrdeId;
-                        return Redirect("/User/Wallet/ChargeWallet?Amount=" + Amount + "&OrderId=" + OrderId);
-                        //return Redirect("/User/Wallet/ChargeWallet/" + charge);
+                        else
+                        {
+                            long SumBalance = selectedDiscount.SumWithDiscount;
+                            if (SumBalance < 1000)
+                            {
+                                SumBalance = 1000;
+                            }
+                            ChargeWalletVm charge = new ChargeWalletVm();
+                            int Amount = (int)SumBalance;
+                            int OrderId = addOrder.OrdeId;
+                            return Redirect("/User/Wallet/ChargeWallet?Amount=" + Amount + "&OrderId=" + OrderId);
+                            //return Redirect("/User/Wallet/ChargeWallet/" + charge);
+                        }
                     }
+
                 }
                 return await Task.FromResult(View());
             }

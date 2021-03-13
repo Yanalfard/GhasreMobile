@@ -257,7 +257,7 @@
                             <a href="/">خانه</a>
                         </li>
                         <li>
-                            <a href="/#faq">سوالات متداول</a>
+                            <a href="/Questions">سوالات متداول</a>
                         </li>
                         <li>
                             <a href="/Contact">تماس با ما</a>
@@ -275,9 +275,7 @@
                 </div>
                 <div class="intro">
                     <h4>معرفی سایت</h4>
-                    <p>
-                        می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است.
-                    </p>
+                    @await Component.InvokeAsync("ShortDarbareyeMaView")
                 </div>
                 <div class="contact">
                     <h4>تماس با ما</h4>
@@ -293,7 +291,6 @@
                         </li>
                     </ul>
                     <div class="media">
-                        
                         @await Component.InvokeAsync("TelegramInstaView")
                     </div>
                 </div>
@@ -479,7 +476,8 @@
         }
 
     </script>
-
+    <!--BEGIN RAYCHAT CODE-->
+    <script type="text/javascript">!function () { function t() { var t = document.createElement("script"); t.type = "text/javascript", t.async = !0, localStorage.getItem("rayToken") ? t.src = "https://app.raychat.io/scripts/js/" + o + "?rid=" + localStorage.getItem("rayToken") + "&href=" + window.location.href : t.src = "https://app.raychat.io/scripts/js/" + o + "?href=" + window.location.href; var e = document.getElementsByTagName("script")[0]; e.parentNode.insertBefore(t, e) } var e = document, a = window, o = "ed2cbd05-94f9-447e-8556-4bad0cf1ac1c"; "complete" == e.readyState ? t() : a.attachEvent ? a.attachEvent("onload", t) : a.addEventListener("load", t, !1) }();</script> <!--END RAYCHAT CODE-->
     @RenderSection("Scripts", false)
 
 </body>
