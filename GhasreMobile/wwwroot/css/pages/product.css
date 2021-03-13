@@ -94,6 +94,7 @@ backdrop-filter: saturate(80%);
       position: relative; }
       .pr-image .border .fraction {
         border: 1px solid rgba(150, 2, 126, 0.52);
+        background-color: #fff;
         -moz-border-radius: 4px 4px 4px 4px;
         -webkit-border-radius: 4px 4px 4px 4px;
         border-radius: 4px 4px 4px 4px;
