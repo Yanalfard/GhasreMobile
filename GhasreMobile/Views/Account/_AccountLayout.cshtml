@@ -57,6 +57,20 @@
             $("#overlay").fadeOut(300);
         }
     </script>
+
+    <script>
+        window.addEventListener('resize', () => { checkResize() })
+        checkResize();
+        function checkResize() {
+            const container = document.querySelector('.l-image');
+            if (window.innerWidth < 624) {
+                container.classList.add('uk-display-none')
+            }
+            else if (window.innerWidth >= 624) {
+                container.classList.remove('uk-display-none')
+            }
+        }
+    </script>
     @RenderSection("Scripts", false)
 
 </body>

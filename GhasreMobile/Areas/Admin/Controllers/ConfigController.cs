@@ -33,6 +33,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
             config.LinkInsta = configs.Where(c => c.Key == "LinkInsta").Single().Value;
             config.LinkTelegram = configs.Where(c => c.Key == "LinkTelegram").Single().Value;
             config.Gavanin = configs.Where(c => c.Key == "Gavanin").Single().Value;
+            config.ShortTamasBaMa= configs.Where(c => c.Key == "ShortTamasBaMa").Single().Value;
+            
             return View(config);
         }
 
@@ -55,6 +57,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 TblConfig ConfigLinkInsta = configs.Where(c => c.Key == "LinkInsta").Single();
                 TblConfig ConfigLinkTelegram = configs.Where(c => c.Key == "LinkTelegram").Single();
                 TblConfig ConfigGavanin = configs.Where(c => c.Key == "Gavanin").Single();
+                TblConfig ConfigShortTamasBaMa = configs.Where(c => c.Key == "ShortTamasBaMa").Single();
 
                 ConfigDarbareyeMa.Value = configVm.DarbareyeMa;
                 //ConfigHazineErsalBaPost.Value = configVm.HazineErsalBaPost.ToString();
@@ -68,6 +71,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 ConfigLinkInsta.Value = configVm.LinkInsta;
                 ConfigLinkTelegram.Value = configVm.LinkTelegram;
                 ConfigGavanin.Value = configVm.Gavanin;
+                ConfigShortTamasBaMa.Value = configVm.ShortTamasBaMa;
 
                 _core.Config.Update(ConfigDarbareyeMa);
                 _core.Config.Update(ConfigTamasBaMa);
@@ -81,6 +85,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.Config.Update(ConfigLinkInsta);
                 _core.Config.Update(ConfigLinkTelegram);
                 _core.Config.Update(ConfigGavanin);
+                _core.Config.Update(ConfigShortTamasBaMa);
 
                 _core.Config.Save();
             }

@@ -12397,3 +12397,6 @@ iframe.uk-cover {
   h2,
   h3 {
     page-break-after: avoid; } }
+
+.display-none {
+  display: none !important; }

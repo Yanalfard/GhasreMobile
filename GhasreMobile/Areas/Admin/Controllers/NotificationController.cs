@@ -26,7 +26,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             else
             {
-                IEnumerable<TblNotification> notifications = PagingList.Create(_core.Notification.Get().OrderByDescending(n=>n.NotificationId), 50, page);
+                IEnumerable<TblNotification> notifications = PagingList.Create(_core.Notification.Get().OrderByDescending(n => n.NotificationId), 50, page);
                 return View(notifications);
             }
 
@@ -39,19 +39,37 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(bool SendAll, int? UserId, string Text)
+        public IActionResult Create(bool SendAll, bool SendEmployees, int? UserId, string Text)
         {
             TblClient Sender = _core.Client.Get(c => c.TellNo == User.Identity.Name.ToString()).Single();
-            if (SendAll == false)
+            if (!SendAll)
             {
-                TblNotification notification = new TblNotification();
-                notification.ClientId = UserId.Value;
-                notification.IsSeen = false;
-                notification.SenderId = Sender.ClientId;
-                notification.Message = Text;
-                _core.Notification.Add(notification);
-                _core.Notification.Save();
-                return Redirect("/Admin/Notification");
+                if (SendEmployees)
+                {
+                    IEnumerable<TblClient> clients = _core.Client.Get(i => i.RoleId == 2);
+                    foreach (var item in clients)
+                    {
+                        TblNotification notification = new TblNotification();
+                        notification.ClientId = item.ClientId;
+                        notification.IsSeen = false;
+                        notification.SenderId = Sender.ClientId;
+                        notification.Message = Text;
+                        _core.Notification.Add(notification);
+                    }
+                    _core.Notification.Save();
+                    return Redirect("/Admin/Notification");
+                }
+                else
+                {
+                    TblNotification notification = new TblNotification();
+                    notification.ClientId = UserId.Value;
+                    notification.IsSeen = false;
+                    notification.SenderId = Sender.ClientId;
+                    notification.Message = Text;
+                    _core.Notification.Add(notification);
+                    _core.Notification.Save();
+                    return Redirect("/Admin/Notification");
+                }
             }
             else
             {
@@ -77,7 +95,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         public int ReturnUser(string TelNo)
         {
-            TblClient client = _core.Client.Get(c=>c.TellNo==TelNo).SingleOrDefault();
+            TblClient client = _core.Client.Get(c => c.TellNo == TelNo).SingleOrDefault();
 
             if (client != null)
             {
