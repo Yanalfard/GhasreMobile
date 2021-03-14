@@ -75,6 +75,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label>قیمت</label>
+                        <input data-type='currency' class="form-control form-control-sm PriceInput" value="@Model.PriceBeforeDiscount" placeholder="مثال : 80,000 تومان">
                         <input value="@Model.PriceBeforeDiscount" class="form-control form-control-sm">
                         <input asp-for="PriceBeforeDiscount" type="hidden" />
                         <span asp-validation-for="PriceBeforeDiscount" class="text-danger"></span>
@@ -178,6 +179,7 @@
 
 @section Script{
     <script src="~/js/bootstrap-tagsinput.js"></script>
+    <script src="~/js/Auto_Formatting_Currency.js"></script>
     <style>
         .dz-error-message {
             display: none !important;
@@ -293,6 +295,15 @@
         function DeleteProperty(id) {
             $("#PropertyInCreate-" + id).remove();
         }
+
+        $(".PriceInput").change(function () {
+            var price = $(this).val().replaceAll(",", "");
+            if ($.isNumeric(price)) {
+                $("#PriceBeforeDiscount").val($(this).val().replaceAll(",", ""));
+            } else {
+                $(this).val("");
+            }
+        });
 
         function RemoveImageGallery(imageId) {
             $.post("/Admin/Product/RemoveAlbumImage/" + imageId, function (result) {

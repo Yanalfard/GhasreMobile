@@ -36,5 +36,9 @@ namespace DataLayer.ViewModels
 
         [Required(ErrorMessage = "لطفا قوانین را وارد کنید")]
         public string Gavanin { get; set; }
+        
+        [Required(ErrorMessage = "لطفا توضیح خرید اقساطی را وارد کنید")]
+        public string KharidAgsady { get; set; }
+
     }
 }
