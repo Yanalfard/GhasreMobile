@@ -1,0 +1,6 @@
+﻿@model IEnumerable<TblProduct>
+
+@foreach (var item in Model)
+{
+    <partial name="_ProductBlock" model="item" />
+}

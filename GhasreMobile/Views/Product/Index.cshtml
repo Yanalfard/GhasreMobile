@@ -38,29 +38,36 @@
     </div>
 
     <div class="pr-image">
-        <div class="head uk-padding-small border row uk-margin-small-bottom">
-            <ul class="timer uk-margin-auto-right" countdown="2020/01/01">
-                <li>
-                    <label day></label>
-                    <span>روز</span>
-                </li>
-                <li>
-                    <label hour></label>
-                    <span>ساعت</span>
-                </li>
-                <li>
-                    <label minute></label>
-                    <span>دقیقه</span>
-                </li>
-                <li>
-                    <label second></label>
-                    <span>ثانیه</span>
-                </li>
-            </ul>
-            <h3 class="percentage uk-text-danger">
-                36%
-            </h3>
-        </div>
+        @if (Model.TblColor.Sum(i => i.Count) > 0)
+        {
+            @if (Model.TblSpecialOffer.Count > 0 && Model.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now)
+            {
+                <div class="head uk-padding-small border row uk-margin-small-bottom">
+                    <ul class="timer uk-margin-auto-right" countdown="@Model.TblSpecialOffer.SingleOrDefault().ValidTill">
+                        <li>
+                            <label day></label>
+                            <span>روز</span>
+                        </li>
+                        <li>
+                            <label hour></label>
+                            <span>ساعت</span>
+                        </li>
+                        <li>
+                            <label minute></label>
+                            <span>دقیقه</span>
+                        </li>
+                        <li>
+                            <label second></label>
+                            <span>ثانیه</span>
+                        </li>
+                    </ul>
+                    <h3 class="percentage uk-text-danger">
+                        @Model.TblSpecialOffer.SingleOrDefault().Discount%
+                    </h3>
+                </div>
+            }
+        }
+
         <div uk-slideshow="animation: slide; ratio:1:1">
             <div class="border">
                 @if (Model.IsFractional)
@@ -138,53 +145,56 @@
             @Html.Raw(Model.DescriptionShortHtml)
         </div>
         <div class="price">
-            @if (Model.TblSpecialOffer.Count > 0 && Model.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now)
+            @if (Model.TblColor.Sum(i => i.Count) > 0)
             {
-
-                if (Model.PriceAfterDiscount == 0)
+                @if (Model.TblSpecialOffer.Count > 0 && Model.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now)
                 {
-                    var BeforeSumWithDiscount = Model.PriceBeforeDiscount - (long)(Math.Floor((double)(Model.PriceBeforeDiscount * Model.TblSpecialOffer.SingleOrDefault().Discount / 100)));
-                    <h4 class="discount">
-                        @Model.PriceBeforeDiscount.Value.ToString("#,0")
-                    </h4>
-                    <h3 class="actual">
-                        @BeforeSumWithDiscount.Value.ToString("#,0")
-                        <span class="t">تومان</span>
-                    </h3>
+
+                    if (Model.PriceAfterDiscount == 0)
+                    {
+                        var BeforeSumWithDiscount = Model.PriceBeforeDiscount - (long)(Math.Floor((double)(Model.PriceBeforeDiscount * Model.TblSpecialOffer.SingleOrDefault().Discount / 100)));
+                        <h4 class="discount">
+                            @Model.PriceBeforeDiscount.Value.ToString("#,0")
+                        </h4>
+                        <h3 class="actual">
+                            @BeforeSumWithDiscount.Value.ToString("#,0")
+                            <span class="t">تومان</span>
+                        </h3>
+                    }
+                    else
+                    {
+                        var AfterSumWithDiscount = Model.PriceAfterDiscount - (long)(Math.Floor((double)(Model.PriceAfterDiscount * Model.TblSpecialOffer.SingleOrDefault().Discount / 100)));
+                        <h4 class="discount">
+                            @Model.PriceAfterDiscount.Value.ToString("#,0")
+                        </h4>
+                        <h3 class="actual">
+                            @AfterSumWithDiscount.Value.ToString("#,0")
+                            <span class="t">تومان</span>
+                        </h3>
+                    }
                 }
                 else
                 {
-                    var AfterSumWithDiscount = Model.PriceAfterDiscount - (long)(Math.Floor((double)(Model.PriceAfterDiscount * Model.TblSpecialOffer.SingleOrDefault().Discount / 100)));
-                    <h4 class="discount">
-                        @Model.PriceAfterDiscount.Value.ToString("#,0")
-                    </h4>
-                    <h3 class="actual">
-                        @AfterSumWithDiscount.Value.ToString("#,0")
-                        <span class="t">تومان</span>
-                    </h3>
+                    @if (Model.PriceAfterDiscount == 0)
+                    {
+                        <h3 class="actual">
+                            @Model.PriceBeforeDiscount.Value.ToString("#,0")
+                            <span class="t">تومان</span>
+                        </h3>
+                    }
+                    else
+                    {
+                        <h4 class="discount">
+                            @Model.PriceBeforeDiscount.Value.ToString("#,0")
+                        </h4>
+                        <h3 class="actual">
+                            @Model.PriceAfterDiscount.Value.ToString("#,0")
+                            <span class="t">تومان</span>
+                        </h3>
+                    }
                 }
-            }
-            else
-            {
-                @if (Model.PriceAfterDiscount == 0)
-                {
-                    <h3 class="actual">
-                        @Model.PriceBeforeDiscount.Value.ToString("#,0")
-                        <span class="t">تومان</span>
-                    </h3>
-                }
-                else
-                {
-                    <h4 class="discount">
-                        @Model.PriceBeforeDiscount.Value.ToString("#,0")
-                    </h4>
-                    <h3 class="actual">
-                        @Model.PriceAfterDiscount.Value.ToString("#,0")
-                        <span class="t">تومان</span>
-                    </h3>
-                }
-            }
 
+            }
 
         </div>
         <div class="colours">
