@@ -1,0 +1,79 @@
+﻿@model SearchVm
+
+<form id="ajaxresultSearch" action="/Search" swap="filter" class="mat-card col"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="SendComment()"
+      data-ajax-update="#ajaxresultSearch">
+    <h4 class="uk-margin-bottom">
+        فیلتر ها
+    </h4>
+
+    <div class="fg-col">
+        <div class="fg-label">نام محصول</div>
+        <input type="text" class="entry" asp-for="name" name="name" value="@ViewData["name"]" />
+        <div class="text-danger"></div>
+    </div>
+    <input type="hidden" class="entry" asp-for="q" name="q" value="" />
+
+    <div class="fg-col">
+        <div class="fg-label">برند محصول</div>
+        @{
+            List<TblBrand> listBrand = ViewData["brandList"] as List<TblBrand>;
+        }
+        <select class="entry" name="brand" asp-for="brand">
+            @foreach (var item in listBrand)
+            {
+                <option>@item.Name</option>
+            }
+        </select>
+        <div class="text-danger"></div>
+    </div>
+
+    <div class="fg-col">
+        <label class="fg-label">قیمت</label>
+        <div class="rowr uk-child-width-1-2">
+            <div class="col">
+                <input type="number" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" asp-for="minPrice" name="minPrice" value="@ViewData["minPrice"]" />
+                <div class="text-danger"></div>
+            </div>
+            <div class="col">
+                <input type="number" class="entry" aria-label="priceTo" placeholder="تا" asp-for="maxPrice" name="maxPrice" value="@ViewData["maxPrice"]" />
+                <div class="text-danger"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fg-col">
+        <label class="fg-label">تاریخ ثبت</label>
+        <div class="rowr uk-child-width-1-2">
+            <div class="col">
+                <label class="fg-label text-4">از تاریخ</label>
+                <input type="text" onfocusout="checkDate(this)" pattern="" lang="fa" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="mm/dd/yyyy" asp-for="minDate" id="minDate" name="minDate" value="@ViewData["minDate"]" autocomplete="off" />
+                <span class="text-danger" asp-validation-for="minDate"></span>
+            </div>
+            <div class="col">
+                <label class="fg-label text-4">تا تاریخ</label>
+                <input type="text" onfocusout="checkDate(this)" lang="fa" class="entry" aria-label="priceTo" placeholder="mm/dd/yyyy" id="maxDate" asp-for="maxDate" name="maxDate" value="@ViewData["maxDate"]" autocomplete="off" />
+                <span class="text-danger" asp-validation-for="maxDate"></span>
+            </div>
+        </div>
+    </div>
+
+    <label class="text-2 rowr uk-margin-small-bottom">
+        <input class="uk-checkbox" type="checkbox" name="available" asp-for="available" />
+        فقط کالا های موجود
+    </label>
+
+    <label class="text-2 rowr uk-margin-small-bottom">
+        <input class="uk-checkbox" type="checkbox" name="isFractional" asp-for="isFractional" />
+        فقط فروش های اقساطی
+    </label>
+
+    <label class="text-2 rowr uk-margin-small-bottom">
+        <input class="uk-checkbox" type="checkbox" name="discount" asp-for="discount" />
+        فقط کالا های تخفیف دار
+    </label>
+    <button class="btn btn-primary uk-margin-top">اعمال فیلتر ها</button>
+</form>

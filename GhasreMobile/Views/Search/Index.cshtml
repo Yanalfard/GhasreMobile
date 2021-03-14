@@ -11,8 +11,8 @@
 }
 
 @section Aside{
-
-    <form asp-action="/Search" swap="filter" class="mat-card col">
+    @*@await Component.InvokeAsync("SearchView")*@
+    <form action="/Search" swap="filter" class="mat-card col">
         <h4 class="uk-margin-bottom">
             فیلتر ها
         </h4>
@@ -29,10 +29,10 @@
             @{
                 List<TblBrand> listBrand = ViewData["brandList"] as List<TblBrand>;
             }
-            <select class="entry" name="brand">
+            <select class="entry brandList" name="brand">
                 @foreach (var item in listBrand)
                 {
-                    <option>@item.Name</option>
+                    <option value="@item.BrandId">@item.Name</option>
                 }
             </select>
             <div class="text-danger"></div>
@@ -57,34 +57,32 @@
             <div class="rowr uk-child-width-1-2">
                 <div class="col">
                     <label class="fg-label text-4">از تاریخ</label>
-                    <input type="text" lang="fa" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="mm/dd/yyyy" id="minDate" name="minDate" value="@ViewData["minDate"]" />
+                    <input type="text" onfocusout="checkDate(this)" lang="fa" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="mm/dd/yyyy" id="minDate" name="minDate" value="@ViewData["minDate"]" autocomplete="off" />
                     <div class="text-danger"></div>
                 </div>
                 <div class="col">
                     <label class="fg-label text-4">تا تاریخ</label>
-                    <input type="text" lang="fa" class="entry" aria-label="priceTo" placeholder="mm/dd/yyyy" id="maxDate" name="maxDate" value="@ViewData["maxDate"]" />
+                    <input type="text" onfocusout="checkDate(this)" lang="fa" class="entry" aria-label="priceTo" placeholder="mm/dd/yyyy" id="maxDate" name="maxDate" value="@ViewData["maxDate"]" autocomplete="off" />
                     <div class="text-danger"></div>
                 </div>
             </div>
         </div>
 
         <label class="text-2 rowr uk-margin-small-bottom">
-            <input class="uk-checkbox" type="checkbox" name="available" />
+            <input class="uk-checkbox" type="checkbox" @(((bool)ViewData["available"] == true) ? "checked" : "") id="available" name="available" />
             فقط کالا های موجود
         </label>
 
         <label class="text-2 rowr uk-margin-small-bottom">
-            <input class="uk-checkbox" type="checkbox" name="isFractional" />
+            <input class="uk-checkbox" type="checkbox" id="isFractional" @(((bool)ViewData["IsFractional"] == true) ? "checked" : "") name="isFractional" />
             فقط فروش های اقساطی
         </label>
 
         <label class="text-2 rowr uk-margin-small-bottom">
-            <input class="uk-checkbox" type="checkbox" name="discount" />
+            <input class="uk-checkbox" type="checkbox" @(((bool)ViewData["discount"] == true) ? "checked" : "") id="discount" name="discount" />
             فقط کالا های تخفیف دار
         </label>
-
         <button class="btn btn-primary uk-margin-top">اعمال فیلتر ها</button>
-
     </form>
 
     <div swap="Ad"> @await Component.InvokeAsync("AdView")</div>
@@ -123,14 +121,39 @@
     </div>
 }
 
+<input type="hidden" id="brandId" value="@ViewData["brand"]" />
 @section Scripts{
     <script src="~/datePersion/prism.js"></script>
     <script src="~/datePersion/persianDatepicker.js"></script>
     <script>
+        $('.brandList').val($('#brandId').val());
         $(function () {
             //selectedBefor & selectedDate
             $("#minDate").persianDatepicker();
             $("#maxDate").persianDatepicker();
         });
+    </script>
+
+    <script>
+        function checkDate(input) {
+            let val = input.value;
+            let lbl = input.parentElement.querySelector('.text-danger');
+
+            if (!val) {
+                lbl.innerText = '';
+                return true;
+            }
+
+            const a = Date.parse(val);
+
+            if (isNaN(a)) {
+                lbl.innerText = 'تاریخ درست وارد نشده است';
+                return false;
+            } else {
+                lbl.innerText = '';
+                return false;
+            }
+            return true;
+        }
     </script>
 }
