@@ -69,6 +69,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
             _core.Order.Save();
         }
 
+        public void Payed(int id)
+        {
+            TblOrder order = _core.Order.GetById(id);
+            order.IsPayed = !order.IsPayed;
+            _core.Order.Update(order);
+            _core.Order.Save();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
