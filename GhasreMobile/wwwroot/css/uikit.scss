@@ -4862,7 +4862,7 @@ select.uk-form-width-xsmall {
     font-size: 1.25rem;
     line-height: 1.4;
     cursor: pointer;
-    border-right: $primary solid 3px!important;
+    border-right: $primary solid 3px !important;
     @include mat;
 }
 
@@ -13569,4 +13569,8 @@ iframe.uk-cover {
     h3 {
         page-break-after: avoid;
     }
+}
+
+.display-none {
+    display: none !important;
 }

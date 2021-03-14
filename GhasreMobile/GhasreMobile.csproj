@@ -49,7 +49,6 @@
     <Folder Include="wwwroot\Images\Blogs\" />
     <Folder Include="wwwroot\Images\ProductMain\" />
     <Folder Include="wwwroot\Images\Slider\" />
-    <Folder Include="wwwroot\Images\Store\" />
     <Folder Include="wwwroot\Images\User\" />
     <Folder Include="wwwroot\Images\ProductAlbum\" />
     <Folder Include="wwwroot\lib\" />
