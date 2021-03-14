@@ -17,6 +17,25 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1, int OrderId = 0, string TellNo = null)
         {
+            //PersianCalendar pc = new PersianCalendar();
+            //string[] dates = minDate.Split('/');
+            //if (dates.Length == 3)
+            //{
+            //    try
+            //    {
+            //        DateTime dte = pc.ToDateTime(Convert.ToInt32(dates[0]), Convert.ToInt32(dates[1]), Convert.ToInt32(dates[2]), 0, 0, 0, 0);
+            //        list = list.Where(i => i.DateCreated >= dte).ToList();
+            //    }
+            //    catch (FormatException)
+            //    {
+            //        ViewData["minDate"] = "";
+            //    }
+            //}
+            //else
+            //{
+            //    ViewData["minDate"] = "";
+
+            //}
             if (!string.IsNullOrEmpty(TellNo) && OrderId == 0)
             {
                 IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(od => od.Client.TellNo.Contains(TellNo) && od.IsFractional.Value), 40, page);
