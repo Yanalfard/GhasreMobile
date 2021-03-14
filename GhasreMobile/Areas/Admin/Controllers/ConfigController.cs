@@ -33,8 +33,9 @@ namespace GhasreMobile.Areas.Admin.Controllers
             config.LinkInsta = configs.Where(c => c.Key == "LinkInsta").Single().Value;
             config.LinkTelegram = configs.Where(c => c.Key == "LinkTelegram").Single().Value;
             config.Gavanin = configs.Where(c => c.Key == "Gavanin").Single().Value;
-            config.ShortTamasBaMa= configs.Where(c => c.Key == "ShortTamasBaMa").Single().Value;
-            
+            config.ShortTamasBaMa = configs.Where(c => c.Key == "ShortTamasBaMa").Single().Value;
+            config.KharidAgsady = configs.Where(c => c.Key == "KharidAgsady").Single().Value;
+
             return View(config);
         }
 
@@ -58,7 +59,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 TblConfig ConfigLinkTelegram = configs.Where(c => c.Key == "LinkTelegram").Single();
                 TblConfig ConfigGavanin = configs.Where(c => c.Key == "Gavanin").Single();
                 TblConfig ConfigShortTamasBaMa = configs.Where(c => c.Key == "ShortTamasBaMa").Single();
-
+                TblConfig ConfigKharidAgsady = configs.Where(c => c.Key == "KharidAgsady").Single();
                 ConfigDarbareyeMa.Value = configVm.DarbareyeMa;
                 //ConfigHazineErsalBaPost.Value = configVm.HazineErsalBaPost.ToString();
                 //ConfigHazineErsalBaTipaxChapare.Value = configVm.HazineErsalBaTipaxChapare.ToString();
@@ -72,6 +73,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 ConfigLinkTelegram.Value = configVm.LinkTelegram;
                 ConfigGavanin.Value = configVm.Gavanin;
                 ConfigShortTamasBaMa.Value = configVm.ShortTamasBaMa;
+                ConfigKharidAgsady.Value = configVm.KharidAgsady;
 
                 _core.Config.Update(ConfigDarbareyeMa);
                 _core.Config.Update(ConfigTamasBaMa);
@@ -86,6 +88,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.Config.Update(ConfigLinkTelegram);
                 _core.Config.Update(ConfigGavanin);
                 _core.Config.Update(ConfigShortTamasBaMa);
+                _core.Config.Update(ConfigKharidAgsady);
 
                 _core.Config.Save();
             }

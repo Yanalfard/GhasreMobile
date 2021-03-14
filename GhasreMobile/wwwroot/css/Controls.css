@@ -887,7 +887,9 @@ textarea {
         color: #96027E;
         background-color: #fff;
         margin: auto 12px;
-        padding: 0 4px;
+        padding: 0;
+        height: 19px;
+        width: 19px;
         -moz-border-radius: 1000px 1000px 1000px 1000px;
         -webkit-border-radius: 1000px 1000px 1000px 1000px;
         border-radius: 1000px 1000px 1000px 1000px;

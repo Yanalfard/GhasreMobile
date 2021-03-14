@@ -204,7 +204,7 @@
             </div>
         </div>
         <div id="dropbar">
-            <div class="uk-container" gemini="#btnCategory" clickedOutside="CloseDropbar()">
+            <div class="uk-container" onclick="CloseDropbar()" gemini="#btnCategory" clickedOutside="CloseDropbar()">
                 <div class="grid">
                     @await Component.InvokeAsync("CategoryListView")
                 </div>

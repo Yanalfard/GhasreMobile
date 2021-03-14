@@ -47,10 +47,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 if (MainImage != null)
                 {
                     blog.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
+                    string saveDirectory = Path.Combine(
+                                                    Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs");
                     string savePathAlbum = Path.Combine(
-                                        Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs", blog.MainImage
+                                        Directory.GetCurrentDirectory(),saveDirectory, blog.MainImage
                                     );
-
+                    if (!Directory.Exists(saveDirectory))
+                    {
+                        Directory.CreateDirectory(saveDirectory);
+                    }
                     using (var stream = new FileStream(savePathAlbum, FileMode.Create))
                     {
                         await MainImage.CopyToAsync(stream);

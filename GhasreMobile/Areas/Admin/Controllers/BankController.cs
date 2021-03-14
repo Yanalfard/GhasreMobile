@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataLayer.Models;
 using ReflectionIT.Mvc.Paging;
+using System.Globalization;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -17,10 +18,33 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
 
         [HttpGet]
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(int page = 1, string startDate = null, string endDate = null)
         {
-            IEnumerable<TblWallet> wallets = PagingList.Create(_core.Wallet.Get().OrderByDescending(o => o.WalletId), 30, page);
-            return View(wallets);
+
+
+
+
+            if (startDate != null && endDate != null)
+            {
+                PersianCalendar pc = new PersianCalendar();
+                string[] Start = startDate.Split('/');
+
+                DateTime sdte = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+
+                //////End Date
+                string[] End = endDate.Split('/');
+
+                DateTime edte = pc.ToDateTime(Convert.ToInt32(End[0]), Convert.ToInt32(End[1]), Convert.ToInt32(End[2]), 0, 0, 0, 0);
+
+                /////
+                IEnumerable<TblWallet> wallets = PagingList.Create(_core.Wallet.Get(b => b.Date > sdte && b.Date < edte).OrderByDescending(o => o.WalletId), 60, page);
+                return View(wallets);
+            }
+            else
+            {
+                IEnumerable<TblWallet> wallets = PagingList.Create(_core.Wallet.Get().OrderByDescending(o => o.WalletId), 30, page);
+                return View(wallets);
+            }
         }
 
         protected override void Dispose(bool disposing)

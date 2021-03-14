@@ -20,54 +20,31 @@ namespace GhasreMobile.Areas.Admin.Controllers
         public IActionResult Index(int page = 1, int OrderId = 0, string TellNo = null, string StartDate = null, string EndDate = null)
         {
 
+            List<TblOrder> orders = _core.Order.Get().ToList();
+            if (OrderId != 0)
+            {
+                orders = orders.Where(i => i.OrdeId == OrderId).ToList();
+            }
+            if (TellNo != null)
+            {
+                orders = orders.Where(i => i.Client.TellNo == TellNo).ToList();
+            }
+            if (StartDate != null)
+            {
+                PersianCalendar pc = new PersianCalendar();
+                string[] Start = StartDate.Split('/');
+                DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
+            }
+            if (EndDate != null)
+            {
+                PersianCalendar pc = new PersianCalendar();
+                string[] Start = EndDate.Split('/');
+                DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
+            }
+            return View(PagingList.Create(orders, 50, page));
 
-            PersianCalendar pc = new PersianCalendar();
-            string[] Start = StartDate.Split('/');
-            if (Start.Length == 3)
-            {
-                try
-                {
-                    DateTime dte = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                    //list = list.Where(i => i.DateCreated >= dte).ToList();
-                }
-                catch (FormatException)
-                {
-                }
-            }
-            //////End Date
-            string[] End = StartDate.Split('/');
-            if (End.Length == 3)
-            {
-                try
-                {
-                    DateTime dte = pc.ToDateTime(Convert.ToInt32(End[0]), Convert.ToInt32(End[1]), Convert.ToInt32(End[2]), 0, 0, 0, 0);
-                    //list = list.Where(i => i.DateCreated >= dte).ToList();
-                }
-                catch (FormatException)
-                {
-                }
-            }
-            /////
-            if (!string.IsNullOrEmpty(TellNo) && OrderId == 0)
-            {
-                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(od => od.Client.TellNo.Contains(TellNo)), 40, page);
-                return View(Orders);
-            }
-            if (!string.IsNullOrEmpty(TellNo) && OrderId != 0)
-            {
-                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(od => od.Client.TellNo.Contains(TellNo) && od.OrdeId == OrderId), 40, page);
-                return View(Orders);
-            }
-            else if (string.IsNullOrEmpty(TellNo) && OrderId != 0)
-            {
-                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get(o => o.OrdeId == OrderId), 40, page);
-                return View(Orders);
-            }
-            else
-            {
-                IEnumerable<TblOrder> Orders = PagingList.Create(_core.Order.Get().OrderByDescending(o => o.OrdeId), 40, page);
-                return View(Orders);
-            }
         }
 
         public IActionResult Info(int id)

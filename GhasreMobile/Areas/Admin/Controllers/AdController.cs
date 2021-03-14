@@ -35,10 +35,16 @@ namespace GhasreMobile.Areas.Admin.Controllers
             {
                 if (Image != null)
                 {
+                    string saveDirectory = Path.Combine(
+                                                    Directory.GetCurrentDirectory(), "wwwroot/Images/Ad");
                     ad.Image = Guid.NewGuid().ToString() + Path.GetExtension(Image.FileName);
                     string savePath = Path.Combine(
-                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Ad", ad.Image
+                                            Directory.GetCurrentDirectory(), saveDirectory, ad.Image
                                         );
+                    if (!Directory.Exists(saveDirectory))
+                    {
+                        Directory.CreateDirectory(saveDirectory);
+                    }
 
                     using (var stream = new FileStream(savePath, FileMode.Create))
                     {
