@@ -54,21 +54,27 @@
             </h3>
         </a>
 
+
         @if (Model.Product.PriceAfterDiscount == 0)
         {
-            <span class="price">
-                <span class="t">ريال</span>
-                <span>@Model.Product.PriceBeforeDiscount.Value.ToString("#,0")</span>
-            </span>
-        }
-        else
-        {
+            var BeforeSumWithDiscount = Model.Product.PriceBeforeDiscount - (long)(Math.Floor((double)(Model.Product.PriceBeforeDiscount * Model.Discount / 100)));
             <span class="discount">
                 <span>@Model.Product.PriceBeforeDiscount.Value.ToString("#,0")</span>
             </span>
             <span class="price">
-                <span class="t">ريال</span>
+                <span class="t">تومان</span>
+                <span>@BeforeSumWithDiscount.Value.ToString("#,0")</span>
+            </span>
+        }
+        else
+        {
+            var AfterSumWithDiscount = Model.Product.PriceAfterDiscount - (long)(Math.Floor((double)(Model.Product.PriceAfterDiscount * Model.Discount / 100)));
+            <span class="discount">
                 <span>@Model.Product.PriceAfterDiscount.Value.ToString("#,0")</span>
+            </span>
+            <span class="price">
+                <span class="t">تومان</span>
+                <span>@AfterSumWithDiscount.Value.ToString("#,0")</span>
             </span>
         }
 

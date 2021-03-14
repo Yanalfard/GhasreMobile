@@ -42,19 +42,27 @@ namespace GhasreMobile.Areas.User.Controllers
                             p.PriceBeforeDiscount,
                             p.Brand,
                         }).Single();
-                        list.Add(new ShopCartItemVm()
+
+                        ShopCartItemVm shop = new ShopCartItemVm();
+                        shop.Count = item.Count;
+                        shop.ProductID = item.ProductID;
+                        shop.ColorID = item.ColorID;
+                        shop.ColorName = db.Color.GetById(item.ColorID).Name;
+                        shop.Name = product.Name;
+                        shop.ImageName = product.MainImage;
+                        shop.PriceAfterDiscount = product.PriceAfterDiscount;
+                        shop.PriceBeforeDiscount = product.PriceBeforeDiscount;
+                        shop.Brand = product.Brand.Name;
+                        shop.Special = 0;
+                        shop.Sum = product.PriceAfterDiscount == 0 ? item.Count * product.PriceBeforeDiscount : product.PriceAfterDiscount * item.Count;
+                        TblSpecialOffer offer = db.SpecialOffer.Get(i => i.ProductId == item.ProductID && i.ValidTill >= DateTime.Now).SingleOrDefault();
+                        if (offer != null)
                         {
-                            Count = item.Count,
-                            ProductID = item.ProductID,
-                            ColorID = item.ColorID,
-                            ColorName = db.Color.GetById(item.ColorID).Name,
-                            Name = product.Name,
-                            ImageName = product.MainImage,
-                            PriceAfterDiscount = product.PriceAfterDiscount,
-                            PriceBeforeDiscount = product.PriceBeforeDiscount,
-                            Brand = product.Brand.Name,
-                            Sum = product.PriceAfterDiscount == 0 ? item.Count * product.PriceBeforeDiscount : product.PriceAfterDiscount * item.Count,
-                        });
+                            var Special = product.PriceAfterDiscount == 0 ? product.PriceBeforeDiscount : product.PriceAfterDiscount;
+                            shop.Special = Special - (long)(Math.Floor((double)(Special * offer.Discount / 100)));
+                            shop.Sum = shop.Sum - (long)(Math.Floor((double)(shop.Sum * offer.Discount / 100)));
+                        };
+                        list.Add(shop);
                     }
                 }
 

@@ -82,7 +82,7 @@
                     <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">انتخاب تصویر اصلی</label>
                 </div>
                 <br />
-                <span class="text-success">لطفا طول و عرض تصویر یکی باشد</span>
+                <span class="text-success">لطفا اندازه تصویر انتخابی 420*368 باشد</span>
                 <span id="MainImageErorr" class="text-danger" asp-validation-for="MainImage"></span>
                 <div class="form-row mt-3">
                     <div class="form-group col-md-3">
@@ -126,15 +126,13 @@
                 <div class="form-row mt-3">
                     <div class="form-group col-md-5">
                         <label class="uk-text-bold">افزودن ویژگی</label>
-                        <input id="NewProperyName" class="form-control form-control-sm" placeholder="مثال : حافظه داخلی">
-                        <span id="CreateNewProperyErorr" class="text-danger"></span>
+                        <a onclick="CreateProperty()" data-toggle="modal" data-target="#modalSave" class="btn btn-info btn-sm text-white">افزودن</a>
+
                     </div>
                     <div class="form-group col-md-2 mt-md-4 pt-2">
-                        <a onclick="CreateProperty()" class="btn btn-info btn-sm text-white">افزودن</a>
                     </div>
                 </div>
                 <aside id="PropertyPanel">
-                    @await Component.InvokeAsync("PropertyListAdmin")
                 </aside>
                 <hr />
                 <div class="mt-3">
@@ -154,7 +152,34 @@
 
                 <div id="GalleryPanel" class="h-50"></div>
                 <br />
-                <span class="text-success">لطفا طول و عرض تصویر یکی باشد</span>
+                <span class="text-success">لطفا اندازه تصویر انتخابی 420*368 باشد</span>
+                <br />
+                <label class="col-md-12 mt-4 mb-4 bg-light uk-border-rounded pt-3 pb-3 pl-3"><span class="text-primary" uk-icon="information-circle"></span>نمونه تصاویر انتخابی برای محصولات</label>
+                <div class="form-row col-10">
+                    <div class="uk-child-width-1-4-at-m" uk-grid uk-lightbox="animation: slide">
+                        <div>
+                            <a class="uk-inline" href="~/st/r/template_single.png" data-caption="اندازه تصاویر">
+                                <img src="~/st/r/template_single.png" alt="">
+                            </a>
+                        </div>
+                        <div>
+                            <a class="uk-inline" href="~/st/r/phones/p2.jpg" data-caption="نمونه 1">
+                                <img src="~/st/r/phones/p2.jpg" alt="">
+                            </a>
+                        </div>
+                        <div>
+                            <a class="uk-inline" href="~/st/r/template_double.png" data-caption="اندازه تصاویر">
+                                <img src="~/st/r/template_double.png" alt="">
+                            </a>
+                        </div>
+                        <div>
+                            <a class="uk-inline" href="~/st/r/phones/p15.jpg" data-caption="نمونه 2">
+                                <img src="~/st/r/phones/p15.jpg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="card-footer bg-white mt-2">
                 <span class="text-danger" id="SubmitErorr"></span>
@@ -224,11 +249,11 @@
             //$("#GalleryPanel").append("<div class='custom-file col-md-7 mt-3'><input type='file' class='custom-file-input form-control form-control-sm' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/><label class='custom-file-label'></label></div>");
             $("#GalleryPanel").append(
                 `<div class="custom-file col-md-7 mt-3">
-                                               <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
-                                               <label class="custom-file-label" data-browse="انتخاب">
-                                                    انتخاب فایل
-                                               </label>
-                                             </div>`
+                                                   <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
+                                                   <label class="custom-file-label" data-browse="انتخاب">
+                                                        انتخاب فایل
+                                                   </label>
+                                                 </div>`
             );
             //$("#GalleryPanel").append("<div><input type='file' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/></div>");
         }
@@ -288,23 +313,9 @@
         }
 
         function CreateProperty() {
-            var Name = $("#NewProperyName").val();
-            if (Name == "" || Name == null) {
-                $("#CreateNewProperyErorr").html("لطفا نام ویژگی را وارد کنید");
-            } else {
-                $.post("/Admin/Property/Create?Name=" + Name, function (result) {
-                    if (result == "true") {
-                        $("#CreateNewProperyErorr").html("");
-                        $("#PropertyPanel").html("");
-                        $("#NewProperyName").val("");
-                        $.get("/Admin/Product/PropertyList", function (result) {
-                            $("#PropertyPanel").html(result);
-                        });
-                    } else {
-                        $("#CreateNewProperyErorr").html(result);
-                    }
-                });
-            }
+            $.get("/Admin/Product/PropertyList", function (result) {
+                $(".modal-content").html(result);
+            });
         }
 
         $(".PriceInput").change(function () {

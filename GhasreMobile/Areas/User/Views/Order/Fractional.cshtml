@@ -10,14 +10,18 @@
         <table class="table mat-card" dir="rtl">
             <thead>
                 <tr>
-                    <th>
-                        <label class="date">@Model.DateSubmited.DateToShamsi()</label>
-                    </th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>
-                        <label class="text-3">شماره پیش فاکتور @Model.OrdeId#  </label>
+                    <th colspan="5">
+                        <div class="item-list box-shadow uk-margin-small-bottom">
+                            <div class="text-3">@Model.DateSubmited.DateToShamsi()</div>
+                            <div>شماره پیش فاکتور @Model.OrdeId#</div>
+                            <div>
+                                @{
+                                    TblConfig config = ViewBag.KharidAgsady as TblConfig;
+                                }
+
+                                @Html.Raw(config.Value)
+                            </div>
+                        </div>
                     </th>
                 </tr>
                 <tr>
@@ -36,7 +40,7 @@
                             <a href="/Product/@j.ProductId/@j.Product.Name.Replace(" ","-")" class="link-text">@j.Product.Name</a>
                         </td>
                         <td>@j.Count</td>
-                        <td>@j.ColorId</td>
+                        <td>@j.Color.Name</td>
                         <td>@j.Price</td>
                         <td>@((j.Count * j.Price).ToString("#,0")) تومان</td>
                     </tr>

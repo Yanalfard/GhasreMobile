@@ -27,6 +27,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>نام</th>
+                                <th>عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,7 +35,13 @@
                             {
                                 <tr>
                                     <td>@item.Name</td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
+                                            <a onclick="Delete(@item.PropertyId)" class="text-danger" uk-icon="trash-outline"></a>
+                                        </span>
+                                    </td>
                                 </tr>
+
                             }
                         </tbody>
                     </table>
@@ -66,6 +73,16 @@
                     }
                 });
             }
+        }
+
+        function Delete(id) {
+            $.post("/Admin/Property/Delete/" + id, function (result) {
+                if (result == "true") {
+                    window.location.reload();
+                } else {
+                    UIkit.notification({ message: result });
+                }
+            });
         }
 
     </script>
