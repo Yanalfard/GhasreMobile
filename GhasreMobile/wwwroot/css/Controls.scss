@@ -561,32 +561,22 @@ $background-highlight: #eee;
             @include mat;
             @include border-def-radius;
             @include shadow-mild;
-            padding: 2px 6px 2px 12px;
+            padding: 2px 6px 2px 6px;
             margin: auto 0;
             flex: auto;
             max-width: 624px;
             display: flex;
 
-
-            span {
-                color: $Text-4;
+            > span {
                 margin-right: auto;
                 margin-top: auto;
                 margin-bottom: auto;
-            }
+                height: 22px;
+                min-height: 22px;
+                padding: 4px 6px !important;
 
-            .adv {
-                margin: auto;
-                margin-left: 6px;
-                font-size: 12px;
-                color: #c3c3c3;
-                text-wrap: none;
-                white-space: nowrap;
-            }
-
-            @media only screen and (max-width: 640px) {
-                .adv {
-                    display: none;
+                > span {
+                    font-size: 11px;
                 }
             }
 
