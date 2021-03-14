@@ -31,6 +31,9 @@
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
                                             <a onclick="Edit(@item.BrandId)" id="Edit" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
                                         </span>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                            <a onclick="Delete(@item.BrandId)" id="Edit" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                        </span>
                                     </td>
                                 </tr>
                             }
@@ -41,7 +44,7 @@
 
             <div class="card-footer bg-white">
                 <nav aria-label="Page navigation example">
-                      @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
                 </nav>
             </div>
         </div>
@@ -63,5 +66,16 @@
                 $(".modal-content").html(result);
             });
         }
+
+        function Delete(Id) {
+            $.post("/Admin/Brand/Delete/" + Id, function (result) {
+                if (result == "true") {
+                    window.location.reload();
+                } else {
+                    UIkit.notification({ message: result });
+                }
+            });
+        }
+
     </script>
 }

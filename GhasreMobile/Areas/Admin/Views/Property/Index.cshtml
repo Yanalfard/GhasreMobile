@@ -37,10 +37,11 @@
                                     <td>@item.Name</td>
                                     <td>
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
-                                            <a onclick="Delete()" class="text-danger" uk-icon="trash-outline"></a>
+                                            <a onclick="Delete(@item.PropertyId)" class="text-danger" uk-icon="trash-outline"></a>
                                         </span>
                                     </td>
-                                </tr>                               
+                                </tr>
+
                             }
                         </tbody>
                     </table>
@@ -75,8 +76,12 @@
         }
 
         function Delete(id) {
-            $.post("/Admin/Property/Delete/" + id, function () {
-                window.location.reload();
+            $.post("/Admin/Property/Delete/" + id, function (result) {
+                if (result == "true") {
+                    window.location.reload();
+                } else {
+                    UIkit.notification({ message: result });
+                }
             });
         }
 

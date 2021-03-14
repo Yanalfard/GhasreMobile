@@ -37,6 +37,21 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
         }
 
+        public string Delete(int id)
+        {
+            TblProperty property = _core.Property.GetById(id);
+            if (property.TblProductPropertyRel.Count() == 0)
+            {
+                return "ویژگی در محصولی استفاده شده است";
+            }
+            else
+            {
+                _core.Property.DeleteById(id);
+                _core.Property.Save();
+                return "true";
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

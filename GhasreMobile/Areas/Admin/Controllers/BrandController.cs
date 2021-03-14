@@ -56,6 +56,21 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return View(brand);
         }
 
+        public string Delete(int id)
+        {
+            TblBrand brand = _core.Brand.GetById(id);
+            if (brand.TblProduct.Count() == 0)
+            {
+                return "برند مورد نظر در محصولی استفاده شده است";
+            }
+            else
+            {
+                _core.Brand.DeleteById(id);
+                _core.Brand.Save();
+                return "true";
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
