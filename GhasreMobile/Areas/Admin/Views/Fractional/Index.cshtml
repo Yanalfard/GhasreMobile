@@ -4,3 +4,119 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div class="card-header bg-white">
+                <div class="pr-1 pt-2">
+                    <div class="card-form form-row">
+                        <div class="form-input">
+                            <div class="form-inline">
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <input id="SearchInputId" class="form-control uk-text-small" type="text" placeholder="کد سفارش" value="">
+                                </div>
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <input id="SearchInputUserPhone" class="form-control uk-text-small" type="text" placeholder="شماره تماس مشتری" value="">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-toolbar mr-3">
+                            <button onclick="BtnSearch()" type="button" class="btn btn-primary btn-sm">جستجو<span class="icon-holder uk-margin-small-right" uk-icon="search-outline"></span></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="card-table" class="card-body flex-div">
+                <div class="table-responsive flex">
+                    <table class="table fixed">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>کد سفارش</th>
+                                <th>تاریخ ثبت سفارش</th>
+                                <th>وضعیت</th>
+                                <th>جزئیات</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>15151851</td>
+                                <td>1399</td>
+                                <td>
+                                    <span class="text-warning">در حال آماده سازی</span>
+                                    <span class="text-info">ارسال شده</span>
+                                    <span class="text-success">تکمیل شده</span>
+                                </td>
+                                <td>
+                                    <span data-placement="top" data-toggle="tooltip" data-original-title="جزئیات">
+                                        <a onclick="OrderInfo()" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="تایید سفارش">
+                                        <a onclick="StatusOrder()" class="text-info" uk-icon="cash-outline"></a>
+                                    </span>
+                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ارسال سفارش">
+                                        <a onclick="SendOrder()" class="text-info" uk-icon="send-outline"></a>
+                                    </span>
+                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="تکمیل سفارش">
+                                        <a onclick="DoneOrder()" class="text-success" uk-icon="checkmark-done-outline"></a>
+                                    </span>
+                                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="برگشت برای ارسال">
+                                        <a onclick="ChangeSendOrderStatus()" class="text-success" uk-icon="close-circle-outline"></a>
+                                    </span>
+                                    <span class="text-success">تکمیل شده</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                    @*@await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Script{
+    <script>
+        function OrderInfo(id) {
+            $(".modal-content").html("");
+            $.get("/Admin/Order/Info/" + id, function (result) {
+                $(".modal-content").html(result);
+            });
+        }
+
+        function SendOrder(id) {
+            $(".modal-content").html("");
+            $.get("/Admin/Order/SendOrder/" + id, function () {
+                window.location.reload();
+            });
+        }
+
+        function DoneOrder(id) {
+            $(".modal-content").html("");
+            $.get("/Admin/Order/DoneOrder/" + id, function () {
+                window.location.reload();
+            });
+        }
+
+        function BtnSearch() {
+            var OrderId = $("#SearchInputId").val();
+            var TellNo = $("#SearchInputUserPhone").val();
+            window.location.href = "/Admin/Order?OrderId=" + OrderId + "&TellNo=" + TellNo;
+        }
+
+        function ChangeSendOrderStatus(id) {
+            $.post("/Admin/Order/ChangeSendOrderStatus/" + id, function () {
+                window.location.reload();
+            });
+        }
+    </script>
+}
