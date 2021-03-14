@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace GhasreMobile.ViewComponents.View.Product
 {
-    public class ProductView: ViewComponent
+    public class ProductView : ViewComponent
     {
         private Core db = new Core();
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/ProductView/ProductView.cshtml", db.Brand.Get().OrderByDescending(i => i.TblProduct.Count())));
+            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/ProductView/ProductView.cshtml", db.Brand.Get().OrderByDescending(i => i.TblProduct.Where(i => i.IsDeleted = false).Count())));
         }
     }
 }

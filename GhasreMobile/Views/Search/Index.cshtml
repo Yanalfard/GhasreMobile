@@ -12,24 +12,26 @@
 
 @section Aside{
     @*@await Component.InvokeAsync("SearchView")*@
-    <form action="/Search" swap="filter" class="mat-card col">
+
+    <form id="btnSearch" swap="filter" class="mat-card col">
         <h4 class="uk-margin-bottom">
             فیلتر ها
         </h4>
 
         <div class="fg-col">
             <div class="fg-label">نام محصول</div>
-            <input type="text" class="entry" name="name" value="@ViewData["name"]" />
+            <input type="text" class="entry" name="name" id="name" value="@ViewData["name"]" />
             <div class="text-danger"></div>
         </div>
-        <input type="hidden" class="entry" name="q" value="" />
+        <input type="hidden" class="entry" id="q" name="q" value="" />
+        <input type="hidden" class="entry" name="pageId" value="@ViewData["pageId"]" id="pageId" />
 
         <div class="fg-col">
             <div class="fg-label">برند محصول</div>
             @{
                 List<TblBrand> listBrand = ViewData["brandList"] as List<TblBrand>;
             }
-            <select class="entry brandList" name="brand">
+            <select class="entry brandList" name="brand" id="brand">
                 @foreach (var item in listBrand)
                 {
                     <option value="@item.BrandId">@item.Name</option>
@@ -42,11 +44,11 @@
             <label class="fg-label">قیمت</label>
             <div class="rowr uk-child-width-1-2">
                 <div class="col">
-                    <input type="number" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" name="minPrice" value="@ViewData["minPrice"]" />
+                    <input type="number" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" id="minPrice" name="minPrice" value="@ViewData["minPrice"]" />
                     <div class="text-danger"></div>
                 </div>
                 <div class="col">
-                    <input type="number" class="entry" aria-label="priceTo" placeholder="تا" name="maxPrice" value="@ViewData["maxPrice"]" />
+                    <input type="number" class="entry" aria-label="priceTo" placeholder="تا" name="maxPrice" id="maxPrice" value="@ViewData["maxPrice"]" />
                     <div class="text-danger"></div>
                 </div>
             </div>
@@ -79,7 +81,7 @@
         </label>
 
         <label class="text-2 rowr uk-margin-small-bottom">
-            <input class="uk-checkbox" type="checkbox" @(((bool)ViewData["discount"] == true) ? "checked" : "") id="discount" name="discount" />
+            <input class="uk-checkbox" type="checkbox" id="discount" name="discount" />
             فقط کالا های تخفیف دار
         </label>
         <button class="btn btn-primary uk-margin-top">اعمال فیلتر ها</button>
@@ -104,7 +106,7 @@
         </div>
 
     </div>
-    <div class="grid">
+    <div class="grid" id="grid">
         @foreach (var item in Model)
         {
             <partial name="_ProductBlock" model="item" />
@@ -125,6 +127,47 @@
 @section Scripts{
     <script src="~/datePersion/prism.js"></script>
     <script src="~/datePersion/persianDatepicker.js"></script>
+    <script>
+        //$.get("/SearchProduct/", function (result) {
+        //    $('#grid').html(result);
+        //});
+        $('#btnSearch').submit(function (e) {
+            e.preventDefault();
+            $(".loading").fadeIn();
+            //let data = $(this).serializeArray();
+            var name = $('#name').val();
+            var q = $('#q').val();
+            var pageId = $('#pageId').val();
+            var brand = $('#brand option:selected').text();
+            var minPrice = $('#minPrice').val();
+            var maxPrice = $('#maxPrice').val();
+            var maxDate = $('#maxDate').val();
+            var minDate = $('#minDate').val();
+            let available = "";
+            if ($('#available').prop("checked") == true) {
+                available = "on";
+            }
+            let isFractional = "";
+            if ($('#isFractional').prop("checked") == true) {
+                isFractional = "on";
+            }
+            let discount = "";
+            if ($('#discount').prop("checked") == true) {
+                discount = "on";
+            }
+            $.get("/SearchProduct?pageId=" + 1 + "&name=" + name + "&q=" + "" + "&brand=" + brand + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + "&maxDate=" + maxDate + "&minDate=" + minDate + "&available=" + available + "&isFractional=" + isFractional + "&discount=" + discount, function (result) {
+                pageCount = 1;
+                if (result == false) {
+                    isLoading = true;
+                    $(".loading").fadeOut();
+                    return;
+                }
+                document.getElementById('grid').innerHTML = result;
+                isLoading = false;
+                $(".loading").fadeOut();
+            });
+        });
+    </script>
     <script>
         $('.brandList').val($('#brandId').val());
         $(function () {
@@ -154,6 +197,72 @@
                 return false;
             }
             return true;
+        }
+    </script>
+
+    <script>
+
+        let isLoading = false;
+
+        let pageCount = 1;
+        const myDiv = document.querySelector('.loading');
+        window.addEventListener('DOMContentLoaded', () => {
+
+            $(".loading").fadeOut();
+
+            window.addEventListener('scroll', () => {
+                var limit = Math.max(document.body.scrollHeight, document.body.offsetHeight,
+                    document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+
+                limit = limit - 969;
+
+                if ((limit - window.scrollY) < 724) {
+                    nextPage();
+                }
+            });
+        })
+
+        function nextPage() {
+            if (isLoading) return;
+            isLoading = true;
+
+            pageCount++;
+
+            $(".loading").fadeIn();
+
+
+            var name = $('#name').val();
+            var q = $('#q').val();
+            var pageId = $('#pageId').val();
+            var brand = $('#brand option:selected').text();
+            var minPrice = $('#minPrice').val();
+            var maxPrice = $('#maxPrice').val();
+            var maxDate = $('#maxDate').val();
+            var minDate = $('#minDate').val();
+            let available = "";
+            if ($('#available').prop("checked") == true) {
+                available = "on";
+            }
+            let isFractional = "";
+            if ($('#isFractional').prop("checked") == true) {
+                isFractional = "on";
+            }
+            let discount = "";
+            if ($('#discount').prop("checked") == true) {
+                discount = "on";
+            }
+
+            $.get("/SearchProduct?pageId=" + pageCount + "&name=" + name + "&q=" + "" + "&brand=" + brand + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + "&maxDate=" + maxDate + "&minDate=" + minDate + "&available=" + available + "&isFractional=" + isFractional + "&discount=" + discount, function (result) {
+                if (result == false) {
+                    isLoading = true;
+                    $(".loading").fadeOut();
+                    return;
+                }
+                document.getElementById('grid').innerHTML += result
+                isLoading = false;
+                $(".loading").fadeOut();
+            });
+
         }
     </script>
 }

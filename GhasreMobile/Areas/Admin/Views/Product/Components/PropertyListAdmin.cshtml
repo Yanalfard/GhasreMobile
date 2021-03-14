@@ -31,7 +31,11 @@
 
 <script>
     function SetInNewProduct(id, Name) {
-        $("#PropertyPanel").append(`<div id="Property" class="form-inline col-md-7 mt-2"><label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">${Name}:</label><input id="PropetryNameId" name="PropertyId" type="hidden" value="${id}" /><input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3 col-9"><a onclick="DeletProperty()" class="text-danger col-2 mr-1" uk-icon="close-circle"></a></div>`);
+        $("#PropertyPanel").append(`<div id="PropertyInCreate-${id}" class="form-inline col-md-7 mt-2"><label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">${Name}:</label><input id="PropetryNameId" name="PropertyId" type="hidden" value="${id}" /><input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3 col-9"><a onclick="DeleteProperty('${id}')" class="text-danger col-2 mr-1" uk-icon="close-circle"></a></div>`);
         $("#Property-" + id).remove();
+    }
+
+    function DeleteProperty(id) {
+        $("#PropertyInCreate-" + id).remove();
     }
 </script>
