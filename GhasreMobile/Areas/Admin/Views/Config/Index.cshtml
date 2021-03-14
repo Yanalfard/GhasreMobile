@@ -23,9 +23,11 @@
                     </div>*@
                     <div class="form-group col-lg-12">
                         <label>سقف هزینه ارسال رایگان: </label>
-                        <input asp-for="SagfePost" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left" placeholder="مثال: 19,000">
+                        <input data-type='currency' class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left PriceInput" placeholder="مثال: 19,000">
+                        <input type="hidden" asp-for="SagfePost" />
                         <br /><span class="text-danger" asp-validation-for="SagfePost"></span>
                     </div>
+
                     @*<div class="form-group col-lg-12 mt-lg-3">
                         <label>هزینه ارسال با تیپاکس و چاپار</label>
                         <input asp-for="HazineErsalBaTipaxChapare" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left" placeholder="مثال: 28,000">
@@ -40,6 +42,11 @@
                         <label>تماس با ما:</label>
                         <textarea asp-for="TamasBaMa" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
                         <br /><span class="text-danger" asp-validation-for="TamasBaMa"></span>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label>تماس با ما کوتاه</label>
+                        <input asp-for="ShortTamasBaMa" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left">
+                        <br /><span class="text-danger" asp-validation-for="ShortTamasBaMa"></span>
                     </div>
                     <div class="form-group col-lg-12 mt-lg-3">
                         <label>قوانین سایت:</label>
@@ -90,6 +97,8 @@
 </div>
 
 @section Script{
+    <script src="~/js/bootstrap-tagsinput.js"></script>
+    <script src="~/js/Auto_Formatting_Currency.js"></script>
     <script>
         $(function () {
             $('#TamasBaMa').ckeditor();
@@ -97,6 +106,17 @@
             $('#StoreDescription').ckeditor();
             $('#Gavanin').ckeditor();
         });
+        $(".PriceInput").change(function () {
+            var price = $(this).val().replaceAll(",", "");
+            if ($.isNumeric(price)) {
+                $("#SagfePost").val($(this).val().replaceAll(",", ""));
+            } else {
+                $(this).val("");
+            }
+        });
+
+        $(".PriceInput").val($("#SagfePost").val());  
+
     </script>
     <script src="~/Validate/jquery.validate.min.js"></script>
     <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
