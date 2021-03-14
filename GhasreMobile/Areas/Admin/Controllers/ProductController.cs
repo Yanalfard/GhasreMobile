@@ -24,12 +24,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(Search))
             {
-                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => !c.IsDeleted).OrderByDescending(p=>p.ProductId), 30, page);
+                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get().OrderByDescending(p => p.ProductId), 30, page);
                 return View(products);
             }
             else
             {
-                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => !c.IsDeleted && c.SearchText.Contains(Search)), 30, page);
+                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => c.SearchText.Contains(Search)), 30, page);
                 ViewBag.Search = Search;
                 return View(products);
 
@@ -84,9 +84,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         if (MainImage != null)
                         {
                             NewProduct.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
-                            string savePath = Path.Combine(
-                                                    Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", NewProduct.MainImage
-                                                );
+                            string saveDirectory = Path.Combine(
+                                                    Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain");
+                            string savePath = Path.Combine(saveDirectory, NewProduct.MainImage);
+
+                            if (!Directory.Exists(saveDirectory))
+                            {
+                                Directory.CreateDirectory(saveDirectory);
+                            }
 
                             using (var stream = new FileStream(savePath, FileMode.Create))
                             {
@@ -126,9 +131,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
                                 TblImage image = new TblImage();
                                 image.AlbumId = album.AlbumId;
                                 image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
+                                string saveDirectory = Path.Combine(
+                                                    Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum");
                                 string savePathAlbum = Path.Combine(
-                                                    Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", image.Image
-                                                );
+                                                    Directory.GetCurrentDirectory(), saveDirectory, image.Image);
+
+                                if (!Directory.Exists(saveDirectory))
+                                {
+                                    Directory.CreateDirectory(saveDirectory);
+                                }
 
                                 using (var stream = new FileStream(savePathAlbum, FileMode.Create))
                                 {
@@ -158,7 +169,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                                 {
                                     propertyRel.Value = "";
                                 }
-                                
+
                                 propertyRel.ProductId = NewProduct.ProductId;
                                 _core.ProductPropertyRel.Add(propertyRel);
                             }
@@ -464,6 +475,67 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return ViewComponent("SpecialOfferAddAdmin", new { id = id });
         }
 
+        public string Delete(int id)
+        {
+            TblProduct product = _core.Product.GetById(id);
+            if (product.TblOrderDetail.Count() > 0)
+            {
+                return "سفارشی برای این کالا وجود دارد";
+            }
+            else
+            {
+                IEnumerable<TblProductPropertyRel> propertyRels = _core.ProductPropertyRel.Get(pr => pr.ProductId == product.ProductId);
+                if (propertyRels != null)
+                {
+                    foreach (var item in propertyRels)
+                    {
+                        _core.ProductPropertyRel.Delete(item);
+
+                    }
+                    _core.ProductPropertyRel.Save();
+                }
+                IEnumerable<TblProductKeywordRel> keywordRels = _core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId);
+                if (keywordRels != null)
+                {
+                    foreach (var item in keywordRels)
+                    {
+                        _core.ProductKeywordRel.Delete(item);
+                    }
+                    _core.ProductKeywordRel.Save();
+                }
+                IEnumerable<TblProductImageRel> imageRels = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId);
+                if (imageRels != null)
+                {
+                    foreach (var item in imageRels)
+                    {
+                        _core.ProductImageRel.Delete(item);
+                    }
+                    _core.ProductImageRel.Save();
+                }
+
+                IEnumerable<TblSpecialOffer> specialOffers = _core.SpecialOffer.Get(s => s.ProductId == product.ProductId);
+                if (specialOffers != null)
+                {
+                    foreach (var item in specialOffers)
+                    {
+                        _core.SpecialOffer.Delete(item);
+                    }
+                    _core.SpecialOffer.Save();
+                }
+                _core.Product.Delete(product);
+                _core.Product.Save();
+
+                return "true";
+            }
+        }
+
+        public void Selling(int id)
+        {
+            TblProduct product = _core.Product.GetById(id);
+            product.IsDeleted = !product.IsDeleted;
+            _core.Product.Update(product);
+            _core.Product.Save();
+        }
 
         protected override void Dispose(bool disposing)
         {
