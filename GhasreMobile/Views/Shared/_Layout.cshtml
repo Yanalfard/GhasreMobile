@@ -129,7 +129,7 @@
         <div class="bottom">
             <div class="uk-container rowr">
                 <nav>
-                    <button uk-icon="grid-outline" onclick="CategoryClick()"></button>
+                    <button uk-icon="grid-outline" onclick="CategoryClick()" id="btnCategory"></button>
                     <button uk-icon="menu-outline" uk-toggle="target: #offCanvas" type="button" class="uk-margin-small-right show-on-threshold"></button>
                     <a href="/">خانه</a>
                     <a href="/Forum">تالار گفتگو</a>
@@ -204,8 +204,8 @@
             </div>
         </div>
         <div id="dropbar">
-            <div class="uk-container">
-                <div class="grid" onclick="CategoryClick()">
+            <div class="uk-container" onclick="CloseDropbar()" gemini="#btnCategory" clickedOutside="CloseDropbar()">
+                <div class="grid">
                     @await Component.InvokeAsync("CategoryListView")
                 </div>
             </div>
@@ -392,6 +392,31 @@
 
         }
 
+        window.addEventListener('click', click);
+
+        const elementsWithClickedOutside = document.querySelectorAll('[clickedOutside]');
+
+        function click(e) {
+
+            for (let element of elementsWithClickedOutside) {
+                const codeString = element.getAttribute('clickedOutside');
+                const geminiQuery = element.getAttribute('gemini');
+                const gemini = document.querySelector(geminiQuery);
+
+                if (!e.path.includes(element) && !e.path.includes(gemini))
+                    eval(codeString);
+            }
+        }
+
+        function CloseDropbar() {
+            IsCategoryOpen = false;
+            const dropbar = document.getElementById('dropbar');
+            dropbar.style.transition = 'all ease .3s';
+            dropbar.style.maxHeight = '0';
+            dropbar.querySelector('.grid').style.opacity = '0';
+        }
+
+
     </script>
 
     <script>
@@ -473,6 +498,7 @@
         }
 
     </script>
+ 
     <!--BEGIN RAYCHAT CODE-->
     <script type="text/javascript">!function () { function t() { var t = document.createElement("script"); t.type = "text/javascript", t.async = !0, localStorage.getItem("rayToken") ? t.src = "https://app.raychat.io/scripts/js/" + o + "?rid=" + localStorage.getItem("rayToken") + "&href=" + window.location.href : t.src = "https://app.raychat.io/scripts/js/" + o + "?href=" + window.location.href; var e = document.getElementsByTagName("script")[0]; e.parentNode.insertBefore(t, e) } var e = document, a = window, o = "ed2cbd05-94f9-447e-8556-4bad0cf1ac1c"; "complete" == e.readyState ? t() : a.attachEvent ? a.attachEvent("onload", t) : a.addEventListener("load", t, !1) }();</script> <!--END RAYCHAT CODE-->
     @RenderSection("Scripts", false)

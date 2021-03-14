@@ -458,3 +458,44 @@ backdrop-filter: saturate(80%);
   .star-cb-group label {
     width: 24px !important;
     font-size: 28px !important; } }
+
+.timer {
+  display: flex;
+  flex-direction: row;
+  grid-column-gap: 9px;
+  margin-top: 0;
+  margin-right: auto; }
+  .timer li {
+    display: flex;
+    flex-direction: column; }
+    .timer li label {
+      margin: 0 auto;
+      font-size: 15px;
+      line-height: 1;
+      background-color: #F5F5F5;
+      min-width: 16px !important;
+      max-width: 16px !important;
+      text-align: center;
+      padding: 6px;
+      color: #666;
+      -moz-border-radius: 9px 9px 9px 9px;
+      -webkit-border-radius: 9px 9px 9px 9px;
+      border-radius: 9px 9px 9px 9px; }
+    .timer li span {
+      margin: 0 auto;
+      margin-top: 4px;
+      font-size: 9px;
+      color: #666; }
+
+.percentage {
+  background-color: transparent;
+  color: #e0173c !important;
+  padding: 4px;
+  margin: auto;
+  font-weight: 500;
+  margin-right: 0;
+  vertical-align: central;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
+  border: 2px solid #e0173c; }

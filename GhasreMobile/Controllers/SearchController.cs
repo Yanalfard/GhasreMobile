@@ -14,7 +14,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Session;
-
+using System.Globalization;
 
 namespace GhasreMobile.Controllers
 {
@@ -22,11 +22,10 @@ namespace GhasreMobile.Controllers
     {
         private Core db = new Core();
         [Route("Search/{q?}/{name?}/{cat?}/{brand?}/{color?}/{colorIId?}/{minPrice?}/{maxPrice?}")]
-        public async Task<IActionResult> Index(string q = null, string name = null, int catId = 0, string cat = null, int brandId = 0, string brand = null, string color = null, string maxDate = null, string minDate = null, int colorIId = 0, long minPrice = 0, long maxPrice = 0, bool available = false, bool discount = false, bool IsFractional = false)
+        public async Task<IActionResult> Index(SearchVm search, string q = null, string name = null, int catId = 0, string cat = null, int brandId = 0, string brand = null, string color = null, string maxDate = null, string minDate = null, int colorIId = 0, long minPrice = 0, long maxPrice = 0, string available = null, string discount = null, string IsFractional = null)
         {
             try
             {
-
                 ViewData["Title"] = q + name + cat + brand + color;
                 ViewData["brandList"] = db.Brand.Get();
                 ViewData["name"] = name;
@@ -35,6 +34,10 @@ namespace GhasreMobile.Controllers
                 ViewData["maxPrice"] = maxPrice;
                 ViewData["maxDate"] = maxDate;
                 ViewData["minDate"] = minDate;
+                ViewData["IsFractional"] = IsFractional == "on" ? true : false;
+                ViewData["discount"] = discount == "on" ? true : false;
+                ViewData["available"] = available == "on" ? true : false;
+
                 List<TblProduct> list = db.Product.Get().ToList();
                 if (q != null)
                 {
@@ -78,25 +81,61 @@ namespace GhasreMobile.Controllers
                 }
                 if (maxDate != null)
                 {
-                    list = list.Where(i => i.DateCreated <= Convert.ToDateTime(maxDate)).ToList();
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] dates = maxDate.Split('/');
+                    if (dates.Length == 3)
+                    {
+                        try
+                        {
+                            DateTime dte = pc.ToDateTime(Convert.ToInt32(dates[0]), Convert.ToInt32(dates[1]), Convert.ToInt32(dates[2]), 0, 0, 0, 0);
+                            list = list.Where(i => i.DateCreated <= dte).ToList();
+                        }
+                        catch (FormatException)
+                        {
+                            ViewData["maxDate"] = "";
+                        }
+                    }
+                    else
+                    {
+                        ViewData["maxDate"] = "";
+                    }
                 }
                 if (minDate != null)
                 {
-                    list = list.Where(i => i.DateCreated >= Convert.ToDateTime(minDate)).ToList();
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] dates = minDate.Split('/');
+                    if (dates.Length == 3)
+                    {
+                        try
+                        {
+                            DateTime dte = pc.ToDateTime(Convert.ToInt32(dates[0]), Convert.ToInt32(dates[1]), Convert.ToInt32(dates[2]), 0, 0, 0, 0);
+                            list = list.Where(i => i.DateCreated >= dte).ToList();
+                        }
+                        catch (FormatException)
+                        {
+                            ViewData["minDate"] = "";
+                        }
+                    }
+                    else
+                    {
+                        ViewData["minDate"] = "";
+
+                    }
                 }
-                if (available != false)
+                if (available != null)
                 {
                     list.AddRange(db.Color.Get(i => i.Count > 0).Select(i => i.Product).ToList());
                 }
-                if (discount != false)
+                if (discount != null)
                 {
                     list = list.Where(i => i.PriceAfterDiscount > 0).ToList();
                 }
-                if (IsFractional != false)
+                if (IsFractional != null)
                 {
                     list = list.Where(i => i.IsFractional).ToList();
                 }
                 return await Task.FromResult(View(list.Distinct().OrderByDescending(i => i.TblColor.Sum(i => i.Count))));
+
             }
             catch
             {
