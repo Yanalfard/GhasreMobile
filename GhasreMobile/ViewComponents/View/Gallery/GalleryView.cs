@@ -15,9 +15,6 @@ namespace GhasreMobile.ViewComponents.View.Gallery
         {
             Random rand = new Random();
             List<TblImage> images =  db.Image.Get().OrderByDescending(i => i.ImageId).Take(6).ToList();
-            //List<TblImage> imagesToReturn = new List<TblImage>();
-            //for (int i = 0; i < 5; i++)
-            //    imagesToReturn.Add(images[rand.Next(20)]);
             return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/GalleryView/GalleryView.cshtml", images));
         }
     }
