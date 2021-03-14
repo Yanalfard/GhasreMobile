@@ -1,4 +1,4 @@
-const staticCacheName = 'site-static-v0.0.5';
+const staticCacheName = 'site-static-v0.0.42';
 const isOnline = navigator.onLine;
 
 const assets = [
