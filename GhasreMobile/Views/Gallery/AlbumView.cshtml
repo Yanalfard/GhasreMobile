@@ -1,6 +1,6 @@
 ﻿@model TblAlbum
 @{
-    ViewData["Title"] = "آلبوم"+ Model.Name;
+    ViewData["Title"] = "آلبوم" + Model.Name;
     ViewData["Single"] = true;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -13,11 +13,13 @@
 
 <div class="mat-card col">
     <div class="gallery-grid">
-        <h3 class="uk-margin-bottom">   گالری محصول   @Model.Name</h3>
+        <h3 class="uk-margin-bottom"> گالری محصول @Model.Name</h3>
         <div class="grid" uk-lightbox>
             @foreach (var item in Model.TblImage)
             {
-                <a href="~/Images/ProductAlbum/@item.Image" data-caption="@Model.Name"><img src="~/Images/ProductAlbum/@item.Image" alt="@Model.Name" /></a>
+                <a href="~/Images/ProductAlbum/@item.Image" data-caption="@Model.Name">
+                    <img src="~/Images/ProductAlbum/@item.Image" alt="@Model.Name" />
+                </a>
             }
         </div>
         <div class="row">
