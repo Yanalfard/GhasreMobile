@@ -6,12 +6,37 @@
 }
 
 @using GhasreMobile.Utilities
+<link href="~/datePersion/persianDatepicker-default.css" rel="stylesheet" />
 
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
         <div class="card flex-div border-0 main-shadow">
             <div class="card-header bg-white">
+                <div class="pr-1 pt-2">
+                    <div class="card-form form-row">
+                        <div class="form-input">
+                            <div class="form-inline">
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <input id="SearchInputId" class="form-control uk-text-small" type="text" placeholder="کد سفارش" value="">
+                                </div>
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <input id="SearchInputUserPhone" class="form-control uk-text-small" type="text" placeholder="شماره تماس مشتری" value="">
+                                </div>
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <input readonly id="startDate" class="form-control uk-text-small" type="text" placeholder="از تاریخ  " value="">
+                                </div>
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <input readonly id="endDate" class="form-control uk-text-small" type="text" placeholder="تا تاریخ  " value="">
+                                </div>
 
+                            </div>
+                        </div>
+                        <div class="form-toolbar mr-3">
+                            <button onclick="BtnSearch()" type="button" class="btn btn-primary btn-sm">جستجو<span class="icon-holder uk-margin-small-right" uk-icon="search-outline"></span></button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
             <div id="card-table" class="card-body flex-div">
                 <div class="table-responsive flex">
@@ -61,3 +86,15 @@
         </div>
     </div>
 </div>
+
+@section Script{
+    <script src="~/datePersion/prism.js"></script>
+    <script src="~/datePersion/persianDatepicker.js"></script>
+    <script>
+        $(function () {
+            //selectedBefor & selectedDate
+            $("#startDate").persianDatepicker();
+            $("#endDate").persianDatepicker();
+        });
+    </script>
+}

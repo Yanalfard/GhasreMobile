@@ -92,8 +92,12 @@ namespace GhasreMobile.Controllers
                         }
                         catch (FormatException)
                         {
-
+                            ViewData["maxDate"] = "";
                         }
+                    }
+                    else
+                    {
+                        ViewData["maxDate"] = "";
                     }
                 }
                 if (minDate != null)
@@ -109,8 +113,13 @@ namespace GhasreMobile.Controllers
                         }
                         catch (FormatException)
                         {
-
+                            ViewData["minDate"] = "";
                         }
+                    }
+                    else
+                    {
+                        ViewData["minDate"] = "";
+
                     }
                 }
                 if (available != null)

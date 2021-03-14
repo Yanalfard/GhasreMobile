@@ -6,6 +6,7 @@
 }
 
 @using GhasreMobile.Utilities
+<link href="~/datePersion/persianDatepicker-default.css" rel="stylesheet" />
 
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
@@ -20,6 +21,12 @@
                                 </div>
                                 <div class="form-group mx-sm-1 mb-2">
                                     <input id="SearchInputUserPhone" class="form-control uk-text-small" type="text" placeholder="شماره تماس مشتری" value="">
+                                </div>
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <input readonly id="startDate" class="form-control uk-text-small" type="text" placeholder="از تاریخ  " value="">
+                                </div>
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <input readonly id="endDate" class="form-control uk-text-small" type="text" placeholder="تا تاریخ  " value="">
                                 </div>
 
                             </div>
@@ -95,7 +102,7 @@
                                         @if (!item.IsPayed)
                                         {
                                             <span data-placement="top" data-toggle="tooltip" title="" data-original-title="پرداخت پیش قسط">
-                                                <a onclick="PayedOrder(@item.OrdeId)"  class="text-info" uk-icon="cash-outline"></a>
+                                                <a onclick="PayedOrder(@item.OrdeId)" class="text-info" uk-icon="cash-outline"></a>
                                             </span>
                                         }
                                         @if (item.Status == 2)
@@ -120,6 +127,15 @@
 </div>
 
 @section Script{
+    <script src="~/datePersion/prism.js"></script>
+    <script src="~/datePersion/persianDatepicker.js"></script>
+    <script>
+        $(function () {
+            //selectedBefor & selectedDate
+            $("#startDate").persianDatepicker();
+            $("#endDate").persianDatepicker();
+        });
+    </script>
     <script>
         function OrderInfo(id) {
             $(".modal-content").html("");
@@ -145,9 +161,10 @@
         function BtnSearch() {
             var OrderId = $("#SearchInputId").val();
             var TellNo = $("#SearchInputUserPhone").val();
-            window.location.href = "/Admin/Order?OrderId=" + OrderId + "&TellNo=" + TellNo;
+            var StartDate = $("#startDate").val();
+            var EndDate = $("#endDate").val();
+            window.location.href = "/Admin/Order?OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate;
         }
-
         function ChangeSendOrderStatus(id) {
             $.post("/Admin/Order/ChangeSendOrderStatus/" + id, function () {
                 window.location.reload();

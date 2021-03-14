@@ -6,6 +6,8 @@
     ViewData["Title"] = "سفارشات";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+<link href="~/datePersion/persianDatepicker-default.css" rel="stylesheet" />
+
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
         <div class="card flex-div border-0 main-shadow">
@@ -19,6 +21,12 @@
                                 </div>
                                 <div class="form-group mx-sm-1 mb-2">
                                     <input id="SearchInputUserPhone" class="form-control uk-text-small" type="text" placeholder="شماره تماس مشتری" value="">
+                                </div>
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <input readonly id="startDate" class="form-control uk-text-small" type="text" placeholder="از تاریخ  " value="">
+                                </div>
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <input readonly id="endDate" class="form-control uk-text-small" type="text" placeholder="تا تاریخ  " value="">
                                 </div>
 
                             </div>
@@ -105,6 +113,16 @@
 </div>
 
 @section Script{
+    <script src="~/datePersion/prism.js"></script>
+    <script src="~/datePersion/persianDatepicker.js"></script>
+    <script>
+        $(function () {
+            //selectedBefor & selectedDate
+            $("#startDate").persianDatepicker();
+            $("#endDate").persianDatepicker();
+        });
+    </script>
+
     <script>
 
         function OrderInfo(id) {
@@ -131,7 +149,9 @@
         function BtnSearch() {
             var OrderId = $("#SearchInputId").val();
             var TellNo = $("#SearchInputUserPhone").val();
-            window.location.href = "/Admin/Order?OrderId=" + OrderId + "&TellNo=" + TellNo;
+            var StartDate = $("#startDate").val();
+            var EndDate = $("#endDate").val();
+            window.location.href = "/Admin/Order?OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate;
         }
 
         function ChangeSendOrderStatus(id) {
