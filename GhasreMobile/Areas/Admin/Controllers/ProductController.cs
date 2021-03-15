@@ -20,20 +20,180 @@ namespace GhasreMobile.Areas.Admin.Controllers
     {
         Core _core = new Core();
         [HttpGet]
-        public IActionResult Index(int page = 1, string Search = null)
+        public IActionResult Index(ProductsInAdminVm productsInAdmin)
         {
-            if (string.IsNullOrEmpty(Search))
+            if (productsInAdmin.CatagoryId != 0)
             {
-                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get().OrderByDescending(p => p.CatagoryId), 30, page);
-                ViewData["isStop"] = products.Any(i => !i.IsDeleted);
-                return View(products);
+                if (string.IsNullOrEmpty(productsInAdmin.Search))
+                {
+                    if (productsInAdmin.InPageCount == 0)
+                    {
+                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.CatagoryId);
+                        int count = products.Count();
+
+                        var skip = (productsInAdmin.PageId - 1) * 18;
+
+                        ViewBag.pageid = productsInAdmin.PageId;
+
+                        ViewBag.PageCount = count / 18;
+
+                        ViewBag.InPageCount = productsInAdmin.InPageCount;
+
+                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+
+                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                        return View(products.Skip(skip).Take(18));
+                    }
+                    else
+                    {
+                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.CatagoryId);
+                        int count = products.Count();
+
+                        var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
+
+                        ViewBag.pageid = productsInAdmin.PageId;
+
+                        ViewBag.PageCount = count / productsInAdmin.InPageCount;
+
+                        ViewBag.InPageCount = productsInAdmin.InPageCount;
+
+                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+
+                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                        return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
+                    }
+                }
+                else
+                {
+                    if (productsInAdmin.InPageCount == 0)
+                    {
+                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.SearchText.Contains(productsInAdmin.Search) && c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.CatagoryId);
+                        int count = products.Count();
+
+                        var skip = (productsInAdmin.PageId - 1) * 18;
+
+                        ViewBag.PageId = productsInAdmin.PageId;
+
+                        ViewBag.PageCount = count / 18;
+
+                        ViewBag.InPageCount = productsInAdmin.InPageCount;
+
+                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+
+                        ViewBag.Search = productsInAdmin.Search;
+
+                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                        return View(products.Skip(skip).Take(18));
+                    }
+                    else
+                    {
+                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.SearchText.Contains(productsInAdmin.Search) && c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.CatagoryId);
+                        int count = products.Count();
+
+                        var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
+
+                        ViewBag.PageId = productsInAdmin.PageId;
+
+                        ViewBag.PageCount = count / productsInAdmin.InPageCount;
+
+                        ViewBag.InPageCount = productsInAdmin.InPageCount;
+
+                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+
+                        ViewBag.Search = productsInAdmin.Search;
+
+                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                        return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
+                    }
+                }
             }
             else
             {
-                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => c.SearchText.Contains(Search)).OrderByDescending(p => p.CatagoryId), 30, page);
-                ViewBag.Search = Search;
-                ViewData["isStop"] = !products.Any(i => i.IsDeleted);
-                return View(products);
+
+                if (string.IsNullOrEmpty(productsInAdmin.Search))
+                {
+                    if (productsInAdmin.InPageCount == 0)
+                    {
+                        IEnumerable<TblProduct> products = _core.Product.Get().OrderByDescending(p => p.CatagoryId);
+                        int count = products.Count();
+
+                        var skip = (productsInAdmin.PageId - 1) * 18;
+
+                        ViewBag.PageId = productsInAdmin.PageId;
+
+                        ViewBag.PageCount = count / 18;
+
+                        ViewBag.InPageCount = productsInAdmin.InPageCount;
+
+                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+
+                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                        return View(products.Skip(skip).Take(18));
+                    }
+                    else
+                    {
+                        IEnumerable<TblProduct> products = _core.Product.Get().OrderByDescending(p => p.CatagoryId);
+                        int count = products.Count();
+
+                        var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
+
+                        ViewBag.PageId = productsInAdmin.PageId;
+
+                        ViewBag.PageCount = count / productsInAdmin.InPageCount;
+
+                        ViewBag.InPageCount = productsInAdmin.InPageCount;
+
+                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+
+                        ViewBag.Search = productsInAdmin.Search;
+
+                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                        return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
+                    }
+                }
+                else
+                {
+                    if (productsInAdmin.InPageCount == 0)
+                    {
+                        IEnumerable<TblProduct> products = _core.Product.Get(p => p.Name.Contains(productsInAdmin.Search)).OrderByDescending(p => p.CatagoryId);
+                        int count = products.Count();
+
+                        var skip = (productsInAdmin.PageId - 1) * 18;
+
+                        ViewBag.PageId = productsInAdmin.PageId;
+
+                        ViewBag.PageCount = count / 18;
+
+                        ViewBag.InPageCount = productsInAdmin.InPageCount;
+
+                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                        return View(products.Skip(skip).Take(18));
+                    }
+                    else
+                    {
+                        IEnumerable<TblProduct> products = _core.Product.Get(p => p.Name.Contains(productsInAdmin.Search)).OrderByDescending(p => p.CatagoryId);
+                        int count = products.Count();
+
+                        var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
+
+                        ViewBag.PageId = productsInAdmin.PageId;
+
+                        ViewBag.PageCount = count / productsInAdmin.InPageCount;
+
+                        ViewBag.InPageCount = productsInAdmin.InPageCount;
+
+                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                        return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
+                    }
+                }
             }
 
         }

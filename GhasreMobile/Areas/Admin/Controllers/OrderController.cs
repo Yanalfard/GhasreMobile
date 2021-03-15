@@ -18,33 +18,94 @@ namespace GhasreMobile.Areas.Admin.Controllers
     {
         Core _core = new Core();
 
-        public IActionResult Index(int page = 1, int OrderId = 0, string TellNo = null, string StartDate = null, string EndDate = null)
+        public IActionResult Index(int PageId = 1, int InPageCount = 0, int OrderId = 0, string TellNo = null, string StartDate = null, string EndDate = null)
         {
-
+            ViewBag.OrderId = OrderId;
+            ViewBag.TellNo = TellNo;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
             List<TblOrder> orders = _core.Order.Get().ToList();
-            if (OrderId != 0)
+            int count = orders.Count;
+            if (InPageCount == 0)
             {
-                orders = orders.Where(i => i.OrdeId == OrderId).ToList();
+                if (OrderId != 0)
+                {
+                    orders = orders.Where(i => i.OrdeId == OrderId).ToList();
+                    count = orders.Count();
+                }
+                if (TellNo != null)
+                {
+                    orders = orders.Where(i => i.Client.TellNo == TellNo).ToList();
+                    count = orders.Count();
+                }
+                if (StartDate != null)
+                {
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] Start = StartDate.Split('/');
+                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                    orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
+                    count = orders.Count();
+                }
+                if (EndDate != null)
+                {
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] Start = EndDate.Split('/');
+                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                    orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
+                    count = orders.Count();
+                }
+                ViewBag.pageid = PageId;
+
+                ViewBag.PageCount = count / 18;
+
+                ViewBag.InPageCount = InPageCount;
+
+                ViewBag.OrderId = OrderId;
+                ViewBag.TellNo = TellNo;
+                ViewBag.StartDate = StartDate;
+                ViewBag.EndDate = EndDate;
+
+                var skip = (PageId - 1) * 18;
+
+                return View(orders.Skip(skip).Take(18));
             }
-            if (TellNo != null)
+            else
             {
-                orders = orders.Where(i => i.Client.TellNo == TellNo).ToList();
+                if (OrderId != 0)
+                {
+                    orders = orders.Where(i => i.OrdeId == OrderId).ToList();
+                    count = orders.Count();
+                }
+                if (TellNo != null)
+                {
+                    orders = orders.Where(i => i.Client.TellNo == TellNo).ToList();
+                    count = orders.Count();
+                }
+                if (StartDate != null)
+                {
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] Start = StartDate.Split('/');
+                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                    orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
+                    count = orders.Count();
+                }
+                if (EndDate != null)
+                {
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] Start = EndDate.Split('/');
+                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                    orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
+                    count = orders.Count();
+                }
+                ViewBag.pageid = PageId;
+
+                ViewBag.PageCount = count / InPageCount;
+
+                ViewBag.InPageCount = InPageCount;
+                var skip = (PageId - 1) * InPageCount;
+                return View(orders.Skip(skip).Take(InPageCount));
             }
-            if (StartDate != null)
-            {
-                PersianCalendar pc = new PersianCalendar();
-                string[] Start = StartDate.Split('/');
-                DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
-            }
-            if (EndDate != null)
-            {
-                PersianCalendar pc = new PersianCalendar();
-                string[] Start = EndDate.Split('/');
-                DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
-            }
-            return View(PagingList.Create(orders, 50, page));
+
 
         }
 

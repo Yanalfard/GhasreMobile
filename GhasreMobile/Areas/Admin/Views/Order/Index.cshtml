@@ -105,7 +105,95 @@
 
             <div class="card-footer bg-white">
                 <nav aria-label="Page navigation example">
-                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end">
+
+                            @if (ViewBag.PageId == 1)
+                            {
+                                <li class="page-item d-none">
+                                    <a class="page-link" onclick="Page(@((int)ViewBag.PageId-1))">قبلی</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="/Admin/Order?pageId=@(ViewBag.PageId-1)&InPageCount=@ViewBag.InPageCount&OrderId=@ViewBag.OrderId&TellNo=@ViewBag.TellNo&StartDate=@ViewBag.StartDate&EndDate=@ViewBag.EndDate">قبلی</a>
+                                </li>
+
+                            }
+
+                            <li class="page-item">
+                                <select id="pageNumber" class="custom-select custom-select-sm">
+                                    @for (int i = 1; i <= (ViewBag.PageCount + 1); i++)
+                                    {
+                                        if (ViewBag.pageId == i)
+                                        {
+                                            <option class="page-item" selected value="@i">صفحه @i از @((int)ViewBag.PageCount + 1)</option>
+                                        }
+                                        else
+                                        {
+                                            <option class="page-item" value="@i">صفحه @i از @((int)ViewBag.PageCount + 1)</option>
+
+                                        }
+                                    }
+                                </select>
+                            </li>
+
+
+                            @if ((int)ViewBag.PageId > (int)ViewBag.PageCount)
+                            {
+                                <li class="page-item d-none">
+                                    <a class="page-link" onclick="Page(@((int)ViewBag.PageId + 1))">بعدی</a>
+                                </li>
+                            }
+                            else
+
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="/Admin/Order?pageId=@(ViewBag.PageId+1)&InPageCount=@ViewBag.InPageCount&OrderId=@ViewBag.OrderId&TellNo=@ViewBag.TellNo&StartDate=@ViewBag.StartDate&EndDate=@ViewBag.EndDate">بعدی</a>
+                                </li>
+
+                            }
+                            <li>
+                                <select id="InPageCount" class="custom-select custom-select-sm">
+                                    @if (ViewBag.InPageCount == 0)
+                                    {
+                                        <option value="0" selected>18 در هر صفحه</option>
+                                        <option value="20">20 در هر صفحه</option>
+                                        <option value="30">30 در هر صفحه</option>
+                                        <option value="40">40 در هر صفحه</option>
+
+                                    }
+
+                                    @if (ViewBag.InPageCount == 20)
+                                    {
+                                        <option value="0">18 در هر صفحه</option>
+                                        <option value="20" selected>20 در هر صفحه</option>
+                                        <option value="30">30 در هر صفحه</option>
+                                        <option value="40">40 در هر صفحه</option>
+
+                                    }
+                                    else if (ViewBag.InPageCount == 30)
+                                    {
+                                        <option value="0">18 در هر صفحه</option>
+                                        <option value="20">20 در هر صفحه</option>
+                                        <option value="30" selected>30 در هر صفحه</option>
+                                        <option value="40">40 در هر صفحه</option>
+
+                                    }
+                                    else if (ViewBag.InPageCount == 40)
+                                    {
+                                        <option value="0">18 در هر صفحه</option>
+                                        <option value="20">20 در هر صفحه</option>
+                                        <option value="30">30 در هر صفحه</option>
+                                        <option value="40" selected>40 در هر صفحه</option>
+                                    }
+
+
+                                </select>
+                            </li>
+                        </ul>
+                    </nav>
                 </nav>
             </div>
         </div>
@@ -151,8 +239,39 @@
             var TellNo = $("#SearchInputUserPhone").val();
             var StartDate = $("#startDate").val();
             var EndDate = $("#endDate").val();
-            window.location.href = "/Admin/Order?OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate;
+            var pageId = $("#pageNumber option:selected").val();
+            var InPageCount = $("#InPageCount option:selected").val();
+            window.location.href = "/Admin/Order?pageId=" + pageId + "&InPageCount=" + InPageCount + "&OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate;
         }
+
+
+        $("#pageNumber").change(function () {
+            $("#overlay").fadeIn(300);
+            var pageId = $("#pageNumber option:selected").val();
+            var InPageCount = $("#InPageCount option:selected").val();
+            var OrderId = $("#SearchInputId").val();
+            var TellNo = $("#SearchInputUserPhone").val();
+            var StartDate = $("#startDate").val();
+            var EndDate = $("#endDate").val();
+
+            window.location.href = "/Admin/Order?pageId=" + pageId + "&InPageCount=" + InPageCount + "&OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate;
+
+        });
+
+
+        $("#InPageCount").change(function () {
+            $("#overlay").fadeIn(300);
+            var pageId = $("#pageNumber option:selected").val();
+            var InPageCount = $("#InPageCount option:selected").val();
+            var OrderId = $("#SearchInputId").val();
+            var TellNo = $("#SearchInputUserPhone").val();
+            var StartDate = $("#startDate").val();
+            var EndDate = $("#endDate").val();
+
+            window.location.href = "/Admin/Order?pageId=" + pageId + "&InPageCount=" + InPageCount + "&OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate;
+
+        });
+
 
         function ChangeSendOrderStatus(id) {
             $.post("/Admin/Order/ChangeSendOrderStatus/" + id, function () {
