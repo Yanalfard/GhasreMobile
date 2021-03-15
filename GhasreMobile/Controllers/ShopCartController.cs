@@ -282,6 +282,7 @@ namespace GhasreMobile.Controllers
                             db.Client.Update(selectedClient);
                             db.Order.Update(selectedOrder);
                             db.Client.Save();
+                            HttpContext.Session.Clear();
                             return View();
                         }
                         else
@@ -368,10 +369,11 @@ namespace GhasreMobile.Controllers
                                 }
                             }
                             db.Wallet.Save();
+                            List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
+                            DiscountVm discount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                            HttpContext.Session.Clear();
                         }
-                        List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
-                        DiscountVm discount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
-                        HttpContext.Session.Clear();
+                        
                     }
 
                 }

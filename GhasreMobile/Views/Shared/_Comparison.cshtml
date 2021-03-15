@@ -10,7 +10,7 @@
                     @foreach (var item in Model.Items)
                     {
                         <th uk-lightbox>
-                            <a href="~/Images/ProductMain/@item.ImageName">
+                            <a href="/Product/@item.ProductID/@item.Name.Replace("/", "").Replace(" ", "-")">
                                 <img src="~/Images/ProductMain/@item.ImageName" alt="" />
                                 <h5>@item.Name</h5>
                                 @if (item.PriceAfterDiscount == 0)

@@ -34,7 +34,7 @@
             <select class="entry brandList" name="brand" id="brand">
                 @foreach (var item in listBrand)
                 {
-                    <option value="@item.BrandId">@item.Name</option>
+                <option value="@item.BrandId">@item.Name</option>
                 }
             </select>
             <div class="text-danger"></div>
@@ -107,9 +107,14 @@
 
     </div>
     <div class="grid" id="grid">
+        @if(Model.Any()){
         @foreach (var item in Model)
         {
-            <partial name="_ProductBlock" model="item" />
+        <partial name="_ProductBlock" model="item" />
+        }
+        }
+        else{
+        <p>موردی یافت نشد</p>
         }
     </div>
 </div>
@@ -118,9 +123,9 @@
 
 @if (Model.Any())
 {
-    <div class="loading">
-        <img src="~/st/v/loading.svg" />
-    </div>
+<div class="loading">
+    <img src="~/st/v/loading.svg" />
+</div>
 }
 
 <input type="hidden" id="brandId" value="@ViewData["brand"]" />
@@ -160,6 +165,7 @@
                 if (result == false) {
                     isLoading = true;
                     $(".loading").fadeOut();
+                    document.getElementById('grid').innerHTML = "موردی یافت نشد";
                     return;
                 }
                 document.getElementById('grid').innerHTML = result;
