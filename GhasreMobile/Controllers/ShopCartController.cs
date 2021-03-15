@@ -1,4 +1,5 @@
 ﻿using DataLayer.Models;
+using DataLayer.Utilities;
 using DataLayer.ViewModels;
 using GhasreMobile.Utilities;
 using Microsoft.AspNetCore.Mvc;
@@ -283,6 +284,8 @@ namespace GhasreMobile.Controllers
                             db.Order.Update(selectedOrder);
                             db.Client.Save();
                             HttpContext.Session.Clear();
+                            int message = selectedOrder.OrdeId;
+                            await Sms.SendSms(selectedClient.TellNo, message.ToString(), "DoneSefareshGhasrMobile");
                             return View();
                         }
                         else
@@ -371,6 +374,8 @@ namespace GhasreMobile.Controllers
                             db.Wallet.Save();
                             List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
                             DiscountVm discount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                            int message = selectedOrder.OrdeId;
+                            await Sms.SendSms(selectedClient.TellNo, message.ToString(), "DoneSefareshGhasrMobile");
                             HttpContext.Session.Clear();
                         }
                         
