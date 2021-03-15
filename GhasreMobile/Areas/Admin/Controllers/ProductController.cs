@@ -25,14 +25,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (string.IsNullOrEmpty(Search))
             {
                 IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get().OrderByDescending(p => p.ProductId), 30, page);
+                ViewData["isStop"] = products.Any(i => !i.IsDeleted);
                 return View(products);
             }
             else
             {
                 IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => c.SearchText.Contains(Search)), 30, page);
                 ViewBag.Search = Search;
+                ViewData["isStop"] = !products.Any(i => i.IsDeleted);
                 return View(products);
-
             }
 
         }
@@ -469,6 +470,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return View(product);
         }
 
+        [HttpGet]
+        public IActionResult StopSales(bool id)
+        {
+            List<TblProduct> products = _core.Product.Get().ToList();
+            foreach (TblProduct i in products)
+            {
+                i.IsDeleted = id;
+                _core.Product.Update(i);
+            }
+
+            _core.Product.Save();
+            return Redirect("/Admin/Product");
+        }
 
         public IActionResult SpecialOffer(int id)
         {

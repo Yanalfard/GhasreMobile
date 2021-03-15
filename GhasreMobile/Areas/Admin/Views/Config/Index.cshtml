@@ -84,9 +84,14 @@
                         <br /><span class="text-danger" asp-validation-for="LinkTelegram"></span>
                     </div>
                     <div class="form-group col-lg-12 mt-lg-3">
-                        <label>توضیحات خرید اقساطی:</label>
+                        <label>توضیحات خرید اقساطی در صفحه ی فاکتور:</label>
                         <textarea asp-for="KharidAgsady" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
                         <br /><span class="text-danger" asp-validation-for="KharidAgsady"></span>
+                    </div>
+                    <div class="form-group col-lg-12 mt-lg-3">
+                        <label>توضیحات خرید اقساطی در منو:</label>
+                        <textarea asp-for="SharayeteAghsati" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
+                        <br /><span class="text-danger" asp-validation-for="SharayeteAghsati"></span>
                     </div>
                     <button type="submit" class="btn btn-success btn-sm text-white">ثبت تغییرات<span class="icon-holder uk-margin-small-right" uk-icon="create-outline"></span></button>
                 </form>
@@ -110,6 +115,8 @@
             $('#DarbareyeMa').ckeditor();
             $('#StoreDescription').ckeditor();
             $('#Gavanin').ckeditor();
+            $('#SharayeteAghsati').ckeditor();
+
         });
         $(".PriceInput").change(function () {
             var price = $(this).val().replaceAll(",", "");
