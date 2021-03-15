@@ -24,6 +24,9 @@
                         <div class="form-group pb-0 mb-0 mr-1 mr-md-3">
                             <a id="Create" href="/Admin/Product/Create" class="btn btn-success btn-sm"> افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></a>
                         </div>
+                        <div class="form-group pb-0 mb-0 mr-1 mr-md-3">
+                            <a id="Create" href="/Admin/Product/StopSales/@Convert.ToBoolean(ViewData["isStop"])" class="btn @(Convert.ToBoolean(ViewData["isStop"]) ? "btn-warning" : "btn-info") btn-sm">@(Convert.ToBoolean(ViewData["isStop"]) ? "توقف فروش" : "شروع فروش") <span class="icon-holder uk-margin-small-right" uk-icon="@(Convert.ToBoolean(ViewData["isStop"]) ? "stop-circle-outline" : "play-circle-outline")"></span></a>
+                        </div>
                     </div>
 
                 </div>
