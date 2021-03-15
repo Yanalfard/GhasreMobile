@@ -1,12 +1,74 @@
 ﻿<nav class="user-navigation col">
-    <a href="/User/Profile" class="active">پروفایل</a>
-    <a href="/User/Profile/ChangePassword">تغییر رمز عبور</a>
-    <a href="/User/Wallet">کیف پول</a>
-    <a href="/User/Cart">سبد خرید</a>
-    <a href="/User/Comparison">لیست مقایسه</a>
-    <a href="/User/Order">سابقه خرید ها</a>
-    <a href="/User/Order/Fractionals">سابقه خرید اقساطی</a>
-    <a href="/User/Bookmarks">لیست علاقه مندی ها</a>
-    <a href="/User/Ticket">پشتیبانی</a>
-    <a href="/User/Order/OnlineOrder">سفارش آنلاین</a>
+    <a href="/User/Profile" routeCls="route:/User/Profile; matchFully:true; cls:active; ">پروفایل</a>
+    <a href="/User/Profile/ChangePassword" routeCls="route:/User/Profile/ChangePassword; matchFully:true; cls:active; ">تغییر رمز عبور</a>
+    <a href="/User/Wallet" routeCls="route:/User/Wallet; matchFully:true; cls:active; ">کیف پول</a>
+    <a href="/User/Cart" routeCls="route:/User/Cart; cls:active; ">سبد خرید</a>
+    <a href="/User/Comparison" routeCls="route:/User/Comparison; matchFully:true; cls:active; ">لیست مقایسه</a>
+    <a href="/User/Order" routeCls="route:/User/Order; matchFully:true; cls:active; ">سابقه خرید ها</a>
+    <a href="/User/Order/Fractionals" routeCls="route:/User/Order/Fractionals; matchFully:true; cls:active; ">سابقه خرید اقساطی</a>
+    <a href="/User/Bookmarks" routeCls="route:/User/Bookmarks; matchFully:true; cls:active; ">لیست علاقه مندی ها</a>
+    <a href="/User/Ticket" routeCls="route:/User/Ticket; matchFully:true; cls:active; ">پشتیبانی</a>
+    <a href="/User/Order/OnlineOrder" routeCls="route:/User/Order/OnlineOrder; matchFully:true; cls:active; ">سفارش آنلاین</a>
 </nav>
+
+<script>
+
+    const routeKey = 'routeCls';
+    routedElements = document.querySelectorAll(`[${routeKey}]`);
+
+    for (let item of routedElements) {
+
+        let raw = item.getAttribute(routeKey).replaceAll(' ', '');
+        raw = raw.split(';');
+
+        let route;
+        let matchFully = false;
+        let classes = [];
+
+        for (let section of raw) {
+            const key = section.split(':')[0];
+            const value = section.split(':')[1];
+
+            switch (key) {
+                case 'route':
+                    route = value;
+                    break;
+                case 'matchFully':
+                    matchFully = value.toLowerCase() === 'true' ? true : false;
+                    break;
+                case 'cls':
+                    classes = value;
+                    break;
+                case 'clss':
+                    classes = value;
+                    break;
+                case 'class':
+                    classes = value;
+                    break;
+                case 'classes':
+                    classes = value;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (matchFully) {
+            if (window.location.pathname.toLowerCase() === route.toLowerCase()) {
+                for (let cls of classes.split(',')) {
+                    item.classList.add(cls);
+                }
+            }
+        }
+        else if (!matchFully) {
+            if (window.location.href.includes(route)) {
+                for (let cls of classes.split(',')) {
+                    item.classList.add(cls);
+                }
+            }
+        }
+
+
+    }
+
+</script>

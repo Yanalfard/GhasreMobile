@@ -54,9 +54,21 @@
                     </a>
                 </li>
                 <li>
+                    <a href="/About">
+                        <span class="text-3" uk-icon="information-circle"></span>
+                        <span>درباره</span>
+                    </a>
+                </li>
+                <li>
                     <a href="/Affiliate">
                         <span class="text-3" uk-icon="flag"></span>
                         <span>شعب ما</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Conditions">
+                        <span class="text-3" uk-icon="pricetags"></span>
+                        <span>شرایط فروش اقساطی</span>
                     </a>
                 </li>
                 <li>
@@ -84,9 +96,7 @@
                     <img src="~/st/r/logo.jpg" width="48" height="48" alt="لوگو فصر موبایل" />
                 </a>
                 <div class="search">
-                    <span class="btn btn-primary" dir="rtl" onclick="window.location = '/Search?q=' + (this.parentElement.querySelector('[name=q]').value)">
-                        <span>جستجو پیشرفته</span>
-                        <span uk-icon="search"></span>
+                    <span class="link-text" uk-icon="search" dir="rtl" onclick="window.location = '/Search?q=' + (this.parentElement.querySelector('[name=q]').value)">
                     </span>
                     <input id="txtSearchMain" dir="rtl" class="entry-invis"
                            type="text" placeholder="جستجو..." name="q"
@@ -97,35 +107,46 @@
                      id="dropSearch">
                     <div class="drop-content mat-border mat col">
                         @*<a href="">
-                            این یک <strong>گزینه</strong> می باشد
-                        </a>
-                        <a href="">
-                            این یک <strong>گزینه</strong> می باشد
-                        </a>
-                        <a href="">
-                            این یک <strong>گزینه</strong> می باشد
-                        </a>*@
+                                این یک <strong>گزینه</strong> می باشد
+                            </a>
+                            <a href="">
+                                این یک <strong>گزینه</strong> می باشد
+                            </a>
+                            <a href="">
+                                این یک <strong>گزینه</strong> می باشد
+                            </a>*@
                     </div>
                 </div>
+                <button class="adv btn-primary" uk-tooltip="جستجوی پیشرفته" dir="rtl" onclick="window.location = '/Search?q=' + (this.parentElement.querySelector('[name=q]').value)">
+                    <span class="w">جستجوی پیشرفته</span>
+                    <span uk-icon="icon:filter-solid;ratio:.8"></span>
+                </button>
 
-                <div class="cart">
-                    <span class="label">سبد خرید</span>
-                    <div class="badge">
-                        <span id="countShopCart"></span>
-                    </div>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <a href="/User/Cart">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a href="/User/Cart" class="cart">
+                        <span class="label">سبد خرید</span>
+                        <div class="badge">
+                            <span id="countShopCart"></span>
+                        </div>
+                        <span class="icon">
                             <span uk-icon="cart-outline"></span>
-                        </a>
-                    }
-                    else
-                    {
-                        <a href="/ShopCart">
+                        </span>
+                    </a>
+                }
+                else
+                {
+                    <a href="/ShopCart" class="cart">
+                        <span class="label">سبد خرید</span>
+                        <div class="badge">
+                            <span id="countShopCart"></span>
+                        </div>
+                        <span class="icon">
                             <span uk-icon="cart-outline"></span>
-                        </a>
-                    }
-                </div>
+                        </span>
+                    </a>
+                }
+
             </div>
 
         </div>
@@ -141,6 +162,7 @@
                     <a href="/Affiliate">شعب ما</a>
                     <a href="/Blog">اخبار</a>
                     <a href="/Gallery">گالری</a>
+                    <a href="/Conditions">شرایط اقساطی</a>
                 </nav>
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -328,6 +350,10 @@
     <script src="~/Validate/jquery.unobtrusive-ajax.min.js"></script>
 
     <script>
+        var isUserLoggedIn = @(User.Identity.IsAuthenticated ? "true" : "false");
+    </script>
+
+    <script>
         function reply(commentId) {
             // آیدی کامنتی که بهش پاسخ داریم میدیم رو میزارم تو یه اینپوت
             const input = document.getElementById('ParentId');
@@ -501,7 +527,7 @@
         }
 
     </script>
- 
+
     <!--BEGIN RAYCHAT CODE-->
     <script type="text/javascript">!function () { function t() { var t = document.createElement("script"); t.type = "text/javascript", t.async = !0, localStorage.getItem("rayToken") ? t.src = "https://app.raychat.io/scripts/js/" + o + "?rid=" + localStorage.getItem("rayToken") + "&href=" + window.location.href : t.src = "https://app.raychat.io/scripts/js/" + o + "?href=" + window.location.href; var e = document.getElementsByTagName("script")[0]; e.parentNode.insertBefore(t, e) } var e = document, a = window, o = "ed2cbd05-94f9-447e-8556-4bad0cf1ac1c"; "complete" == e.readyState ? t() : a.attachEvent ? a.attachEvent("onload", t) : a.addEventListener("load", t, !1) }();</script> <!--END RAYCHAT CODE-->
     @RenderSection("Scripts", false)

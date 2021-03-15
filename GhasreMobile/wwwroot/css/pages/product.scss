@@ -157,7 +157,7 @@
                     }
 
                     .active {
-                        border: 1px solid transparentize($primary,.2);
+                        border: 1px solid transparentize($primary,.2)!important;
                     }
                 }
             }

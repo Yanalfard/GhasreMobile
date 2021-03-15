@@ -46,6 +46,21 @@ namespace GhasreMobile.Controllers
             }
         }
 
+        [Route("Conditions")]
+        public async Task<IActionResult> Conditions()
+        {
+            try
+            {
+                ViewBag.Instagram = db.Config.Get(i => i.Key == "LinkInsta").SingleOrDefault().Value;
+                ViewBag.Telegram = db.Config.Get(i => i.Key == "LinkTelegram").SingleOrDefault().Value;
+                return await Task.FromResult(View());
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
+
         [Route("About")]
         public async Task<IActionResult> About()
         {

@@ -199,7 +199,7 @@
         </div>
         <div class="colours">
             <h4>رنگ بندی</h4>
-            <ul class="grid">
+            <ul class="grid uk-margin-small-top">
                 @foreach (var item in Model.TblColor.Where(i => i.Count > 0))
                 {
                     System.Drawing.Color col = System.Drawing.ColorTranslator.FromHtml(item.ColorCode);
@@ -208,8 +208,6 @@
                     {
                         <li>
                             <input type="hidden" name="ProductColorId" id="ProductColorId" value="@item.ColorId" />
-                        </li>
-                        <li>
                             <div class="clr active" onclick="selectColour(this)">
                                 <span>@item.Name</span>
                                 <strong style="background-color: @item.ColorCode; @(isLight ? "border:1px solid #333;" : "border:1px solid #ddd;")"></strong>
@@ -221,8 +219,6 @@
                     {
                         <li>
                             <input type="hidden" name="ProductColorId" id="ProductColorId" value="@item.ColorId" />
-                        </li>
-                        <li>
                             <div class="clr" onclick="selectColour(this)">
                                 <span>@item.Name</span>
                                 <strong style="background-color: @item.ColorCode; @(isLight ? "border:1px solid #333;" : "border:1px solid #ddd;")"></strong>

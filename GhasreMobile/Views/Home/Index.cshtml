@@ -7,12 +7,12 @@
     <link href="~/css/pages/index.min.css" rel="stylesheet" />
 }
 @section Aside{
+
     <div swap="swBrandList" class="categories">
         <ul>
             @await Component.InvokeAsync("BrandListView")
         </ul>
     </div>
-
 
     <div swap="Exp1" class="mat mat-border">
         @await Component.InvokeAsync("SpecialOfferViem")
@@ -21,6 +21,7 @@
     <div swap="Ad1">
         @await Component.InvokeAsync("AdView")
     </div>
+
     <div swap="Ad2">
         @await Component.InvokeAsync("AdView")
     </div>
