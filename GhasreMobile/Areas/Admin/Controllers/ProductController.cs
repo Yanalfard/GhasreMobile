@@ -24,13 +24,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(Search))
             {
-                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get().OrderByDescending(p => p.ProductId), 30, page);
+                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get().OrderByDescending(p => p.CatagoryId), 30, page);
                 ViewData["isStop"] = products.Any(i => !i.IsDeleted);
                 return View(products);
             }
             else
             {
-                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => c.SearchText.Contains(Search)), 30, page);
+                IEnumerable<TblProduct> products = PagingList.Create(_core.Product.Get(c => c.SearchText.Contains(Search)).OrderByDescending(p => p.CatagoryId), 30, page);
                 ViewBag.Search = Search;
                 ViewData["isStop"] = !products.Any(i => i.IsDeleted);
                 return View(products);

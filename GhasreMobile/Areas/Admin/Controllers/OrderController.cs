@@ -57,7 +57,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             TblOrder order = _core.Order.GetById(id);
             order.Status = 1;
-            await Sms.SendSms(order.Client.TellNo, order.OrdeId.ToString(), "SendOrderGhasrMobile");
+            await Sms.SendSms(order.Client.TellNo, order.OrdeId.ToString(), "GhasrMobileSendOrder");
             _core.Order.Update(order);
             _core.Order.Save();
         }
@@ -66,7 +66,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             TblOrder order = _core.Order.GetById(id);
             order.Status = 2;
-            await Sms.SendSms(order.Client.TellNo, order.OrdeId.ToString(), "DoneOrderGhasrMobile");
+            await Sms.SendSms(order.Client.TellNo, order.OrdeId.ToString(), "GhasrMobileDoneOrder");
             _core.Order.Update(order);
             _core.Order.Save();
         }
