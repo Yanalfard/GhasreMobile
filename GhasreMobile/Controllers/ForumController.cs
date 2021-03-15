@@ -23,12 +23,12 @@ namespace GhasreMobile.Controllers
             TblClient selectUser = db.Client.GetById(userId);
             return selectUser;
         }
-       
+
         public async Task<IActionResult> Index()
         {
             try
             {
-                return View(db.Topic.Get(i => i.IsValid));
+                return View(db.Topic.Get(i => i.IsValid).OrderByDescending(i => i.TopicId));
             }
             catch (Exception)
             {
@@ -58,7 +58,7 @@ namespace GhasreMobile.Controllers
             {
                 return await Task.FromResult(Redirect("404.html"));
             }
-           
+
         }
 
         [HttpPost]
@@ -80,7 +80,7 @@ namespace GhasreMobile.Controllers
             {
                 return await Task.FromResult(Redirect("404.html"));
             }
-         
+
         }
         [HttpPost]
 
@@ -182,7 +182,7 @@ namespace GhasreMobile.Controllers
             {
                 return await Task.FromResult(Redirect("404.html"));
             }
-         
+
         }
     }
 }

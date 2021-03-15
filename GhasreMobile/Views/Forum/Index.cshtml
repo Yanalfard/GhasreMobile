@@ -28,9 +28,25 @@
 <div role="none" id="swNewForum"></div>
 @if (Context.Request.Query["addForum"].ToString() == "true")
 {
-    <div class="uk-alert uk-alert-success">
-        <p class="help-block">پیام شما ثبت شد و بعد از بررسی در تالار گفتوگو قرار خواهد گرفت</p>
-    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @if (User.Claims.Last().Value == "user")
+        {
+            <div class="uk-alert uk-alert-success" id="addForum">
+                <p class="help-block">پیام شما ثبت شد و بعد از بررسی در تالار گفتوگو قرار خواهد گرفت</p>
+            </div>
+        }
+        else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
+        {
+            <div class="uk-alert uk-alert-success" id="addForum">
+                <p class="help-block">پیام شما ثبت شد</p>
+            </div>
+        }
+        <script>
+            var delay = 4000;
+            setTimeout(function () { $("#addForum").css("display", "none"); }, delay);
+        </script>
+    }
 }
 <div class="threads col">
     @foreach (var item in Model)

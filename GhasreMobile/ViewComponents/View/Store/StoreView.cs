@@ -15,7 +15,7 @@ namespace GhasreMobile.ViewComponents.View.Store
         private Core db = new Core();
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/StoreView/StoreView.cshtml", db.Store.Get()));
+            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/StoreView/StoreView.cshtml", db.Store.Get().OrderByDescending(i => i.StoreId)));
         }
     }
 }
