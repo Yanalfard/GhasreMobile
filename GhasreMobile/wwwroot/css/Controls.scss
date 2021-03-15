@@ -537,7 +537,7 @@ $background-highlight: #eee;
         background-color: #EFF1F5;
 
         .uk-container {
-            grid-column-gap: 20px;
+            grid-column-gap: 10px;
 
             nav {
             }
@@ -548,12 +548,42 @@ $background-highlight: #eee;
             filter: drop-shadow(2px 2px 8px rgba(0,0,0,.20));
             background-color: #fff;
             @include border-circle;
+            margin-left: 12px;
 
             img {
                 width: 48px;
                 height: 48px;
                 @include border-circle;
                 @include obj;
+            }
+        }
+
+        .adv {
+            display: block;
+            @include trans(.2s);
+            @include border-def-radius;
+            margin: auto 0;
+            height: 39px;
+            padding: 0 6px;
+            -ms-flex-wrap: nowrap;
+            -webkit-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+
+            span {
+                text-wrap: none;
+                white-space: nowrap;
+            }
+        }
+
+
+        @media only screen and (max-width: 960px) {
+
+            .adv {
+                height: 32px;
+            }
+
+            .w {
+                display: none;
             }
         }
 
@@ -573,12 +603,10 @@ $background-highlight: #eee;
                 margin-bottom: auto;
                 height: 22px;
                 min-height: 22px;
-                padding: 4px 6px !important;
-
-                > span {
-                    font-size: 11px;
-                }
+                color: #888;
             }
+
+
 
             #txtSearchMain {
                 color: $Text;
@@ -597,8 +625,9 @@ $background-highlight: #eee;
             margin: auto auto auto 0;
             padding: 1px;
             overflow: hidden;
+            height: 37px;
 
-            button, a {
+            .icon {
                 background-color: #9D189D;
                 border: 0;
                 padding: 6px;
@@ -670,13 +699,14 @@ $background-highlight: #eee;
             height: 100%;
             background-color: transparent;
             border: 0;
+            @include row;
 
             span {
-                margin-top: auto !important;
-                margin-bottom: auto !important;
+                margin-right: 4px;
                 vertical-align: central;
                 text-align: center;
                 color: $Text;
+                height: 0 !important;
             }
 
             .uk-icon {
@@ -733,7 +763,7 @@ $background-highlight: #eee;
             border-bottom: 1px solid #eee;
 
             .uk-container {
-                grid-column-gap: 12px;
+                grid-column-gap: 8px;
             }
 
             .logo {
@@ -742,6 +772,7 @@ $background-highlight: #eee;
                 background-color: #fff;
                 @include border-circle;
                 min-width: 38px;
+                margin-left: 0px;
 
                 img {
                     width: 42px;
@@ -787,10 +818,11 @@ $background-highlight: #eee;
                 background-color: $primary;
                 margin: auto auto auto 0;
                 padding: 0px;
+                height: 32px;
                 overflow: hidden;
                 min-width: 144px;
 
-                button, a {
+                .icon {
                     background-color: #9D189D;
                     border: 0;
                     padding: 4px;
@@ -887,7 +919,7 @@ $background-highlight: #eee;
 
 //-
 
-@media only screen and (max-width: 590px) {
+@media only screen and (max-width: 696px) {
     .header {
         .bottom {
             nav {
@@ -899,7 +931,7 @@ $background-highlight: #eee;
     }
 }
 
-@media only screen and (max-width: 540px) {
+@media only screen and (max-width: 590px) {
     .header {
         .bottom {
             nav {
@@ -911,7 +943,7 @@ $background-highlight: #eee;
     }
 }
 
-@media only screen and (max-width: 496px) {
+@media only screen and (max-width: 540px) {
     .header {
         .bottom {
             nav {
@@ -923,7 +955,7 @@ $background-highlight: #eee;
     }
 }
 
-@media only screen and (max-width: 432px) {
+@media only screen and (max-width: 496px) {
     .header {
         .bottom {
             nav {
@@ -935,7 +967,7 @@ $background-highlight: #eee;
     }
 }
 
-@media only screen and (max-width: 356px) {
+@media only screen and (max-width: 432px) {
     .header {
         .bottom {
             nav {
@@ -947,7 +979,7 @@ $background-highlight: #eee;
     }
 }
 
-@media only screen and (max-width: 280px) {
+@media only screen and (max-width: 356px) {
     .header {
         .bottom {
             nav {
@@ -958,6 +990,19 @@ $background-highlight: #eee;
         }
     }
 }
+
+@media only screen and (max-width: 280px) {
+    .header {
+        .bottom {
+            nav {
+                a:nth-last-child(7) {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
 //-
 
 @media only screen and (max-width: 512px) {
@@ -967,7 +1012,7 @@ $background-highlight: #eee;
             .cart {
                 min-width: 70px;
 
-                button, a {
+                .icon {
                     margin: auto;
                     background-color: $primary;
                 }

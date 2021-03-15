@@ -6,7 +6,6 @@
                 <th></th>
                 @if (Model.Items.Any())
                 {
-
                     @foreach (var item in Model.Items)
                     {
                         <th uk-lightbox>
@@ -21,6 +20,67 @@
                                 {
                                     <label> @item.PriceBeforeDiscount.Value.ToString("#,0")</label>
                                     <label> @item.PriceAfterDiscount.Value.ToString("#,0")</label>
+                                }
+
+                                @if (item.SumProduct > 0)
+                                {
+                                    @if (item.SpecialOffer)
+                                    {
+                                        if (item.PriceAfterDiscount == 0)
+                                        {
+                                            var BeforeSumWithDiscount = item.PriceBeforeDiscount - (long)(Math.Floor((double)(item.PriceBeforeDiscount * item.SpecialOfferDiscount / 100)));
+                                            <h4 class="discount">
+                                                @item.PriceBeforeDiscount.Value.ToString("#,0")
+                                            </h4>
+                                            <span class="price">
+                                                <span class="t">تومان</span>
+                                                <span>@BeforeSumWithDiscount.Value.ToString("#,0")</span>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            var AfterSumWithDiscount = item.PriceAfterDiscount - (long)(Math.Floor((double)(item.PriceAfterDiscount * item.SpecialOfferDiscount / 100)));
+                                            <span class="discount">
+                                                <span>@item.PriceBeforeDiscount.Value.ToString("#,0")</span>
+                                            </span>
+                                            <span class="price">
+                                                <span>@item.PriceAfterDiscount.Value.ToString("#,0")</span>
+                                                <span class="t">تومان</span>
+                                            </span>
+                                        }
+                                    }
+                                    else
+                                    {
+
+                                        @if (item.PriceAfterDiscount == 0)
+                                        {
+                                            <span class="price">
+                                                <span class="t">تومان</span>
+                                                <span>@item.PriceBeforeDiscount.Value.ToString("#,0")</span>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="discount">
+                                                <span>@item.PriceBeforeDiscount.Value.ToString("#,0")</span>
+                                            </span>
+                                            <span class="price">
+                                                <span class="t">تومان</span>
+                                                <span>@item.PriceAfterDiscount.Value.ToString("#,0")</span>
+                                            </span>
+                                        }
+                                    }
+
+                                }
+                                else
+                                {
+                                    <div class="unavailable">
+                                        <span>
+                                            <span></span>
+                                            ناموجود
+                                        </span>
+                                        <span class="link-text"></span>
+                                    </div>
                                 }
                             </a>
                         </th>

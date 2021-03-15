@@ -41,7 +41,7 @@ namespace GhasreMobile.Controllers
             }
             if (!list.Any(p => p.ProductID == id))
             {
-                var product = db.Product.Get(p => p.ProductId == id).Select(p => new { p.Name, p.MainImage,p.PriceAfterDiscount,p.PriceBeforeDiscount }).Single();
+                var product = db.Product.Get(p => p.ProductId == id).Select(p => new { p.Name, p.MainImage, p.PriceAfterDiscount, p.PriceBeforeDiscount, p.TblColor,p.TblSpecialOffer }).Single();
                 list.Add(new CompareItemVm()
                 {
                     ProductID = id,
@@ -50,6 +50,9 @@ namespace GhasreMobile.Controllers
                     Brand = product.MainImage,
                     PriceBeforeDiscount = product.PriceBeforeDiscount,
                     PriceAfterDiscount = product.PriceAfterDiscount,
+                    SumProduct = product.TblColor.Sum(i => i.ColorId),
+                    SpecialOffer = product.TblSpecialOffer.Count > 0 && product.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now ? true : false,
+                    SpecialOfferDiscount = product.TblSpecialOffer.Count > 0 && product.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now ? (int)product.TblSpecialOffer.SingleOrDefault().Discount : 0,
                 });
             }
             HttpContext.Session.SetComplexData("Compare", list);

@@ -164,7 +164,7 @@ body {
   min-height: 100vh; }
 
 .height {
-  height: calc(100vh - calc(156px + 400px)); }
+  min-height: calc(100vh - calc(156px + 400px)); }
 
 /*#region Space */
 /* Phone landscape and bigger */
