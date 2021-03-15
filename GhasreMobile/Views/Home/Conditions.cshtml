@@ -12,14 +12,14 @@
 }
 
 <div class="mat-card height">
-    @if (string.IsNullOrEmpty(Model.Value))
+    @if (Model.Value != null)
+    {
+        @Html.Raw(Model.Value)
+    }
+    else
     {
         <h1 class="uk-alert uk-text-center">
             شرایط فروش اقساطی
         </h1>
-    }
-    else
-    {
-        @Html.Raw(Model.Value)
     }
 </div>
