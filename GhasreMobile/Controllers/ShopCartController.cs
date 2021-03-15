@@ -285,7 +285,7 @@ namespace GhasreMobile.Controllers
                             db.Client.Save();
                             HttpContext.Session.Clear();
                             int message = selectedOrder.OrdeId;
-                            await Sms.SendSms(selectedClient.TellNo, message.ToString(), "DoneSefareshGhasrMobile");
+                            await Sms.SendSms(selectedClient.TellNo, message.ToString(), "GhasrMobileDoneSefaresh");
                             return View();
                         }
                         else
@@ -375,12 +375,10 @@ namespace GhasreMobile.Controllers
                             List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
                             DiscountVm discount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
                             int message = selectedOrder.OrdeId;
-                            await Sms.SendSms(selectedClient.TellNo, message.ToString(), "DoneSefareshGhasrMobile");
+                            await Sms.SendSms(selectedClient.TellNo, message.ToString(), "GhasrMobileDoneSefaresh");
                             HttpContext.Session.Clear();
                         }
-                        
                     }
-
                 }
                 return await Task.FromResult(View());
             }
