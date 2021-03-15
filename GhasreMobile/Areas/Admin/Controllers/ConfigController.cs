@@ -23,9 +23,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
             ConfigVm config = new ConfigVm();
             config.DarbareyeMa = configs.Where(c => c.Key == "DarbareyeMa").Single().Value;
             config.TamasBaMa = configs.Where(c => c.Key == "TamasBaMa").Single().Value;
-            //config.HazineErsalBaPost = Convert.ToInt32(configs.Where(c => c.Key == "HazineErsalBaPost").Single().Value);
-            //config.HazineErsalBaTipaxChapare = Convert.ToInt32(configs.Where(c => c.Key == "HazineErsalBaTipax/Chapare").Single().Value);
-            //config.HazineErsalPeyk = Convert.ToInt32(configs.Where(c => c.Key == "HazineErsalPeyk").Single().Value);
             config.StoreDescription = configs.Where(c => c.Key == "StoreDescription").Single().Value;
             config.SagfePost = configs.Where(c => c.Key == "SagfePost").Single().Value;
             config.FinalTextKharid = configs.Where(c => c.Key == "FinalTextKharid").Single().Value;
@@ -35,6 +32,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             config.Gavanin = configs.Where(c => c.Key == "Gavanin").Single().Value;
             config.ShortTamasBaMa = configs.Where(c => c.Key == "ShortTamasBaMa").Single().Value;
             config.KharidAgsady = configs.Where(c => c.Key == "KharidAgsady").Single().Value;
+            config.SharayeteAghsati = configs.Where(c => c.Key == "SharayeteAghsati").Single().Value;
 
             return View(config);
         }
@@ -48,9 +46,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                 TblConfig ConfigDarbareyeMa = configs.Where(c => c.Key == "DarbareyeMa").Single();
                 TblConfig ConfigTamasBaMa = configs.Where(c => c.Key == "TamasBaMa").Single();
-                //TblConfig ConfigHazineErsalBaPost = configs.Where(c => c.Key == "HazineErsalBaPost").Single();
-                //TblConfig ConfigHazineErsalBaTipaxChapare = configs.Where(c => c.Key == "HazineErsalBaTipax/Chapare").Single();
-                //TblConfig ConfigHazineErsalPeyk = configs.Where(c => c.Key == "HazineErsalPeyk").Single();
                 TblConfig ConfigStoreDescription = configs.Where(c => c.Key == "StoreDescription").Single();
                 TblConfig ConfigSagfePost = configs.Where(c => c.Key == "SagfePost").Single();
                 TblConfig ConfigFinalTextKharid = configs.Where(c => c.Key == "FinalTextKharid").Single();
@@ -60,11 +55,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 TblConfig ConfigGavanin = configs.Where(c => c.Key == "Gavanin").Single();
                 TblConfig ConfigShortTamasBaMa = configs.Where(c => c.Key == "ShortTamasBaMa").Single();
                 TblConfig ConfigKharidAgsady = configs.Where(c => c.Key == "KharidAgsady").Single();
+                TblConfig ConfigSharayeteAghsati = configs.Where(c => c.Key == "SharayeteAghsati").Single();
+
                 ConfigDarbareyeMa.Value = configVm.DarbareyeMa;
-                //ConfigHazineErsalBaPost.Value = configVm.HazineErsalBaPost.ToString();
-                //ConfigHazineErsalBaTipaxChapare.Value = configVm.HazineErsalBaTipaxChapare.ToString();
                 ConfigTamasBaMa.Value = configVm.TamasBaMa;
-                //ConfigHazineErsalPeyk.Value = configVm.HazineErsalPeyk.ToString();
                 ConfigStoreDescription.Value = configVm.StoreDescription;
                 ConfigSagfePost.Value = configVm.SagfePost;
                 ConfigFinalTextKharid.Value = configVm.FinalTextKharid;
@@ -74,12 +68,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 ConfigGavanin.Value = configVm.Gavanin;
                 ConfigShortTamasBaMa.Value = configVm.ShortTamasBaMa;
                 ConfigKharidAgsady.Value = configVm.KharidAgsady;
+                ConfigSharayeteAghsati.Value = configVm.SharayeteAghsati;
 
                 _core.Config.Update(ConfigDarbareyeMa);
                 _core.Config.Update(ConfigTamasBaMa);
-                //_core.Config.Update(ConfigHazineErsalBaPost);
-                //_core.Config.Update(ConfigHazineErsalBaTipaxChapare);
-                //_core.Config.Update(ConfigHazineErsalPeyk);
                 _core.Config.Update(ConfigStoreDescription);
                 _core.Config.Update(ConfigSagfePost);
                 _core.Config.Update(ConfigFinalTextKharid);
@@ -89,6 +81,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.Config.Update(ConfigGavanin);
                 _core.Config.Update(ConfigShortTamasBaMa);
                 _core.Config.Update(ConfigKharidAgsady);
+                _core.Config.Update(ConfigSharayeteAghsati);
 
                 _core.Config.Save();
             }

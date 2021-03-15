@@ -167,6 +167,19 @@ namespace GhasreMobile.Controllers
                 ViewData["available"] = available == "on" ? true : false;
 
                 List<TblProduct> list = db.Product.Get(i => i.IsDeleted == false).ToList();
+                if (available != null)
+                {
+                    //list.AddRange(db.Color.Get(i => i.Count > 0).Select(i => i.Product).ToList());
+                    list = list.Where(i => i.TblColor.Sum(i => i.Count) > 0).ToList();
+                }
+                if (discount != null)
+                {
+                    list = list.Where(i => i.PriceAfterDiscount > 0).ToList();
+                }
+                if (IsFractional != null)
+                {
+                    list = list.Where(i => i.IsFractional).ToList();
+                }
                 if (q != null)
                 {
                     list = list.Where(i => i.SearchText.ToLower().Contains(q.ToLower()) || i.Name.ToLower().Contains(q.ToLower())).ToList();
@@ -250,18 +263,7 @@ namespace GhasreMobile.Controllers
 
                     }
                 }
-                if (available != null)
-                {
-                    list.AddRange(db.Color.Get(i => i.Count > 0).Select(i => i.Product).ToList());
-                }
-                if (discount != null)
-                {
-                    list = list.Where(i => i.PriceAfterDiscount > 0).ToList();
-                }
-                if (IsFractional != null)
-                {
-                    list = list.Where(i => i.IsFractional).ToList();
-                }
+
                 //Pagging
                 int take = GlobalTake;
                 int skip = (pageId - 1) * take;

@@ -11,8 +11,8 @@
 }
 
 <nav class="breadcrumb">
-    <a href="">کالا</a>
-    <a href="">@Model.Brand.Name</a>
+    <a href="/Search">کالا</a>
+    <a href="/Search?brandId=@Model.Brand.BrandId">@Model.Brand.Name</a>
     <a href="#" class="active">@Model.Name</a>
 </nav>
 
@@ -24,11 +24,11 @@
         <div class="rowr uk-margin-top">
             <span class="row" dir="rtl">
                 <span class="uk-margin-small-left">برند:</span>
-                <a href="#">@Model.Brand.Name</a>
+                <a href="/Search?brandId=@Model.BrandId">@Model.Brand.Name</a>
             </span>
             <span class="row uk-margin-right" dir="rtl">
                 <span class="uk-margin-small-left">دسته:</span>
-                <a href="#">@Model.Catagory.Name</a>
+                <a href="/Search?catId=@Model.CatagoryId">@Model.Catagory.Name</a>
             </span>
             <span class="row uk-margin-right" dir="rtl">
                 <span class="uk-margin-small-left">کد:</span>
@@ -292,7 +292,7 @@
         <tbody>
             @if (Model.TblProductPropertyRel.Any())
             {
-                @foreach (var item in Model.TblProductPropertyRel.Where(i => i.Value != ""))
+                @foreach (var item in Model.TblProductPropertyRel.Where(i => i.Value != "" && i.Property.Name != ""))
                 {
                     @if (item.Value != "")
                     {
