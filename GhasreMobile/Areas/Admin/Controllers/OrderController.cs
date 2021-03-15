@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ReflectionIT.Mvc.Paging;
 using System.Globalization;
+using DataLayer.Utilities;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -52,18 +53,20 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return ViewComponent("OrderInfoAdmin", new { id = id });
         }
 
-        public void SendOrder(int id)
+        public async Task SendOrderAsync(int id)
         {
             TblOrder order = _core.Order.GetById(id);
             order.Status = 1;
+            await Sms.SendSms(order.Client.TellNo, order.OrdeId.ToString(), "SendOrderGhasrMobile");
             _core.Order.Update(order);
             _core.Order.Save();
         }
 
-        public void DoneOrder(int id)
+        public async Task DoneOrder(int id)
         {
             TblOrder order = _core.Order.GetById(id);
             order.Status = 2;
+            await Sms.SendSms(order.Client.TellNo, order.OrdeId.ToString(), "DoneOrderGhasrMobile");
             _core.Order.Update(order);
             _core.Order.Save();
         }
