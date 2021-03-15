@@ -6,7 +6,6 @@
                 <th></th>
                 @if (Model.Items.Any())
                 {
-
                     @foreach (var item in Model.Items)
                     {
                         <th uk-lightbox>
@@ -75,13 +74,13 @@
                                 }
                                 else
                                 {
-                                        <div class="unavailable">
-                                            <span>
-                                                <span></span>
-                                                ناموجود
-                                            </span>
-                                            <span  class="link-text" ></span>
-                                        </div>
+                                    <div class="unavailable">
+                                        <span>
+                                            <span></span>
+                                            ناموجود
+                                        </span>
+                                        <span class="link-text"></span>
+                                    </div>
                                 }
                             </a>
                         </th>
