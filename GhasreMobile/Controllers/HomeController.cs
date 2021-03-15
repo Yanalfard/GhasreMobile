@@ -51,9 +51,7 @@ namespace GhasreMobile.Controllers
         {
             try
             {
-                ViewBag.Instagram = db.Config.Get(i => i.Key == "LinkInsta").SingleOrDefault().Value;
-                ViewBag.Telegram = db.Config.Get(i => i.Key == "LinkTelegram").SingleOrDefault().Value;
-                return await Task.FromResult(View());
+               return await Task.FromResult(View(db.Config.Get(i => i.Key == "SharayeteAghsati").SingleOrDefault()));
             }
             catch
             {
