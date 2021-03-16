@@ -599,6 +599,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         _core.ProductImageRel.Save();
                     }
                 }
+                List<TblProductPropertyRel> pros = new List<TblProductPropertyRel>();
                 for (int i = 0; i < PropertyId.Count; i++)
                 {
                     TblProductPropertyRel propertyRel = new TblProductPropertyRel();
@@ -613,6 +614,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         propertyRel.PropertyId = PropertyId[i].Value;
                         propertyRel.Value = Value[i];
                     }
+                    pros.Add(propertyRel);
                 }
                 EditProduct.Name = product.Name;
                 EditProduct.PriceBeforeDiscount = product.PriceBeforeDiscount;
@@ -631,7 +633,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                 _core.Product.Update(EditProduct);
                 _core.Product.Save();
-
+                TblProduct productSaved = _core.Product.Get(i => i.Name == EditProduct.Name).ToList().First();
+                _core.ProductPropertyRel.Get(i => i.ProductId == EditProduct.ProductId).ToList().ForEach(j => _core.ProductPropertyRel.Delete(j));
+                _core.ProductPropertyRel.Save();
+                foreach (var item in pros)
+                {
+                    _core.ProductPropertyRel.Add(item);
+                }
+                _core.ProductPropertyRel.Save();
                 return await Task.FromResult(Redirect("/Admin/Product"));
             }
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
