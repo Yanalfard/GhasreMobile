@@ -468,6 +468,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             TblProductPropertyRel rel = _core.ProductPropertyRel.GetById(id);
             bool isDeleted = _core.ProductPropertyRel.Delete(rel);
+            _core.ProductPropertyRel.Save();
             return Ok(isDeleted);
         }
 
