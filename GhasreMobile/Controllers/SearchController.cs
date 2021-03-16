@@ -39,6 +39,7 @@ namespace GhasreMobile.Controllers
                 ViewData["minDate"] = minDate;
                 ViewData["catId"] = catId;
                 ViewData["cat"] = cat;
+                ViewData["brandId"] = brandId;
                 ViewData["IsFractional"] = IsFractional == "on" ? true : false;
                 ViewData["discount"] = discount == "on" ? true : false;
                 ViewData["available"] = available == "on" ? true : false;
@@ -168,6 +169,7 @@ namespace GhasreMobile.Controllers
                 ViewData["minDate"] = minDate;
                 ViewData["catId"] = catId;
                 ViewData["cat"] = cat;
+                ViewData["brandId"] = brandId;
                 ViewData["IsFractional"] = IsFractional == "on" ? true : false;
                 ViewData["discount"] = discount == "on" ? true : false;
                 ViewData["available"] = available == "on" ? true : false;

@@ -24,9 +24,10 @@
             <input type="text" class="entry" name="name" id="name" value="@ViewData["name"]" />
             <div class="text-danger"></div>
         </div>
-        <input type="hidden" class="entry" id="q" name="q" value="" />
-        <input type="hidden" class="entry" id="q" name="catId" value="" />
-        <input type="hidden" class="entry" id="q" name="cat" value="" />
+        <input type="hidden" class="entry" id="q" name="q" value="@ViewData["q"]" />
+        <input type="hidden" class="entry" id="catId" name="catId" value="@ViewData["catId"]" />
+        <input type="hidden" class="entry" id="cat" name="cat" value="@ViewData["cat"]" />
+        <input type="hidden" class="entry" id="brandId" name="cat" value="@ViewData["brandId"]" />
         <input type="hidden" class="entry" name="pageId" value="@ViewData["pageId"]" id="pageId" />
 
         <div class="fg-col">
@@ -164,8 +165,9 @@
             var maxPrice = $('#maxPrice').val();
             var maxDate = $('#maxDate').val();
             var minDate = $('#minDate').val();
-            var catId = $('#catId').val();
-            var cat = $('#cat').val();
+            var catId = "";
+            var cat = "";
+            var brandId = "";
             let available = "";
             if ($('#available').prop("checked") == true) {
                 available = "on";
@@ -178,7 +180,7 @@
             if ($('#discount').prop("checked") == true) {
                 discount = "on";
             }
-            $.get("/SearchProduct?pageId=" + 1 + "&name=" + name + "&q=" + "" + "&brand=" + brand + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + "&maxDate=" + maxDate + "&minDate=" + minDate + "&available=" + available + "&isFractional=" + isFractional + "&discount=" + discount + "&cat=" + "" + "&catId=" + "", function (result) {
+            $.get("/SearchProduct?pageId=" + 1 + "&name=" + name + "&q=" + "" + "&brand=" + brand + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + "&maxDate=" + maxDate + "&minDate=" + minDate + "&available=" + available + "&isFractional=" + isFractional + "&discount=" + discount + "&cat=" + "" + "&catId=" + "" + "&brandId=" + "", function (result) {
                 pageCount = 1;
                 if (result == false) {
                     isLoading = true;
@@ -265,6 +267,7 @@
             let available = "";
             var catId = $('#catId').val();
             var cat = $('#cat').val();
+            var brandId = $('#brandId').val();
             if ($('#available').prop("checked") == true) {
                 available = "on";
             }
@@ -277,7 +280,7 @@
                 discount = "on";
             }
 
-            $.get("/SearchProduct?pageId=" + pageCount + "&name=" + name + "&q=" + "" + "&brand=" + brand + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + "&maxDate=" + maxDate + "&minDate=" + minDate + "&available=" + available + "&isFractional=" + isFractional + "&discount=" + discount + "&cat=" + "" + "&catId=" + "", function (result) {
+            $.get("/SearchProduct?pageId=" + pageCount + "&name=" + name + "&q=" + q + "&brand=" + brand + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + "&maxDate=" + maxDate + "&minDate=" + minDate + "&available=" + available + "&isFractional=" + isFractional + "&discount=" + discount + "&cat=" + cat + "&catId=" + catId + "&brandId=" + brandId, function (result) {
                 if (result == false) {
                     isLoading = true;
                     $(".loading").fadeOut();
