@@ -326,22 +326,8 @@
     </div>
 }
 
-<div class="product-slider gap-t uk-position-relative uk-visible-toggle" tabindex="-1" uk-slider="">
+@await Component.InvokeAsync("ShowProductsInView", Model.ProductId)
 
-    <div class="title">
-        <a href="#" class="dot-container">
-            <img src="~/st/v/dot.svg" alt="" class="dot" />
-            <h3>محصولات مرتبط</h3>
-        </a>
-    </div>
-
-    <ul class="uk-slider-items">
-        @await Component.InvokeAsync("ShowProductsInView", Model.ProductId)
-    </ul>
-
-    <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
-
-</div>
 <input type="hidden" class="hidden" name="ProductId" id="ProductId" value="@Model.ProductId" />
 @section Scripts{
 

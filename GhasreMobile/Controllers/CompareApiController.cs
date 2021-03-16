@@ -50,7 +50,7 @@ namespace GhasreMobile.Controllers
                     Brand = product.MainImage,
                     PriceBeforeDiscount = product.PriceBeforeDiscount,
                     PriceAfterDiscount = product.PriceAfterDiscount,
-                    SumProduct = product.TblColor.Sum(i => i.ColorId),
+                    SumProduct = product.TblColor.Sum(i => i.Count),
                     SpecialOffer = product.TblSpecialOffer.Count > 0 && product.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now ? true : false,
                     SpecialOfferDiscount = product.TblSpecialOffer.Count > 0 && product.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now ? (int)product.TblSpecialOffer.SingleOrDefault().Discount : 0,
                 });
