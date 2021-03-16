@@ -14,27 +14,17 @@
         </ul>
     </div>
 
-    <div swap="Exp1" class="mat mat-border">
-        @await Component.InvokeAsync("SpecialOfferViem")
-    </div>
+    @await Component.InvokeAsync("SpecialOfferViem", new { swap = "Exp1" })
 
-    <div swap="Ad1">
-        @await Component.InvokeAsync("AdView")
-    </div>
+    @await Component.InvokeAsync("AdView", new { swap = "Ad1" })
 
-    <div swap="Ad2">
-        @await Component.InvokeAsync("AdView")
-    </div>
+    @await Component.InvokeAsync("AdView", new { swap = "Ad2" })
 
-    <div swap="Exp2" class="mat mat-border">
-        @await Component.InvokeAsync("SpecialOfferViem")
-    </div>
-    <div swap="Ad3">
-        @await Component.InvokeAsync("AdView")
-    </div>
-    <div swap="Ad4">
-        @await Component.InvokeAsync("AdView")
-    </div>
+    @await Component.InvokeAsync("SpecialOfferViem", new { swap = "Exp2" })
+
+    @await Component.InvokeAsync("AdView", new { swap = "Ad3" })
+
+    @await Component.InvokeAsync("AdView", new { swap = "Ad4" })
 
 }
 <!-- #SliderView -->

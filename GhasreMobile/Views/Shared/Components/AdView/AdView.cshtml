@@ -2,7 +2,7 @@
 
 @if (Model.Image != null)
 {
-    <partial name="_Ad" model="Model" />
+    <div swap="@ViewData["Swap"]"><partial name="_Ad" model="Model" /></div>
 }
 
 

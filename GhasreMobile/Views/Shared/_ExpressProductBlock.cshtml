@@ -2,7 +2,7 @@
 @{
     var raiting = (Model.Product.TblRate.Count > 0) ? (Model.Product.TblRate.Sum(i => i.Rate) / Model.Product.TblRate.Count) : 0;
 }
-<div class="product-express">
+<div class="product-express mat mat-border">
     <div class="head">
         <h3>پیشنهاد ویژه</h3>
         <ul class="timer" countdown="@Model.ValidTill">

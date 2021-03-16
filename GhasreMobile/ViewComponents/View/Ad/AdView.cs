@@ -12,7 +12,7 @@ namespace GhasreMobile.ViewComponents.View.Ad
     public class AdView : ViewComponent
     {
         private Core db = new Core();
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string swap)
         {
             TblAd list = new TblAd();
             List<TblAd> ads = db.Ad.Get().ToList();
@@ -21,6 +21,9 @@ namespace GhasreMobile.ViewComponents.View.Ad
             {
                 list = ads[ran.Next(ads.Count)];
             }
+
+            ViewData["Swap"] = swap;
+
             return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/AdView/AdView.cshtml", list));
         }
     }

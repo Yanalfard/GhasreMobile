@@ -1,17 +1,19 @@
 ﻿@model DiscountVm
-@{ 
- string discountType = ViewBag.typeDiscount.ToString();
- string discountDarsad = ViewBag.discountDarsad.ToString();
+@{
+    string discountType = ViewBag.typeDiscount.ToString();
+    string discountDarsad = ViewBag.discountDarsad.ToString();
 }
 
 <div class="mat-card">
     <h4 class="uk-margin-small-bottom">
         کد تخفیف
     </h4>
-    <form action="/User/Order/CheckDiscount" method="post" class="rowr g-2">
-        <input type="text" placeholder="کد تخفیف را وارد کنید" class="entry flex-auto" asp-for="Name" required />
-        @*<button class="btn btn-primary unselectable"> CODEX 64%</button>*@
-        <button class="btn btn-dashed">اعمال</button>
+    <form action="/User/Order/CheckDiscount" method="post" class="col">
+        <div class="rowr g-2">
+            <input type="text" placeholder="کد تخفیف را وارد کنید" class="entry flex-auto" asp-for="Name" required />
+            @*<button class="btn btn-primary unselectable"> CODEX 64%</button>*@
+            <button style="max-width:92px;" class="btn btn-dashed">اعمال</button>
+        </div>
         <div class="fg-col"> <span class="text-danger" asp-validation-for="Name"></span></div>
     </form>
     @if (discountType != "")

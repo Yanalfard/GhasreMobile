@@ -12,9 +12,10 @@ namespace GhasreMobile.ViewComponents.View.SpecialOffer
     public class SpecialOfferViem : ViewComponent
     {
         private Core db = new Core();
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string swap)
         {
             TblSpecialOffer list = new TblSpecialOffer();
+
 
             List<TblSpecialOffer> offer = db.SpecialOffer.Get(i => i.ValidTill > DateTime.Now && i.Product.IsDeleted == false).ToList();
             Random ran = new Random();
@@ -22,7 +23,10 @@ namespace GhasreMobile.ViewComponents.View.SpecialOffer
             {
                 list = offer[ran.Next(offer.Count)];
             }
-            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/SpecialOfferViem/SpecialOfferViem.cshtml", list));
+            ViewData["swap"] = swap;
+
+            return await Task.FromResult((IViewComponentResult)
+                View("~/Views/Shared/Components/SpecialOfferViem/SpecialOfferViem.cshtml", list));
         }
     }
 }

@@ -116,3 +116,64 @@ window.addEventListener("load", () => {
     }
 
 })
+
+
+// route class
+const routeKey = 'routeCls';
+routedElements = document.querySelectorAll(`[${routeKey}]`);
+
+for (let item of routedElements) {
+
+    let raw = item.getAttribute(routeKey).replaceAll(' ', '');
+    raw = raw.split(';');
+
+    let route;
+    let matchFully = false;
+    let classes = [];
+
+    for (let section of raw) {
+        const key = section.split(':')[0];
+        const value = section.split(':')[1];
+
+        switch (key) {
+            case 'route':
+                route = value;
+                break;
+            case 'matchFully':
+                matchFully = value.toLowerCase() === 'true' ? true : false;
+                break;
+            case 'cls':
+                classes = value;
+                break;
+            case 'clss':
+                classes = value;
+                break;
+            case 'class':
+                classes = value;
+                break;
+            case 'classes':
+                classes = value;
+                break;
+            default:
+                break;
+        }
+    }
+
+    if (matchFully) {
+        if (window.location.pathname.toLowerCase() === route.toLowerCase()) {
+            for (let cls of classes.split(',')) {
+                item.classList.add(cls);
+            }
+        }
+    }
+    else if (!matchFully) {
+        if (window.location.href.includes(route)) {
+            for (let cls of classes.split(',')) {
+                item.classList.add(cls);
+            }
+        }
+    }
+
+
+}
+
