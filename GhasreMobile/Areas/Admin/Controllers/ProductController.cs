@@ -464,6 +464,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        public IActionResult DeleteProperty(int id)
+        {
+            TblProductPropertyRel rel = _core.ProductPropertyRel.GetById(id);
+            bool isDeleted = _core.ProductPropertyRel.Delete(rel);
+            return Ok(isDeleted);
+        }
+
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(TblProduct product,
                                                 List<string> Keywords,
