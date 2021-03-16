@@ -65,10 +65,12 @@ namespace GhasreMobile.Controllers
                 }
                 if (name != null)
                 {
+                    ViewData["Title"] = name;
                     list = list.Where(i => i.Name.ToLower().Contains(name.ToLower())).ToList();
                 }
                 if (cat != null)
                 {
+                    ViewData["Title"] = cat;
                     list = list.Where(i => i.Catagory.Name.ToLower().Contains(cat.ToLower())).ToList();
                 }
                 if (catId != 0)
@@ -77,6 +79,7 @@ namespace GhasreMobile.Controllers
                 }
                 if (brand != null)
                 {
+                    ViewData["Title"] = brand;
                     list = list.Where(i => i.Brand.Name.ToLower().Contains(brand.ToLower())).ToList();
                 }
                 if (brandId != 0)

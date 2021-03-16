@@ -1,67 +1,68 @@
 ﻿@model DiscountVm
 @if (Model != null)
 {
-    <form action="/ShopCart/Payment" id="mainForm" class="col g-3" method="post">
-        <div class="mat-card">
-            <h4 class="uk-margin-small-bottom">
-                انتخاب آدرس
-            </h4>
-            <div class="fg-col">
-                <label class="fg-label">آدرس</label>
-                <textarea class="entry" name="address" required></textarea>
-            </div>
-        </div>
+<form action="/ShopCart/Payment" id="mainForm" class="col g-3" method="post">
 
-        <div class="mat-card">
-            <h4 class="uk-margin-small-bottom">
-                روش های ارسال
-            </h4>
-            <div class="fg-col">
-                @{
-                    List<TblPostOption> list = ViewBag.ListPostOption as List<TblPostOption>;
-                }
-                @foreach (var item in list)
+
+    <div class="mat-card">
+        <h4 class="uk-margin-small-bottom">
+            روش های ارسال
+        </h4>
+        <div class="fg-col">
+            @{
+                List<TblPostOption> list = ViewBag.ListPostOption as List<TblPostOption>;
+            }
+            @foreach (var item in list)
+            {
+                <label class="radio">
+                    <span>@item.Name (@item.Price.Value.ToString("#,0"))</span>
+                    <input id="radio" name="radio" @((list.ToList().IndexOf(item) == 0 ? "checked" : "")) class="uk-radio @item.PostOptionId" value="@item.PostOptionId" type="radio">
+                </label>
+            }
+        </div>
+    </div>
+
+    <div class="mat-card">
+        <h4 class="uk-margin-small-bottom">
+            انتخاب آدرس
+        </h4>
+        <div class="fg-col">
+            <label class="fg-label">آدرس</label>
+            <textarea class="entry" name="address" required></textarea>
+        </div>
+    </div>
+
+    <hr class="uk-divider-icon uk-margin-small" />
+
+    <div class="mat-card col">
+        <h3 class="uk-margin-bottom">
+            پرداخت
+        </h3>
+
+        <div class="col">
+            <div class="item-list box-shadow uk-margin-small-bottom">
+                <div class="profit-amount">تخفیف  : <span>@Model.DiscountPrice.ToString("#,0") تومان </span></div>
+                <div class="profit-amount">هزینه ارسال  : <span>@Model.PostPrice.ToString("#,0") تومان </span><span>(   فاکتور بالای @Model.SagfePost.ToString("#,0")   شامل هزینه نمی باشد   )</span></div>
+                <div class="main-payment">مبلغ کل : <span>@Model.Sum.ToString("#,0") تومان</span> </div>
+                <div class="main-payment">موجودی کیف پول شما  : <span>@Model.Balance.ToString("#,0") تومان</span> </div>
+                <div class="final-payment">مبلغ قابل پرداخت : <span>@Model.SumWithDiscount.ToString("#,0") تومان</span></div>
+            </div>
+
+            <div class="rowr g-3  uk-margin-auto-left uk-margin-small-top">
+                <button type="submit" class="btn btn-primary uk-margin-auto-top">
+                    ثبت و پرداخت
+                </button>
+                @if (Model.IsFractional == true)
                 {
-                    <label class="radio">
-                        <span>@item.Name (@item.Price.Value.ToString("#,0"))</span>
-                        <input id="radio" name="radio" @((list.ToList().IndexOf(item) == 0 ? "checked" : "")) class="uk-radio @item.PostOptionId" value="@item.PostOptionId" type="radio">
-                    </label>
+                    <input type="hidden" name="IsFractional" id="IsFractional" />
+                    <button type="submit" id="btnIsFractional" class="btn btn-secondary uk-margin-auto-top">
+                        خرید اقساطی
+                    </button>
                 }
             </div>
         </div>
-
-        <hr class="uk-divider-icon uk-margin-small" />
-
-        <div class="mat-card col">
-            <h3 class="uk-margin-bottom">
-                پرداخت
-            </h3>
-
-            <div class="col">
-
-                <div class="item-list box-shadow uk-margin-small-bottom">
-                    <div class="profit-amount">تخفیف  : <span>@Model.DiscountPrice.ToString("#,0") تومان </span></div>
-                    <div class="profit-amount">هزینه ارسال  : <span>@Model.PostPrice.ToString("#,0") تومان </span><span>(   فاکتور بالای @Model.SagfePost.ToString("#,0")   شامل هزینه نمی باشد   )</span></div>
-                    <div class="main-payment">مبلغ کل : <span>@Model.Sum.ToString("#,0") تومان</span> </div>
-                    <div class="main-payment">موجودی کیف پول شما  : <span>@Model.Balance.ToString("#,0") تومان</span> </div>
-                    <div class="final-payment">مبلغ قابل پرداخت : <span>@Model.SumWithDiscount.ToString("#,0") تومان</span></div>
-                </div>
-
-                <div class="rowr g-3  uk-margin-auto-left uk-margin-small-top">
-                    <button type="submit" class="btn btn-primary uk-margin-auto-top">
-                        ثبت و پرداخت
-                    </button>
-                    @if (Model.IsFractional == true)
-                    {
-                        <input type="hidden" name="IsFractional" id="IsFractional" />
-                        <button type="submit" id="btnIsFractional" class="btn btn-secondary uk-margin-auto-top">
-                            خرید اقساطی
-                        </button>
-                    }
-                </div>
-            </div>
-        </div>
-    </form>
+    </div>
+</form>
 
     <input type="hidden" name="PostPriceId" id="PostPriceId" value="@Model.PostPriceId" />
 
