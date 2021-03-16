@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ReflectionIT.Mvc.Paging;
 using System.Globalization;
 using DataLayer.Utilities;
+using DataLayer.ViewModels;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -18,92 +19,92 @@ namespace GhasreMobile.Areas.Admin.Controllers
     {
         Core _core = new Core();
 
-        public IActionResult Index(int PageId = 1, int InPageCount = 0, int OrderId = 0, string TellNo = null, string StartDate = null, string EndDate = null)
+        public IActionResult Index(OrdersInAdminVm ordersInAdmin)
         {
-            ViewBag.OrderId = OrderId;
-            ViewBag.TellNo = TellNo;
-            ViewBag.StartDate = StartDate;
-            ViewBag.EndDate = EndDate;
+            ViewBag.OrderId = ordersInAdmin.OrderId;
+            ViewBag.TellNo = ordersInAdmin.TellNo;
+            ViewBag.StartDate = ordersInAdmin.StartDate;
+            ViewBag.EndDate = ordersInAdmin.EndDate;
             List<TblOrder> orders = _core.Order.Get().ToList();
             int count = orders.Count;
-            if (InPageCount == 0)
+            if (ordersInAdmin.InPageCount == 0)
             {
-                if (OrderId != 0)
+                if (ordersInAdmin.OrderId != 0)
                 {
-                    orders = orders.Where(i => i.OrdeId == OrderId).ToList();
+                    orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
                     count = orders.Count();
                 }
-                if (TellNo != null)
+                if (ordersInAdmin.TellNo != null)
                 {
-                    orders = orders.Where(i => i.Client.TellNo == TellNo).ToList();
+                    orders = orders.Where(i => i.Client.TellNo == ordersInAdmin.TellNo).ToList();
                     count = orders.Count();
                 }
-                if (StartDate != null)
+                if (ordersInAdmin.StartDate != null)
                 {
                     PersianCalendar pc = new PersianCalendar();
-                    string[] Start = StartDate.Split('/');
+                    string[] Start = ordersInAdmin.StartDate.Split('/');
                     DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
                     orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
                     count = orders.Count();
                 }
-                if (EndDate != null)
+                if (ordersInAdmin.EndDate != null)
                 {
                     PersianCalendar pc = new PersianCalendar();
-                    string[] Start = EndDate.Split('/');
+                    string[] Start = ordersInAdmin.EndDate.Split('/');
                     DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
                     orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
                     count = orders.Count();
                 }
-                ViewBag.pageid = PageId;
+                ViewBag.pageid = ordersInAdmin.PageId;
 
                 ViewBag.PageCount = count / 18;
 
-                ViewBag.InPageCount = InPageCount;
+                ViewBag.InPageCount = ordersInAdmin.InPageCount;
 
-                ViewBag.OrderId = OrderId;
-                ViewBag.TellNo = TellNo;
-                ViewBag.StartDate = StartDate;
-                ViewBag.EndDate = EndDate;
+                ViewBag.OrderId = ordersInAdmin.OrderId;
+                ViewBag.TellNo = ordersInAdmin.TellNo;
+                ViewBag.StartDate = ordersInAdmin.StartDate;
+                ViewBag.EndDate = ordersInAdmin.EndDate;
 
-                var skip = (PageId - 1) * 18;
+                var skip = (ordersInAdmin.PageId - 1) * 18;
 
                 return View(orders.Skip(skip).Take(18));
             }
             else
             {
-                if (OrderId != 0)
+                if (ordersInAdmin.OrderId != 0)
                 {
-                    orders = orders.Where(i => i.OrdeId == OrderId).ToList();
+                    orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
                     count = orders.Count();
                 }
-                if (TellNo != null)
+                if (ordersInAdmin.TellNo != null)
                 {
-                    orders = orders.Where(i => i.Client.TellNo == TellNo).ToList();
+                    orders = orders.Where(i => i.Client.TellNo == ordersInAdmin.TellNo).ToList();
                     count = orders.Count();
                 }
-                if (StartDate != null)
+                if (ordersInAdmin.StartDate != null)
                 {
                     PersianCalendar pc = new PersianCalendar();
-                    string[] Start = StartDate.Split('/');
+                    string[] Start = ordersInAdmin.StartDate.Split('/');
                     DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
                     orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
                     count = orders.Count();
                 }
-                if (EndDate != null)
+                if (ordersInAdmin.EndDate != null)
                 {
                     PersianCalendar pc = new PersianCalendar();
-                    string[] Start = EndDate.Split('/');
+                    string[] Start = ordersInAdmin.EndDate.Split('/');
                     DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
                     orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
                     count = orders.Count();
                 }
-                ViewBag.pageid = PageId;
+                ViewBag.pageid = ordersInAdmin.PageId;
 
-                ViewBag.PageCount = count / InPageCount;
+                ViewBag.PageCount = count / ordersInAdmin.InPageCount;
 
-                ViewBag.InPageCount = InPageCount;
-                var skip = (PageId - 1) * InPageCount;
-                return View(orders.Skip(skip).Take(InPageCount));
+                ViewBag.InPageCount = ordersInAdmin.InPageCount;
+                var skip = (ordersInAdmin.PageId - 1) * ordersInAdmin.InPageCount;
+                return View(orders.Skip(skip).Take(ordersInAdmin.InPageCount));
             }
 
 
