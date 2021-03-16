@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ReflectionIT.Mvc.Paging;
 using System.Globalization;
+using DataLayer.Utilities;
+using DataLayer.ViewModels;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -17,33 +19,94 @@ namespace GhasreMobile.Areas.Admin.Controllers
     {
         Core _core = new Core();
 
-        public IActionResult Index(int page = 1, int OrderId = 0, string TellNo = null, string StartDate = null, string EndDate = null)
+        public IActionResult Index(OrdersInAdminVm ordersInAdmin)
         {
-
+            ViewBag.OrderId = ordersInAdmin.OrderId;
+            ViewBag.TellNo = ordersInAdmin.TellNo;
+            ViewBag.StartDate = ordersInAdmin.StartDate;
+            ViewBag.EndDate = ordersInAdmin.EndDate;
             List<TblOrder> orders = _core.Order.Get().ToList();
-            if (OrderId != 0)
+            int count = orders.Count;
+            if (ordersInAdmin.InPageCount == 0)
             {
-                orders = orders.Where(i => i.OrdeId == OrderId).ToList();
+                if (ordersInAdmin.OrderId != 0)
+                {
+                    orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
+                    count = orders.Count();
+                }
+                if (ordersInAdmin.TellNo != null)
+                {
+                    orders = orders.Where(i => i.Client.TellNo == ordersInAdmin.TellNo).ToList();
+                    count = orders.Count();
+                }
+                if (ordersInAdmin.StartDate != null)
+                {
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] Start = ordersInAdmin.StartDate.Split('/');
+                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                    orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
+                    count = orders.Count();
+                }
+                if (ordersInAdmin.EndDate != null)
+                {
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] Start = ordersInAdmin.EndDate.Split('/');
+                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                    orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
+                    count = orders.Count();
+                }
+                ViewBag.pageid = ordersInAdmin.PageId;
+
+                ViewBag.PageCount = count / 18;
+
+                ViewBag.InPageCount = ordersInAdmin.InPageCount;
+
+                ViewBag.OrderId = ordersInAdmin.OrderId;
+                ViewBag.TellNo = ordersInAdmin.TellNo;
+                ViewBag.StartDate = ordersInAdmin.StartDate;
+                ViewBag.EndDate = ordersInAdmin.EndDate;
+
+                var skip = (ordersInAdmin.PageId - 1) * 18;
+
+                return View(orders.Skip(skip).Take(18));
             }
-            if (TellNo != null)
+            else
             {
-                orders = orders.Where(i => i.Client.TellNo == TellNo).ToList();
+                if (ordersInAdmin.OrderId != 0)
+                {
+                    orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
+                    count = orders.Count();
+                }
+                if (ordersInAdmin.TellNo != null)
+                {
+                    orders = orders.Where(i => i.Client.TellNo == ordersInAdmin.TellNo).ToList();
+                    count = orders.Count();
+                }
+                if (ordersInAdmin.StartDate != null)
+                {
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] Start = ordersInAdmin.StartDate.Split('/');
+                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                    orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
+                    count = orders.Count();
+                }
+                if (ordersInAdmin.EndDate != null)
+                {
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] Start = ordersInAdmin.EndDate.Split('/');
+                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                    orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
+                    count = orders.Count();
+                }
+                ViewBag.pageid = ordersInAdmin.PageId;
+
+                ViewBag.PageCount = count / ordersInAdmin.InPageCount;
+
+                ViewBag.InPageCount = ordersInAdmin.InPageCount;
+                var skip = (ordersInAdmin.PageId - 1) * ordersInAdmin.InPageCount;
+                return View(orders.Skip(skip).Take(ordersInAdmin.InPageCount));
             }
-            if (StartDate != null)
-            {
-                PersianCalendar pc = new PersianCalendar();
-                string[] Start = StartDate.Split('/');
-                DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
-            }
-            if (EndDate != null)
-            {
-                PersianCalendar pc = new PersianCalendar();
-                string[] Start = EndDate.Split('/');
-                DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
-            }
-            return View(PagingList.Create(orders, 50, page));
+
 
         }
 
@@ -52,18 +115,20 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return ViewComponent("OrderInfoAdmin", new { id = id });
         }
 
-        public void SendOrder(int id)
+        public async Task SendOrderAsync(int id)
         {
             TblOrder order = _core.Order.GetById(id);
             order.Status = 1;
+            await Sms.SendSms(order.Client.TellNo, order.OrdeId.ToString(), "GhasrMobileSendOrder");
             _core.Order.Update(order);
             _core.Order.Save();
         }
 
-        public void DoneOrder(int id)
+        public async Task DoneOrder(int id)
         {
             TblOrder order = _core.Order.GetById(id);
             order.Status = 2;
+            await Sms.SendSms(order.Client.TellNo, order.OrdeId.ToString(), "GhasrMobileDoneOrder");
             _core.Order.Update(order);
             _core.Order.Save();
         }
