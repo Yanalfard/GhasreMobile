@@ -10,6 +10,7 @@
     <link href="~/datePersion/persianDatepicker-default.css" rel="stylesheet" />
 }
 
+
 @section Aside{
     @*@await Component.InvokeAsync("SearchView")*@
 
@@ -24,6 +25,8 @@
             <div class="text-danger"></div>
         </div>
         <input type="hidden" class="entry" id="q" name="q" value="" />
+        <input type="hidden" class="entry" id="q" name="catId" value="" />
+        <input type="hidden" class="entry" id="q" name="cat" value="" />
         <input type="hidden" class="entry" name="pageId" value="@ViewData["pageId"]" id="pageId" />
 
         <div class="fg-col">
@@ -34,7 +37,7 @@
             <select class="entry brandList" name="brand" id="brand">
                 @foreach (var item in listBrand)
                 {
-                <option value="@item.BrandId">@item.Name</option>
+                    <option value="@item.BrandId">@item.Name</option>
                 }
             </select>
             <div class="text-danger"></div>
@@ -107,14 +110,18 @@
 
     </div>
     <div class="grid" id="grid">
-        @if(Model.Any()){
-        @foreach (var item in Model)
+
+        @if (Model.Any())
         {
-        <partial name="_ProductBlock" model="item" />
+            @foreach (var item in Model)
+            {
+                <partial name="_ProductBlock" model="item" />
+            }
         }
-        }
-        else{
-        <p>موردی یافت نشد</p>
+        else
+        {
+            <p>موردی یافت نشد</p>
+
         }
     </div>
 </div>
@@ -123,19 +130,28 @@
 
 @if (Model.Any())
 {
-<div class="loading">
-    <img src="~/st/v/loading.svg" />
-</div>
+    <div class="loading">
+        <img src="~/st/v/loading.svg" />
+    </div>
 }
 
 <input type="hidden" id="brandId" value="@ViewData["brand"]" />
 @section Scripts{
     <script src="~/datePersion/prism.js"></script>
     <script src="~/datePersion/persianDatepicker.js"></script>
+    @if (Model.Any())
+    {
+        <script>
+            var isLoading = false;
+        </script>
+    }
+    else
+    {
+        <script>
+            var isLoading = true;
+        </script>
+    }
     <script>
-        //$.get("/SearchProduct/", function (result) {
-        //    $('#grid').html(result);
-        //});
         $('#btnSearch').submit(function (e) {
             e.preventDefault();
             $(".loading").fadeIn();
@@ -148,6 +164,8 @@
             var maxPrice = $('#maxPrice').val();
             var maxDate = $('#maxDate').val();
             var minDate = $('#minDate').val();
+            var catId = $('#catId').val();
+            var cat = $('#cat').val();
             let available = "";
             if ($('#available').prop("checked") == true) {
                 available = "on";
@@ -160,7 +178,7 @@
             if ($('#discount').prop("checked") == true) {
                 discount = "on";
             }
-            $.get("/SearchProduct?pageId=" + 1 + "&name=" + name + "&q=" + "" + "&brand=" + brand + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + "&maxDate=" + maxDate + "&minDate=" + minDate + "&available=" + available + "&isFractional=" + isFractional + "&discount=" + discount, function (result) {
+            $.get("/SearchProduct?pageId=" + 1 + "&name=" + name + "&q=" + "" + "&brand=" + brand + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + "&maxDate=" + maxDate + "&minDate=" + minDate + "&available=" + available + "&isFractional=" + isFractional + "&discount=" + discount + "&cat=" + "" + "&catId=" + "", function (result) {
                 pageCount = 1;
                 if (result == false) {
                     isLoading = true;
@@ -206,9 +224,8 @@
         }
     </script>
 
-    <script>
 
-        let isLoading = false;
+    <script>
 
         let pageCount = 1;
         const myDiv = document.querySelector('.loading');
@@ -246,6 +263,8 @@
             var maxDate = $('#maxDate').val();
             var minDate = $('#minDate').val();
             let available = "";
+            var catId = $('#catId').val();
+            var cat = $('#cat').val();
             if ($('#available').prop("checked") == true) {
                 available = "on";
             }
@@ -258,7 +277,7 @@
                 discount = "on";
             }
 
-            $.get("/SearchProduct?pageId=" + pageCount + "&name=" + name + "&q=" + "" + "&brand=" + brand + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + "&maxDate=" + maxDate + "&minDate=" + minDate + "&available=" + available + "&isFractional=" + isFractional + "&discount=" + discount, function (result) {
+            $.get("/SearchProduct?pageId=" + pageCount + "&name=" + name + "&q=" + "" + "&brand=" + brand + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + "&maxDate=" + maxDate + "&minDate=" + minDate + "&available=" + available + "&isFractional=" + isFractional + "&discount=" + discount + "&cat=" + "" + "&catId=" + "", function (result) {
                 if (result == false) {
                     isLoading = true;
                     $(".loading").fadeOut();
@@ -270,5 +289,9 @@
             });
 
         }
+
+
+
+
     </script>
 }

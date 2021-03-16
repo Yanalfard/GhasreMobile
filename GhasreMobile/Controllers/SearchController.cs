@@ -37,6 +37,8 @@ namespace GhasreMobile.Controllers
                 ViewData["maxPrice"] = maxPrice;
                 ViewData["maxDate"] = maxDate;
                 ViewData["minDate"] = minDate;
+                ViewData["catId"] = catId;
+                ViewData["cat"] = cat;
                 ViewData["IsFractional"] = IsFractional == "on" ? true : false;
                 ViewData["discount"] = discount == "on" ? true : false;
                 ViewData["available"] = available == "on" ? true : false;
@@ -164,10 +166,11 @@ namespace GhasreMobile.Controllers
                 ViewData["maxPrice"] = maxPrice;
                 ViewData["maxDate"] = maxDate;
                 ViewData["minDate"] = minDate;
+                ViewData["catId"] = catId;
+                ViewData["cat"] = cat;
                 ViewData["IsFractional"] = IsFractional == "on" ? true : false;
                 ViewData["discount"] = discount == "on" ? true : false;
                 ViewData["available"] = available == "on" ? true : false;
-
                 List<TblProduct> list = db.Product.Get(i => i.IsDeleted == false).ToList();
                 if (available != null)
                 {
