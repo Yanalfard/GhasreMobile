@@ -8,20 +8,10 @@
                 {
                     @foreach (var item in Model.Items)
                     {
-                        <th uk-lightbox>
+                        <th>
                             <a href="/Product/@item.ProductID/@item.Name.Replace("/", "").Replace(" ", "-")">
                                 <img src="~/Images/ProductMain/@item.ImageName" alt="" />
                                 <h5>@item.Name</h5>
-                                @if (item.PriceAfterDiscount == 0)
-                                {
-                                    <label> @item.PriceBeforeDiscount.Value.ToString("#,0")</label>
-                                }
-                                else
-                                {
-                                    <label> @item.PriceBeforeDiscount.Value.ToString("#,0")</label>
-                                    <label> @item.PriceAfterDiscount.Value.ToString("#,0")</label>
-                                }
-
                                 @if (item.SumProduct > 0)
                                 {
                                     @if (item.SpecialOffer)
@@ -70,16 +60,13 @@
                                             </span>
                                         }
                                     }
-
                                 }
                                 else
                                 {
                                     <div class="unavailable">
-                                        <span>
-                                            <span></span>
+                                        <span class="text-4">
                                             ناموجود
                                         </span>
-                                        <span class="link-text"></span>
                                     </div>
                                 }
                             </a>
