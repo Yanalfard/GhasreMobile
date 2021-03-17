@@ -638,8 +638,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 foreach (var item in pros)
                 {
                     _core.ProductPropertyRel.Add(item);
+                    _core.ProductPropertyRel.Save();
                 }
-                _core.ProductPropertyRel.Save();
                 return await Task.FromResult(Redirect("/Admin/Product"));
             }
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
