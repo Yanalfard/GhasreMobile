@@ -293,9 +293,11 @@
         }
 
         function DeleteProperty(id, mainId) {
+            $("#overlay").fadeIn(300);
             var isDeleted = Bjax('/Admin/Product/DeleteProperty?id=', mainId, 'SP');
             if (isDeleted) {
                 $("#PropertyInCreate-" + id).remove();
+                $("#overlay").fadeOut(300);
             }
         }
 
@@ -310,8 +312,10 @@
         });
 
         function RemoveImageGallery(imageId) {
+            $("#overlay").fadeIn(300);
             $.post("/Admin/Product/RemoveAlbumImage/" + imageId, function (result) {
                 if (result == "true") {
+                    $("#overlay").fadeOut(300);
                     $("#Img-" + imageId).remove();
                     $("#RemoveGallery-" + imageId).remove();
                 }
