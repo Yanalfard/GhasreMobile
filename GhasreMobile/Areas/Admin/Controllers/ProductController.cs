@@ -577,10 +577,41 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     IEnumerable<TblProductImageRel> tblProductImageRel = _core.ProductImageRel.Get(p => p.ProductId == product.ProductId);
 
+                    if (tblProductImageRel.Count() > 0)
+                    {
+                        foreach (var item in tblProductImageRel)
+                        {
+                            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", item.Image.Image);
+
+                            if (System.IO.File.Exists(imagePath))
+                            {
+                                System.IO.File.Delete(imagePath);
+                            }
+                            _core.Album.Delete(item.Image.Album);
+                            _core.Image.Delete(item.Image);
+                            _core.Image.Save();
+                            _core.Image.Save();
+
+                        }
+                    }
+
                     foreach (var galleryimage in GalleryFile)
                     {
+
                         TblImage NewImage = new TblImage();
-                        NewImage.AlbumId = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).First().Image.AlbumId;
+                        if (_core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).Count() == 0)
+                        {
+                            TblAlbum album = new TblAlbum();
+                            album.Name = product.Name;
+                            _core.Album.Add(album);
+                            _core.Album.Save();
+                            NewImage.AlbumId = album.AlbumId;
+
+                        }
+                        else
+                        {
+                            NewImage.AlbumId = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).First().Image.AlbumId;
+                        }
                         NewImage.Image = Guid.NewGuid().ToString() + Path.GetExtension(galleryimage.FileName);
                         string savePathAlbum = Path.Combine(
                                             Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", NewImage.Image
@@ -631,7 +662,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 EditProduct.SearchText = product.SearchText;
                 EditProduct.IsFractional = product.IsFractional;
                 EditProduct.BrandId = product.BrandId;
-
+                EditProduct.DescriptionShortHtml = product.DescriptionShortHtml;
+                EditProduct.DescriptionLongHtml = product.DescriptionLongHtml;
                 _core.Product.Update(EditProduct);
                 _core.Product.Save();
                 _core.ProductPropertyRel.Get(i => i.ProductId == EditProduct.ProductId).ToList().ForEach(j => _core.ProductPropertyRel.Delete(j));
@@ -714,6 +746,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     }
                     _core.SpecialOffer.Save();
                 }
+
+                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", product.MainImage);
+
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+
+
                 _core.Product.Delete(product);
                 _core.Product.Save();
 

@@ -76,7 +76,6 @@
                     <div class="form-group col-md-2">
                         <label>قیمت</label>
                         <input data-type='currency' class="form-control form-control-sm PriceInput" value="@Model.PriceBeforeDiscount" placeholder="مثال : 80,000 تومان">
-                        <input value="@Model.PriceBeforeDiscount" class="form-control form-control-sm">
                         <input asp-for="PriceBeforeDiscount" type="hidden" />
                         <span asp-validation-for="PriceBeforeDiscount" class="text-danger"></span>
                     </div>
@@ -162,7 +161,7 @@
                                 <input type="file" value="@item.Image" class="custom-file-input form-control form-control-sm">
                                 <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">@item.Image.Image</label>
 
-                            </div><span onclick="RemoveImageGallery(@item.ImageId)" class="text-danger mr-md-2 mr-1" uk-icon="remove-circle-outline"></span>
+                            </div><span id="RemoveGallery-@item.ImageId" onclick="RemoveImageGallery(@item.ImageId)" class="text-danger mr-md-2 mr-1" uk-icon="remove-circle-outline"></span>
                         }
                     }
                 </div>
@@ -303,6 +302,7 @@
         $(".PriceInput").change(function () {
             var price = $(this).val().replaceAll(",", "");
             if ($.isNumeric(price)) {
+                console.log($("#PriceBeforeDiscount").val().replaceAll(",", ""));
                 $("#PriceBeforeDiscount").val($(this).val().replaceAll(",", ""));
             } else {
                 $(this).val("");
@@ -313,6 +313,7 @@
             $.post("/Admin/Product/RemoveAlbumImage/" + imageId, function (result) {
                 if (result == "true") {
                     $("#Img-" + imageId).remove();
+                    $("#RemoveGallery-" + imageId).remove();
                 }
             });
         }
