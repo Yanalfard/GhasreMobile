@@ -333,6 +333,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                                 propertyRel.ProductId = NewProduct.ProductId;
                                 _core.ProductPropertyRel.Add(propertyRel);
+                                _core.ProductPropertyRel.Save();
                             }
                         }
 

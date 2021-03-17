@@ -54,7 +54,7 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
+                                <tr id="productId_@item.ProductId">
                                     <td>@item.ProductId</td>
                                     <td>@item.Name</td>
                                     <td>
@@ -277,15 +277,22 @@
                 window.location.reload();
             });
         }
-
+       
         function Delete(id) {
-            $.post("/Admin/Product/Delete/" + id, function (result) {
-                if (result == "true") {
-                    window.location.reload();
-                } else {
-                    UIkit.notification({ message: result });
-                }
-            });
+            if (confirm('آیا از حذف کالای  مورد نظر مطمئن هستید؟')) {
+                $.post("/Admin/Product/Delete/" + id, function (result) {
+                    if (result == "true") {
+                        $('#productId_' + id).addClass('text-danger');
+                        $("#productId_" + id).hide('slow');
+                        //window.location.reload();
+                    } else {
+                        UIkit.notification({ message: result });
+                    }
+                });
+            } else {
+                // Do nothing!
+            }
+
         }
 
         function Selling(id) {
