@@ -633,7 +633,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                 _core.Product.Update(EditProduct);
                 _core.Product.Save();
-                TblProduct productSaved = _core.Product.Get(i => i.Name == EditProduct.Name).ToList().First();
                 _core.ProductPropertyRel.Get(i => i.ProductId == EditProduct.ProductId).ToList().ForEach(j => _core.ProductPropertyRel.Delete(j));
                 _core.ProductPropertyRel.Save();
                 foreach (var item in pros)

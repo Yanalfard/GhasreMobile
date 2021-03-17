@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <aside id="PropertyPanel">
-                    @foreach (var item in Model.TblProductPropertyRel)
+                    @foreach (var item in Model.TblProductPropertyRel.OrderBy(i => i.ProductPropertyRelId))
                     {
                         <div id="PropertyInCreate-@item.PropertyId" class="form-inline col-md-7 mt-2">
                             <label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">@item.Property.Name:</label>
@@ -217,11 +217,11 @@
         function SetNewInputGallery() {
             $("#GalleryPanel").append(
                 `<div class="custom-file col-md-7 mt-3">
-                                                           <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
-                                                           <label class="custom-file-label" data-browse="انتخاب">
-                                                                انتخاب فایل
-                                                           </label>
-                                                         </div>`
+                                                               <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
+                                                               <label class="custom-file-label" data-browse="انتخاب">
+                                                                    انتخاب فایل
+                                                               </label>
+                                                             </div>`
             );
 
             //$("#GalleryPanel").append("<div><input type='file' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/></div>");
