@@ -47,11 +47,11 @@
         <label class="fg-label">قیمت</label>
         <div class="rowr uk-child-width-1-2">
             <div class="col">
-                <input type="number" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" id="minPrice" name="minPrice" value="@ViewData["minPrice"]" />
+                <input type="number" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" id="minPrice" name="minPrice" value="@ViewData["minPrice"]" min="0"/>
                 <div class="text-danger"></div>
             </div>
             <div class="col">
-                <input type="number" class="entry" aria-label="priceTo" placeholder="تا" name="maxPrice" id="maxPrice" value="@ViewData["maxPrice"]" />
+                <input type="number" class="entry" aria-label="priceTo" placeholder="تا" name="maxPrice" id="maxPrice" value="@ViewData["maxPrice"]" min="0" />
                 <div class="text-danger"></div>
             </div>
         </div>
@@ -152,8 +152,12 @@
         </script>
     }
     <script>
+
+
+
         $('#btnSearch').submit(function (e) {
             e.preventDefault();
+        
             $(".loading").fadeIn();
             //let data = $(this).serializeArray();
             var name = $('#name').val();
@@ -192,6 +196,8 @@
                 $(".loading").fadeOut();
             });
         });
+
+
     </script>
     <script>
         $('.brandList').val($('#brandId').val());

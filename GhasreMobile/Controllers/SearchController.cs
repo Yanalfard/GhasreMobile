@@ -184,7 +184,7 @@ namespace GhasreMobile.Controllers
                 }
                 if (discount != null)
                 {
-                    list = list.Where(i => i.PriceAfterDiscount > 0).ToList();
+                    list = list.Where(i => i.PriceAfterDiscount > 0 ).ToList();
                 }
                 if (IsFractional != null)
                 {
@@ -224,11 +224,11 @@ namespace GhasreMobile.Controllers
                 }
                 if (minPrice != 0)
                 {
-                    list = list.Where(i => i.PriceAfterDiscount > minPrice || i.PriceBeforeDiscount > minPrice).ToList();
+                    list = list.Where(i => i.PriceAfterDiscount == 0 ? minPrice >= i.PriceBeforeDiscount : minPrice >= i.PriceAfterDiscount).ToList();
                 }
                 if (maxPrice != 0)
                 {
-                    list = list.Where(i => i.PriceAfterDiscount < maxPrice || i.PriceBeforeDiscount < maxPrice).ToList();
+                    list = list.Where(i => i.PriceAfterDiscount == 0 ? minPrice <= i.PriceBeforeDiscount : minPrice <= i.PriceAfterDiscount).ToList();
                 }
                 if (maxDate != null)
                 {
