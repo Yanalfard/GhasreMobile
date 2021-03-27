@@ -45,7 +45,7 @@
                             {
                                 <tr>
                                     <td>@item.Title</td>
-                                    <td>@item.DateCreated.</td>
+                                    <td>@item.DateCreated.Value.AllToShamsi()</td>
                                     <td>
 
                                         @if (item.IsValid)
@@ -64,6 +64,9 @@
                                     <td>
                                         <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
                                             <a onclick="Info(@item.TopicId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
+                                        </span>
+                                        <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
+                                            <a onclick="Delete(@item.TopicId)" class="text-danger" uk-icon="trash-outline"></a>
                                         </span>
                                     </td>
                                 </tr>
@@ -87,6 +90,18 @@
 @section Script{
 
     <script>
+
+        function Delete(id) {
+            if (confirm("حذف تالار") == true) {
+                $.post("/Admin/Topic/Delete/" + id, function (result) {
+                    if (result == "true") {
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+
+
         function Info(id) {
             $.get("/Admin/Topic/Info/" + id, function (result) {
                 $(".modal-content").html(result);
