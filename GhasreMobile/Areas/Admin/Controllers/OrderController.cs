@@ -70,7 +70,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                 var skip = (ordersInAdmin.PageId - 1) * 18;
 
-                return View(orders.Skip(skip).Take(18));
+                return View(orders.OrderByDescending(o=>o.OrdeId).Skip(skip).Take(18));
             }
             else
             {
