@@ -61,7 +61,8 @@ namespace GhasreMobile.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
+        [Route("/Forum/VoteUp/{id}")]
         public async Task<IActionResult> VoteUp(int id)
         {
             try
@@ -82,8 +83,9 @@ namespace GhasreMobile.Controllers
             }
 
         }
-        [HttpPost]
 
+        [HttpGet]
+        [Route("/Forum/VoteDown/{id}")]
         public async Task<IActionResult> VoteDown(int id)
         {
             try

@@ -144,7 +144,8 @@ function dbVoteDown(val) {
 
     vote.innerText = parseInt(vote.innerText) - 1;
 
-    fetch("/Forum/VoteDown?id=" + val).then(i => {
+    debugger;
+    fetch("/Forum/VoteDown/" + val).then(i => {
         console.log(i);
     });
 
@@ -165,7 +166,8 @@ function dbVoteUp(val) {
     var vote = document.getElementById('Vote' + val);
     vote.innerText = parseInt(vote.innerText) + 1;
 
-    fetch("/Forum/VoteUp?id=" + val)
+    debugger;
+    fetch("/Forum/VoteUp/" + val)
         .then(i => {
             console.log(i);
         });

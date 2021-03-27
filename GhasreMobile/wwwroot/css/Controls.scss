@@ -1,6 +1,7 @@
 ﻿@import '_colors.scss';
 @import '_layout.scss';
 @import '_starRating.scss';
+@import '_animations.scss';
 
 button, .btn, a, a:hover .js-upload, input[type=file] {
     cursor: pointer;
@@ -1363,6 +1364,11 @@ $background-highlight: #eee;
 
         > a {
             display: flex;
+
+            img {
+                margin: auto;
+                max-height: 264px;
+            }
         }
 
         .star {
@@ -1570,6 +1576,7 @@ $background-highlight: #eee;
         @include obj;
         width: 100%;
         height: auto;
+        max-height: 264px;
     }
 }
 
