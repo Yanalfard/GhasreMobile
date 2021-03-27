@@ -14,81 +14,83 @@
 @section Aside{
     @*@await Component.InvokeAsync("SearchView")*@
 
-<form id="btnSearch" swap="filter" class="mat-card col">
-    <h4 class="uk-margin-bottom">
-        فیلتر ها
-    </h4>
+    <form id="btnSearch" swap="filter" class="mat-card col">
+        <h4 class="uk-margin-bottom">
+            فیلتر ها
+        </h4>
 
-    <div class="fg-col">
-        <div class="fg-label">نام محصول</div>
-        <input type="text" class="entry" name="name" id="name" value="@ViewData["name"]" />
-        <div class="text-danger"></div>
-    </div>
-    <input type="hidden" class="entry" id="q" name="q" value="@ViewData["q"]" />
-    <input type="hidden" class="entry" id="catId" name="catId" value="@ViewData["catId"]" />
-    <input type="hidden" class="entry" id="cat" name="cat" value="@ViewData["cat"]" />
-    <input type="hidden" class="entry" id="brandsId" name="brandsId" value="@ViewData["brandId"]" />
-    <input type="hidden" class="entry" name="pageId" id="pageId" value="@ViewData["pageId"]" />
-    <div class="fg-col">
-        <div class="fg-label">برند محصول</div>
-        @{
-            List<TblBrand> listBrand = ViewData["brandList"] as List<TblBrand>;
-        }
-        <select class="entry brandList" name="brand" id="brand">
-            @foreach (var item in listBrand)
-            {
-                <option value="@item.BrandId">@item.Name</option>
+        <div class="fg-col">
+            <div class="fg-label">نام محصول</div>
+            <input type="text" class="entry" name="name" id="name" value="@ViewData["name"]" />
+            <div class="text-danger"></div>
+        </div>
+        <input type="hidden" class="entry" id="q" name="q" value="@ViewData["q"]" />
+        <input type="hidden" class="entry" id="catId" name="catId" value="@ViewData["catId"]" />
+        <input type="hidden" class="entry" id="cat" name="cat" value="@ViewData["cat"]" />
+        <input type="hidden" class="entry" id="brandsId" name="brandsId" value="@ViewData["brandId"]" />
+        <input type="hidden" class="entry" name="pageId" id="pageId" value="@ViewData["pageId"]" />
+        <div class="fg-col">
+            <div class="fg-label">برند محصول</div>
+            @{
+                List<TblBrand> listBrand = ViewData["brandList"] as List<TblBrand>;
             }
-        </select>
-        <div class="text-danger"></div>
-    </div>
+            <select class="entry brandList" name="brand" id="brand">
+                @foreach (var item in listBrand)
+                {
+                    <option value="@item.BrandId">@item.Name</option>
+                }
+            </select>
+            <div class="text-danger"></div>
+        </div>
 
-    <div class="fg-col">
-        <label class="fg-label">قیمت</label>
-        <div class="rowr uk-child-width-1-2">
-            <div class="col">
-                <input type="number" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" id="minPrice" name="minPrice" value="@ViewData["minPrice"]" min="0"/>
-                <div class="text-danger"></div>
-            </div>
-            <div class="col">
-                <input type="number" class="entry" aria-label="priceTo" placeholder="تا" name="maxPrice" id="maxPrice" value="@ViewData["maxPrice"]" min="0" />
-                <div class="text-danger"></div>
+        <div class="fg-col">
+            <label class="fg-label">قیمت</label>
+            <div class="rowr uk-child-width-1-2">
+                <div class="col">
+                    <label class="fg-label text-4">از قیمت</label>
+                    <input type="number" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="از" id="minPrice" name="minPrice" value="@ViewData["minPrice"]" min="0" />
+                    <div class="text-danger"></div>
+                </div>
+                <div class="col">
+                    <label class="fg-label text-4">تا قیمت </label>
+                    <input type="number" class="entry" aria-label="priceTo" placeholder="تا" name="maxPrice" id="maxPrice" value="@ViewData["maxPrice"]" min="0" />
+                    <div class="text-danger"></div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="fg-col">
-        <label class="fg-label">تاریخ ثبت</label>
-        <div class="rowr uk-child-width-1-2">
-            <div class="col">
-                <label class="fg-label text-4">از تاریخ</label>
-                <input type="text" readonly onfocusout="checkDate(this)" lang="fa" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="mm/dd/yyyy" id="minDate" name="minDate" value="@ViewData["minDate"]" autocomplete="off" />
-                <div class="text-danger"></div>
-            </div>
-            <div class="col">
-                <label class="fg-label text-4">تا تاریخ</label>
-                <input type="text" readonly onfocusout="checkDate(this)" lang="fa" class="entry" aria-label="priceTo" placeholder="mm/dd/yyyy" id="maxDate" name="maxDate" value="@ViewData["maxDate"]" autocomplete="off" />
-                <div class="text-danger"></div>
+        <div class="fg-col">
+            <label class="fg-label">تاریخ ثبت</label>
+            <div class="rowr uk-child-width-1-2">
+                <div class="col">
+                    <label class="fg-label text-4">از تاریخ</label>
+                    <input type="text" readonly onfocusout="checkDate(this)" lang="fa" class="entry uk-margin-small-left" aria-label="priceFrom" placeholder="mm/dd/yyyy" id="minDate" name="minDate" value="@ViewData["minDate"]" autocomplete="off" />
+                    <div class="text-danger"></div>
+                </div>
+                <div class="col">
+                    <label class="fg-label text-4">تا تاریخ</label>
+                    <input type="text" readonly onfocusout="checkDate(this)" lang="fa" class="entry" aria-label="priceTo" placeholder="mm/dd/yyyy" id="maxDate" name="maxDate" value="@ViewData["maxDate"]" autocomplete="off" />
+                    <div class="text-danger"></div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <label class="text-2 rowr uk-margin-small-bottom">
-        <input class="uk-checkbox" type="checkbox" @(((bool)ViewData["available"] == true) ? "checked" : "") id="available" name="available" />
-        فقط کالا های موجود
-    </label>
+        <label class="text-2 rowr uk-margin-small-bottom">
+            <input class="uk-checkbox" type="checkbox" @(((bool)ViewData["available"] == true) ? "checked" : "") id="available" name="available" />
+            فقط کالا های موجود
+        </label>
 
-    <label class="text-2 rowr uk-margin-small-bottom">
-        <input class="uk-checkbox" type="checkbox" id="isFractional" @(((bool)ViewData["IsFractional"] == true) ? "checked" : "") name="isFractional" />
-        فقط فروش های اقساطی
-    </label>
+        <label class="text-2 rowr uk-margin-small-bottom">
+            <input class="uk-checkbox" type="checkbox" id="isFractional" @(((bool)ViewData["IsFractional"] == true) ? "checked" : "") name="isFractional" />
+            فقط فروش های اقساطی
+        </label>
 
-    <label class="text-2 rowr uk-margin-small-bottom">
-        <input class="uk-checkbox" type="checkbox" id="discount" name="discount" />
-        فقط کالا های تخفیف دار
-    </label>
-    <button class="btn btn-primary uk-margin-top">اعمال فیلتر ها</button>
-</form>
+        <label class="text-2 rowr uk-margin-small-bottom">
+            <input class="uk-checkbox" type="checkbox" id="discount" name="discount" />
+            فقط کالا های تخفیف دار
+        </label>
+        <button class="btn btn-primary uk-margin-top">اعمال فیلتر ها</button>
+    </form>
 
     <div swap="Ad"> @await Component.InvokeAsync("AdView")</div>
 
@@ -103,7 +105,7 @@
 
             <nav class="breadcrumb uk-padding-remove">
                 <a href="#">جستجو</a>
-                <a href="#">@ViewData["Title"]</a>
+                <a href="#" >@ViewData["Title"]</a>
             </nav>
 
         </div>
@@ -121,7 +123,10 @@
         else
         {
             <p>موردی یافت نشد</p>
-
+            <script>
+                document.querySelector('title').text = 'موردی یافت نشد';
+               
+            </script>
         }
     </div>
 </div>
@@ -157,7 +162,7 @@
 
         $('#btnSearch').submit(function (e) {
             e.preventDefault();
-        
+            $("#overlay").fadeIn(300);
             $(".loading").fadeIn();
             //let data = $(this).serializeArray();
             var name = $('#name').val();
@@ -185,12 +190,17 @@
             }
             $.get("/SearchProduct?pageId=" + 1 + "&name=" + name + "&q=" + "" + "&brand=" + brand + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + "&maxDate=" + maxDate + "&minDate=" + minDate + "&available=" + available + "&isFractional=" + isFractional + "&discount=" + discount + "&cat=" + "" + "&catId=" + "" + "&brandId=" + "", function (result) {
                 pageCount = 1;
+                $("#overlay").fadeOut(300);
                 if (result == false) {
                     isLoading = true;
                     $(".loading").fadeOut();
                     document.getElementById('grid').innerHTML = "موردی یافت نشد";
+                     if (pageCount == 1) {
+                        document.querySelector('title').text = 'موردی یافت نشد';
+                    }
                     return;
                 }
+                document.querySelector('title').text = 'جستوجوی پیشرفته';
                 document.getElementById('grid').innerHTML = result;
                 isLoading = false;
                 $(".loading").fadeOut();
@@ -289,8 +299,13 @@
                 if (result == false) {
                     isLoading = true;
                     $(".loading").fadeOut();
+                    if (pageCount == 1) {
+                        document.querySelector('title').text = 'موردی یافت نشد';
+                    }
                     return;
                 }
+                document.querySelector('title').text = 'جستوجوی پیشرفته';
+
                 document.getElementById('grid').innerHTML += result
                 isLoading = false;
                 $(".loading").fadeOut();

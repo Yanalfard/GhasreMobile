@@ -159,7 +159,26 @@ namespace GhasreMobile.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
-
+        public async Task<IActionResult> DeleteFromCompare(int id, string ReturnUrl = "/")
+        {
+            try
+            {
+                List<CompareItemVm> list = new List<CompareItemVm>();
+                var Session = HttpContext.Session.GetComplexData<List<CompareItemVm>>("Compare");
+                if (Session != null)
+                {
+                    list = Session as List<CompareItemVm>;
+                    int index = list.FindIndex(p => p.ProductID == id);
+                    list.RemoveAt(index);
+                    HttpContext.Session.SetComplexData("Compare", list);
+                }
+                return await Task.FromResult(Redirect(ReturnUrl));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
         public async Task<IActionResult> Bookmarks()
         {
             try
@@ -242,7 +261,7 @@ namespace GhasreMobile.Controllers
                                 addOrderDetail.Price = (int)product.PriceAfterDiscount;
                             }
                         }
-                       
+
                         db.OrderDetail.Add(addOrderDetail);
 
                     }

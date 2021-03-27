@@ -9,7 +9,7 @@
                     @foreach (var item in Model.Items)
                     {
                         <th class="position-relative">
-                            <button class="remove uk-position-absolute btn-icon uk-border-rounded"
+                            <button onclick="window.location.href = '/ShopCart/DeleteFromCompare/@item.ProductID?ReturnUrl=' + window.location.href" class="remove uk-position-absolute btn-icon uk-border-rounded"
                                     uk-icon="trash"
                                     uk-tooltip="حذف از لیست مقایسه"></button>
                             <a href="/Product/@item.ProductID/@item.Name.Replace("/", "").Replace(" ", "-")">

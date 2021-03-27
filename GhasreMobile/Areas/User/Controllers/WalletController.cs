@@ -16,7 +16,7 @@ namespace GhasreMobile.Areas.User.Controllers
     public class WalletController : Controller
     {
         readonly string Domain = "https://localhost:44371";
-        //readonly Domain = "https://gasremobile2004.com";
+       // readonly string Domain = "https://gasremobile2004.com";
 
 
         Core db = new Core();
