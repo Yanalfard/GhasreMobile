@@ -32,12 +32,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 if (ordersInAdmin.OrderId != 0)
                 {
                     orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
-                    count = orders.Count();
                 }
                 if (ordersInAdmin.TellNo != null)
                 {
-                    orders = orders.Where(i => i.Client.TellNo == ordersInAdmin.TellNo).ToList();
-                    count = orders.Count();
+                    orders = orders.Where(i => i.Client.TellNo.Contains(ordersInAdmin.TellNo)).ToList();
+                   
                 }
                 if (ordersInAdmin.StartDate != null)
                 {
@@ -45,7 +44,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     string[] Start = ordersInAdmin.StartDate.Split('/');
                     DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
                     orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
-                    count = orders.Count();
                 }
                 if (ordersInAdmin.EndDate != null)
                 {
@@ -53,8 +51,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     string[] Start = ordersInAdmin.EndDate.Split('/');
                     DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
                     orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
-                    count = orders.Count();
                 }
+
+
+                count = orders.Count();
+
+
                 ViewBag.pageid = ordersInAdmin.PageId;
 
                 ViewBag.PageCount = count / 18;
@@ -75,12 +77,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 if (ordersInAdmin.OrderId != 0)
                 {
                     orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
-                    count = orders.Count();
+                    
                 }
                 if (ordersInAdmin.TellNo != null)
                 {
-                    orders = orders.Where(i => i.Client.TellNo == ordersInAdmin.TellNo).ToList();
-                    count = orders.Count();
+                    orders = orders.Where(i => i.Client.TellNo.Contains(ordersInAdmin.TellNo)).ToList();
+                    
                 }
                 if (ordersInAdmin.StartDate != null)
                 {
@@ -88,7 +90,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     string[] Start = ordersInAdmin.StartDate.Split('/');
                     DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
                     orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
-                    count = orders.Count();
+                    
                 }
                 if (ordersInAdmin.EndDate != null)
                 {
@@ -96,8 +98,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     string[] Start = ordersInAdmin.EndDate.Split('/');
                     DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
                     orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
-                    count = orders.Count();
+                    
                 }
+
+                count = orders.Count();
+
                 ViewBag.pageid = ordersInAdmin.PageId;
 
                 ViewBag.PageCount = count / ordersInAdmin.InPageCount;

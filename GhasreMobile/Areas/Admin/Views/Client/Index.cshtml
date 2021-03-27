@@ -31,6 +31,7 @@
                                 <th scope="col">نام کاربر</th>
                                 <th scope="col">شماره تماس</th>
                                 <th scope="col">کیف پول</th>
+                                <th scope="col">وضعیت کاربر</th>
                                 <th scope="col">نقش</th>
                                 <th scope="col">تاریخ ثبت نام</th>
                                 <th scope="col">عملیات</th>
@@ -43,12 +44,34 @@
                                     <td>@item.Name</td>
                                     <td>@item.TellNo</td>
                                     <td class="text-success">@item.Balance.ToString("#,0")<span></span></td>
+                                    <td>
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="text-success">فعال</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">غیر فعال</span>
+                                        }
+                                    </td>
                                     <td>@item.Role.Title</td>
                                     <td>@item.DateCreated.Value.AllToShamsi()</td>
                                     <td>
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
                                             <a onclick="Edit(@item.ClientId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
                                         </span>
+                                        @if (item.IsActive)
+                                        {
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="غیر فعال کردن">
+                                                <a onclick="IsActive(@item.ClientId)" class="text-danger" uk-icon="ban-outline"></a>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="فعال کردن">
+                                                <a onclick="IsActive(@item.ClientId)" class="text-success" uk-icon="checkmark-outline"></a>
+                                            </span>
+                                        }
                                         @if (item.RoleId == 1)
                                         {
                                             <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ورود به عنوان این کاربر">
@@ -81,8 +104,15 @@
             });
         }
 
+        function IsActive(id) {
+            $.post("/Admin/Client/IsActive/" + id, function (result) {
+                if (result == "true") {
+                    window.location.reload();
+                }
+            });
+        }
 
-        function SearchInputName() {
+        function BtnSearch() {
             var SearchInputName = $("#SearchInputName").val();
             var SearchInputTelNo = $("#SearchInputTelNo").val();
             window.location.href = "/Admin/Client?page=1&Name=" + SearchInputName + "&TelNo=" + SearchInputTelNo;
