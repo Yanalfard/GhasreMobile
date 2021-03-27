@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GhasreMobile;
 
 namespace GhasreMobile.Areas.User.Controllers
 {
@@ -14,6 +15,10 @@ namespace GhasreMobile.Areas.User.Controllers
     [PermissionChecker("user,employee,admin")]
     public class WalletController : Controller
     {
+        readonly string Domain = "https://localhost:44371";
+        //readonly Domain = "https://gasremobile2004.com";
+
+
         Core db = new Core();
         TblClient SelectUser()
         {
@@ -68,7 +73,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     #region Online Payment
 
                     var payment = new ZarinpalSandbox.Payment((int)charge.Amount);
-                    var res = payment.PaymentRequest("شارژ کیف پول", "https://gasremobile2004.com/OnlinePayment/" + addWallet.WalletId, "gasremobile2004@gmail.Com", "09357035985");
+                    var res = payment.PaymentRequest("شارژ کیف پول", Domain + "/OnlinePayment/" + addWallet.WalletId, "gasremobile2004@gmail.Com", "09357035985");
 
                     if (res.Result.Status == 100)
                     {

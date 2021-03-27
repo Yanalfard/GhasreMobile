@@ -87,9 +87,6 @@
                                             <span data-placement="top" data-toggle="tooltip" title="" data-original-title="تکمیل سفارش">
                                                 <a onclick="DoneOrder(@item.OrdeId)" class="text-success" uk-icon="checkmark-done-outline"></a>
                                             </span>
-                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="برگشت برای ارسال">
-                                                <a onclick="ChangeSendOrderStatus(@item.OrdeId)" class="text-success" uk-icon="close-circle-outline"></a>
-                                            </span>
                                         }
                                         else if (item.Status == 2)
                                         {
@@ -272,13 +269,6 @@
             window.location.href = "/Admin/Order?pageId=" + pageId + "&InPageCount=" + InPageCount + "&OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate;
 
         });
-
-
-        function ChangeSendOrderStatus(id) {
-            $.post("/Admin/Order/ChangeSendOrderStatus/" + id, function () {
-                window.location.reload();
-            });
-        }
 
     </script>
 }

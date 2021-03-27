@@ -1,0 +1,28 @@
+﻿@import '_colors.scss';
+@import '_layout.scss';
+
+.anim-add-to-cart {
+    animation-name:anim-add-to-cart;
+    animation-iteration-count:1;
+    animation-duration:.3s;
+}
+
+@keyframes anim-add-to-cart {
+    0% {
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    32% {
+        -moz-box-shadow: 0 0 0 12px transparentize($primary,.8);
+        -webkit-box-shadow: 0 0 0 12px transparentize($primary,.8);
+        box-shadow: 0 0 0 12px transparentize($primary,.8);
+    }
+
+    100% {
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+}

@@ -17,21 +17,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1, int SearchInputId = 0, string SearchInputTelNo = null)
         {
+            IEnumerable<TblTicket> data = _core.Ticket.Get();
 
             if (SearchInputId != 0)
             {
-                IEnumerable<TblTicket> SearchIdtickets = PagingList.Create(_core.Ticket.Get(s => s.TicketId == SearchInputId), 40, page);
-                return View(SearchIdtickets);
+                data = data.Where(s => s.TicketId == SearchInputId);
             }
 
             if (!string.IsNullOrEmpty(SearchInputTelNo))
             {
-                IEnumerable<TblTicket> SearchTelNo = PagingList.Create(_core.Ticket.Get(t => t.Client.TellNo.Contains(SearchInputTelNo)), 40, page);
-                return View(SearchInputTelNo);
+                data = data.Where(s => s.Client.TellNo.Contains(SearchInputTelNo));
             }
 
-            IEnumerable<TblTicket> tickets = PagingList.Create(_core.Ticket.Get().OrderByDescending(t => t.TicketId), 40, page);
-            return View(tickets);
+            return View(PagingList.Create(data, 40, page));
 
         }
 

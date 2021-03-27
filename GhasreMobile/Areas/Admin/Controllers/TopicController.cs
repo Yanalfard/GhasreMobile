@@ -29,7 +29,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
 
         }
-        
+
         public IActionResult Info(int id)
         {
             return ViewComponent("TopicInfoAdmin", new { id = id });
@@ -41,6 +41,22 @@ namespace GhasreMobile.Areas.Admin.Controllers
             topic.IsValid = !topic.IsValid;
             _core.Topic.Update(topic);
             _core.Topic.Save();
+        }
+
+        public string Delete(int id)
+        {
+            TblTopic topic = _core.Topic.GetById(id);
+            if (topic.TblTopicCommentRel.Count() > 0)
+            {
+                foreach (var item in topic.TblTopicCommentRel)
+                {
+                    _core.TopicCommentRel.Delete(item);
+                }
+                _core.TopicCommentRel.Save();
+            }
+            _core.Topic.Delete(topic);
+            _core.Topic.Save();
+            return "true";
         }
 
         protected override void Dispose(bool disposing)

@@ -21,22 +21,20 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1, string Name = null, string TelNo = null)
         {
+            IEnumerable<TblClient> data = _core.Client.Get();
+
             if (!string.IsNullOrEmpty(Name))
             {
-                IEnumerable<TblClient> clients = PagingList.Create(_core.Client.Get(c => c.Name.Contains(Name)), 40, page);
-                return View(clients);
+                data = data.Where(c => c.Name.Contains(Name));
             }
 
             if (!string.IsNullOrEmpty(TelNo))
             {
-                IEnumerable<TblClient> clients = PagingList.Create(_core.Client.Get(c => c.Name.Contains(Name)), 40, page);
-                return View(clients);
+                data = data.Where(c => c.TellNo.Contains(TelNo));
             }
-            else
-            {
-                IEnumerable<TblClient> clients = PagingList.Create(_core.Client.Get().OrderByDescending(b => b.ClientId), 40, page);
-                return View(clients);
-            }
+
+            return View(PagingList.Create(data.OrderByDescending(b => b.ClientId), 40, page));
+
 
         }
 
@@ -44,6 +42,16 @@ namespace GhasreMobile.Areas.Admin.Controllers
         public IActionResult Edit(int id)
         {
             return ViewComponent("ClientEditAdmin", new { id = id });
+        }
+
+        [HttpPost]
+        public string IsActive(int id)
+        {
+            TblClient client = _core.Client.GetById(id);
+            client.IsActive = !client.IsActive;
+            _core.Client.Update(client);
+            _core.Client.Save();
+            return "true";
         }
 
         [HttpPost]
