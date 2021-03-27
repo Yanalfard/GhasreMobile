@@ -65,30 +65,15 @@
                     <span uk-icon="icon:filter-solid;ratio:.8"></span>
                 </button>
 
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <a href="/User/Cart" class="cart">
-                        <span class="label">سبد خرید</span>
-                        <div class="badge">
-                            <span id="countShopCart"></span>
-                        </div>
-                        <span class="icon">
-                            <span uk-icon="cart-outline"></span>
-                        </span>
-                    </a>
-                }
-                else
-                {
-                    <a href="/ShopCart" class="cart">
-                        <span class="label">سبد خرید</span>
-                        <div class="badge">
-                            <span id="countShopCart"></span>
-                        </div>
-                        <span class="icon">
-                            <span uk-icon="cart-outline"></span>
-                        </span>
-                    </a>
-                }
+                <a href="@(User.Identity.IsAuthenticated?"/User/Cart":"/ShopCart")" class="cart">
+                    <span class="label">سبد خرید</span>
+                    <div class="badge">
+                        <span id="countShopCart"></span>
+                    </div>
+                    <span class="icon">
+                        <span uk-icon="cart-outline"></span>
+                    </span>
+                </a>
 
             </div>
 
@@ -109,60 +94,56 @@
                 </nav>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    @if (User.Claims.Last().Value == "user")
-                    {
-                        <a href="" class="profile">
-                            <span>پروفایل</span>
-                            <span uk-icon="person-circle-outline"></span>
-                        </a>
+    @if (User.Claims.Last().Value == "user")
+    {
+<a href="" class="profile">
+    <span>پروفایل</span>
+    <span uk-icon="person-circle-outline"></span>
+</a>
 
-                        <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
-                            <div class="mat-card">
-                                <ul class="col g-2">
-                                    <li>
-                                        <a class="link-text" href="/User/Profile">پروفایل</a>
-                                    </li>
-                                    <li>
-                                        <a class="link-text" href="/User/Cart">سبد خرید</a>
-                                    </li>
-                                    <li>
-                                        <a class="link-text" href="/LogOut">خروج</a>
-                                    </li>
-                                </ul>
-                            </div>
+                    <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
+                        <div class="mat-card">
+                            <ul class="col g-2">
+                                <li>
+                                    <a class="link-text" href="/User/Profile">پروفایل</a>
+                                </li>
+                                <li>
+                                    <a class="link-text" href="/User/Cart">سبد خرید</a>
+                                </li>
+                                <li>
+                                    <a class="link-text" href="/LogOut">خروج</a>
+                                </li>
+                            </ul>
                         </div>
-                    }
-                    else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
-                    {
-                        <a href="" class="profile">
-                            <span>پروفایل</span>
-                            <span uk-icon="person-circle-outline"></span>
-                        </a>
-
-                        <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
-                            <div class="mat-card">
-                                <ul class="col g-2">
-                                    <li>
-                                        <a class="link-text" href="/Admin/">پنل مدیریت</a>
-                                    </li>
-                                    <li>
-                                        <a class="link-text" href="/User/Profile">پنل کاربری</a>
-                                    </li>
-                                    <li>
-                                        <a class="link-text" href="/LogOut">خروج</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    }
-                }
-                else
+                    </div> }
+                else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
                 {
-                    <a href="/Login" class="profile">
-                        <span>ورود</span>
-                        <span uk-icon="person-circle-outline"></span>
-                    </a>
-                }
+<a href="" class="profile">
+    <span>پروفایل</span>
+    <span uk-icon="person-circle-outline"></span>
+</a>
+
+                    <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
+                        <div class="mat-card">
+                            <ul class="col g-2">
+                                <li>
+                                    <a class="link-text" href="/Admin/">پنل مدیریت</a>
+                                </li>
+                                <li>
+                                    <a class="link-text" href="/User/Profile">پنل کاربری</a>
+                                </li>
+                                <li>
+                                    <a class="link-text" href="/LogOut">خروج</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>} }
+else
+{
+<a href="/Login" class="profile">
+    <span>ورود</span>
+    <span uk-icon="person-circle-outline"></span>
+</a>}
 
 
                 @*<a href="" class="enter">
@@ -184,21 +165,19 @@
     <!-- Single means the layout has only one Column -->
     @if (ViewData["Single"] == null)
     {
-        <div class="m uk-container">
-            <main class="m-content">
-                @RenderBody()
-            </main>
-            <aside class="m-aside">
-                @RenderSection("Aside", false)
-            </aside>
-        </div>
-    }
-    else if (ViewData["Single"] != null)
-    {
-        <div class="uk-container">
-            @RenderBody()
-        </div>
-    }
+<div class="m uk-container">
+    <main class="m-content">
+        @RenderBody()
+    </main>
+    <aside class="m-aside">
+        @RenderSection("Aside", false)
+    </aside>
+</div> }
+else if (ViewData["Single"] != null)
+{
+<div class="uk-container">
+    @RenderBody()
+</div>}
 
     <footer>
         <div class="uk-container col uk-light">
@@ -419,6 +398,12 @@
             $.get("/api/Shop/" + id + "/" + colorId, function (res) {
                 $("#countShopCart").html(res);
                 // updateShopCart();
+
+                const element = document.querySelector('.cart');
+                element.classList.remove('anim-add-to-cart')
+                void element.offsetWidth;
+                element.classList.add('anim-add-to-cart')
+
             });
         }
         function AddToCompare(id) {

@@ -8,7 +8,10 @@
                 {
                     @foreach (var item in Model.Items)
                     {
-                        <th>
+                        <th class="position-relative">
+                            <button class="remove uk-position-absolute btn-icon uk-border-rounded"
+                                    uk-icon="trash"
+                                    uk-tooltip="حذف از لیست مقایسه"></button>
                             <a href="/Product/@item.ProductID/@item.Name.Replace("/", "").Replace(" ", "-")">
                                 <img src="~/Images/ProductMain/@item.ImageName" alt="" />
                                 <h5>@item.Name</h5>
