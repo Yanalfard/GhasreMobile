@@ -83,7 +83,7 @@ namespace GhasreMobile
             //        await next();
             //    }
             //});
-            #region 
+            #region  404 error
             app.UseStatusCodePagesWithReExecute("/404.html");
             #endregion
             app.UseSession();
