@@ -11,11 +11,11 @@
     <p class="text-3 uk-margin-small-top uk-margin-bottom">
         دقت کنید، مبلغ غیر قابل عودت می باشد
     </p>
-    <form asp-action="ChargeWallet" asp-controller="Wallet" asp-area="User">
+    <form asp-action="Charg" asp-controller="Wallet" asp-area="User">
         <div class="fg-col" dir="rtl">
             <label class="fg-label">مبلغ شارژ <span class="text-3">(تومان)</span></label>
-            <input type="text" class="entry PriceInput" data-type='currency' />
-            <input type="hidden" class="entry"  asp-for="Amount"/>
+            <input type="text" class="entry PriceInput" data-type='currency'maxlength="10" />
+            <input type="hidden" class="entry" name="Amount" id="Amount"/>
             <span class="text-danger" asp-validation-for="Amount"></span>
         </div>
         <div class="uk-margin-medium-top">
@@ -27,7 +27,7 @@
 
 @section Scripts{
 
-<script src="~/js/Auto_Formatting_Currency.js"></script>
+    <script src="~/js/Auto_Formatting_Currency.js"></script>
     <script>
         $('.PriceInput').change(function () {
             var price = $(this).val().replaceAll(',', "");

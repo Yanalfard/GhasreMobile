@@ -145,7 +145,7 @@
             @Html.Raw(Model.DescriptionShortHtml)
         </div>
         <div class="price">
-            @if (Model.TblColor.Sum(i => i.Count) > 0)
+            @if (Model.TblColor.Sum(i => i.Count) > 0 && Model.IsDeleted == false)
             {
                 @if (Model.TblSpecialOffer.Count > 0 && Model.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now)
                 {
@@ -222,24 +222,29 @@
         </div>
         <div class="cart uk-margin-top">
             @*<div class="counter rowr">
-                    <button class="plus" uk-icon="add"></button>
-                    <span class="count">
-                        <span>16</span>
-                    </span>
-                    <button class="minus" uk-icon="remove"></button>
-                </div>*@
+            <button class="plus" uk-icon="add"></button>
+            <span class="count">
+                <span>16</span>
+            </span>
+            <button class="minus" uk-icon="remove"></button>
+        </div>*@
 
 
-            @if (Model.TblColor.Sum(i => i.Count) > 0)
+            @if (Model.TblColor.Sum(i => i.Count) > 0 && Model.IsDeleted == false)
             {
                 <button class="button" onclick="AddToCart(@Model.ProductId)">
                     <span>افزودن به سبد خرید</span>
                     <span uk-icon="cart"></span>
                 </button>
             }
+            else if (Model.IsDeleted == true)
+            {
+                <button class="button">
+                    <span>توقف فروش</span>
+                </button>
+            }
             else
             {
-
 
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -301,10 +306,10 @@
 
 @await Component.InvokeAsync("SendCommentView", Model.ProductId)
 
+<a href="#" name="comments" class="anchor-within-page"></a>
 @if (Model.TblProductCommentRel.Any())
 {
     <div class="comment-section mat-card gap-t">
-        <a href="#" name="comments" class="anchor-within-page"></a>
         <h3 class="uk-margin-bottom uk-margin-remove-top">نظرات کاربران</h3>
         <ul>
             @foreach (var item in Model.TblProductCommentRel.Where(i => i.Comment.IsValid))

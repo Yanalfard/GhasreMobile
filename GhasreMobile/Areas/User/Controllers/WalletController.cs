@@ -15,7 +15,7 @@ namespace GhasreMobile.Areas.User.Controllers
     [PermissionChecker("user,employee,admin")]
     public class WalletController : Controller
     {
-       // readonly string Domain = "https://localhost:44371";
+        // readonly string Domain = "https://localhost:44371";
         readonly string Domain = "https://gasremobile2004.com";
 
 
@@ -40,12 +40,29 @@ namespace GhasreMobile.Areas.User.Controllers
             }
         }
 
-        public async Task<IActionResult> Charge()
+        public async Task<IActionResult> Charg()
         {
-           
             try
             {
                 return await Task.FromResult(View());
+            }
+            catch (Exception)
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Charg(ChargeWalletVm charg)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    int Amount = (int)charg.Amount;
+                    return Redirect("/User/Wallet/ChargeWallet?Amount=" + Amount);
+                }
+                return await Task.FromResult(View(charg));
             }
             catch (Exception)
             {
@@ -57,38 +74,34 @@ namespace GhasreMobile.Areas.User.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                TblWallet addWallet = new TblWallet();
+                addWallet.Amount = (int)charge.Amount;
+                addWallet.Date = DateTime.Now;
+                addWallet.Description = "شارژ حساب";
+                addWallet.IsDeposit = true;
+                addWallet.IsFinaly = false;
+                addWallet.ClientId = SelectUser().ClientId;
+                addWallet.OrderId = charge.OrderId;
+                db.Wallet.Add(addWallet);
+                db.Wallet.Save();
+
+                #region OnlinePayment
+                var payment = new ZarinpalSandbox.Payment((int)charge.Amount);
+                var res = payment.PaymentRequest("شارژ کیف پول", Domain + "/OnlinePayment/" + addWallet.WalletId, "gasremobile2004@gmail.Com", "09357035985");
+
+                if (res.Result.Status == 100)
                 {
-                    TblWallet addWallet = new TblWallet();
-                    addWallet.Amount = (int)charge.Amount;
-                    addWallet.Date = DateTime.Now;
-                    addWallet.Description = "شارژ حساب";
-                    addWallet.IsDeposit = true;
-                    addWallet.IsFinaly = false;
-                    addWallet.ClientId = SelectUser().ClientId;
-                    addWallet.OrderId = charge.OrderId;
-                    db.Wallet.Add(addWallet);
-                    db.Wallet.Save();
-
-                    #region Online Payment
-
-                    var payment = new ZarinpalSandbox.Payment((int)charge.Amount);
-                    var res = payment.PaymentRequest("شارژ کیف پول", Domain + "/OnlinePayment/" + addWallet.WalletId, "gasremobile2004@gmail.Com", "09357035985");
-
-                    if (res.Result.Status == 100)
-                    {
-                        return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + res.Result.Authority);
-                    }
-                    return null;
-                    #endregion
+                    return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + res.Result.Authority);
                 }
-                return await Task.FromResult(View(charge));
+                #endregion
+
+                return await Task.FromResult(RedirectToAction("Charge"));
             }
             catch (Exception)
             {
                 return await Task.FromResult(Redirect("404.html"));
             }
-           
+
         }
     }
 }

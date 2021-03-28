@@ -94,56 +94,56 @@
                 </nav>
                 @if (User.Identity.IsAuthenticated)
                 {
-    @if (User.Claims.Last().Value == "user")
-    {
-<a href="" class="profile">
-    <span>پروفایل</span>
-    <span uk-icon="person-circle-outline"></span>
-</a>
+                    @if (User.Claims.Last().Value == "user")
+                    {
+                        <a href="" class="profile">
+                            <span>پروفایل</span>
+                            <span uk-icon="person-circle-outline"></span>
+                        </a>
 
-                    <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
-                        <div class="mat-card">
-                            <ul class="col g-2">
-                                <li>
-                                    <a class="link-text" href="/User/Profile">پروفایل</a>
-                                </li>
-                                <li>
-                                    <a class="link-text" href="/User/Cart">سبد خرید</a>
-                                </li>
-                                <li>
-                                    <a class="link-text" href="/LogOut">خروج</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div> }
-                else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
+                        <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
+                            <div class="mat-card">
+                                <ul class="col g-2">
+                                    <li>
+                                        <a class="link-text" href="/User/Profile">پروفایل</a>
+                                    </li>
+                                    <li>
+                                        <a class="link-text" href="/User/Cart">سبد خرید</a>
+                                    </li>
+                                    <li>
+                                        <a class="link-text" href="/LogOut">خروج</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> }
+                    else if (User.Claims.Last().Value == "employee" || User.Claims.Last().Value == "admin")
+                    {
+                        <a href="" class="profile">
+                            <span>پروفایل</span>
+                            <span uk-icon="person-circle-outline"></span>
+                        </a>
+
+                        <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
+                            <div class="mat-card">
+                                <ul class="col g-2">
+                                    <li>
+                                        <a class="link-text" href="/Admin/">پنل مدیریت</a>
+                                    </li>
+                                    <li>
+                                        <a class="link-text" href="/User/Profile">پنل کاربری</a>
+                                    </li>
+                                    <li>
+                                        <a class="link-text" href="/LogOut">خروج</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>} }
+                else
                 {
-<a href="" class="profile">
-    <span>پروفایل</span>
-    <span uk-icon="person-circle-outline"></span>
-</a>
-
-                    <div uk-drop="boundary: .profile; pos:bottom-left; offset: 20; mode: hover,click">
-                        <div class="mat-card">
-                            <ul class="col g-2">
-                                <li>
-                                    <a class="link-text" href="/Admin/">پنل مدیریت</a>
-                                </li>
-                                <li>
-                                    <a class="link-text" href="/User/Profile">پنل کاربری</a>
-                                </li>
-                                <li>
-                                    <a class="link-text" href="/LogOut">خروج</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>} }
-else
-{
-<a href="/Login" class="profile">
-    <span>ورود</span>
-    <span uk-icon="person-circle-outline"></span>
-</a>}
+                    <a href="/Login" class="profile">
+                        <span>ورود</span>
+                        <span uk-icon="person-circle-outline"></span>
+                    </a>}
 
 
                 @*<a href="" class="enter">
@@ -165,19 +165,19 @@ else
     <!-- Single means the layout has only one Column -->
     @if (ViewData["Single"] == null)
     {
-<div class="m uk-container">
-    <main class="m-content">
-        @RenderBody()
-    </main>
-    <aside class="m-aside">
-        @RenderSection("Aside", false)
-    </aside>
-</div> }
-else if (ViewData["Single"] != null)
-{
-<div class="uk-container">
-    @RenderBody()
-</div>}
+        <div class="m uk-container">
+            <main class="m-content">
+                @RenderBody()
+            </main>
+            <aside class="m-aside">
+                @RenderSection("Aside", false)
+            </aside>
+        </div> }
+    else if (ViewData["Single"] != null)
+    {
+        <div class="uk-container">
+            @RenderBody()
+        </div>}
 
     <footer>
         <div class="uk-container col uk-light">
@@ -305,7 +305,7 @@ else if (ViewData["Single"] != null)
             $(form)[0].reset();
         }
         function SearchInput(input) {
-            const val = input.value.trim();
+            let val = input.value.trim();
             const drop = document.getElementById('dropSearch');
             const list = document.querySelector('.drop-content');
 
@@ -313,6 +313,8 @@ else if (ViewData["Single"] != null)
                 UIkit.drop(drop).hide();
                 return
             };
+
+            val = val.toLowerCase();
 
             fetch('/q/' + val).then(j => {
                 j.json().then(i => {
