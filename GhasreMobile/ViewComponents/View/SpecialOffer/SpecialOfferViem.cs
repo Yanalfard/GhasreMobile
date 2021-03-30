@@ -14,9 +14,8 @@ namespace GhasreMobile.ViewComponents.View.SpecialOffer
         private Core db = new Core();
         public async Task<IViewComponentResult> InvokeAsync(string swap)
         {
+        
             TblSpecialOffer list = new TblSpecialOffer();
-
-
             List<TblSpecialOffer> offer = db.SpecialOffer.Get(i => i.ValidTill > DateTime.Now && i.Product.IsDeleted == false && i.Product.TblColor.Sum(i => i.Count) > 0).ToList();
             Random ran = new Random();
             if (offer.Count > 0)

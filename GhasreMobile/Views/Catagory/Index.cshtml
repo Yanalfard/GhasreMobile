@@ -18,7 +18,7 @@
         <div class="rowr">
 
             <nav class="breadcrumb uk-padding-remove">
-                <a href="#">برند</a>
+                <a href="#">دسته</a>
                 <a href="#">@ViewData["name"]</a>
             </nav>
 
@@ -95,7 +95,7 @@
             $(".loading").fadeIn();
             var id = $('#id').val();
             var name = $('#name').val();
-            $.get("/Brand/ScrollBrand?id=" + id + "&name=" + name + "&pageId=" + pageCount, function (result) {
+            $.get("/Catagory/ScrollCatagory?id=" + id + "&name=" + name + "&pageId=" + pageCount, function (result) {
                 if (result == false) {
                     isLoading = true;
                     $(".loading").fadeOut();

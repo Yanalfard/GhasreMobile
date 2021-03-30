@@ -19,7 +19,7 @@
             @Model.Name
         </h3>
     </a>
-    <a href="/Search?catId=@Model.CatagoryId" class="category link-text">@Model.Catagory.Name </a>
+    <a href="/ShowCatagory/@Model.CatagoryId/@Model.Catagory.Name.Replace(" ","-")" class="category link-text">@Model.Catagory.Name </a>
     @if (Model.TblColor.Sum(i => i.Count) > 0)
     {
         @if (Model.TblSpecialOffer.Count > 0 && Model.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now)

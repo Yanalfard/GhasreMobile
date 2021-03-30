@@ -12,7 +12,7 @@
 
 <nav class="breadcrumb">
     <a href="/Search">کالا</a>
-    <a href="/Search?brandId=@Model.Brand.BrandId">@Model.Brand.Name</a>
+    <a href="/ShowBrand/@Model.BrandId/@Model.Brand.Name.Replace(" ","-")">@Model.Brand.Name</a>
     <a href="#" class="active">@Model.Name</a>
 </nav>
 
@@ -24,11 +24,11 @@
         <div class="rowr uk-margin-top">
             <span class="row" dir="rtl">
                 <span class="uk-margin-small-left">برند:</span>
-                <a href="/Search?brandId=@Model.BrandId">@Model.Brand.Name</a>
+                <a href="/ShowBrand/@Model.BrandId/@Model.Brand.Name.Replace(" ","-")">@Model.Brand.Name</a>
             </span>
             <span class="row uk-margin-right" dir="rtl">
                 <span class="uk-margin-small-left">دسته:</span>
-                <a href="/Search?catId=@Model.CatagoryId">@Model.Catagory.Name</a>
+                <a href="/ShowCatagory/@Model.CatagoryId/@Model.Catagory.Name.Replace(" ","-")">@Model.Catagory.Name</a>
             </span>
             <span class="row uk-margin-right" dir="rtl">
                 <span class="uk-margin-small-left">کد:</span>

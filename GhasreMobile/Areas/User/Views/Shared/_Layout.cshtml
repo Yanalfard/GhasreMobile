@@ -173,5 +173,22 @@
 
     @RenderSection("Scripts", false)
 
+
+
+    <script>
+        function alertWhenReady(id) {
+            $.ajax({
+                url: '/Product/AlertWhenReady/',
+                data: { id: id },
+            }).done(function (result) {
+                if (result == "true") {
+                    UIkit.notification('بعد از موجود شدن محصول اطلاع رسانی خواهد شد');
+                }
+                else {
+                    UIkit.notification('شما در صف اطلاع رسانی قرار دارید');
+                }
+            })
+        }
+    </script>
 </body>
 </html>

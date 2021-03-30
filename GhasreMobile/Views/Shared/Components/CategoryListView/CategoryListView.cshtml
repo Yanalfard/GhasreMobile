@@ -12,7 +12,8 @@
                 @foreach (var j in item.InverseParent)
                 {
                     <li>
-                        <a href="/Search?catId=@j.CatagoryId">@j.Name</a>
+                        @*<a href="/Search?catId=@j.CatagoryId">@j.Name</a>*@
+                        <a href="/ShowCatagory/@j.CatagoryId/@item.Name.Replace(" ","-")">@j.Name</a>
                     </li>
                 }
             </ul>

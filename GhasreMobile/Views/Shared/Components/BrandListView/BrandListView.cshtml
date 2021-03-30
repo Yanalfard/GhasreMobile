@@ -2,7 +2,7 @@
 @foreach (var item in Model)
 {
     <li>
-        <a href="/Search?brandId=@item.BrandId" class="link-text">@item.Name</a>
-        @*<a href="/ShowBrand/@item.BrandId/@item.Name.Replace(" ","-")" class="link-text">@item.Name</a>*@
+        @*<a href="/Search?brandId=@item.BrandId" class="link-text">@item.Name</a>*@
+        <a href="/ShowBrand/@item.BrandId/@item.Name.Replace(" ","-")" class="link-text">@item.Name</a>
     </li>
 }

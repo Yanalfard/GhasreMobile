@@ -16,15 +16,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Session;
 using System.Globalization;
 
+
 namespace GhasreMobile.Controllers
 {
-    public class BrandController : Controller
+    public class CatagoryController : Controller
     {
         private Core db = new Core();
         readonly static int GlobalTake = 12;
 
 
-        [Route("ShowBrand/{id=0}/{name?}/{pageId=1}")]
+        [Route("ShowCatagory/{id=0}/{name?}/{pageId=1}")]
         public async Task<IActionResult> Index(int id = 0, string name = "", int pageId = 1)
         {
             try
@@ -32,10 +33,10 @@ namespace GhasreMobile.Controllers
                 ViewData["name"] = name;
                 ViewData["id"] = id;
                 List<TblProduct> list = new List<TblProduct>();
-                TblBrand selectedBrand = db.Brand.GetById(id);
-                if (selectedBrand != null)
+                TblCatagory selectedCatagory = db.Catagory.GetById(id);
+                if (selectedCatagory != null)
                 {
-                    list = selectedBrand.TblProduct.ToList();
+                    list = selectedCatagory.TblProduct.ToList();
                 }
                 else
                 {
@@ -52,17 +53,17 @@ namespace GhasreMobile.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
-        public async Task<IActionResult> ScrollBrand(int id = 0, string name = "", int pageId = 1)
+        public async Task<IActionResult> ScrollCatagory(int id = 0, string name = "", int pageId = 1)
         {
             try
             {
                 ViewData["name"] = name;
                 ViewData["id"] = id;
                 List<TblProduct> list = new List<TblProduct>();
-                TblBrand selectedBrand = db.Brand.GetById(id);
-                if (selectedBrand != null)
+                TblCatagory selectedCatagory = db.Catagory.GetById(id);
+                if (selectedCatagory != null)
                 {
-                    list = selectedBrand.TblProduct.ToList();
+                    list = selectedCatagory.TblProduct.ToList();
                 }
                 else
                 {
