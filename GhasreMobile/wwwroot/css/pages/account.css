@@ -71,11 +71,22 @@ backdrop-filter: saturate(80%);
 body {
   background-color: #fff; }
 
+.grecaptcha-badge {
+  display: none !important; }
+
 .home {
   display: flex;
-  padding: 20px;
-  position: fixed;
-  z-index: 24; }
+  padding: 6px;
+  top: 18px;
+  left: 18px;
+  position: absolute;
+  z-index: 24;
+  background-color: #fff;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 4px 4px 4px;
+  border: 1px solid #e5e5e5;
+  color: #999; }
 
 .l {
   display: grid;
@@ -117,18 +128,18 @@ body {
   .l {
     display: grid;
     grid-template-columns: 1fr;
-    height: 100vh; }
+    height: auto; }
     .l-content {
       position: relative;
       background-color: #fff;
       z-index: 10; }
       .l-content .l-mid {
         display: flex;
-        flex-direction: row;
-        height: 100vh; }
+        flex-direction: row; }
         .l-content .l-mid .form-block {
           margin: auto;
           margin-top: 16px;
           min-width: unset;
           width: 100%;
-          padding: 0 20px; } }
+          padding: 0 20px;
+          padding-bottom: 20px; } }

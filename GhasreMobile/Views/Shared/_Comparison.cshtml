@@ -8,13 +8,10 @@
                 {
                     @foreach (var item in Model.Items)
                     {
-                        <th class="position-relative">
-                            <button onclick="window.location.href = '/ShopCart/DeleteFromCompare/@item.ProductID?ReturnUrl=' + window.location.href" class="remove uk-position-absolute btn-icon uk-border-rounded"
-                                    uk-icon="trash"
-                                    uk-tooltip="حذف از لیست مقایسه"></button>
-                            <a href="/Product/@item.ProductID/@item.Name.Replace("/", "").Replace(" ", "-")"  target="_blank">
+                        <td>
+                            <div class="comp-block">
                                 <img src="~/Images/ProductMain/@item.ImageName" alt="" />
-                                <h5>@item.Name</h5>
+                                <a href="/Product/@item.ProductID/@item.Name.Replace("/", "").Replace(" ", "-")" target="_blank">@item.Name</a>
                                 @if (item.SumProduct > 0)
                                 {
                                     @if (item.SpecialOffer)
@@ -26,8 +23,8 @@
                                                 @item.PriceBeforeDiscount.Value.ToString("#,0")
                                             </h4>
                                             <span class="price">
-                                                <span class="t">تومان</span>
                                                 <span>@BeforeSumWithDiscount.Value.ToString("#,0")</span>
+                                                <span class="t">تومان</span>
                                             </span>
                                         }
                                         else
@@ -48,8 +45,8 @@
                                         @if (item.PriceAfterDiscount == 0)
                                         {
                                             <span class="price">
-                                                <span class="t">تومان</span>
                                                 <span>@item.PriceBeforeDiscount.Value.ToString("#,0")</span>
+                                                <span class="t">تومان</span>
                                             </span>
                                         }
                                         else
@@ -58,8 +55,8 @@
                                                 <span>@item.PriceBeforeDiscount.Value.ToString("#,0")</span>
                                             </span>
                                             <span class="price">
-                                                <span class="t">تومان</span>
                                                 <span>@item.PriceAfterDiscount.Value.ToString("#,0")</span>
+                                                <span class="t">تومان</span>
                                             </span>
                                         }
                                     }
@@ -72,8 +69,12 @@
                                         </span>
                                     </div>
                                 }
-                            </a>
-                        </th>
+                                <button onclick="window.location.href = '/ShopCart/DeleteFromCompare/@item.ProductID?ReturnUrl=' + window.location.href"
+                                        class="remove btn-icon uk-border-rounded"
+                                        uk-icon="trash"
+                                        uk-tooltip="title:حذف از لیست مقایسه;pos:bottom-center"></button>
+                            </div>
+                        </td>
                     }
                 }
             </tr>
