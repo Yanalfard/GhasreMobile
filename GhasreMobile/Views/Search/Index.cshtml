@@ -35,6 +35,7 @@
                 List<TblBrand> listBrand = ViewData["brandList"] as List<TblBrand>;
             }
             <select class="entry brandList" name="brand" id="brand">
+                <option value=""></option>
                 @foreach (var item in listBrand)
                 {
                     <option value="@item.BrandId">@item.Name</option>
@@ -105,7 +106,7 @@
 
             <nav class="breadcrumb uk-padding-remove">
                 <a href="#">جستجو</a>
-                <a href="#" >@ViewData["Title"]</a>
+                <a href="#">@ViewData["Title"]</a>
             </nav>
 
         </div>
@@ -125,7 +126,7 @@
             <p>موردی یافت نشد</p>
             <script>
                 document.querySelector('title').text = 'موردی یافت نشد';
-               
+
             </script>
         }
     </div>
@@ -195,7 +196,7 @@
                     isLoading = true;
                     $(".loading").fadeOut();
                     document.getElementById('grid').innerHTML = "موردی یافت نشد";
-                     if (pageCount == 1) {
+                    if (pageCount == 1) {
                         document.querySelector('title').text = 'موردی یافت نشد';
                     }
                     return;
@@ -210,7 +211,7 @@
 
     </script>
     <script>
-        $('.brandList').val($('#brandId').val());
+        $('.brandList').val($('#brandsId').val());
         $(function () {
             //selectedBefor & selectedDate
             $("#minDate").persianDatepicker();
