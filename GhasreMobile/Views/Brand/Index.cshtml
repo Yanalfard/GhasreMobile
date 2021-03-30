@@ -1,6 +1,6 @@
-﻿@model TblBrand
+﻿@*@model IEnumerable<TblProduct>
 @{
-    ViewData["Title"] = Model.Name;
+    ViewData["Title"] = ViewData["Title"];
 }
 
 @section Styles{
@@ -24,11 +24,11 @@
         </div>
 
     </div>
-    <div class="grid" id="grid">
+    <div class="grid" id="gridList">
 
-        @if (Model.TblProduct.Any())
+        @if (Model.Any())
         {
-            @foreach (var item in Model.TblProduct)
+            @foreach (var item in Model)
             {
                 <partial name="_ProductBlock" model="item" />
             }
@@ -40,3 +40,72 @@
     </div>
 </div>
 
+
+
+
+@if (Model.Any())
+{
+    <div class="loading">
+        <img src="~/st/v/loading.svg" />
+    </div>
+}
+
+@section Scripts{
+    @if (Model.Any())
+    {
+        <script>
+            var isLoading = false;
+        </script>
+    }
+    else
+    {
+        <script>
+            var isLoading = true;
+        </script>
+    }
+
+
+    <input type="hidden" name="id" id="id" value="@ViewData["id"]" />
+    <input type="hidden" name="name" id="name" value="@ViewData["name"]" />
+    <script>
+
+        let pageCount = 1;
+        const myDiv = document.querySelector('.loading');
+        window.addEventListener('DOMContentLoaded', () => {
+
+            $(".loading").fadeOut();
+
+            window.addEventListener('scroll', () => {
+                var limit = Math.max(document.body.scrollHeight, document.body.offsetHeight,
+                    document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+
+                limit = limit - 969;
+
+                if ((limit - window.scrollY) < 724) {
+                    nextPage();
+                }
+            });
+        })
+
+        function nextPage() {
+            if (isLoading) return;
+            isLoading = true;
+            pageCount++;
+            $(".loading").fadeIn();
+            var id = $('#id').val();
+            var name = $('#name').val();
+            $.get("/ScrollBrand?id=" + id + "&name=" + name + "&pageId=" + pageCount, function (result) {
+                if (result == false) {
+                    isLoading = true;
+                    $(".loading").fadeOut();
+                    return;
+                }
+                document.getElementById('gridList').innerHTML += result
+                isLoading = false;
+                $(".loading").fadeOut();
+            });
+
+        }
+
+    </script>
+}*@

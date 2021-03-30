@@ -141,7 +141,6 @@
     </div>
 }
 
-<input type="hidden" id="brandId" value="@ViewData["brand"]" />
 @section Scripts{
     <script src="~/datePersion/prism.js"></script>
     <script src="~/datePersion/persianDatepicker.js"></script>
@@ -157,10 +156,7 @@
             var isLoading = true;
         </script>
     }
-    <script>
-
-
-
+<script>
         $('#btnSearch').submit(function (e) {
             e.preventDefault();
             $("#overlay").fadeIn(300);
@@ -177,6 +173,9 @@
             var catId = "";
             var cat = "";
             var brandId = "";
+            @ViewData["brandId"]="";
+            @ViewData["catId"]="";
+            @ViewData["cat"]="";
             let available = "";
             if ($('#available').prop("checked") == true) {
                 available = "on";
@@ -209,7 +208,7 @@
         });
 
 
-    </script>
+</script>
     <script>
         $('.brandList').val($('#brandsId').val());
         $(function () {
@@ -266,12 +265,8 @@
         function nextPage() {
             if (isLoading) return;
             isLoading = true;
-
             pageCount++;
-
             $(".loading").fadeIn();
-
-
             var name = $('#name').val();
             var q = $('#q').val();
             var pageId = $('#pageId').val();
@@ -313,9 +308,6 @@
             });
 
         }
-
-
-
 
     </script>
 }

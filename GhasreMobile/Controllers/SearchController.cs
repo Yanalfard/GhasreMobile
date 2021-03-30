@@ -20,7 +20,7 @@ namespace GhasreMobile.Controllers
 {
     public class SearchController : Controller
     {
-        readonly static int GlobalTake = 12;
+        readonly static int GlobalTake = 2;
 
         private Core db = new Core();
         [Route("Search/{q?}/{name?}/{cat?}/{brand?}/{color?}/{colorIId?}/{minPrice?}/{maxPrice?}")]
