@@ -48,7 +48,6 @@
     function ShowUser() {
         var data = $("#PhoneNumber").val();
         $.get("/Admin/Notification/ReturnUser?TelNo=" + data, function (result) {
-            alert(result);
             if (result == "0") {
                 document.getElementById("UserName").classList.remove("d-none");
                 $("#UserId").val("");

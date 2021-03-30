@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<DataLayer.Models.TblOrder>
 
 @{
-    ViewData["Title"] = "خرید اقساطی";
+    ViewData["Title"] = "سفارشات اقساطی";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,7 +20,7 @@
                                     <input id="SearchInputId" class="form-control uk-text-small" type="text" placeholder="کد سفارش" value="">
                                 </div>
                                 <div class="form-group mx-sm-1 mb-2">
-                                    <input id="SearchInputUserPhone" class="form-control uk-text-small" type="text" placeholder="شماره تماس مشتری" value="">
+                                    <input id="SearchInputUserPhone" class="form-control uk-text-small" type="number" placeholder="شماره تماس مشتری" value="">
                                 </div>
                                 <div class="form-group mx-sm-1 mb-2">
                                     <input readonly id="startDate" class="form-control uk-text-small" type="text" placeholder="از تاریخ  " value="">
@@ -163,7 +163,7 @@
             var TellNo = $("#SearchInputUserPhone").val();
             var StartDate = $("#startDate").val();
             var EndDate = $("#endDate").val();
-            window.location.href = "/Admin/Order?OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate;
+            window.location.href = "/Admin/Fractional?OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate;
         }
         function ChangeSendOrderStatus(id) {
             $.post("/Admin/Order/ChangeSendOrderStatus/" + id, function () {

@@ -46,20 +46,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 TblTicket ticketuser = _core.Ticket.GetById(item.TicketId);
                 ticketuser.IsAnswerd = true;
                 _core.Ticket.Update(ticketuser);
-                _core.Ticket.Save();
             }
+            _core.Ticket.Save();
             TblTicket ticket = new TblTicket();
             ticket.DateSubmited = DateTime.Now;
             ticket.ClientId = ClientId;
             ticket.Title = "Admin";
             ticket.IsAnswer = true;
-            ticket.IsAnswerd = false;
+            ticket.IsAnswerd = true;
             ticket.Body = Body;
             _core.Ticket.Add(ticket);
             _core.Ticket.Save();
             return Redirect("/Admin/Ticket/InnerTicket/" + ClientId);
         }
-
 
         protected override void Dispose(bool disposing)
         {

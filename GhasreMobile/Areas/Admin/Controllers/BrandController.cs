@@ -59,7 +59,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         public string Delete(int id)
         {
             TblBrand brand = _core.Brand.GetById(id);
-            if (brand.TblProduct.Count() == 0)
+            if (brand.TblProduct.Count() > 0)
             {
                 return "برند مورد نظر در محصولی استفاده شده است";
             }

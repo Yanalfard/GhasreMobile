@@ -16,7 +16,7 @@
                         <div class="form-input">
                             <div class="form-inline">
                                 <div class="form-group mx-sm-1 mb-2">
-                                    <input id="SearchInputUserPhone" class="form-control uk-text-small" type="text" placeholder="عنوان" value="">
+                                    <input id="SearchInputUserPhone" class="form-control uk-text-small" type="number" placeholder="عنوان" value="">
                                 </div>
 
                             </div>
@@ -57,11 +57,23 @@
                                         else
                                         {
                                             <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="تایید نشده">
-                                                <span onclick="ChangeStatus(@item.TopicId)" class="text-danger" uk-icon="close-circle-outline"></span>
+                                                <span class="text-danger" uk-icon="close-outline"></span>
                                             </span>
                                         }
                                     </td>
                                     <td>
+                                        @if (item.IsValid)
+                                        {
+                                            <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="غیر فعال کردن">
+                                                <a onclick="IsValid(@item.TopicId)" class="text-danger" uk-icon="close-outline"></a>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="فعال کردن">
+                                                <a onclick="IsValid(@item.TopicId)" class="text-success" uk-icon="checkmark-outline"></a>
+                                            </span>
+                                        }
                                         <span class="mr-2" data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
                                             <a onclick="Info(@item.TopicId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
                                         </span>
@@ -108,15 +120,15 @@
             });
         }
 
-        function ChangeStatus(id) {
-            $.get("/Admin/Topic/ChangeStatus/" + id, function () {
-                window.location.reload();
-            });
-        }
-
         function BtnSearch() {
             var data = $("#SearchInputUserPhone").val();
             window.location.href = "/Admin/Topic?page=1&Search=" + data;
+        }
+
+        function IsValid(id) {
+            $.post("/Admin/Topic/IsValid?id=" + id, function () {
+                window.location.reload();
+            });
         }
 
     </script>

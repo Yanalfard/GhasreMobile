@@ -109,6 +109,9 @@
                                                 <a onclick="Selling(@item.ProductId)" class="text-danger" uk-icon="ban-outline"></a>
                                             </span>
                                         }
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن رنگ">
+                                            <a onclick="AddColor(@item.ProductId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="add-circle-outline"></a>
+                                        </span>
                                     </td>
 
                                 </tr>
@@ -248,6 +251,15 @@
 
 @section Script{
     <script>
+
+        function AddColor(id) {
+            $("#modalCategory").modal("hide");
+            $(".modal-content").html("");
+            $.get("/Admin/Product/CreateColor/" + id, function (result) {
+                $(".modal-content").html(result);
+            });
+        }
+
 
         function Stock(Id) {
             $(".modal-content").html("");

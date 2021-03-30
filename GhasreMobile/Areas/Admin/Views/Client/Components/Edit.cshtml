@@ -1,4 +1,5 @@
 ﻿@model DataLayer.Models.TblClient
+@using GhasreMobile.Utilities;
 <div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
         ویرایش کاربر
@@ -52,13 +53,12 @@
             </div>
             <div class="form-group col-md-3">
                 <label>کیف پول</label>
-                @*<input asp-for="Balance" class="form-control form-control-sm PriceInput" placeholder="840000">*@
                 @Html.TextBoxFor(model => model.Balance, new { @class = "form-control form-control-sm" })
             </div>
 
             <div class="form-group col-md-3">
                 <label>تاریخ ثبت نام</label>
-                <input value="@Model.DateCreated" type="date" class="form-control form-control-sm" placeholder="840000" disabled>
+                <input value="@Model.DateCreated.Value.AllToShamsi()" class="form-control form-control-sm" placeholder="840000" disabled>
             </div>
         </div>
     </div>

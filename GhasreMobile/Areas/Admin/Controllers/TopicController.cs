@@ -35,7 +35,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return ViewComponent("TopicInfoAdmin", new { id = id });
         }
 
-        public void ChangeStatus(int id)
+        public void IsValid(int id)
         {
             TblTopic topic = _core.Topic.GetById(id);
             topic.IsValid = !topic.IsValid;
