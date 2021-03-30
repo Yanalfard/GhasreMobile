@@ -371,7 +371,7 @@ $aside-width: 142px;
         border-spacing: 8px;
 
         thead {
-            a {
+            .comp-block {
                 @include column;
                 grid-gap: 5px;
                 -ms-align-content: center;
@@ -402,6 +402,14 @@ $aside-width: 142px;
                 label:last-child {
                     color: $success;
                     font-size: 15px;
+                }
+
+                .t {
+                    font-size: 10px;
+                }
+
+                .remove {
+                    color: #888;
                 }
             }
         }
