@@ -35,13 +35,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
             {
                 if (catagory.ParentId == null)
                 {
+                    catagory.IsOnFirstPage = true;
                     _core.Catagory.Add(catagory);
                     _core.Catagory.Save();
                     return Redirect("/Admin/Catagory");
                 }
                 else
                 {
-                    
+
                     TblCatagory ParentCatagory = _core.Catagory.GetById(catagory.ParentId);
                     ParentCatagory.IsOnFirstPage = false;
                     _core.Catagory.Update(ParentCatagory);
@@ -76,6 +77,20 @@ namespace GhasreMobile.Areas.Admin.Controllers
         public IActionResult ShowChilds(int Id)
         {
             return ViewComponent("ShowChildsCatagoryAdmin", new { Id = Id });
+        }
+
+        public string Delete(int id)
+        {
+            if (_core.Catagory.GetById(id).InverseParent.Count() > 0 || _core.Catagory.GetById(id).TblProduct.Count() > 0)
+            {
+                return "false";
+            }
+            else
+            {
+                _core.Catagory.DeleteById(id);
+                _core.Catagory.Save();
+                return "true";
+            }
         }
 
         protected override void Dispose(bool disposing)

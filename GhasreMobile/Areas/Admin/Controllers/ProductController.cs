@@ -386,6 +386,29 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return await Task.FromResult(View(product));
         }
 
+
+        public IActionResult CreateColor(int id)
+        {
+            return ViewComponent("CreateColorAdmin",new {id=id });
+        }
+
+        [HttpPost]
+        public IActionResult CreateColor(CreateColorVm createColorVm)
+        {
+            if (ModelState.IsValid)
+            {
+                TblColor color = new TblColor();
+                color.ProductId = createColorVm.id;
+                color.Name = createColorVm.Name;
+                color.ColorCode = createColorVm.Code;
+                color.Count = createColorVm.count;
+                _core.Color.Add(color);
+                _core.Color.Save();
+                return Redirect("/Admin/Product");
+            }
+            return View(createColorVm);
+        }
+
         [HttpGet]
         public IActionResult PropertyList()
         {

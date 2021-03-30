@@ -20,7 +20,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             Core _core = new Core();
             IEnumerable<TblClient> clients = _core.Client.Get(v => v.IsActive);
             IEnumerable<TblOrder> orders = _core.Order.Get();
-            IEnumerable<TblTicket> tickets = _core.Ticket.Get();
+            IEnumerable<TblTicket> tickets = _core.Ticket.Get().GroupBy(g => g.ClientId).FirstOrDefault();
             return View(new AdminDashboardVm()
             {
                 CustomersCount = clients.Where(c => c.RoleId == 1).Count(),

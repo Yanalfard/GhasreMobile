@@ -1,0 +1,44 @@
+﻿@model DataLayer.ViewModels.CreateColorVm
+<div class="modal-header">
+    <h6 class="modal-title" id="modalCenterTitle">
+        افزودن رنگ برای محصول @ViewBag.Name
+    </h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form asp-action="CreateColor" asp-controller="Product" asp-area="Admin"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="EndCatagoryCreate()"
+      data-ajax-update="#ajaxresult">
+    <div class="modal-body">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label>نام رنگ</label>
+                <input asp-for="Name" placeholder="نام رنگ" class="form-control form-control-sm">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label>کد رنگ</label>
+                <input asp-for="Code" type="color" class="form-control form-control-sm">
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label>تعداد</label>
+                <input asp-for="count" class="form-control form-control-sm" placeholder="مثال: 6">
+                <span asp-validation-for="count" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-end">
+        <button type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+    </div>
+</form>
+<script src="~/Validate/jquery.validate.min.js"></script>
+<script src="~/Validate/jquery.validate.unobtrusive.js"></script>

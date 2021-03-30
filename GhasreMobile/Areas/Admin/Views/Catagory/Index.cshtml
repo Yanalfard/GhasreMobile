@@ -48,6 +48,9 @@
                                             <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
                                                 <a onclick="EditCatagory(@item.CatagoryId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
                                             </span>
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                                <a onclick="Delete(@item.CatagoryId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                            </span>
                                         </td>
                                     </tr>
                                 }
@@ -94,6 +97,18 @@
             $.get("/Admin/Catagory/Create?Id=" + Id, function (result) {
                 $(".modal-content").html(result);
             });
-        }</script>
+        }
+
+        function Delete(id) {
+            $.get("/Admin/Category/Delete/" + id, function (result) {
+                if (result == "true") {
+                    window.location.reload();
+                } else if (result=="false") {
+                    UIkit.notification('این دسته بندی نمیتواند حذف شود');
+                }
+            });
+        }
+
+    </script>
 }
 
