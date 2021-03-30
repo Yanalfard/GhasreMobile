@@ -185,7 +185,6 @@ namespace GhasreMobile.Controllers
                 }
                 if (available != null)
                 {
-                    //list.AddRange(db.Color.Get(i => i.Count > 0).Select(i => i.Product).ToList());
                     list = list.Where(i => i.TblColor.Sum(i => i.Count) > 0).ToList();
                 }
 

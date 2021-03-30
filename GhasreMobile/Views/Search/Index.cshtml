@@ -87,7 +87,7 @@
         </label>
 
         <label class="text-2 rowr uk-margin-small-bottom">
-            <input class="uk-checkbox" type="checkbox" id="discount" name="discount" />
+            <input class="uk-checkbox" type="checkbox" id="discount" name="discount" @(((bool)ViewData["discount"] == true) ? "checked" : "") />
             فقط کالا های تخفیف دار
         </label>
         <button class="btn btn-primary uk-margin-top">اعمال فیلتر ها</button>
@@ -173,9 +173,10 @@
             var catId = "";
             var cat = "";
             var brandId = "";
-            @ViewData["brandId"]="";
-            @ViewData["catId"]="";
-            @ViewData["cat"]="";
+            $('#catId').val("");
+            $('#cat').val("");
+            $('#brandsId').val("");
+
             let available = "";
             if ($('#available').prop("checked") == true) {
                 available = "on";
