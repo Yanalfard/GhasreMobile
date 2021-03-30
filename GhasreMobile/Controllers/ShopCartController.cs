@@ -32,35 +32,45 @@ namespace GhasreMobile.Controllers
 
                     foreach (var item in listShop)
                     {
-                        var product = db.Product.Get().Where(p => p.ProductId == item.ProductID).Select(p => new
+                        if (db.Product.Get().Any(i => i.ProductId == item.ProductID && i.IsDeleted == false))
                         {
-                            p.MainImage,
-                            p.Name,
-                            p.PriceAfterDiscount,
-                            p.PriceBeforeDiscount,
-                            p.Brand,
-                        }).Single();
-                        ShopCartItemVm shop = new ShopCartItemVm();
-                        shop.Count = item.Count;
-                        shop.ProductID = item.ProductID;
-                        shop.ColorID = item.ColorID;
-                        shop.ColorName = db.Color.GetById(item.ColorID).Name;
-                        shop.Name = product.Name;
-                        shop.ImageName = product.MainImage;
-                        shop.PriceAfterDiscount = product.PriceAfterDiscount;
-                        shop.PriceBeforeDiscount = product.PriceBeforeDiscount;
-                        shop.Brand = product.Brand.Name;
-                        shop.Special = 0;
-                        shop.Sum = product.PriceAfterDiscount == 0 ? item.Count * product.PriceBeforeDiscount : product.PriceAfterDiscount * item.Count;
-                        TblSpecialOffer offer = db.SpecialOffer.Get(i => i.ProductId == item.ProductID && i.ValidTill >= DateTime.Now).SingleOrDefault();
-                        if (offer != null)
+
+                            var product = db.Product.Get().Where(p => p.ProductId == item.ProductID).Select(p => new
+                            {
+                                p.MainImage,
+                                p.Name,
+                                p.PriceAfterDiscount,
+                                p.PriceBeforeDiscount,
+                                p.Brand,
+                            }).Single();
+                            ShopCartItemVm shop = new ShopCartItemVm();
+                            shop.Count = item.Count;
+                            shop.ProductID = item.ProductID;
+                            shop.ColorID = item.ColorID;
+                            shop.ColorName = db.Color.GetById(item.ColorID).Name;
+                            shop.Name = product.Name;
+                            shop.ImageName = product.MainImage;
+                            shop.PriceAfterDiscount = product.PriceAfterDiscount;
+                            shop.PriceBeforeDiscount = product.PriceBeforeDiscount;
+                            shop.Brand = product.Brand.Name;
+                            shop.Special = 0;
+                            shop.Sum = product.PriceAfterDiscount == 0 ? item.Count * product.PriceBeforeDiscount : product.PriceAfterDiscount * item.Count;
+                            TblSpecialOffer offer = db.SpecialOffer.Get(i => i.ProductId == item.ProductID && i.ValidTill >= DateTime.Now).SingleOrDefault();
+                            if (offer != null)
+                            {
+                                var Special = product.PriceAfterDiscount == 0 ? product.PriceBeforeDiscount : product.PriceAfterDiscount;
+                                shop.Special = Special - (long)(Math.Floor((double)(Special * offer.Discount / 100)));
+                                shop.Sum = shop.Sum - (long)(Math.Floor((double)(shop.Sum * offer.Discount / 100)));
+                            };
+                            list.Add(shop);
+                        }
+                        else
                         {
-                            var Special = product.PriceAfterDiscount == 0 ? product.PriceBeforeDiscount : product.PriceAfterDiscount;
-                            shop.Special = Special - (long)(Math.Floor((double)(Special * offer.Discount / 100)));
-                            shop.Sum = shop.Sum - (long)(Math.Floor((double)(shop.Sum * offer.Discount / 100)));
-                        };
-                        list.Add(shop);
+                            var index = listShop.FindIndex(p => p.ProductID == item.ProductID);
+                            listShop[index].Count = 0;
+                        }
                     }
+                    HttpContext.Session.SetComplexData("ShopCart", listShop);
                 }
                 return await Task.FromResult(View(list));
             }
@@ -318,7 +328,6 @@ namespace GhasreMobile.Controllers
                             int Amount = (int)SumBalance;
                             int OrderId = addOrder.OrdeId;
                             return Redirect("/User/Wallet/ChargeWallet?Amount=" + Amount + "&OrderId=" + OrderId);
-                            //return Redirect("/User/Wallet/ChargeWallet/" + charge);
                         }
                     }
 

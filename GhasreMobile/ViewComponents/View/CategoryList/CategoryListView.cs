@@ -12,7 +12,7 @@ namespace GhasreMobile.ViewComponents.View.CategoryList
         private Core db = new Core();
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/CategoryListView/CategoryListView.cshtml", db.Catagory.Get().OrderByDescending(i => i.CatagoryId)));
+            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/CategoryListView/CategoryListView.cshtml", db.Catagory.Get(i => i.Parent == null).OrderByDescending(i => i.CatagoryId)));
         }
     }
 }

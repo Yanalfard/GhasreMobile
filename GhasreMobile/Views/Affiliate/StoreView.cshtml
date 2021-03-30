@@ -60,7 +60,7 @@
     <script src="~/js/leaflet.js"></script>
 
     <script>
-        var map = L.map('map').setView([38.07674409597339, 46.29700302496196], 12);
+        var map = L.map('map').setView([@Model.Lat, @Model.Lon], 15);
 
         L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 

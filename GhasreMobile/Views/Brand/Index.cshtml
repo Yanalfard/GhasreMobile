@@ -1,0 +1,42 @@
+﻿@model TblBrand
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+@section Styles{
+
+    <link href="~/css/pages/search.min.css" rel="stylesheet" />
+    <link href="~/datePersion/persianDatepicker-default.css" rel="stylesheet" />
+}
+
+
+
+<div class="search-grid form">
+    <div class="form-header">
+
+        <div class="rowr">
+
+            <nav class="breadcrumb uk-padding-remove">
+                <a href="#">جستجو</a>
+                <a href="#">@ViewData["Title"]</a>
+            </nav>
+
+        </div>
+
+    </div>
+    <div class="grid" id="grid">
+
+        @if (Model.TblProduct.Any())
+        {
+            @foreach (var item in Model.TblProduct)
+            {
+                <partial name="_ProductBlock" model="item" />
+            }
+        }
+        else
+        {
+            <p>موردی یافت نشد</p>
+        }
+    </div>
+</div>
+

@@ -347,32 +347,36 @@ backdrop-filter: saturate(80%);
     margin: 0;
     margin-top: 8px;
     border-spacing: 8px; }
-    .details table thead a {
+    .details table thead .comp-block {
       display: flex;
       flex-direction: column;
       grid-gap: 5px;
       -ms-align-content: center;
       -webkit-align-content: center;
       align-content: center; }
-      .details table thead a * {
+      .details table thead .comp-block * {
         margin: 0 auto;
         text-align: center; }
-      .details table thead a img {
+      .details table thead .comp-block img {
         -o-object-fit: cover;
         object-fit: cover;
         -o-object-position: center;
         object-position: center;
         width: 72px;
         height: 72px; }
-      .details table thead a h5 {
+      .details table thead .comp-block h5 {
         font-size: 11px; }
-      .details table thead a label:nth-last-child(2) {
+      .details table thead .comp-block label:nth-last-child(2) {
         color: #FF5A64;
         text-decoration: line-through;
         font-size: 12px; }
-      .details table thead a label:last-child {
+      .details table thead .comp-block label:last-child {
         color: #52C41A;
         font-size: 15px; }
+      .details table thead .comp-block .t {
+        font-size: 10px; }
+      .details table thead .comp-block .remove {
+        color: #888; }
     .details table tbody tr td {
       padding: 8px;
       -moz-border-radius: 3px 3px 3px 3px;

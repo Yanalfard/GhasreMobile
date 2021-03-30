@@ -17,7 +17,7 @@ namespace GhasreMobile.ViewComponents.View.SpecialOffer
             TblSpecialOffer list = new TblSpecialOffer();
 
 
-            List<TblSpecialOffer> offer = db.SpecialOffer.Get(i => i.ValidTill > DateTime.Now && i.Product.IsDeleted == false).ToList();
+            List<TblSpecialOffer> offer = db.SpecialOffer.Get(i => i.ValidTill > DateTime.Now && i.Product.IsDeleted == false && i.Product.TblColor.Sum(i => i.Count) > 0).ToList();
             Random ran = new Random();
             if (offer.Count > 0)
             {

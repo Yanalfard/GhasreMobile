@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<TblCatagory>
 
-@foreach (var item in Model.Where(i => i.Parent == null))
+@foreach (var item in Model)
 {
     <section>
         <h4>

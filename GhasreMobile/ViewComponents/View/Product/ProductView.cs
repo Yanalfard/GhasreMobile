@@ -13,7 +13,7 @@ namespace GhasreMobile.ViewComponents.View.Product
         private Core db = new Core();
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/ProductView/ProductView.cshtml", db.Brand.Get().OrderByDescending(i => i.TblProduct.Where(i => i.IsDeleted = false).Count())));
+            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/ProductView/ProductView.cshtml", db.Brand.Get().OrderByDescending(i => i.TblProduct.Count())));
         }
     }
 }

@@ -45,14 +45,15 @@ namespace GhasreMobile.Controllers
                 ViewData["available"] = available == "on" ? true : false;
 
                 List<TblProduct> list = db.Product.Get(i => i.IsDeleted == false).ToList();
+                if (discount != null)
+                {
+                    list = list.Where(i => i.PriceAfterDiscount > 0).ToList();
+                    list.AddRange(db.SpecialOffer.Get(i => i.ValidTill >= DateTime.Now && i.Discount > 0).Select(i => i.Product).ToList());
+                }
                 if (available != null)
                 {
                     //list.AddRange(db.Color.Get(i => i.Count > 0).Select(i => i.Product).ToList());
                     list = list.Where(i => i.TblColor.Sum(i => i.Count) > 0).ToList();
-                }
-                if (discount != null)
-                {
-                    list = list.Where(i => i.PriceAfterDiscount > 0).ToList();
                 }
                 if (IsFractional != null)
                 {
@@ -177,16 +178,17 @@ namespace GhasreMobile.Controllers
                 ViewData["discount"] = discount == "on" ? true : false;
                 ViewData["available"] = available == "on" ? true : false;
                 List<TblProduct> list = db.Product.Get(i => i.IsDeleted == false).ToList();
-                if (available != null)
-                {
-                    //list.AddRange(db.Color.Get(i => i.Count > 0).Select(i => i.Product).ToList());
-                    list = list.Where(i => i.TblColor.Sum(i => i.Count) > 0).ToList();
-                }
                 if (discount != null)
                 {
                     list = list.Where(i => i.PriceAfterDiscount > 0).ToList();
                     list.AddRange(db.SpecialOffer.Get(i => i.ValidTill >= DateTime.Now && i.Discount > 0).Select(i => i.Product).ToList());
                 }
+                if (available != null)
+                {
+                    //list.AddRange(db.Color.Get(i => i.Count > 0).Select(i => i.Product).ToList());
+                    list = list.Where(i => i.TblColor.Sum(i => i.Count) > 0).ToList();
+                }
+
                 if (IsFractional != null)
                 {
                     list = list.Where(i => i.IsFractional).ToList();
@@ -298,7 +300,7 @@ namespace GhasreMobile.Controllers
         public IActionResult LayoutSearch(string key)
         {
             if (key.Length <= 2) return Ok("Invalid Key");
-            var dbFake = db.Product.Get().Select(i => i.Name.ToLower());
+            var dbFake = db.Product.Get(i => i.IsDeleted == false).Select(i => i.Name.ToLower());
             return Json(dbFake.ToList().Where(i => i.Contains(key)));
         }
 
