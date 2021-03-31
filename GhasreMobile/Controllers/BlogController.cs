@@ -23,6 +23,7 @@ namespace GhasreMobile.Controllers
         {
             try
             {
+                ViewData["ListIdAd"] = db.Ad.Get().Select(i => i.AdId).ToList();
                 return await Task.FromResult(View(db.Blog.Get()));
             }
             catch
@@ -35,6 +36,7 @@ namespace GhasreMobile.Controllers
         {
             try
             {
+                ViewData["ListIdAd"] = db.Ad.Get().Select(i => i.AdId).ToList();
                 return await Task.FromResult(View(db.Blog.GetById(id)));
             }
             catch

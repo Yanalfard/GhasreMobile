@@ -2,6 +2,20 @@
 @{
     ViewData["Title"] = "تالار گفتگو";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<int> idsAdd = (List<int>)ViewData["ListIdAd"];
+    Random random = new Random();
+
+    int getNext()
+    {
+        if (idsAdd.Count > 0)
+        {
+            int randomIndex = random.Next(0, idsAdd.Count - 1);
+            int id = idsAdd[randomIndex];
+            idsAdd.Remove(id);
+            return id;
+        }
+        return -1;
+    }
 }
 
 @section Styles{
@@ -16,8 +30,8 @@
         <a href="/Forum/NewForum" class="btn btn-primary">ثبت موضوع</a>
     </div>
 
-    @await Component.InvokeAsync("AdView")
-    @await Component.InvokeAsync("AdView")
+    @await Component.InvokeAsync("AdView", new { number = getNext() })
+    @await Component.InvokeAsync("AdView", new { number = getNext() })
 
 }
 

@@ -3,6 +3,22 @@
     ViewData["Title"] = "مقاله ها";
     ViewData["Single"] = true;
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<int> idsAdd = (List<int>)ViewData["ListIdAd"];
+    Random random = new Random();
+
+    int getNext()
+    {
+        if (idsAdd.Count > 0)
+        {
+            int randomIndex = random.Next(0, idsAdd.Count - 1);
+            int id = idsAdd[randomIndex];
+            idsAdd.Remove(id);
+            return id;
+        }
+        return -1;
+    }
+
 }
 
 @section Styles{
@@ -23,6 +39,6 @@
 </div>
 
 <div class="uk-child-width-1-2 row gap-t gap-card">
-    @await Component.InvokeAsync("AdView")
-    @await Component.InvokeAsync("AdView")
+    @await Component.InvokeAsync("AdView", new {number = getNext() })
+    @await Component.InvokeAsync("AdView", new { number = getNext() })
 </div>

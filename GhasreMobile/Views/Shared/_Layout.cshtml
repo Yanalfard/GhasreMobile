@@ -162,10 +162,10 @@
     </div>
     <div role="none" class="space-nav-header gap-b"></div>
 
-    <!-- Single means the layout has only one Column -->
+    <!-- Single means the layout has only one Column-->
     @if (ViewData["Single"] == null)
     {
-        <div class="m uk-container">
+        <div class="m uk-container height">
             <main class="m-content">
                 @RenderBody()
             </main>
@@ -175,7 +175,7 @@
         </div> }
     else if (ViewData["Single"] != null)
     {
-        <div class="uk-container">
+        <div class="uk-container height">
             @RenderBody()
         </div>}
 

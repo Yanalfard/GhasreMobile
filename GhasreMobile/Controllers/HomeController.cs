@@ -23,6 +23,8 @@ namespace GhasreMobile.Controllers
         {
             try
             {
+                ViewData["ListIdAd"] = db.Ad.Get().Select(i => i.AdId).ToList();
+                ViewData["ListIdSpecial"] = db.SpecialOffer.Get().Select(i => i.SpecialOfferId).ToList();
                 return await Task.FromResult(View());
             }
             catch
@@ -30,7 +32,6 @@ namespace GhasreMobile.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
-
         [Route("Contact")]
         public async Task<IActionResult> Contact()
         {

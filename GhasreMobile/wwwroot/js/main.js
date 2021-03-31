@@ -88,7 +88,6 @@ function copy(text, message) {
 
     UIkit.notification(message);
 }
-
 // Countdown
 window.addEventListener("load", () => {
 
@@ -101,21 +100,37 @@ window.addEventListener("load", () => {
         const hour = timer.querySelector('[hour]');
         const day = timer.querySelector('[day]');
 
-        const date = Date.parse(timer.getAttribute('countdown'));
+        let seconds = Number.parseInt(timer.getAttribute('countdown'));
 
         setInterval(() => {
-            const now = Date.now();
-            const range = new Date(date - now);
 
-            second.innerHTML = range.getUTCSeconds();
-            minute.innerHTML = range.getUTCMinutes();
-            hour.innerHTML = range.getUTCHours();
-            day.innerHTML = range.getUTCDay();
+            seconds = Number(seconds);
+            var d = Math.floor(seconds / (3600 * 24));
+            var h = Math.floor(seconds % (3600 * 24) / 3600);
+            var m = Math.floor(seconds % 3600 / 60);
+            var s = Math.floor(seconds % 60);
+
+            var dDisplay = d;
+            var hDisplay = h;
+            var mDisplay = m;
+            var sDisplay = s;
+
+            seconds--;
+
+            second.innerHTML = sDisplay;
+            minute.innerHTML = mDisplay;
+            hour.innerHTML = hDisplay;
+            day.innerHTML = dDisplay;
+
         }, 1000);
 
     }
 
 })
+
+function secondsToDhms(seconds) {
+
+}
 
 
 // route class

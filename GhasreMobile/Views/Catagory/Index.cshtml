@@ -18,6 +18,10 @@
         <div class="rowr">
 
             <nav class="breadcrumb uk-padding-remove">
+                @{
+                    string namepage = "همه محصولات";
+                }
+                <a href="/ShowCatagory/0/@namepage.Replace(" ","-")">محصولات قصر موبایل</a>
                 <a href="#">دسته</a>
                 <a href="#">@ViewData["name"]</a>
             </nav>

@@ -2,6 +2,36 @@
 @{
     ViewData["Title"] = "قصر موبایل";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<int> idsAdd = (List<int>)ViewData["ListIdAd"];
+    List<int> special = (List<int>)ViewData["ListIdSpecial"];
+    Random random = new Random();
+
+    int getNext()
+    {
+        if (idsAdd.Count > 0)
+        {
+            int randomIndex = random.Next(0, idsAdd.Count - 1);
+            int id = idsAdd[randomIndex];
+            idsAdd.Remove(id);
+            return id;
+        }
+        return -1;
+    }
+
+    int getNextspecial()
+    {
+        if (special.Count > 0)
+        {
+            int randomIndexspecial = random.Next(0, special.Count - 1);
+            int id = special[randomIndexspecial];
+            special.Remove(id);
+            return id;
+        }
+        return -1;
+    }
+
+
 }
 @section Styles{
     <link href="~/css/pages/index.min.css" rel="stylesheet" />
@@ -14,24 +44,24 @@
         </ul>
     </div>
 
-    @await Component.InvokeAsync("SpecialOfferViem", new { swap = "Exp1" })
+    @await Component.InvokeAsync("SpecialOfferViem", new { swap = "Exp1", number = getNextspecial() })
 
-    @await Component.InvokeAsync("AdView", new { swap = "Ad1" })
+    @await Component.InvokeAsync("AdView", new { swap = "Ad1", number = getNext() })
 
-    @await Component.InvokeAsync("AdView", new { swap = "Ad2" })
+    @await Component.InvokeAsync("AdView", new { swap = "Ad2", number = getNext() })
 
-    @await Component.InvokeAsync("SpecialOfferViem", new { swap = "Exp2" })
+    @await Component.InvokeAsync("SpecialOfferViem", new { swap = "Exp2", number = getNextspecial() })
 
-    @await Component.InvokeAsync("AdView", new { swap = "Ad3" })
+    @await Component.InvokeAsync("AdView", new { swap = "Ad3", number = getNext() })
 
-    @await Component.InvokeAsync("AdView", new { swap = "Ad4" })
+    @await Component.InvokeAsync("AdView", new { swap = "Ad4", number = getNext() })
 
 }
 <!-- #SliderView -->
 @await Component.InvokeAsync("SliderView")
 <!-- #SliderView -->
 <div role="none" id="swBrandList"></div>
-<!-- #Product -->   
+<!-- #Product -->
 @await Component.InvokeAsync("ProductView")
 <!-- #Product -->
 <div class="swap-doubler">

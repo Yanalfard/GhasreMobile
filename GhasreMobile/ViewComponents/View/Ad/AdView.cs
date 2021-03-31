@@ -12,19 +12,26 @@ namespace GhasreMobile.ViewComponents.View.Ad
     public class AdView : ViewComponent
     {
         private Core db = new Core();
-        public async Task<IViewComponentResult> InvokeAsync(string swap)
+        public async Task<IViewComponentResult> InvokeAsync(string swap, int number = -1)
         {
             TblAd list = new TblAd();
-            List<TblAd> ads = db.Ad.Get().ToList();
-            Random ran = new Random();
-            if (ads.Count > 0)
+            if (number == -1)
             {
-                list = ads[ran.Next(ads.Count)];
+                List<TblAd> ads = db.Ad.Get().ToList();
+                Random ran = new Random();
+                if (ads.Count > 0)
+                {
+                    list = ads[ran.Next(ads.Count)];
+                }
             }
-
+            else
+            {
+                // id
+                list = db.Ad.GetById(number);
+            }
             ViewData["Swap"] = swap;
-
             return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/AdView/AdView.cshtml", list));
+
         }
     }
 }

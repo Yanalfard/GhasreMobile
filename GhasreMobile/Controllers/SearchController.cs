@@ -28,6 +28,7 @@ namespace GhasreMobile.Controllers
         {
             try
             {
+                ViewData["ListIdAd"] = db.Ad.Get().Select(i => i.AdId).ToList();
                 ViewData["Title"] = "جستوجوی پیشرفته";
                 ViewData["brandList"] = db.Brand.Get();
                 ViewData["pageId"] = pageId;

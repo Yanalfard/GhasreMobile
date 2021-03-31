@@ -28,6 +28,7 @@ namespace GhasreMobile.Controllers
         {
             try
             {
+                ViewData["ListIdAd"] = db.Ad.Get().Select(i => i.AdId).ToList();
                 return View(db.Topic.Get(i => i.IsValid).OrderByDescending(i => i.TopicId));
             }
             catch (Exception)
@@ -40,6 +41,7 @@ namespace GhasreMobile.Controllers
         {
             try
             {
+                ViewData["ListIdAd"] = db.Ad.Get().Select(i => i.AdId).ToList();
                 return await Task.FromResult(View(db.Topic.GetById(id)));
             }
             catch

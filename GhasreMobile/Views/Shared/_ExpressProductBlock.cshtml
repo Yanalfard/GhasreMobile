@@ -5,7 +5,7 @@
 <div class="product-express mat mat-border">
     <div class="head">
         <h3>پیشنهاد ویژه</h3>
-        <ul class="timer" countdown="@Model.ValidTill">
+        <ul class="timer" countdown="@Model.ValidTill.ConvertToUnixTimestamp()">
             <li>
                 <label day></label>
                 <span>روز</span>
