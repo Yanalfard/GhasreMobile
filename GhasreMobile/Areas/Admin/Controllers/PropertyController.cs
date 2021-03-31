@@ -42,13 +42,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblProperty property = _core.Property.GetById(id);
             if (property.TblProductPropertyRel.Count() == 0)
             {
-                return "ویژگی در محصولی استفاده شده است";
-            }
-            else
-            {
                 _core.Property.DeleteById(id);
                 _core.Property.Save();
                 return "true";
+                
+            }
+            else
+            {
+                return "ویژگی در محصولی استفاده شده است";
             }
         }
 

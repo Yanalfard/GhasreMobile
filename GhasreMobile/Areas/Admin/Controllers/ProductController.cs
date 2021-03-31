@@ -755,8 +755,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     foreach (var item in imageRels)
                     {
+                        _core.Album.Delete(item.Image.Album);
                         _core.ProductImageRel.Delete(item);
+                        
                     }
+                    _core.Album.Save();
                     _core.ProductImageRel.Save();
                 }
 

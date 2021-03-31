@@ -35,7 +35,7 @@
                                     <div class="col-xl-2 col-lg-2  col-sm-3 col-5">
                                         <div class="option d-flex">
                                             <a onclick="EditCatagory(@item.CatagoryId)" data-placement="top" data-toggle="tooltip"><i class="btn ml-2 text-primary" uk-icon="create-outline"></i></a>
-                                            <a onclick="Delete(@item.CatagoryId)" data-placement="top" data-toggle="tooltip"><i class="btn ml-2 text-primary" uk-icon="create-outline"></i></a>
+                                            <a onclick="Delete(@item.CatagoryId)" data-placement="top" data-toggle="tooltip"><i class="btn ml-2 text-danger" uk-icon="trash-outline"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -58,7 +58,7 @@
 
 <script>
     function Delete(id) {
-        $.get("/Admin/Category/Delete/" + id, function (result) {
+        $.get("/Admin/Catagory/Delete/" + id, function (result) {
             if (result == "true") {
                 window.location.reload();
             } else if (result == "false") {
