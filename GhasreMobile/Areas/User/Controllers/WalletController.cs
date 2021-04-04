@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GhasreMobile;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace GhasreMobile.Areas.User.Controllers
 {
@@ -15,7 +18,7 @@ namespace GhasreMobile.Areas.User.Controllers
     [PermissionChecker("user,employee,admin")]
     public class WalletController : Controller
     {
-        // readonly string Domain = "https://localhost:44371";
+       // readonly string Domain = "https://localhost:44371";
         readonly string Domain = "https://gasremobile2004.com";
 
 
@@ -59,8 +62,77 @@ namespace GhasreMobile.Areas.User.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    int Amount = (int)charg.Amount;
-                    return Redirect("/User/Wallet/ChargeWallet?Amount=" + Amount);
+                    //int Amount = (int)charg.Amount;
+                    //return Redirect("/User/Wallet/ChargeWallet?Amount=" + Amount);
+                    TblWallet addWallet = new TblWallet();
+                    addWallet.Amount = (int)charg.Amount;
+                    addWallet.Date = DateTime.Now;
+                    addWallet.Description = "شارژ حساب";
+                    addWallet.IsDeposit = true;
+                    addWallet.IsFinaly = false;
+                    addWallet.ClientId = SelectUser().ClientId;
+                    addWallet.OrderId = charg.OrderId;
+                    db.Wallet.Add(addWallet);
+                    db.Wallet.Save();
+
+                    //توضیحات مورد نیاز پرداخت
+                    var description = "قصر موبایل";
+                    //آدرس برگشت از بانک به سایت
+                    var returnurl = Domain + "/ShopCart/OnlinePayment/";
+                    //مبلغ پرداخت
+                    decimal Price = (int)charg.Amount;
+                    //شماره پرداخت به صورت منحصر به فرد 
+                    //ایجاد می شود GetUniqueKey این شماره به وسیله تابع
+                    long OrderId = addWallet.WalletId;
+                    //به منظور فراخوانی تابع پرداخت MellatPayment ارسال اطلاعات به تابع  
+                    //MellatPayment(returnurl, description, Price, OrderId);
+                    //رفع مشکلات امنیتی
+                    BypassCertificateError();
+                    //شماره ترمینال اخذ شده از به پرداخت
+                    string TerminalId = "5869122";
+                    //نام کاربری اخذ شده از به پرداخت
+                    string UserName = "gasremobile777";
+
+                    //رمز عبور اخذ شده از به پرداخت
+                    string UserPassword = "16986563";
+
+                    Shaparak1.PaymentGatewayClient p = new Shaparak1.PaymentGatewayClient();
+                    //فراخوانی تابع درخواست پرداخت
+
+                    var result = await p.bpPayRequestAsync(Int64.Parse(TerminalId), UserName, UserPassword, OrderId, (long)Price, GetDate(), GetTime(), description, returnurl, "0");
+                    //بررسی نتیجه برگشتی ار تابع پرداخت
+                    //در صورت نول نبودن یعنی فراخوانی انجام شده
+                    //در صورت نول بودن یعنی فراخوانی انجام نشده
+                    if (result != null)
+                    {
+                        //پس از فراخوانی صحیح یک رشته از طرف بان ارسال می گررد که حاوی کد ارجاع و کد پیغام از طرف بانک است
+
+                        //است که به صورت زیر تفکیک می گردد A0ds04545sd24545,0 مثلا کد برگشتی به صورت 
+                        string res = result.Body.@return.ToString();
+                        String[] resultArray = res.Split(',');
+
+                        //در صورتی که کد پیغام 0 باشد یعنی عملیات پرداخت انجام پذیر است و با دستور زیر بررسی می گردد
+                        if (int.Parse(res[0].ToString()) == 0)
+                        {
+                            //ارسال کد ارجاع به تابع جاوا اسکریبت به منظور هدایت به درگاه پرداخت
+                            //در صفحه ایندکس نوشته شده است postRefId تابع جاوا اسکریبت
+                            ViewBag.jscode = "<script language='javascript' type='text/javascript'> postRefId('" + resultArray[1] + "');</script>";
+                        }
+                        else
+                        {
+                            //در صورتی که کد برگشتی 0 نباشد این کد به تابع زیر ارسال شده و پیغامی متناسب با آن نمایش داده می شود
+                            // ViewBag.message = Infrastructure.BMResult.BMResultText(result);
+                            //ViewBag.jscode = "<script language='javascript' type='text/javascript'> postRefId('" + resultArray[1] + "');</script>";
+
+                            ViewBag.message = "<script language='javascript' type='text/javascript'> runerror();</script>";
+                        }
+
+                    }
+                    else
+                    {
+                        ViewBag.message = "در حال حاظر امکان اتصال به این درگاه وجود ندارد ";
+                    }
+                    return await Task.FromResult(View(charg));
                 }
                 return await Task.FromResult(View(charg));
             }
@@ -71,19 +143,7 @@ namespace GhasreMobile.Areas.User.Controllers
 
         }
 
-        public string SetDefaultDate()
-        {
-            return DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString().PadLeft(2, '0') + DateTime.Now.Day.ToString().PadLeft(2, '0');
 
-        }
-        public string SetDefaultTime()
-        {
-            return DateTime.Now.Hour.ToString().PadLeft(2, '0') + DateTime.Now.Minute.ToString().PadLeft(2, '0') + DateTime.Now.Second.ToString().PadLeft(2, '0');
-        }
-        public static readonly string CallBackUrl = "https://gasremobile2004.com/OnlinePayment/";
-        public static readonly string TerminalId = "5869122";
-        public static readonly string UserName = "gasremobile777";
-        public static readonly string UserPassword = "16986563";
         public async Task<IActionResult> ChargeWallet(ChargeWalletVm charge)
         {
             try
@@ -111,36 +171,23 @@ namespace GhasreMobile.Areas.User.Controllers
 
 
                 #region Shaparak
-                // var payment = new Shaparak1.PaymentGatewayClient();
-                // string c = payment.ToString();
-                // var result = await payment.bpPayRequestAsync(5869122, "gasremobile777", "16986563", addWallet.WalletId, (int)charge.Amount, $"{addWallet.Date.Year}/{addWallet.Date.Month}/{addWallet.Date.Day}", $"{addWallet.Date.Hour}:{addWallet.Date.Minute}:{addWallet.Date.Second}", "پرداخت قصر موبایل", Domain + "/OnlinePayment/", 0);
-                // var result = await payment.bpPayRequestAsync(5869122, "gasremobile777", "16986563", addWallet.WalletId, (int)charge.Amount, SetDefaultDate(), SetDefaultTime(), "پرداخت قصر موبایل", Domain + "/OnlinePayment/", addWallet.ClientId.ToString());
 
-
-                Shaparak1.PaymentGatewayClient bp = new Shaparak1.PaymentGatewayClient();
-                int number = 0;
-                var result =await bp.bpPayRequestAsync(Int64.Parse(TerminalId), UserName, UserPassword, long.Parse(addWallet.WalletId.ToString()), long.Parse(charge.Amount.ToString()), SetDefaultDate(), SetDefaultTime(), "1000File.com", CallBackUrl, number.ToString());
-                
-
-
-
-                //string CallBackUrl = Domain + "/OnlinePayment/";
-                //Shaparak1.PaymentGatewayClient bp = new Shaparak1.PaymentGatewayClient();
-                //var result = await bp.bpPayRequestAsync(5869122, "gasremobile777", "16986563", addWallet.WalletId, (int)charge.Amount, SetDefaultDate(), SetDefaultTime(), "1000File.com", CallBackUrl, "0");
-                //string[] res = result.ToString().Split(',');
-                //if (res[0] == "0")
-                //{
-                //    //db.UpdatePayment("پرداخت نشده", res[1], "", payment_id.Value);
-                //    ViewBag.jscode = "<script>postRefId('" + res[1] + "')</script>";
-                //}
-                //else
-                //{
-                //    ViewBag.message = "خطای " + res[0] + " در ارتباط با بانک";
-                //}
+                //توضیحات مورد نیاز پرداخت
+                var description = "قصر موبایل";
+                //آدرس برگشت از بانک به سایت
+                var returnurl = Domain + "OnlinePayment/";
+                //مبلغ پرداخت
+                decimal Price = (int)charge.Amount;
+                //شماره پرداخت به صورت منحصر به فرد 
+                //ایجاد می شود GetUniqueKey این شماره به وسیله تابع
+                long OrderId = addWallet.WalletId;
+                //به منظور فراخوانی تابع پرداخت MellatPayment ارسال اطلاعات به تابع  
+                MellatPayment(returnurl, description, Price, OrderId);
 
                 #endregion
 
-                return await Task.FromResult(RedirectToAction("Charge"));
+                // return await Task.FromResult(RedirectToAction("Charge"));
+                return await Task.FromResult(View("Charge"));
             }
             catch (Exception)
             {
@@ -148,5 +195,103 @@ namespace GhasreMobile.Areas.User.Controllers
             }
 
         }
+        #region // تابع رفع پیغام های امنیتی
+        void BypassCertificateError()
+        {
+            ServicePointManager.ServerCertificateValidationCallback +=
+                delegate (
+                    Object sender1,
+                    X509Certificate certificate,
+                    X509Chain chain,
+                    SslPolicyErrors sslPolicyErrors)
+                {
+                    return true;
+                };
+        }
+        #endregion
+
+        #region // تابع دریافت تاریخ
+        protected string GetDate()
+        {
+            return DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString().PadLeft(2, '0') +
+                   DateTime.Now.Day.ToString().PadLeft(2, '0');
+        }
+        #endregion
+
+        #region // تابع دریافت زمان
+        protected string GetTime()
+        {
+            return DateTime.Now.Hour.ToString().PadLeft(2, '0') + DateTime.Now.Minute.ToString().PadLeft(2, '0') +
+                   DateTime.Now.Second.ToString().PadLeft(2, '0');
+        }
+        #endregion
+
+        #region // تابع دریافت آدرس سرور بانک ملت
+        protected string GetPgwSite()
+        {
+            return "https://bpm.shaparak.ir/pgwchannel/startpay.mellat";
+        }
+        #endregion
+        #region // تابع فراخوانی درخواست پرداخت بانک
+        protected async void MellatPayment(string returnurl, string description, decimal Price, long OrderId)
+        {
+            try
+            {
+                //رفع مشکلات امنیتی
+                BypassCertificateError();
+                //شماره ترمینال اخذ شده از به پرداخت
+                string TerminalId = "5869122";
+                //نام کاربری اخذ شده از به پرداخت
+                string UserName = "gasremobile777";
+
+                //رمز عبور اخذ شده از به پرداخت
+                string UserPassword = "16986563";
+
+                Shaparak1.PaymentGatewayClient p = new Shaparak1.PaymentGatewayClient();
+                //فراخوانی تابع درخواست پرداخت
+
+                var result = await p.bpPayRequestAsync(Int64.Parse(TerminalId), UserName, UserPassword, OrderId, (long)Price, GetDate(), GetTime(), description, returnurl, "0");
+                //بررسی نتیجه برگشتی ار تابع پرداخت
+                //در صورت نول نبودن یعنی فراخوانی انجام شده
+                //در صورت نول بودن یعنی فراخوانی انجام نشده
+                if (result != null)
+                {
+                    //پس از فراخوانی صحیح یک رشته از طرف بان ارسال می گررد که حاوی کد ارجاع و کد پیغام از طرف بانک است
+
+                    //است که به صورت زیر تفکیک می گردد A0ds04545sd24545,0 مثلا کد برگشتی به صورت 
+                    string res = result.Body.@return.ToString();
+                    String[] resultArray = res.Split(',');
+
+                    //در صورتی که کد پیغام 0 باشد یعنی عملیات پرداخت انجام پذیر است و با دستور زیر بررسی می گردد
+                    if (int.Parse(res[0].ToString()) == 0)
+                    {
+                        //ارسال کد ارجاع به تابع جاوا اسکریبت به منظور هدایت به درگاه پرداخت
+                        //در صفحه ایندکس نوشته شده است postRefId تابع جاوا اسکریبت
+                        ViewBag.jscode = "<script language='javascript' type='text/javascript'> postRefId('" + resultArray[1] + "');</script>";
+                    }
+                    else
+                    {
+                        //در صورتی که کد برگشتی 0 نباشد این کد به تابع زیر ارسال شده و پیغامی متناسب با آن نمایش داده می شود
+                        // ViewBag.message = Infrastructure.BMResult.BMResultText(result);
+                        //ViewBag.jscode = "<script language='javascript' type='text/javascript'> postRefId('" + resultArray[1] + "');</script>";
+
+                        //  ViewBag.message = "خطا در ارسال به درگاه";
+                        ViewBag.message = "<script language='javascript' type='text/javascript'> runerror();</script>";
+                    }
+
+                }
+                else
+                {
+                    ViewBag.message = "در حال حاظر امکان اتصال به این درگاه وجود ندارد ";
+                }
+
+
+            }
+            catch (Exception exp)
+            {
+                ViewBag.message = "Error: " + exp.Message;
+            }
+        }
+        #endregion
     }
 }

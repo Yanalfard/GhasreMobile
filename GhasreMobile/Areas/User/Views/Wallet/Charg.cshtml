@@ -14,8 +14,8 @@
     <form asp-action="Charg" asp-controller="Wallet" asp-area="User">
         <div class="fg-col" dir="rtl">
             <label class="fg-label">مبلغ شارژ <span class="text-3">(تومان)</span></label>
-            <input type="text" class="entry PriceInput" data-type='currency'maxlength="10" />
-            <input type="hidden" class="entry" name="Amount" id="Amount"/>
+            <input type="text" class="entry PriceInput" data-type='currency' maxlength="10" />
+            <input type="hidden" class="entry" name="Amount" id="Amount" />
             <span class="text-danger" asp-validation-for="Amount"></span>
         </div>
         <div class="uk-margin-medium-top">
@@ -24,8 +24,34 @@
     </form>
 </div>
 
+@*این المنت یک آبجکت خالی است که تابع جاوااسکریپت فرمی که برای پست کردن اطلاعات به بانک میسازه رو در این شی قرار میده*@
+<div id="bankform"></div>
+
+@*این تابع یک فرم می سازد و اطلاعات را به شیوه پست ارسال می کند*@
+<script language="javascript" type="text/javascript">
+    function postRefId(refIdValue) {
+        console.log(refIdValue);
+        alert(refIdValue);
+        var form = document.createElement("form");
+        form.setAttribute("method", "POST");
+        form.setAttribute("action", "https://bpm.shaparak.ir/pgwchannel/startpay.mellat");
+        form.setAttribute("target", "_self");
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("name", "RefId");
+        hiddenField.setAttribute("value", refIdValue);
+        form.appendChild(hiddenField);
+        document.getElementById("bankform").appendChild(form);
+        form.submit();
+        document.getElementById("bankform").removeChild(form);
+    }
+    function runerror() {
+        alert("خطا در ارسال به درگاه");
+    }
+</script>
 
 @section Scripts{
+    @Html.Raw(ViewBag.jscode)
+    @Html.Raw(ViewBag.message)
 
     <script src="~/js/Auto_Formatting_Currency.js"></script>
     <script>
