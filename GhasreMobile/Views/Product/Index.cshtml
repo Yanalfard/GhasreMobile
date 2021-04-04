@@ -43,7 +43,7 @@
             @if (Model.TblSpecialOffer.Count > 0 && Model.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now)
             {
                 <div class="head uk-padding-small border row uk-margin-small-bottom">
-                    <ul class="timer uk-margin-auto-right" countdown="@Model.TblSpecialOffer.SingleOrDefault().ValidTill">
+                    <ul class="timer uk-margin-auto-right" countdown="@Model.TblSpecialOffer.SingleOrDefault().ValidTill.ConvertToUnixTimestamp()">
                         <li>
                             <label day></label>
                             <span>روز</span>
