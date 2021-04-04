@@ -751,15 +751,18 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     _core.ProductKeywordRel.Save();
                 }
                 IEnumerable<TblProductImageRel> imageRels = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId);
-                if (imageRels != null)
+                if (imageRels.Count() > 0)
                 {
                     foreach (var item in imageRels)
                     {
                         _core.ProductImageRel.Delete(item);
                         
                     }
-                    _core.Album.Delete(imageRels.First().Image.Album);
-                    _core.Album.Save();
+                    if (imageRels.First().Image.Album != null)
+                    {
+                        _core.Album.Delete(imageRels.First().Image.Album);
+                        _core.Album.Save();
+                    }
                     _core.ProductImageRel.Save();
                 }
 
