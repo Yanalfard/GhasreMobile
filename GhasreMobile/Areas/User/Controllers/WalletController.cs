@@ -70,6 +70,20 @@ namespace GhasreMobile.Areas.User.Controllers
             }
 
         }
+
+        public string SetDefaultDate()
+        {
+            return DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString().PadLeft(2, '0') + DateTime.Now.Day.ToString().PadLeft(2, '0');
+
+        }
+        public string SetDefaultTime()
+        {
+            return DateTime.Now.Hour.ToString().PadLeft(2, '0') + DateTime.Now.Minute.ToString().PadLeft(2, '0') + DateTime.Now.Second.ToString().PadLeft(2, '0');
+        }
+        public static readonly string CallBackUrl = "https://gasremobile2004.com/OnlinePayment/";
+        public static readonly string TerminalId = "5869122";
+        public static readonly string UserName = "gasremobile777";
+        public static readonly string UserPassword = "16986563";
         public async Task<IActionResult> ChargeWallet(ChargeWalletVm charge)
         {
             try
@@ -86,13 +100,44 @@ namespace GhasreMobile.Areas.User.Controllers
                 db.Wallet.Save();
 
                 #region OnlinePayment
-                var payment = new ZarinpalSandbox.Payment((int)charge.Amount);
-                var res = payment.PaymentRequest("شارژ کیف پول", Domain + "/OnlinePayment/" + addWallet.WalletId, "gasremobile2004@gmail.Com", "09357035985");
+                //var payment = new ZarinpalSandbox.Payment((int)charge.Amount);
+                //var res = payment.PaymentRequest("شارژ کیف پول", Domain + "/OnlinePayment/" + addWallet.WalletId, "gasremobile2004@gmail.Com", "09357035985");
 
-                if (res.Result.Status == 100)
-                {
-                    return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + res.Result.Authority);
-                }
+                //if (res.Result.Status == 100)
+                //{
+                //    return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + res.Result.Authority);
+                //}
+                #endregion
+
+
+                #region Shaparak
+                // var payment = new Shaparak1.PaymentGatewayClient();
+                // string c = payment.ToString();
+                // var result = await payment.bpPayRequestAsync(5869122, "gasremobile777", "16986563", addWallet.WalletId, (int)charge.Amount, $"{addWallet.Date.Year}/{addWallet.Date.Month}/{addWallet.Date.Day}", $"{addWallet.Date.Hour}:{addWallet.Date.Minute}:{addWallet.Date.Second}", "پرداخت قصر موبایل", Domain + "/OnlinePayment/", 0);
+                // var result = await payment.bpPayRequestAsync(5869122, "gasremobile777", "16986563", addWallet.WalletId, (int)charge.Amount, SetDefaultDate(), SetDefaultTime(), "پرداخت قصر موبایل", Domain + "/OnlinePayment/", addWallet.ClientId.ToString());
+
+
+                Shaparak1.PaymentGatewayClient bp = new Shaparak1.PaymentGatewayClient();
+                int number = 0;
+                var result =await bp.bpPayRequestAsync(Int64.Parse(TerminalId), UserName, UserPassword, long.Parse(addWallet.WalletId.ToString()), long.Parse(charge.Amount.ToString()), SetDefaultDate(), SetDefaultTime(), "1000File.com", CallBackUrl, number.ToString());
+                
+
+
+
+                //string CallBackUrl = Domain + "/OnlinePayment/";
+                //Shaparak1.PaymentGatewayClient bp = new Shaparak1.PaymentGatewayClient();
+                //var result = await bp.bpPayRequestAsync(5869122, "gasremobile777", "16986563", addWallet.WalletId, (int)charge.Amount, SetDefaultDate(), SetDefaultTime(), "1000File.com", CallBackUrl, "0");
+                //string[] res = result.ToString().Split(',');
+                //if (res[0] == "0")
+                //{
+                //    //db.UpdatePayment("پرداخت نشده", res[1], "", payment_id.Value);
+                //    ViewBag.jscode = "<script>postRefId('" + res[1] + "')</script>";
+                //}
+                //else
+                //{
+                //    ViewBag.message = "خطای " + res[0] + " در ارتباط با بانک";
+                //}
+
                 #endregion
 
                 return await Task.FromResult(RedirectToAction("Charge"));

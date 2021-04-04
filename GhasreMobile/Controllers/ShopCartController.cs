@@ -315,6 +315,17 @@ namespace GhasreMobile.Controllers
                             HttpContext.Session.Clear();
                             int message = selectedOrder.OrdeId;
                             await Sms.SendSms(selectedClient.TellNo, message.ToString(), "GhasrMobileDoneSefaresh");
+                            List<TblOrderDetail> list = db.OrderDetail.Get(i => i.FinalOrderId == addWallet.OrderId).ToList();
+                            foreach (var item in list)
+                            {
+                                TblColor colors = db.Color.GetById(item.ColorId);
+                                if (colors.Count > 0 && colors.Count >= item.Count)
+                                {
+                                    colors.Count -= colors.Count;
+                                    db.Color.Update(colors);
+                                }
+                            }
+                            db.Wallet.Save();
                             return View();
                         }
                         else
