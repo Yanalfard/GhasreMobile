@@ -61,6 +61,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     NewSlider.IsActive = true;
                     NewSlider.Link = slider.Link;
                     NewSlider.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+
+                    if (!Directory.Exists("wwwroot/Images/Slider"))
+                    {
+                        Directory.CreateDirectory("wwwroot/Images/Slider");
+                    }
+
                     string savePath = Path.Combine(
                                             Directory.GetCurrentDirectory(), "wwwroot/Images/Slider", NewSlider.ImageUrl
                                         );
