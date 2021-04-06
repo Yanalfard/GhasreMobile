@@ -8,7 +8,11 @@
     <div class="col-md-12 flex-div pb-3 pt-3">
         <div class="card flex-div border-0 main-shadow">
             <div class="card-header bg-white">
-
+                <div class=" pt-2">
+                    <div class="form-group pb-0 mb-0">
+                        <button id="Create" data-toggle="modal" data-target="#modalSave" class="btn btn-success btn-sm">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+                    </div>
+                </div>
             </div>
             <div id="card-table" class="card-body flex-div">
                 <div class="table-responsive flex">
@@ -54,6 +58,11 @@
                 $(".modal-content").html(result);
             });
         }
-
+        $("#Create").click(function () {
+            $(".modal-content").html("");
+            $.get("/Admin/Album/Create", function (result) {
+                $(".modal-content").html(result);
+            });
+        });
     </script>
 }

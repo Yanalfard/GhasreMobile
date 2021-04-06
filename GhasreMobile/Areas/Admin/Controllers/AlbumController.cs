@@ -23,6 +23,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             return ViewComponent("AlbumShowAdmin", new { id = id });
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return ViewComponent("CreateAlbumAdmin");
+        }
 
         [HttpPost]
         public IActionResult DeleteImage(int id)

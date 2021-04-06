@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+            <div id="card-table mt-4" class="card-body flex-div">
+                <div class="table-responsive flex">
+                    <table class="table fixed">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>نام کاربر</th>
+                                <th>شماره تماس</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                <tr>
+                                    <td>رضا رضایی</td>
+                                    <td>0956541</td>
+                                    <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="جزئیات">
+                                            <a data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <nav aria-label="Page navigation example">
+                  @*  @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })*@
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
