@@ -221,18 +221,19 @@
             </ul>
         </div>
         <div class="cart uk-margin-top">
-            <!-- #region BTN ADD -->
-            <div class="counter rowr">
-                <button class="plus" uk-icon="add"></button>
-                <span class="count">
-                    <span>16</span>
-                </span>
-                <button class="minus" uk-icon="remove"></button>
-            </div>
-            <!-- #endregion -->
+
 
             @if (Model.TblColor.Sum(i => i.Count) > 0 && Model.IsDeleted == false)
             {
+                <!-- #region BTN ADD -->
+                <div class="counter rowr">
+                    <button class="plus" uk-icon="add" onclick="AddToCart(@Model.ProductId)"></button>
+                    <span class="count">
+                        <span id="shopCountProduct"></span>
+                    </span>
+                    <button class="minus" uk-icon="remove" onclick="minusProduct()"></button>
+                </div>
+                <!-- #endregion -->
                 <button class="button" onclick="AddToCart(@Model.ProductId)">
                     <span>افزودن به سبد خرید</span>
                     <span uk-icon="cart"></span>
@@ -267,9 +268,12 @@
         </div>
     </div>
     <ul class="pr-specs">
-        <li>
-            موجود در انبار
-        </li>
+        @if (Model.TblColor.Sum(i => i.Count) > 0)
+        {
+            <li>
+                موجود در انبار
+            </li>
+        }
         <li>
             تحویل پیشتاز
         </li>
@@ -343,6 +347,15 @@
 @section Scripts{
 
     <script>
+        function minusProduct() {
+            var id = $('#ProductColorId').val();
+            $.get("/ShopCart/MinusProduct/" + id, function (res) {
+                //$("#shopCountProduct").html(res);
+                animateCrt();
+                countShopCart();
+                shopCountProduct();
+            });
+        }
 
         //var id = $('#brandName').val();
         //$.get('/Product/SliderInProduct/' + id, function (result) {
@@ -356,18 +369,18 @@
             selectedColour = sender;
             const input = sender.querySelector('input[name=ColorId]');
             const targetInput = document.getElementById('ProductColorId');
-
             targetInput.value = input.value;
+            shopCountProduct();
         }
 
         function comparisonChanged(sender) {
 
             sender.parentElement.classList.toggle('checked');
             // Toggle Comparison
-            $.get("/api/Shop/" + id + "/" + colorId, function (res) {
-                $("#countShopCart").html(res);
-                // updateShopCart();
-            });
+            //$.get("/api/Shop/" + id + "/" + colorId, function (res) {
+            //    $("#countShopCart").html(res);
+            //    // updateShopCart();
+            //});
         }
 
 

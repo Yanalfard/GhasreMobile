@@ -388,6 +388,7 @@
         //shop
         $(function () {
             countShopCart();
+            shopCountProduct();
         });
 
         function countShopCart() {
@@ -395,19 +396,28 @@
                 $("#countShopCart").html(res);
             });
         }
-
+        function shopCountProduct() {
+            var id = $('#ProductColorId').val();
+            $.get("/api/ShopCountProduct/" + id , function (res) {
+                $("#shopCountProduct").html(res);
+            });
+        }
+        
         function AddToCart(id) {
             var colorId = $('#ProductColorId').val();
             $.get("/api/Shop/" + id + "/" + colorId, function (res) {
                 $("#countShopCart").html(res);
                 // updateShopCart();
-
-                const element = document.querySelector('.cart');
-                element.classList.remove('anim-add-to-cart')
-                void element.offsetWidth;
-                element.classList.add('anim-add-to-cart')
+                animateCrt();
+                shopCountProduct();
 
             });
+        }
+        function animateCrt() {
+            const element = document.querySelector('.cart');
+            element.classList.remove('anim-add-to-cart');
+            void element.offsetWidth;
+            element.classList.add('anim-add-to-cart');
         }
         function AddToCompare(id) {
             $.get("/api/CompareApi/" + id, function (res) {
