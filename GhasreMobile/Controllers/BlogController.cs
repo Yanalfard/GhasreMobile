@@ -37,6 +37,7 @@ namespace GhasreMobile.Controllers
             try
             {
                 ViewData["ListIdAd"] = db.Ad.Get().Select(i => i.AdId).ToList();
+                ViewData["ListIdBlog"] = db.Blog.Get(i => i.BlogId != id).Select(i => i.BlogId).ToList();
                 return await Task.FromResult(View(db.Blog.GetById(id)));
             }
             catch

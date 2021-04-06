@@ -80,6 +80,8 @@
 @await Component.InvokeAsync("DeliveryView")
 <!-- #DeliveryView -->
 <div role="none" id="Ad3"></div>
+
+@await Component.InvokeAsync("ProductView", new { id = 1 })
 <!-- #questions -->
 @await Component.InvokeAsync("QuestionsView")
 <!-- #questions -->

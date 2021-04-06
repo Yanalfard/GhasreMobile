@@ -221,14 +221,15 @@
             </ul>
         </div>
         <div class="cart uk-margin-top">
-            @*<div class="counter rowr">
-            <button class="plus" uk-icon="add"></button>
-            <span class="count">
-                <span>16</span>
-            </span>
-            <button class="minus" uk-icon="remove"></button>
-        </div>*@
-
+            <!-- #region BTN ADD -->
+            <div class="counter rowr">
+                <button class="plus" uk-icon="add"></button>
+                <span class="count">
+                    <span>16</span>
+                </span>
+                <button class="minus" uk-icon="remove"></button>
+            </div>
+            <!-- #endregion -->
 
             @if (Model.TblColor.Sum(i => i.Count) > 0 && Model.IsDeleted == false)
             {
@@ -265,9 +266,23 @@
 
         </div>
     </div>
-    <div class="pr-specs">
-
-    </div>
+    <ul class="pr-specs">
+        <li>
+            موجود در انبار
+        </li>
+        <li>
+            تحویل پیشتاز
+        </li>
+        <li>
+            ضمانت بازگشت
+        </li>
+        <li>
+            ضمانت اصل بودن کالا
+        </li>
+        <li>
+            ارسال به تمامی نقاط
+        </li>
+    </ul>
 </div>
 
 <nav class="section-nav">

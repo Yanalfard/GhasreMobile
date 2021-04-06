@@ -11,9 +11,18 @@ namespace GhasreMobile.ViewComponents.View.Product
     public class ProductView : ViewComponent
     {
         private Core db = new Core();
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(int? id = 0)
         {
-            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/ProductView/ProductView.cshtml", db.Brand.Get().OrderByDescending(i => i.TblProduct.Count())));
+            List<TblBrand> list = new List<TblBrand>();
+            if (id == 0)
+            {
+                list = db.Brand.Get().OrderByDescending(i => i.TblProduct.Count()).Skip(1).ToList();
+            }
+            else
+            {
+                list = db.Brand.Get().OrderByDescending(i => i.TblProduct.Count()).Take(1).ToList();
+            }
+            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/ProductView/ProductView.cshtml", list));
         }
     }
 }
