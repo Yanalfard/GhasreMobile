@@ -1,0 +1,6 @@
+﻿@model TblBlog
+
+@if(Model.MainImage != null)
+{
+    <div swap="@ViewData["Swap"]"><partial name="_BlogBlock" model="Model" /></div>
+}

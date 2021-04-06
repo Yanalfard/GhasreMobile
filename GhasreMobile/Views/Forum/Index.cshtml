@@ -29,9 +29,12 @@
         <p>موضوعی برای بحث دارید؟ آن را به اشتراک بگزارید</p>
         <a href="/Forum/NewForum" class="btn btn-primary">ثبت موضوع</a>
     </div>
-
-    @await Component.InvokeAsync("AdView", new { number = getNext() })
-    @await Component.InvokeAsync("AdView", new { number = getNext() })
+    <div swap="baner1">
+        @await Component.InvokeAsync("AdView", new { number = getNext() })
+    </div>
+    <div swap="baner2">
+        @await Component.InvokeAsync("AdView", new { number = getNext() })
+    </div>
 
 }
 
@@ -68,6 +71,9 @@
         <partial name="_ThreadBlock" model="item" />
     }
 </div>
+
+<div role="none" id="baner1"></div>
+<div role="none" id="baner2"></div>
 
 @section Scripts{
     <script src="~/js/BjaxLib.js"></script>
