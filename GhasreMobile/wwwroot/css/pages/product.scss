@@ -2,13 +2,13 @@
 @import '../_layout.scss';
 
 .pr {
-    $specs-width: 180px;
+    $specs-width: 150px;
     $title-height: 92px;
     //
     display: grid;
     grid-template-columns: $specs-width 2fr 1.1fr;
     grid-template-rows: $title-height auto;
-    grid-template-areas: "title title image" "specs content image";
+    grid-template-areas: 'title title image' 'specs content image';
     grid-gap: 10px;
     z-index: 10;
     @include border-radius(4px,4px,0,0);
@@ -117,12 +117,20 @@
         background-color: #F5F6F7;
         @include mat-padding;
         grid-area: title;
+        border: $mat-border-color 1px solid;
     }
+
 
     &-content {
         grid-area: content;
         min-height: 150px;
         grid-gap: 8px;
+
+        .body {
+            p {
+                margin: 4px 0;
+            }
+        }
 
         .colours {
             @include column;
@@ -157,7 +165,7 @@
                     }
 
                     .active {
-                        border: 1px solid transparentize($primary,.2)!important;
+                        border: 1px solid transparentize($primary,.2) !important;
                     }
                 }
             }
@@ -190,10 +198,25 @@
     }
 
     &-specs {
-        background-color: transparent;
         grid-area: specs;
-        min-height: 50px;
         width: $specs-width;
+        margin: 0;
+        margin-bottom: auto;
+        background-color: #F5F6F7;
+        color: $Text-2;
+        min-height: 50px;
+        border: $mat-border-color 1px solid;
+        padding: 12px;
+        direction: rtl;
+        list-style: disc !important;
+        padding-right: 30px;
+
+        li {
+            direction: rtl;
+            min-height: 32px;
+            vertical-align: middle;
+            list-style: disc !important;
+        }
     }
 }
 
