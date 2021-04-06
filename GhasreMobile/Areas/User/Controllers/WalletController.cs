@@ -117,6 +117,8 @@ namespace GhasreMobile.Areas.User.Controllers
                             //ارسال کد ارجاع به تابع جاوا اسکریبت به منظور هدایت به درگاه پرداخت
                             //در صفحه ایندکس نوشته شده است postRefId تابع جاوا اسکریبت
                             ViewBag.jscode = "<script language='javascript' type='text/javascript'> postRefId('" + resultArray[1] + "');</script>";
+                            string addres = "https://bpm.shaparak.ir/pgwchannel/startpay.mellat?RefId=" + resultArray[1];
+                            return Redirect(addres);
                         }
                         else
                         {
@@ -159,35 +161,66 @@ namespace GhasreMobile.Areas.User.Controllers
                 db.Wallet.Add(addWallet);
                 db.Wallet.Save();
 
-                #region OnlinePayment
-                //var payment = new ZarinpalSandbox.Payment((int)charge.Amount);
-                //var res = payment.PaymentRequest("شارژ کیف پول", Domain + "/OnlinePayment/" + addWallet.WalletId, "gasremobile2004@gmail.Com", "09357035985");
-
-                //if (res.Result.Status == 100)
-                //{
-                //    return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + res.Result.Authority);
-                //}
-                #endregion
-
-
-                #region Shaparak
-
                 //توضیحات مورد نیاز پرداخت
                 var description = "قصر موبایل";
                 //آدرس برگشت از بانک به سایت
-                var returnurl = Domain + "OnlinePayment/";
+                var returnurl = Domain + "/ShopCart/OnlinePayment/";
                 //مبلغ پرداخت
                 decimal Price = (int)charge.Amount;
                 //شماره پرداخت به صورت منحصر به فرد 
                 //ایجاد می شود GetUniqueKey این شماره به وسیله تابع
                 long OrderId = addWallet.WalletId;
                 //به منظور فراخوانی تابع پرداخت MellatPayment ارسال اطلاعات به تابع  
-                MellatPayment(returnurl, description, Price, OrderId);
+                //MellatPayment(returnurl, description, Price, OrderId);
+                //رفع مشکلات امنیتی
+                BypassCertificateError();
+                //شماره ترمینال اخذ شده از به پرداخت
+                string TerminalId = "5869122";
+                //نام کاربری اخذ شده از به پرداخت
+                string UserName = "gasremobile777";
 
-                #endregion
+                //رمز عبور اخذ شده از به پرداخت
+                string UserPassword = "16986563";
 
-                // return await Task.FromResult(RedirectToAction("Charge"));
-                return await Task.FromResult(View("Charge"));
+                Shaparak1.PaymentGatewayClient p = new Shaparak1.PaymentGatewayClient();
+                //فراخوانی تابع درخواست پرداخت
+
+                var result = await p.bpPayRequestAsync(Int64.Parse(TerminalId), UserName, UserPassword, OrderId, (long)Price, GetDate(), GetTime(), description, returnurl, "0");
+                //بررسی نتیجه برگشتی ار تابع پرداخت
+                //در صورت نول نبودن یعنی فراخوانی انجام شده
+                //در صورت نول بودن یعنی فراخوانی انجام نشده
+                if (result != null)
+                {
+                    //پس از فراخوانی صحیح یک رشته از طرف بان ارسال می گررد که حاوی کد ارجاع و کد پیغام از طرف بانک است
+
+                    //است که به صورت زیر تفکیک می گردد A0ds04545sd24545,0 مثلا کد برگشتی به صورت 
+                    string res = result.Body.@return.ToString();
+                    String[] resultArray = res.Split(',');
+
+                    //در صورتی که کد پیغام 0 باشد یعنی عملیات پرداخت انجام پذیر است و با دستور زیر بررسی می گردد
+                    if (int.Parse(res[0].ToString()) == 0)
+                    {
+                        //ارسال کد ارجاع به تابع جاوا اسکریبت به منظور هدایت به درگاه پرداخت
+                        //در صفحه ایندکس نوشته شده است postRefId تابع جاوا اسکریبت
+                        ViewBag.jscode = "<script language='javascript' type='text/javascript'> postRefId('" + resultArray[1] + "');</script>";
+                        string addres = "https://bpm.shaparak.ir/pgwchannel/startpay.mellat?RefId=" + resultArray[1];
+                        return Redirect(addres);
+                    }
+                    else
+                    {
+                        //در صورتی که کد برگشتی 0 نباشد این کد به تابع زیر ارسال شده و پیغامی متناسب با آن نمایش داده می شود
+                        // ViewBag.message = Infrastructure.BMResult.BMResultText(result);
+                        //ViewBag.jscode = "<script language='javascript' type='text/javascript'> postRefId('" + resultArray[1] + "');</script>";
+
+                        ViewBag.message = "<script language='javascript' type='text/javascript'> runerror();</script>";
+                    }
+
+                }
+                else
+                {
+                    ViewBag.message = "در حال حاظر امکان اتصال به این درگاه وجود ندارد ";
+                }
+                return await Task.FromResult(RedirectToAction("Charge"));
             }
             catch (Exception)
             {

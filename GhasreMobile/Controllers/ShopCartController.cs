@@ -342,6 +342,7 @@ namespace GhasreMobile.Controllers
                             int Amount = (int)SumBalance;
                             int OrderId = addOrder.OrdeId;
                             return Redirect("/User/Wallet/ChargeWallet?Amount=" + Amount + "&OrderId=" + OrderId);
+                           // return Redirect("/User/Wallet/Charg?Amount=" + Amount + "&OrderId=" + OrderId);
                         }
                     }
 
@@ -358,6 +359,7 @@ namespace GhasreMobile.Controllers
         {
             try
             {
+
                 BypassCertificateError();
 
                 if (string.IsNullOrEmpty(SaleReferenceId))
@@ -365,12 +367,11 @@ namespace GhasreMobile.Controllers
                     if (!string.IsNullOrEmpty(ResCode))
                     {
                         //ViewBag.message = Infrastructure.BMResult.BMResultText(ResCode);
-                        ViewBag.message = "SaleReferenceId";
+                        ViewBag.message = "<div class='uk-alert uk-alert-danger'><h2>پرداخت با شکست مواجه شد</h2></div>";
                     }
                     else
                     {
-                        ViewBag.message = "وضعیت: شماره رسید قابل قبول نیست";
-                        ViewBag.message += "SaleReferenceId";
+                        ViewBag.message = "<div class='uk-alert uk-alert-danger'><h2>پرداخت با شکست مواجه شد</h2></div>";
                     }
                     //ImageState.ImageUrl = "~/Images/notaccept.png";
                 }
@@ -379,65 +380,90 @@ namespace GhasreMobile.Controllers
                     try
                     {
 
-
-
                         Shaparak1.PaymentGatewayClient bpService = new Shaparak1.PaymentGatewayClient();
-
                         //شماره ترمینال اخذ شده از به پرداخت
                         string TerminalId = "5869122";
-
                         //نام کاربری اخذ شده از به پرداخت
                         string UserName = "gasremobile777";
-
                         //رمز عبور اخذ شده از به پرداخت
                         string UserPassword = "16986563";
-
-                        var Vresult2 = bpService.bpVerifyRequestAsync(long.Parse(TerminalId), UserName, UserPassword, long.Parse(SaleOrderId), long.Parse(SaleOrderId), long.Parse(SaleReferenceId));
-                        string Vresult = Vresult2.ToString();
+                        var Vresult2 = await bpService.bpVerifyRequestAsync(long.Parse(TerminalId), UserName, UserPassword, long.Parse(SaleOrderId), long.Parse(SaleOrderId), long.Parse(SaleReferenceId));
+                        string Vresult = Vresult2.Body.@return;
                         if (!string.IsNullOrEmpty(Vresult))
                         {
+
                             if (Vresult == "0")
                             {
-                                var IQresult2 = bpService.bpInquiryRequestAsync(long.Parse(TerminalId), UserName, UserPassword, long.Parse(SaleOrderId), long.Parse(SaleOrderId), long.Parse(SaleReferenceId));
-                                string IQresult = IQresult2.ToString();
-
-                                if (IQresult == "0")
+                                //در اینجا پرداخت انجام شده است و عملیات مربوط به سایت انجام می گیرد
+                                ViewBag.message = "<div class='uk-alert uk-alert-success'>" + "پرداخت با موفقیت انجام شد." + "<br/>" + "شناسه سفارش: " + SaleOrderId + "<br/>" + " شناسه مرجع تراکنش:" + SaleReferenceId + "<br/></div>";
+                                //ViewBag.message = "پرداخت با موفقیت انجام شد." + "<br/>" + "شناسه سفارش: " + SaleOrderId + "<br/>" + " شناسه مرجع تراکنش:" + SaleReferenceId + "<br/>" + "رسید پرداخت:" + RefId;
+                                //ImageState.ImageUrl = "~/Images/accept.png";
+                                //اعلام پرداخت نهایی
+                                var Sresult2 = await bpService.bpSettleRequestAsync(long.Parse(TerminalId), UserName, UserPassword, long.Parse(SaleOrderId), long.Parse(SaleOrderId), long.Parse(SaleReferenceId));
+                                string Sresult = Sresult2.Body.@return.ToString();
+                                if (Sresult != null)
                                 {
-                                    //در اینجا پرداخت انجام شده است و عملیات مربوط به سایت انجام می گیرد
-
-                                    ViewBag.message = "پرداخت با موفقیت انجام شد." + "<br/>" + "شناسه سفارش: " + SaleOrderId + "<br/>" + " شناسه مرجع تراکنش:" + SaleReferenceId + "<br/>" + "رسید پرداخت:" + RefId;
-
-                                    //ImageState.ImageUrl = "~/Images/accept.png";
-
-                                    //اعلام پرداخت نهایی
-                                    var Sresult2 = bpService.bpSettleRequestAsync(long.Parse(TerminalId), UserName, UserPassword, long.Parse(SaleOrderId), long.Parse(SaleOrderId), long.Parse(SaleReferenceId));
-                                    string Sresult = Sresult2.ToString();
-                                    if (Sresult != null)
+                                    if (Sresult == "0" || Sresult == "45")
                                     {
-                                        if (Sresult == "0" || Sresult == "45")
+                                        //تراکنش تایید و ستل شده است 
+                                        var wallet = db.Wallet.GetById(Convert.ToInt32(SaleOrderId));
+                                        wallet.IsFinaly = true;
+                                        db.Wallet.Update(wallet);
+                                        TblClient selectedClient = db.Client.GetById(wallet.ClientId);
+                                        selectedClient.Balance += wallet.Amount;
+                                        db.Client.Update(selectedClient);
+                                        db.Client.Save();
+                                        if (wallet.OrderId != null)
                                         {
-                                            //تراکنش تایید و ستل شده است 
-                                        }
-                                        else
-                                        {
-                                            //تراکنش تایید شده ولی ستل نشده است
+                                            TblOrder selectedOrder = db.Order.GetById(wallet.OrderId);
+                                            selectedOrder.IsPayed = true;
+                                            db.Order.Update(selectedOrder);
+                                            selectedClient.Balance -= selectedOrder.FinalPrice;
+                                            db.Client.Update(selectedClient);
+                                            db.Client.Save();
+                                            TblWallet addWallet = new TblWallet();
+                                            addWallet.Amount = selectedOrder.FinalPrice;
+                                            addWallet.Date = DateTime.Now;
+                                            addWallet.Description = "خرید";
+                                            addWallet.IsDeposit = false;
+                                            addWallet.IsFinaly = true;
+                                            addWallet.ClientId = SelectUser().ClientId;
+                                            addWallet.OrderId = wallet.OrderId;
+                                            db.Wallet.Add(addWallet);
+                                            if (selectedOrder.DiscountId != null)
+                                            {
+                                                TblDiscount selectedDiscount = db.Discount.GetById(selectedOrder.DiscountId);
+                                                selectedDiscount.Count--;
+                                                db.Discount.Update(selectedDiscount);
+                                            }
+                                            List<TblOrderDetail> list = db.OrderDetail.Get(i => i.FinalOrderId == wallet.OrderId).ToList();
+                                            foreach (var item in list)
+                                            {
+                                                TblColor colors = db.Color.GetById(item.ColorId);
+                                                if (colors.Count > 0 && colors.Count >= item.Count)
+                                                {
+                                                    colors.Count -= colors.Count;
+                                                    db.Color.Update(colors);
+                                                }
+                                            }
+                                            db.Wallet.Save();
+                                            List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
+                                            DiscountVm discount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                                            int message = selectedOrder.OrdeId;
+                                            await Sms.SendSms(selectedClient.TellNo, message.ToString(), "GhasrMobileDoneSefaresh");
+                                            HttpContext.Session.Clear();
                                         }
                                     }
+                                    else
+                                    {
 
-
+                                        //تراکنش تایید شده ولی ستل نشده است
+                                    }
                                 }
-                                else
-                                {
-                                    //عملیات برگشت دادن مبلغ
-                                    var Rvresult2 = bpService.bpReversalRequestAsync(long.Parse(TerminalId), UserName, UserPassword, long.Parse(SaleOrderId), long.Parse(SaleOrderId), long.Parse(SaleReferenceId));
-                                    string Rvresult = Rvresult2.ToString();
-                                    ViewBag.message = "تراکنش بازگشت داده شد";
-                                    //ImageState.ImageUrl = "~/Images/notaccept.png";
-                                }
-
                             }
                             else
                             {
+
                                 // ViewBag.message = Infrastructure.BMResult.BMResultText(Vresult);
                                 //ImageState.ImageUrl = "~/Images/notaccept.png";
                             }
@@ -445,14 +471,15 @@ namespace GhasreMobile.Controllers
                         }
                         else
                         {
-                            ViewBag.message = "وضعیت: شماره رسید قابل قبول نیست";
+                            ViewBag.message = "<div class='uk-alert uk-alert-danger'><h2>پرداخت با شکست مواجه شد</h2></div>";
+
                             //ImageState.ImageUrl = "~/Images/notaccept.png";
                         }
 
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        ViewBag.message = ex + "<br/>" + " وضعیت:مشکلی در پرداخت به وجود آمده است ، در صورتیکه وجه پرداختی از حساب بانکی شما کسر شده است آن مبلغ به صورت خودکار برگشت داده خواهد شد ";
+                        ViewBag.message = "<div class='uk-alert uk-alert-danger'><h2><br/> مشکلی در پرداخت به وجود آمده است ، در صورتیکه وجه پرداختی از حساب بانکی شما کسر شده است آن مبلغ به صورت خودکار برگشت داده خواهد شد</h2></div>";
                         //ImageState.ImageUrl = "~/Images/notaccept.png";
                     }
                 }
