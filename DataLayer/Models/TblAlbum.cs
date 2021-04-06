@@ -18,6 +18,8 @@ namespace DataLayer.Models
         [StringLength(100,ErrorMessage ="نام مناسب وارد کنید")]
         public string Name { get; set; }
 
+        public bool IsProduct { get; set; }
+
         [InverseProperty("Album")]
         public virtual ICollection<TblImage> TblImage { get; set; }
     }

@@ -55,6 +55,8 @@ namespace DataLayer.Models
         public virtual DbSet<TblTopicCommentRel> TblTopicCommentRel { get; set; }
         public virtual DbSet<TblWallet> TblWallet { get; set; }
 
+        public virtual DbSet<TblContactUs> TblContactUs { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
            => optionsBuilder
           .UseLazyLoadingProxies()
