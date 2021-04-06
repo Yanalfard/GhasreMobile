@@ -15,11 +15,11 @@
         <div class="rowr uk-margin-small-top">
             @if (User.Identity.IsAuthenticated)
             {
-                <button type="submit" class="btn btn-dashed uk-margin-auto-top" onclick="LoadingRun('#ajaxresultSendCommentTopic')">ثبت نظر</button>
+                <button type="submit" class="btn btn-primary uk-margin-auto-top" onclick="LoadingRun('#ajaxresultSendCommentTopic')">ثبت نظر</button>
             }
             else
             {
-                <a href="/Login" class="btn btn-dashed uk-margin-auto-top" onclick="LoadingRun('#ajaxresultSendCommentTopic')">ثبت نظر</a>
+                <a href="/Login" class="btn btn-primary uk-margin-auto-top" onclick="LoadingRun('#ajaxresultSendCommentTopic')">ثبت نظر</a>
             }
         </div>
     </form>

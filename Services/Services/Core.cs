@@ -49,6 +49,7 @@ namespace Services.Services
         private MainRepo<TblSpecialOffer> _specialOffer;
         private MainRepo<TblWallet> _wallet;
         private MainRepo<TblPostOption> _PostOption;
+        private MainRepo<TblContactUs> _ContactUs;
 
 
         public MainRepo<TblStore> Store => _store ??= new MainRepo<TblStore>(_context);
@@ -90,6 +91,7 @@ namespace Services.Services
         public MainRepo<TblSpecialOffer> SpecialOffer => _specialOffer ??= new MainRepo<TblSpecialOffer>(_context);
         public MainRepo<TblWallet> Wallet => _wallet ??= new MainRepo<TblWallet>(_context);
         public MainRepo<TblPostOption> PostOption => _PostOption ??= new MainRepo<TblPostOption>(_context);
+        public MainRepo<TblContactUs> ContactUs => _ContactUs ??= new MainRepo<TblContactUs>(_context);
 
         public void Dispose()
         {
