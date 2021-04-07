@@ -1218,7 +1218,8 @@ $background-highlight: #eee;
         @include row;
 
         a {
-            border: 1px $Text solid;
+            content: "•";
+            border: 1px $Text solid!important;
             background-color: transparent;
             margin: auto;
             @include trans(.3s);
@@ -1230,8 +1231,8 @@ $background-highlight: #eee;
             margin: auto;
             width: 16px;
             height: 16px;
-            border-color: $primary;
-            background-color: $primary;
+            border-color: $primary!important;
+            background-color: $primary!important;
         }
     }
 }
