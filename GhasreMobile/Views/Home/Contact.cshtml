@@ -40,13 +40,12 @@
         </form>
         <!-- #endregion -->
         <!-- #region Sellers -->
-
-        <a href="@ViewBag.Telegram" class="telegram">
-            <img src="~/st/r/Telegram.png" alt="قصر موبایل" />
-        </a>
-        <a href="@ViewBag.Instagram" class="instagram">
-            <img src="~/st/r/Instagram.png" alt="قصر موبایل" />
-        </a>
+        @*<a href="@ViewBag.Telegram" class="telegram">
+                <img src="~/st/r/Telegram.png" alt="قصر موبایل" />
+            </a>
+            <a href="@ViewBag.Instagram" class="instagram">
+                <img src="~/st/r/Instagram.png" alt="قصر موبایل" />
+            </a>*@
 
         @*<div class="sellers mat-card">
                 <h3>مدیران فروش</h3>
@@ -88,6 +87,21 @@
         @await Component.InvokeAsync("DeliveryInContactView")
         <!-- #endregion -->
 
+    </div>
+
+    <div class="bottom">
+        <a href="">
+            <img src="~/st/v/Gmail.svg" width="124" height="124" alt="" />
+        </a>
+        <a href="">
+            <img src="~/st/v/Whatsapp.svg" width="124" height="124" alt="" />
+        </a>
+        <a href="@ViewBag.Telegram">
+            <img src="~/st/v/Telegram.svg" width="124" height="124" alt="" />
+        </a>
+        <a href="@ViewBag.Instagram">
+            <img src="~/st/v/InstagramLong.svg" height="124" alt="" />
+        </a>
     </div>
 
 </div>
