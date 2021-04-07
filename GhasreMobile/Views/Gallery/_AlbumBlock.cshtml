@@ -3,7 +3,11 @@
 {
     <div class="albumBlock mat col uk-overflow-hidden">
         <a href="/AlbumView/@Model.AlbumId/@Model.Name">
-            <img src="~/images/ProductAlbum/@Model.TblImage.FirstOrDefault().Image" alt="" />
+            @foreach (var item in Model.TblImage.Where(i => i.Image.Contains(".jpg") || i.Image.Contains(".jpeg") || i.Image.Contains(".png")))
+            {
+                <img src="~/images/ProductAlbum/@item.Image" alt="" />
+                break;
+            }
         </a>
         <div class="mat-pad col">
             <h2 class="uk-h5"><a href="/AlbumView/@Model.AlbumId/@Model.Name" class="link-text">@Model.Name</a></h2>

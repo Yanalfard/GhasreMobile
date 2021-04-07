@@ -1,6 +1,6 @@
 ﻿@model TblAlbum
 @{
-    ViewData["Title"] = " آلبوم "+" " + Model.Name;
+    ViewData["Title"] = " آلبوم " + " " + Model.Name;
     ViewData["Single"] = true;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -17,9 +17,19 @@
         <div class="grid" uk-lightbox>
             @foreach (var item in Model.TblImage)
             {
-                <a href="~/Images/ProductAlbum/@item.Image" data-caption="@Model.Name">
-                    <img src="~/Images/ProductAlbum/@item.Image" alt="@Model.Name" />
-                </a>
+                @if (item.Image.ToLower().Contains(".mp4") || item.Image.ToLower().Contains(".mkv") || item.Image.ToLower().Contains(".avi"))
+                {
+                    <video class="video-playback uk-margin-auto-left uk-margin-auto-right white-area-margin" controls controlsList="nodownload">
+                        <source src="~/Images/ProductAlbum/@item.Image" type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <a href="~/Images/ProductAlbum/@item.Image" data-caption="@Model.Name">
+                        <img src="~/Images/ProductAlbum/@item.Image" alt="@Model.Name" />
+                    </a>
+                }
+
             }
         </div>
         <div class="row">
