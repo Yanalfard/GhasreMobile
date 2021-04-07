@@ -46,7 +46,7 @@
 
             <div class="card-footer bg-white">
                 <nav aria-label="Page navigation example">
-                 @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
+                    @await this.Component.InvokeAsync("Pager", new { PagingList = this.Model })
                 </nav>
             </div>
         </div>
@@ -63,11 +63,15 @@
         });
 
         function RemoveSlider(Id) {
-            $.post("/Admin/Slider/RemoveSlider/" + Id, function (result) {
-                if (result == "true") {
-                    window.location.reload();
-                }
-            });
+            if (confirm('آیا از حذف اسلایدر مورد نظر مطمئن هستید؟')) {
+                $.post("/Admin/Slider/RemoveSlider/" + Id, function (result) {
+                    if (result == "true") {
+                        window.location.reload();
+                    }
+                });
+            } else {
+                // Do nothing!
+            }
         }
 
     </script>

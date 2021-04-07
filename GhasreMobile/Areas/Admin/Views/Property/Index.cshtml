@@ -76,13 +76,18 @@
         }
 
         function Delete(id) {
-            $.post("/Admin/Property/Delete/" + id, function (result) {
-                if (result == "true") {
-                    window.location.reload();
-                } else {
-                    UIkit.notification({ message: result });
-                }
-            });
+            if (confirm('آیا از حذف ویژگی مورد نظر مطمئن هستید؟')) {
+                $.post("/Admin/Property/Delete/" + id, function (result) {
+                    if (result == "true") {
+                        window.location.reload();
+                    } else {
+                        UIkit.notification({ message: result });
+                    }
+                });
+            } else {
+                // Do nothing!
+            }
+
         }
 
     </script>

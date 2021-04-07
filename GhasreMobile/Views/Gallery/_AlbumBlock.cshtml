@@ -1,11 +1,11 @@
 ﻿@model TblAlbum
-@if (Model != null && Model.TblImage.Count > 0)
+@if (Model != null && Model.TblImage.Count > 0 && Model.TblImage.Any())
 {
     <div class="albumBlock mat col uk-overflow-hidden">
-        <a href="/AlbumView/@Model.AlbumId/@Model.Name">
+        <a href="/AlbumView/@Model.AlbumId/@Model.Name.Replace(" ","-").Replace("/","-")">
             @foreach (var item in Model.TblImage.Where(i => i.Image.Contains(".jpg") || i.Image.Contains(".jpeg") || i.Image.Contains(".png")))
             {
-                <img src="~/images/ProductAlbum/@item.Image" alt="" />
+                <img src="~/images/Album/@item.Image" alt="" />
                 break;
             }
         </a>

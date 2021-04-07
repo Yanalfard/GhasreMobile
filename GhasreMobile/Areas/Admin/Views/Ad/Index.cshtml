@@ -71,9 +71,14 @@
         }
 
         function Delete(id) {
-            $.post("/Admin/Ad/Delete/" + id, function () {
-                window.location.reload();
-            });
+            if (confirm('آیا از حذف تبلیغ مورد نظر مطمئن هستید؟')) {
+                $.post("/Admin/Ad/Delete/" + id, function () {
+                    window.location.reload();
+                });
+            } else {
+                // Do nothing!
+            }
+
         }
 
     </script>
