@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TblImage>
+﻿@model IEnumerable<TblAlbum>
 @if (Model.Any())
 {
     <div class="gallery-grid mat-card">
@@ -11,7 +11,11 @@
         <div class="grid">
             @foreach (var item in Model)
             {
-                <a href="/AlbumView/@item.AlbumId/@item.Album.Name" ><img src="~/images/ProductAlbum/@item.Image" alt="" /></a>
+                @foreach (var j in item.TblImage.Where(i => i.Image.Contains(".jpg") || i.Image.Contains(".jpeg") || i.Image.Contains(".png")))
+                {
+                    <a href="/AlbumView/@item.AlbumId/@item.Name.Replace(" ","-").Replace("/","-")"><img src="~/images/Album/@j.Image" alt="" /></a>
+                    break;
+                }
             }
         </div>
         <div class="row">

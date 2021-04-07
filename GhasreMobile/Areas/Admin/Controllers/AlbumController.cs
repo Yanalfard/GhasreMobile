@@ -8,10 +8,12 @@ using ReflectionIT.Mvc.Paging;
 using Services.Services;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using GhasreMobile.Utilities;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [PermissionChecker("admin")]
     public class AlbumController : Controller
     {
         Core _core = new Core();
