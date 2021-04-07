@@ -38,7 +38,7 @@
                     <img src="~/st/r/logo.jpg" width="48" height="48" alt="لوگو فصر موبایل" />
                 </a>
                 <div class="search">
-                    <span class="link-text" uk-icon="search" dir="rtl" onclick="window.location = '/Search?q=' + (this.parentElement.querySelector('[name=q]').value)">
+                    <span id="myBtntxtSearchMain" class="link-text" uk-icon="search" dir="rtl" onclick="window.location = '/Search?q=' + (this.parentElement.querySelector('[name=q]').value)">
                     </span>
                     <input id="txtSearchMain" dir="rtl" class="entry-invis"
                            type="text" placeholder="جستجو..." name="q"
@@ -85,12 +85,12 @@
                     <button uk-icon="menu-outline" uk-toggle="target: #offCanvas" type="button" class="uk-margin-small-right show-on-threshold"></button>
                     <a href="/">خانه</a>
                     <a href="/Forum">تالار گفتگو</a>
-                    <a href="/Contact">تماس با ما</a>
-                    <a href="/About">درباره ما</a>
-                    <a href="/Affiliate">شعب ما</a>
                     <a href="/Blog">اخبار</a>
                     <a href="/Gallery">گالری</a>
                     <a href="/Conditions">شرایط اقساطی</a>
+                    <a href="/Affiliate">شعب ما</a>
+                    <a href="/Contact">تماس با ما</a>
+                    <a href="/About">درباره ما</a>
                 </nav>
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -193,8 +193,8 @@
                                 </a>
                             </li>
                             @*<li>
-                                <img src="~/st/r/resane.jpg" uk-tooltip="در دست اقدام" alt="" uk-cover>
-                            </li>*@
+                                    <img src="~/st/r/resane.jpg" uk-tooltip="در دست اقدام" alt="" uk-cover>
+                                </li>*@
                         </ul>
                         <ul class="uk-slideshow-nav uk-dotnav uk-flex-center uk-margin-bottom"></ul>
                     </div>
@@ -282,6 +282,7 @@
             }
         });
     </script>
+
     <script>
         var isUserLoggedIn = @(User.Identity.IsAuthenticated ? "true" : "false");
     </script>
@@ -387,6 +388,7 @@
         //shop
         $(function () {
             countShopCart();
+            shopCountProduct();
         });
 
         function countShopCart() {
@@ -394,19 +396,28 @@
                 $("#countShopCart").html(res);
             });
         }
-
+        function shopCountProduct() {
+            var id = $('#ProductColorId').val();
+            $.get("/api/ShopCountProduct/" + id , function (res) {
+                $("#shopCountProduct").html(res);
+            });
+        }
+        
         function AddToCart(id) {
             var colorId = $('#ProductColorId').val();
             $.get("/api/Shop/" + id + "/" + colorId, function (res) {
                 $("#countShopCart").html(res);
                 // updateShopCart();
-
-                const element = document.querySelector('.cart');
-                element.classList.remove('anim-add-to-cart')
-                void element.offsetWidth;
-                element.classList.add('anim-add-to-cart')
+                animateCrt();
+                shopCountProduct();
 
             });
+        }
+        function animateCrt() {
+            const element = document.querySelector('.cart');
+            element.classList.remove('anim-add-to-cart');
+            void element.offsetWidth;
+            element.classList.add('anim-add-to-cart');
         }
         function AddToCompare(id) {
             $.get("/api/CompareApi/" + id, function (res) {

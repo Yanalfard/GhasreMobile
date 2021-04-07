@@ -135,6 +135,24 @@ namespace GhasreMobile.Controllers
 
         }
 
+
+        public async Task<int> MinusProduct(int id)
+        {
+            var listShop = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
+            if (listShop.Any(p => p.ColorID == id))
+            {
+                var index = listShop.FindIndex(p => p.ColorID == id);
+                listShop[index].Count -= 1;
+                if (listShop[index].Count == 0)
+                {
+                    listShop[index].Count = 0;
+                    listShop.RemoveAt(index);
+                }
+            }
+            HttpContext.Session.SetComplexData("ShopCart", listShop);
+            return await Task.FromResult(0);
+        }
+
         public async Task<IActionResult> Comparison()
         {
             try
@@ -342,7 +360,7 @@ namespace GhasreMobile.Controllers
                             int Amount = (int)SumBalance;
                             int OrderId = addOrder.OrdeId;
                             return Redirect("/User/Wallet/ChargeWallet?Amount=" + Amount + "&OrderId=" + OrderId);
-                           // return Redirect("/User/Wallet/Charg?Amount=" + Amount + "&OrderId=" + OrderId);
+                            // return Redirect("/User/Wallet/Charg?Amount=" + Amount + "&OrderId=" + OrderId);
                         }
                     }
 

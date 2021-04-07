@@ -62,17 +62,17 @@ namespace GhasreMobile.Controllers
                 }
                 if (q != null)
                 {
-                    ViewData["Title"] = q;
-                    list = list.Where(i => i.SearchText.ToLower().Contains(q.ToLower()) || i.Name.ToLower().Contains(q.ToLower())).ToList();
+                    ViewData["q"] = q;
+                    list = list.Where(i => i.SearchText.ToLower().Contains(q.ToLower()) || i.Name.ToLower().Contains(q.ToLower()) || i.Brand.Name.ToLower().Contains(q.ToLower()) || i.Catagory.Name.ToLower().Contains(q.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(q.ToLower())).ToList();
                 }
                 if (name != null)
                 {
-                    ViewData["Title"] = name;
+                    ViewData["name"] = name;
                     list = list.Where(i => i.Name.ToLower().Contains(name.ToLower())).ToList();
                 }
                 if (cat != null)
                 {
-                    ViewData["Title"] = cat;
+                    ViewData["cat"] = cat;
                     list = list.Where(i => i.Catagory.Name.ToLower().Contains(cat.ToLower())).ToList();
                 }
                 if (catId != 0)
@@ -81,7 +81,7 @@ namespace GhasreMobile.Controllers
                 }
                 if (brand != null)
                 {
-                    ViewData["Title"] = brand;
+                    ViewData["brand"] = brand;
                     list = list.Where(i => i.Brand.Name.ToLower().Contains(brand.ToLower())).ToList();
                 }
                 if (brandId != 0)
@@ -195,7 +195,8 @@ namespace GhasreMobile.Controllers
                 }
                 if (q != null)
                 {
-                    list = list.Where(i => i.SearchText.ToLower().Contains(q.ToLower()) || i.Name.ToLower().Contains(q.ToLower())).ToList();
+                    ViewData["q"] = q;
+                    list = list.Where(i => i.SearchText.ToLower().Contains(q.ToLower()) || i.Name.ToLower().Contains(q.ToLower()) || i.Brand.Name.ToLower().Contains(q.ToLower()) || i.Catagory.Name.ToLower().Contains(q.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(q.ToLower())).ToList();
                 }
                 if (name != null)
                 {
@@ -300,7 +301,8 @@ namespace GhasreMobile.Controllers
         public IActionResult LayoutSearch(string key)
         {
             if (key.Length <= 2) return Ok("Invalid Key");
-            var dbFake = db.Product.Get(i => i.IsDeleted == false).Select(i => i.Name.ToLower());
+            List<TblProduct> list = db.Product.Get(i => i.IsDeleted == false).ToList();
+            List<string> dbFake = list.Select(i => i.Name.ToLower() +" "+ i.Catagory.Name.ToLower()).ToList();
             return Json(dbFake.ToList().Where(i => i.Contains(key)));
         }
 
