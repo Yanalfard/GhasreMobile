@@ -19,7 +19,6 @@ namespace DataLayer.Models
         public string Lat { get; set; }
         [Required(ErrorMessage = "موقعیت جغرافیایی فروشگاه را وارد کنید")]
         public string Lon { get; set; }
-        public string MainImage { get; set; }
         public string Body { get; set; }
         [Required(ErrorMessage ="لطفا آدرس فروشگاه را وارد کنید")]
         [StringLength(500,ErrorMessage ="آدرس معتبر وارد کنید")]

@@ -283,6 +283,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                         TblAlbum album = new TblAlbum();
                         album.Name = NewProduct.Name;
+                        album.IsProduct = true;
                         _core.Album.Add(album);
                         _core.Album.Save();
                         if (GalleryFile.Count() > 0)
@@ -626,6 +627,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         {
                             TblAlbum album = new TblAlbum();
                             album.Name = product.Name;
+                            album.IsProduct = true;
                             _core.Album.Add(album);
                             _core.Album.Save();
                             NewImage.AlbumId = album.AlbumId;

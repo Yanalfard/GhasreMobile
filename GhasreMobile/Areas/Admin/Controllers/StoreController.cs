@@ -26,7 +26,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             else
             {
-                IEnumerable<TblStore> stores = PagingList.Create(_core.Store.Get().OrderByDescending(s=>s.StoreId), 40, page);
+                IEnumerable<TblStore> stores = PagingList.Create(_core.Store.Get().OrderByDescending(s => s.StoreId), 40, page);
                 return View(stores);
             }
         }
@@ -38,24 +38,41 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(TblStore store, IFormFile MainImage)
+        public async Task<IActionResult> CreateAsync(TblStore store, List<IFormFile> GalleryFile)
         {
             if (ModelState.IsValid)
             {
-                if (MainImage != null)
-                {
-                    store.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
-                    string savePath = Path.Combine(
-                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Store", store.MainImage
-                                        );
-
-                    using (var stream = new FileStream(savePath, FileMode.Create))
-                    {
-                        await MainImage.CopyToAsync(stream);
-                    };
-                }
                 _core.Store.Add(store);
                 _core.Store.Save();
+                if (GalleryFile != null)
+                {
+                    foreach (var item in GalleryFile)
+                    {
+                        TblImage image = new TblImage();
+                        image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
+                        string saveDirectory = Path.Combine(
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Store");
+                        string savePathAlbum = Path.Combine(
+                                            Directory.GetCurrentDirectory(), saveDirectory, image.Image);
+
+                        if (!Directory.Exists(saveDirectory))
+                        {
+                            Directory.CreateDirectory(saveDirectory);
+                        }
+
+                        using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                        {
+                            await item.CopyToAsync(stream);
+                        }
+                        _core.Image.Add(image);
+                        TblStoreImageRel imageRel = new TblStoreImageRel();
+                        imageRel.StoreId = store.StoreId;
+                        imageRel.ImageId = image.ImageId;
+                        _core.StoreImageRel.Add(imageRel);
+                        _core.StoreImageRel.Save();
+                    }
+                }
+
                 return await Task.FromResult(Redirect("/Admin/Store"));
 
             }
@@ -69,28 +86,37 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAsync(TblStore store, IFormFile Image)
+        public async Task<IActionResult> EditAsync(TblStore store, List<IFormFile> GalleryFile)
         {
             if (ModelState.IsValid)
             {
-                if (Image != null)
+                if (GalleryFile != null)
                 {
-                    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Store", store.MainImage);
-
-                    if (System.IO.File.Exists(imagePath))
+                    foreach (var item in GalleryFile)
                     {
-                        System.IO.File.Delete(imagePath);
+                        TblImage image = new TblImage();
+                        image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
+                        string saveDirectory = Path.Combine(
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Store");
+                        string savePathAlbum = Path.Combine(
+                                            Directory.GetCurrentDirectory(), saveDirectory, image.Image);
+
+                        if (!Directory.Exists(saveDirectory))
+                        {
+                            Directory.CreateDirectory(saveDirectory);
+                        }
+
+                        using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                        {
+                            await item.CopyToAsync(stream);
+                        }
+                        _core.Image.Add(image);
+                        TblStoreImageRel imageRel = new TblStoreImageRel();
+                        imageRel.StoreId = store.StoreId;
+                        imageRel.ImageId = image.ImageId;
+                        _core.StoreImageRel.Add(imageRel);
+                        _core.StoreImageRel.Save();
                     }
-
-                    store.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(Image.FileName);
-                    string savePath = Path.Combine(
-                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Store", store.MainImage
-                                        );
-
-                    using (var stream = new FileStream(savePath, FileMode.Create))
-                    {
-                        await Image.CopyToAsync(stream);
-                    };
                 }
                 else
                 {
