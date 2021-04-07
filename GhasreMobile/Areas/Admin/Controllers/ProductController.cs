@@ -265,8 +265,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         NewProduct.CatagoryId = product.CatagoryId;
                         if (product.PriceAfterDiscount != null)
                         {
-                            NewProduct.PriceAfterDiscount =
-                                NewProduct.PriceBeforeDiscount - (NewProduct.PriceBeforeDiscount * product.PriceAfterDiscount / 100);
+                            NewProduct.PriceAfterDiscount = product.PriceAfterDiscount;
                         }
                         else
                         {

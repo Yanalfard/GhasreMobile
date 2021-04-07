@@ -34,6 +34,12 @@ namespace DataLayer.ViewModels
         [Required(ErrorMessage = "لطفا لینک تلگرم را وارد کنید")]
         public string LinkTelegram { get; set; }
 
+        [Required(ErrorMessage = "لطفا لینک تلگرم را وارد کنید")]
+        public string LinkEmail { get; set; }
+
+        [Required(ErrorMessage = "لطفا لینک تلگرم را وارد کنید")]
+        public string Linkwhatsapp { get; set; }
+
         [Required(ErrorMessage = "لطفا قوانین را وارد کنید")]
         public string Gavanin { get; set; }
         

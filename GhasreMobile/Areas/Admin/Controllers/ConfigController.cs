@@ -29,6 +29,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
             config.ShortDarbareyeMa = configs.Where(c => c.Key == "ShortDarbareyeMa").Single().Value;
             config.LinkInsta = configs.Where(c => c.Key == "LinkInsta").Single().Value;
             config.LinkTelegram = configs.Where(c => c.Key == "LinkTelegram").Single().Value;
+            config.LinkEmail = configs.Where(c => c.Key == "Email").Single().Value;
+            config.Linkwhatsapp = configs.Where(c => c.Key == "Whatsapp").Single().Value;
             config.Gavanin = configs.Where(c => c.Key == "Gavanin").Single().Value;
             config.ShortTamasBaMa = configs.Where(c => c.Key == "ShortTamasBaMa").Single().Value;
             config.KharidAgsady = configs.Where(c => c.Key == "KharidAgsady").Single().Value;
@@ -52,6 +54,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 TblConfig ConfigShortDarbareyeMa = configs.Where(c => c.Key == "ShortDarbareyeMa").Single();
                 TblConfig ConfigLinkInsta = configs.Where(c => c.Key == "LinkInsta").Single();
                 TblConfig ConfigLinkTelegram = configs.Where(c => c.Key == "LinkTelegram").Single();
+                TblConfig ConfigLinkEmail = configs.Where(c => c.Key == "Email").Single();
+                TblConfig ConfigLinkwhatsapp = configs.Where(c => c.Key == "Whatsapp").Single();
                 TblConfig ConfigGavanin = configs.Where(c => c.Key == "Gavanin").Single();
                 TblConfig ConfigShortTamasBaMa = configs.Where(c => c.Key == "ShortTamasBaMa").Single();
                 TblConfig ConfigKharidAgsady = configs.Where(c => c.Key == "KharidAgsady").Single();
@@ -65,6 +69,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 ConfigShortDarbareyeMa.Value = configVm.ShortDarbareyeMa;
                 ConfigLinkInsta.Value = configVm.LinkInsta;
                 ConfigLinkTelegram.Value = configVm.LinkTelegram;
+                ConfigLinkEmail.Value = configVm.LinkEmail;
+                ConfigLinkwhatsapp.Value = configVm.Linkwhatsapp;
                 ConfigGavanin.Value = configVm.Gavanin;
                 ConfigShortTamasBaMa.Value = configVm.ShortTamasBaMa;
                 ConfigKharidAgsady.Value = configVm.KharidAgsady;
@@ -82,6 +88,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.Config.Update(ConfigShortTamasBaMa);
                 _core.Config.Update(ConfigKharidAgsady);
                 _core.Config.Update(ConfigSharayeteAghsati);
+                _core.Config.Update(ConfigLinkEmail);
+                _core.Config.Update(ConfigLinkwhatsapp);
 
                 _core.Config.Save();
             }

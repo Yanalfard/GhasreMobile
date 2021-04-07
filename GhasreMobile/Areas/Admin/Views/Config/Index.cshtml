@@ -16,28 +16,13 @@
                       data-ajax-mode="replace"
                       data-ajax-complete="EndCatagoryCreate()"
                       data-ajax-update="#ajaxresult">
-                    @*<div class="form-group col-lg-12">
-            <label>هزینه ارسال با پست: </label>
-            <input asp-for="HazineErsalBaPost" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left" placeholder="مثال: 19,000">
-            <br /><span class="text-danger" asp-validation-for="HazineErsalBaPost"></span>
-        </div>*@
+
                     <div class="form-group col-lg-12">
                         <label>سقف هزینه ارسال رایگان: </label>
                         <input data-type='currency' class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left PriceInput" placeholder="مثال: 19,000">
                         <input type="hidden" asp-for="SagfePost" />
                         <br /><span class="text-danger" asp-validation-for="SagfePost"></span>
                     </div>
-
-                    @*<div class="form-group col-lg-12 mt-lg-3">
-            <label>هزینه ارسال با تیپاکس و چاپار</label>
-            <input asp-for="HazineErsalBaTipaxChapare" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left" placeholder="مثال: 28,000">
-            <br /><span class="text-danger" asp-validation-for="HazineErsalBaTipaxChapare"></span>
-        </div>*@
-                    @*<div class="form-group col-lg-12 mt-lg-3">
-            <label>هزینه ارسال با پست:</label>
-            <input asp-for="HazineErsalPeyk" class="form-control form-control-sm d-inline-block d-sm-block col-lg-10 float-left" placeholder="مثال: 28,000">
-            <br /><span class="text-danger" asp-validation-for="HazineErsalPeyk"></span>
-        </div>*@
                     <div class="form-group col-lg-12 mt-lg-3">
                         <label>تماس با ما:</label>
                         <textarea asp-for="TamasBaMa" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
@@ -85,13 +70,13 @@
                     </div>
                     <div class="form-group col-lg-12 mt-lg-3">
                         <label>شماره واتساپ: </label>
-                        <textarea  class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
-                        <br /><span class="text-danger" ></span>
+                        <textarea asp-for="Linkwhatsapp" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
+                        <br /><span class="text-danger" asp-validation-for="Linkwhatsapp"></span>
                     </div>
                     <div class="form-group col-lg-12 mt-lg-3">
                         <label>ایمیل: </label>
-                        <textarea  class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
-                        <br /><span class="text-danger"></span>
+                        <textarea asp-for="LinkEmail" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
+                        <br /><span class="text-danger" asp-validation-for="LinkEmail"></span>
                     </div>
                     <div class="form-group col-lg-12 mt-lg-3">
                         <label>توضیحات خرید اقساطی در صفحه ی فاکتور:</label>
@@ -137,7 +122,7 @@
             }
         });
 
-        $(".PriceInput").val($("#SagfePost").val());  
+        $(".PriceInput").val($("#SagfePost").val());
 
     </script>
     <script src="~/Validate/jquery.validate.min.js"></script>
