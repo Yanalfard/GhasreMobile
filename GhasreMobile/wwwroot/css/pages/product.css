@@ -214,25 +214,24 @@ backdrop-filter: saturate(80%);
             border-radius: 1000px 1000px 1000px 1000px; }
         .pr-content .colours .grid li .active {
           border: 1px solid rgba(150, 2, 126, 0.8) !important; }
-    .pr-content .price {
+    .pr-content .price .discount {
+      color: #FF5A64;
+      text-decoration: line-through;
+      font-size: 24px;
       display: flex;
-      flex-direction: column; }
-      .pr-content .price .discount {
-        color: #FF5A64;
-        text-decoration: line-through;
-        font-size: 20px; }
-      .pr-content .price .actual {
-        display: flex;
-        flex-direction: row-reverse;
+      flex-direction: row-reverse; }
+    .pr-content .price .actual {
+      display: flex;
+      flex-direction: row-reverse;
+      color: #333;
+      font-size: 24px;
+      margin-top: 0px; }
+      .pr-content .price .actual .t {
         color: #333;
-        font-size: 24px;
-        margin-top: 0px; }
-        .pr-content .price .actual .t {
-          color: #333;
-          font-size: 13px;
-          margin-top: auto;
-          margin-bottom: 5px;
-          margin-right: 4px; }
+        font-size: 13px;
+        margin-top: auto;
+        margin-bottom: 5px;
+        margin-right: 4px; }
   .pr-specs {
     grid-area: specs;
     width: 150px;
@@ -381,9 +380,9 @@ backdrop-filter: saturate(80%);
   .cart .button {
     background-color: #96027E;
     padding: 6px 8px;
-    -moz-border-radius: 6px 6px 6px 6px;
-    -webkit-border-radius: 6px 6px 6px 6px;
-    border-radius: 6px 6px 6px 6px;
+    -moz-border-radius: 6px 0 0 6px;
+    -webkit-border-radius: 6px 0 0 6px;
+    border-radius: 6px 0 0 6px;
     -moz-transition: all ease 0.2s;
     -o-transition: all ease 0.2s;
     -webkit-transition: all ease 0.2s;
