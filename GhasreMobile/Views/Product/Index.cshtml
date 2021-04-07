@@ -144,7 +144,7 @@
         <div class="body col">
             @Html.Raw(Model.DescriptionShortHtml)
         </div>
-        <div class="price">
+        <div class="price g-2 rowr-at-l rowr-at-m col-at-s col-at-xs">
             @if (Model.TblColor.Sum(i => i.Count) > 0 && Model.IsDeleted == false)
             {
                 @if (Model.TblSpecialOffer.Count > 0 && Model.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now)
