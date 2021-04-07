@@ -80,7 +80,8 @@ namespace GhasreMobile.Areas.User.Controllers
                     //آدرس برگشت از بانک به سایت
                     var returnurl = Domain + "/ShopCart/OnlinePayment/";
                     //مبلغ پرداخت
-                    decimal Price = (int)charg.Amount * 10;
+                    long pricWithZarb = (int)charg.Amount;
+                    long Price = pricWithZarb * 10;
                     //شماره پرداخت به صورت منحصر به فرد 
                     //ایجاد می شود GetUniqueKey این شماره به وسیله تابع
                     long OrderId = addWallet.WalletId;
@@ -99,7 +100,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     Shaparak1.PaymentGatewayClient p = new Shaparak1.PaymentGatewayClient();
                     //فراخوانی تابع درخواست پرداخت
 
-                    var result = await p.bpPayRequestAsync(Int64.Parse(TerminalId), UserName, UserPassword, OrderId, (long)Price, GetDate(), GetTime(), description, returnurl, "0");
+                    var result = await p.bpPayRequestAsync(Int64.Parse(TerminalId), UserName, UserPassword, OrderId, Price, GetDate(), GetTime(), description, returnurl, "0");
                     //بررسی نتیجه برگشتی ار تابع پرداخت
                     //در صورت نول نبودن یعنی فراخوانی انجام شده
                     //در صورت نول بودن یعنی فراخوانی انجام نشده
@@ -166,7 +167,9 @@ namespace GhasreMobile.Areas.User.Controllers
                 //آدرس برگشت از بانک به سایت
                 var returnurl = Domain + "/ShopCart/OnlinePayment/";
                 //مبلغ پرداخت
-                decimal Price = (int)charge.Amount * 10;
+                long pricWithZarb  = (int)charge.Amount;
+                long Price = pricWithZarb * 10;
+                //int Price = (int)((int)(charge.Amount ?? 0) * (int)10);
                 //شماره پرداخت به صورت منحصر به فرد 
                 //ایجاد می شود GetUniqueKey این شماره به وسیله تابع
                 long OrderId = addWallet.WalletId;
@@ -185,7 +188,7 @@ namespace GhasreMobile.Areas.User.Controllers
                 Shaparak1.PaymentGatewayClient p = new Shaparak1.PaymentGatewayClient();
                 //فراخوانی تابع درخواست پرداخت
 
-                var result = await p.bpPayRequestAsync(Int64.Parse(TerminalId), UserName, UserPassword, OrderId, (long)Price, GetDate(), GetTime(), description, returnurl, "0");
+                var result = await p.bpPayRequestAsync(Int64.Parse(TerminalId), UserName, UserPassword, OrderId, Price, GetDate(), GetTime(), description, returnurl, "0");
                 //بررسی نتیجه برگشتی ار تابع پرداخت
                 //در صورت نول نبودن یعنی فراخوانی انجام شده
                 //در صورت نول بودن یعنی فراخوانی انجام نشده
