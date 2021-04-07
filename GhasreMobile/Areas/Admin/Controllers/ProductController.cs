@@ -28,7 +28,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     if (productsInAdmin.InPageCount == 0)
                     {
-                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.CatagoryId);
+                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
                         int count = products.Count();
 
                         var skip = (productsInAdmin.PageId - 1) * 18;
@@ -47,7 +47,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     }
                     else
                     {
-                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.CatagoryId);
+                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
                         int count = products.Count();
 
                         var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
@@ -69,7 +69,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     if (productsInAdmin.InPageCount == 0)
                     {
-                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.SearchText.Contains(productsInAdmin.Search) && c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.CatagoryId);
+                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.SearchText.Contains(productsInAdmin.Search) && c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
                         int count = products.Count();
 
                         var skip = (productsInAdmin.PageId - 1) * 18;
@@ -90,7 +90,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     }
                     else
                     {
-                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.SearchText.Contains(productsInAdmin.Search) && c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.CatagoryId);
+                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.SearchText.Contains(productsInAdmin.Search) && c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
                         int count = products.Count();
 
                         var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
@@ -389,7 +389,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         public IActionResult CreateColor(int id)
         {
-            return ViewComponent("CreateColorAdmin",new {id=id });
+            return ViewComponent("CreateColorAdmin", new { id = id });
         }
 
         [HttpPost]
@@ -434,7 +434,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     {
                         foreach (var item in whenReadies)
                         {
-                            await Sms.SendSms2(item.Client.TellNo, item.Product.Name, "Https://gasrmobile2004.com/Product" + item.ProductId + "/" + item.Product.Name.Replace(" ", "-").Replace("/","-"), "GhasrMobileAlertWhenReady");
+                            await Sms.SendSms2(item.Client.TellNo, item.Product.Name, "Https://gasrmobile2004.com/Product" + item.ProductId + "/" + item.Product.Name.Replace(" ", "-").Replace("/", "-"), "GhasrMobileAlertWhenReady");
                             _core.AlertWhenReady.Delete(item);
                             _core.AlertWhenReady.Save();
                         }
@@ -605,7 +605,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         foreach (var item in tblProductImageRel)
                         {
                             var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", item.Image.Image);
-
                             if (System.IO.File.Exists(imagePath))
                             {
                                 System.IO.File.Delete(imagePath);
@@ -752,16 +751,23 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     _core.ProductKeywordRel.Save();
                 }
                 IEnumerable<TblProductImageRel> imageRels = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId);
+               
                 if (imageRels.Count() > 0)
                 {
+                    TblAlbum selectedAlbum = imageRels.First().Image.Album;
                     foreach (var item in imageRels)
                     {
-                        _core.ProductImageRel.Delete(item);
-                        
+                        var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", item.Image.Image);
+                        if (System.IO.File.Exists(deleteImagePath))
+                        {
+                            System.IO.File.Delete(deleteImagePath);
+                        }
+                        _core.Image.Delete(item.Image);
+                        _core.Image.Save();
                     }
-                    if (imageRels.First().Image.Album != null)
+                    if (selectedAlbum != null)
                     {
-                        _core.Album.Delete(imageRels.First().Image.Album);
+                        _core.Album.Delete(selectedAlbum);
                         _core.Album.Save();
                     }
                     _core.ProductImageRel.Save();

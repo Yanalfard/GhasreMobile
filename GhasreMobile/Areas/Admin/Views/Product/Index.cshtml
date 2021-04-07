@@ -52,7 +52,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.OrderByDescending(i=>i.DateCreated))
                             {
                                 <tr id="productId_@item.ProductId">
                                     <td>@item.ProductId</td>
