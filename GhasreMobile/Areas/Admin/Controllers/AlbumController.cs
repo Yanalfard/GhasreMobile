@@ -7,6 +7,7 @@ using DataLayer.Models;
 using ReflectionIT.Mvc.Paging;
 using Services.Services;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -16,7 +17,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblAlbum> albums = PagingList.Create(_core.Album.Get().OrderByDescending(o => o.AlbumId), 30, page);
+            IEnumerable<TblAlbum> albums = PagingList.Create(_core.Album.Get(a => !a.IsProduct).OrderByDescending(o => o.AlbumId), 30, page);
             return View(albums);
         }
         public IActionResult Show(int id)
@@ -28,23 +29,117 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             return ViewComponent("CreateAlbumAdmin");
         }
+        [HttpPost]
+        public async Task<IActionResult> Create(string Name, List<IFormFile> GalleryFile)
+        {
+            TblAlbum album = new TblAlbum();
+            album.Name = Name;
+            album.IsProduct = false;
+            _core.Album.Add(album);
+            _core.Album.Save();
+            if (GalleryFile != null)
+            {
+                foreach (var item in GalleryFile)
+                {
+                    TblImage image = new TblImage();
+                    image.AlbumId = album.AlbumId;
+                    image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
+                    string saveDirectory = Path.Combine(
+                                        Directory.GetCurrentDirectory(), "wwwroot/Images/Album");
+                    string savePathAlbum = Path.Combine(
+                                        Directory.GetCurrentDirectory(), saveDirectory, image.Image);
+
+                    if (!Directory.Exists(saveDirectory))
+                    {
+                        Directory.CreateDirectory(saveDirectory);
+                    }
+
+                    using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                    {
+                        await item.CopyToAsync(stream);
+                    }
+
+                    _core.Image.Add(image);
+                }
+                _core.Image.Save();
+            }
+            return Redirect("/Admin/Album");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            return ViewComponent("EditAlbumAdmin", new { id = id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id,string Name, List<IFormFile> GalleryFile)
+        {
+            TblAlbum album = _core.Album.GetById(id);
+            album.Name = Name;
+            if (GalleryFile != null)
+            {
+                foreach (var item in GalleryFile)
+                {
+                    TblImage image = new TblImage();
+                    image.AlbumId = album.AlbumId;
+                    image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
+                    string saveDirectory = Path.Combine(
+                                        Directory.GetCurrentDirectory(), "wwwroot/Images/Album");
+                    string savePathAlbum = Path.Combine(
+                                        Directory.GetCurrentDirectory(), saveDirectory, image.Image);
+
+                    if (!Directory.Exists(saveDirectory))
+                    {
+                        Directory.CreateDirectory(saveDirectory);
+                    }
+
+                    using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                    {
+                        await item.CopyToAsync(stream);
+                    }
+
+                    _core.Image.Add(image);
+                }
+                _core.Image.Save();
+            }
+            return Redirect("/Admin/Album");
+        }
+
+        [HttpPost]
+        public void Delete(int id)
+        {
+            IEnumerable<TblImage> images = _core.Image.Get(i => i.AlbumId == id);
+            if (images.Count() > 0)
+            {
+                foreach (var item in images)
+                {
+                    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Album", item.Image);
+
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                    _core.Image.Delete(item);
+                }
+                _core.Image.Save();
+            }
+            _core.Album.DeleteById(id);
+            _core.Album.Save();
+        }
 
         [HttpPost]
         public IActionResult DeleteImage(int id)
         {
             TblImage image = _core.Image.GetById(id);
 
-            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", image.Image);
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Album", image.Image);
 
             if (System.IO.File.Exists(imagePath))
             {
                 System.IO.File.Delete(imagePath);
             }
-
-            TblProductImageRel imageRel = _core.ProductImageRel.Get(ir => ir.ImageId == image.ImageId).SingleOrDefault();
-            _core.ProductImageRel.DeleteById(imageRel);
             _core.Image.Delete(image);
-            _core.ProductImageRel.Save();
             _core.Image.Save();
             return Redirect("/Admin/Album");
         }

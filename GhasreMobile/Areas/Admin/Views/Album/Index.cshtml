@@ -32,6 +32,12 @@
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="نمابش">
                                             <a onclick="Show(@item.AlbumId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="eye-outline"></a>
                                         </span>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
+                                            <a onclick="Delete(@item.AlbumId)" class="text-danger" uk-icon="trash-outline"></a>
+                                        </span>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                            <a onclick="Edit(@item.AlbumId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                        </span>
                                     </td>
                                 </tr>
                             }
@@ -64,5 +70,17 @@
                 $(".modal-content").html(result);
             });
         });
+        function Delete(id) {
+            if (confirm("آیا آلبوم حذف شود")) {
+                $.post("/Admin/Album/Delete/" + id, function () {
+                    window.location.reload();
+                });
+            }
+        }
+        function Edit(id) {
+            $.get("/Admin/Album/Edit/" + id, function (result) {
+                $(".modal-content").html(result);
+            });
+        }
     </script>
 }
