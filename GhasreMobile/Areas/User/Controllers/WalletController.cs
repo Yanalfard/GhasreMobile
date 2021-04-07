@@ -18,7 +18,7 @@ namespace GhasreMobile.Areas.User.Controllers
     [PermissionChecker("user,employee,admin")]
     public class WalletController : Controller
     {
-       // readonly string Domain = "https://localhost:44371";
+        // readonly string Domain = "https://localhost:44371";
         readonly string Domain = "https://gasremobile2004.com";
 
 
@@ -80,7 +80,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     //آدرس برگشت از بانک به سایت
                     var returnurl = Domain + "/ShopCart/OnlinePayment/";
                     //مبلغ پرداخت
-                    decimal Price = (int)charg.Amount;
+                    decimal Price = (int)charg.Amount * 10;
                     //شماره پرداخت به صورت منحصر به فرد 
                     //ایجاد می شود GetUniqueKey این شماره به وسیله تابع
                     long OrderId = addWallet.WalletId;
@@ -166,7 +166,7 @@ namespace GhasreMobile.Areas.User.Controllers
                 //آدرس برگشت از بانک به سایت
                 var returnurl = Domain + "/ShopCart/OnlinePayment/";
                 //مبلغ پرداخت
-                decimal Price = (int)charge.Amount;
+                decimal Price = (int)charge.Amount * 10;
                 //شماره پرداخت به صورت منحصر به فرد 
                 //ایجاد می شود GetUniqueKey این شماره به وسیله تابع
                 long OrderId = addWallet.WalletId;
