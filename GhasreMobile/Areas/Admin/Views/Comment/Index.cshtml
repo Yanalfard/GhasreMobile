@@ -81,13 +81,18 @@
         }
 
         function Delete(id) {
-            $.post("/Admin/Comment/Delete/" + id, function (result) {
-                if (result == "true") {
-                    window.location.reload();
-                } else {
-                    UIkit.notification({ message: result });
-                }
-            });
+            if (confirm('آیا از حذف پیام مورد نظر مطمئن هستید؟')) {
+                $.post("/Admin/Comment/Delete/" + id, function (result) {
+                    if (result == "true") {
+                        window.location.reload();
+                    } else {
+                        UIkit.notification({ message: result });
+                    }
+                });
+            } else {
+                // Do nothing!
+            }
+
         }
 
     </script>
