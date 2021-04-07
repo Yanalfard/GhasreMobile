@@ -57,6 +57,8 @@ namespace DataLayer.Models
 
         public virtual DbSet<TblContactUs> TblContactUs { get; set; }
 
+        public virtual DbSet<TblStoreImageRel> TblStoreImageRel { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
            => optionsBuilder
           .UseLazyLoadingProxies()
@@ -302,6 +304,19 @@ namespace DataLayer.Models
                     .WithMany(p => p.TblProductImageRel)
                     .HasForeignKey(d => d.ProductId)
                     .HasConstraintName("FK_TblProductImageRel_TblProduct");
+            });
+
+            modelBuilder.Entity<TblStoreImageRel>(entity =>
+            {
+                entity.HasOne(d => d.Image)
+                    .WithMany(p => p.TblStoreImageRel)
+                    .HasForeignKey(d => d.ImageId)
+                    .HasConstraintName("FK_TblStoreImageRel_TblImage");
+
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.TblStoreImageRel)
+                    .HasForeignKey(d => d.StoreId)
+                    .HasConstraintName("FK_TblStoreImageRel_TblStore");
             });
 
             modelBuilder.Entity<TblProductKeywordRel>(entity =>

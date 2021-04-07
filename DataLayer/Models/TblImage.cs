@@ -23,5 +23,7 @@ namespace DataLayer.Models
         public virtual TblAlbum Album { get; set; }
         [InverseProperty("Image")]
         public virtual ICollection<TblProductImageRel> TblProductImageRel { get; set; }
+        [InverseProperty("Image")]
+        public virtual ICollection<TblStoreImageRel> TblStoreImageRel { get; set; }
     }
 }

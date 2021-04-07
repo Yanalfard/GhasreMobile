@@ -1,4 +1,5 @@
-﻿<div class="modal-header">
+﻿@model DataLayer.Models.TblAlbum
+<div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
         افزودن آلبوم تصاویر
     </h6>
@@ -6,45 +7,57 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form asp-action="Create" asp-controller="Album" asp-area="Admin" enctype="multipart/form-data"
+<form asp-action="Edit" asp-controller="Album" asp-area="Admin" enctype="multipart/form-data"
       data-ajax="true"
       data-ajax-method="POST"
       data-ajax-mode="replace"
       data-ajax-complete="EndCatagoryCreate()"
       data-ajax-update="#ajaxresult">
+    <input name="id" value="@Model.AlbumId" type="hidden" />
     <div class="modal-body">
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label>عنوان</label>
-                <input name="Name" class="form-control form-control-sm" placeholder="مثال: آلبوم 1">
+                <input name="Name" value="@Model.Name" class="form-control form-control-sm" placeholder="مثال: آلبوم 1">
             </div>
         </div>
         <label class="mt-3 uk-text-bold">افزودن عکس به گالری تصاویر</label>
         &nbsp;<span onclick="SetNewInputGallery()" class="text-success" uk-icon="add-circle-outline"></span>
         &nbsp;<span onclick="RemoveInputGallery()" class="text-danger" uk-icon="remove-circle-outline"></span>
 
-        <div id="GalleryPanel"></div>
+        <div id="GalleryPanel">
+            @foreach (var item in Model.TblImage)
+            {
+                <div class="custom-file col-md-7 mt-3" id="ImageId-@item.ImageId">
+                    <input type="file" class="custom-file-input form-control form-control-sm" disabled accept="image/x-png,image/gif,image/jpeg,video/mp4,video/x-m4v,video/*" />
+                    <label class="custom-file-label" data-browse="انتخاب">
+                        @item.Image
+                    </label>
+                    <span data-placement="top" data-toggle="tooltip" title="" data-original-title="نمابش">
+                        <a onclick="DeleteImage(@item.ImageId)" class="text-danger" uk-icon="trash-outline"></a>
+                    </span>
+                </div>
+            }
+        </div>
         <br />
         <span class="text-success">لطفا اندازه تصویر انتخابی 420*368 باشد</span>
 
 
     </div>
     <div class="modal-footer justify-content-end">
-        <button type="submit" class="btn btn-success btn-sm text-white">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+        <button type="submit" class="btn btn-success btn-sm text-white">ویرایش<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
     </div>
 </form>
 <script>
     function SetNewInputGallery() {
-        //$("#GalleryPanel").append("<div class='custom-file col-md-7 mt-3'><input type='file' class='custom-file-input form-control form-control-sm' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/><label class='custom-file-label'></label></div>");
         $("#GalleryPanel").append(
             `<div class="custom-file col-md-7 mt-3">
-                                                   <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
+                                                   <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg,video/mp4,video/x-m4v,video/*" name="GalleryFile" onchange="inputChanged(this)"/>
                                                    <label class="custom-file-label" data-browse="انتخاب">
                                                         انتخاب فایل
                                                    </label>
                                                  </div>`
         );
-        //$("#GalleryPanel").append("<div><input type='file' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/></div>");
     }
     function inputChanged(sender) {
         var fileName = sender.files[0].name;
@@ -53,5 +66,10 @@
 
     function RemoveInputGallery() {
         $("#GalleryPanel div").last().remove();
+    }
+    function DeleteImage(id) {
+        $.post("/Admin/Album/DeleteImage/" + id, function () {
+            $("#ImageId-" + id).remove();
+        });
     }
 </script>

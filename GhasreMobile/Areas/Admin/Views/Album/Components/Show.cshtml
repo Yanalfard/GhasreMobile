@@ -1,7 +1,7 @@
 ﻿@model DataLayer.Models.TblAlbum
 <div class="modal-header">
     <h6 class="modal-title" id="modalCenterTitle">
-        آلبوم۱
+        @Model.Name
     </h6>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -11,12 +11,24 @@
     <div class="flex row col-12 my-3">
         @foreach (var item in Model.TblImage)
         {
-            <div class="col-6 col-lg-3 col-md-4 mb-3" id="AlbumImageId-@item.ImageId">
-                <button onclick="DeleteImage(@item.ImageId)" class="bg-light dismissButton" uk-icon="close-outline"></button>
-                <a class="d-inline" href="~/Images/ProductAlbum/@item.Image" target="_blank">
-                    <img class="d-inline" src="/Images/ProductAlbum/@item.Image" width="250" height="250" alt="">
-                </a>
-            </div>
+            var format = item.Image.Split(".")[item.Image.Split(".").Length - 1];
+
+            @if (format != "jpg" && format != "png" && format != "jpeg" && format != "PNG")
+            {
+                <div class="col-6 col-lg-3 col-md-4 mb-3 border-success" id="AlbumImageId-@item.ImageId">
+                    <button onclick="DeleteImage(@item.ImageId)" class="bg-light dismissButton" uk-icon="close-outline"></button>
+                    <a class="d-inline" href="~/Images/Album/@item.Image" target="_blank" uk-icon="play-outline"></a>
+                </div>
+            }
+            else
+            {
+                <div class="col-6 col-lg-3 col-md-4 mb-3" id="AlbumImageId-@item.ImageId">
+                    <button onclick="DeleteImage(@item.ImageId)" class="bg-light dismissButton" uk-icon="close-outline"></button>
+                    <a class="d-inline" href="~/Images/Album/@item.Image" target="_blank">
+                        <img class="d-inline" src="/Images/Album/@item.Image" width="250" height="250" alt="">
+                    </a>
+                </div>
+            }
         }
     </div>
 

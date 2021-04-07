@@ -54,6 +54,7 @@
     <Folder Include="Areas\User\Models\" />
     <Folder Include="wwwroot\Images\Ad\" />
     <Folder Include="wwwroot\Images\Blogs\" />
+    <Folder Include="wwwroot\Images\Album\" />
     <Folder Include="wwwroot\Images\ProductMain\" />
     <Folder Include="wwwroot\Images\User\" />
     <Folder Include="wwwroot\Images\ProductAlbum\" />

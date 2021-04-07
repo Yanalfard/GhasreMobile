@@ -183,6 +183,7 @@
             </div>
             <div class="card-footer bg-white mt-2">
                 <span class="text-danger" id="SubmitErorr"></span>
+                <a href="/Admin/Product" class="btn btn-primary btn-sm text-white pull-right ml-4 LoadingDiv">انصراف</a>
                 <button id="SubmitCreateProduct" type="submit" disabled class="btn btn-success btn-sm text-white pull-right ml-4">افزودن<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
             </div>
         </form>
@@ -249,11 +250,11 @@
             //$("#GalleryPanel").append("<div class='custom-file col-md-7 mt-3'><input type='file' class='custom-file-input form-control form-control-sm' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/><label class='custom-file-label'></label></div>");
             $("#GalleryPanel").append(
                 `<div class="custom-file col-md-7 mt-3">
-                                                   <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
-                                                   <label class="custom-file-label" data-browse="انتخاب">
-                                                        انتخاب فایل
-                                                   </label>
-                                                 </div>`
+                                                       <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
+                                                       <label class="custom-file-label" data-browse="انتخاب">
+                                                            انتخاب فایل
+                                                       </label>
+                                                     </div>`
             );
             //$("#GalleryPanel").append("<div><input type='file' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/></div>");
         }
