@@ -19,7 +19,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblAd> ads = PagingList.Create(_core.Ad.Get().OrderByDescending(o=>o.AdId), 30, page);
+            IEnumerable<TblAd> ads = PagingList.Create(_core.Ad.Get(a => a.AdId != 18).OrderByDescending(o => o.AdId), 30, page);
             return View(ads);
         }
 
