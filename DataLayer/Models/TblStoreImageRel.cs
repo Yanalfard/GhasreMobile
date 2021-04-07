@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataLayer.Models
 {
-    public class TblStoreImageRel
+    public partial class TblStoreImageRel
     {
         [Key]
         public int StoreImageRel { get; set; }
@@ -18,6 +18,6 @@ namespace DataLayer.Models
         public virtual TblImage Image { get; set; }
         [ForeignKey(nameof(StoreId))]
         [InverseProperty(nameof(TblStore.TblStoreImageRel))]
-        public virtual TblStore Product { get; set; }
+        public virtual TblStore Store { get; set; }
     }
 }

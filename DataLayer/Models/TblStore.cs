@@ -25,7 +25,7 @@ namespace DataLayer.Models
         [StringLength(500,ErrorMessage ="آدرس معتبر وارد کنید")]
         public string Address { get; set; }
 
-        [InverseProperty("Image")]
+        [InverseProperty("Store")]
         public virtual ICollection<TblStoreImageRel> TblStoreImageRel { get; set; }
     }
 }

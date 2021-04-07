@@ -313,7 +313,7 @@ namespace DataLayer.Models
                     .HasForeignKey(d => d.ImageId)
                     .HasConstraintName("FK_TblStoreImageRel_TblImage");
 
-                entity.HasOne(d => d.Product)
+                entity.HasOne(d => d.Store)
                     .WithMany(p => p.TblStoreImageRel)
                     .HasForeignKey(d => d.StoreId)
                     .HasConstraintName("FK_TblStoreImageRel_TblStore");
