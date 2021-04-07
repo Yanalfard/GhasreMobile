@@ -17,7 +17,7 @@ namespace GhasreMobile.Controllers
         {
             try
             {
-                return await Task.FromResult(View(db.Album.Get()));
+                return await Task.FromResult(View(db.Album.Get(i => i.IsProduct)));
             }
             catch
             {
