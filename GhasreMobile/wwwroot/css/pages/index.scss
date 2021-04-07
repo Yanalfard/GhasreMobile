@@ -177,6 +177,22 @@
             height: auto;
         }
     }
+
+    .bottom {
+        border: 3px $mat-border-color dashed;
+        @include border-radius(6px,6px,6px,6px);
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-column-start: span 2;
+
+        a {
+            display: flex;
+
+            img {
+                margin: auto;
+            }
+        }
+    }
 }
 
 @media only screen and (max-width: 724px) {

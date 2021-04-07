@@ -39,6 +39,8 @@ namespace GhasreMobile.Controllers
             {
                 ViewBag.Instagram = db.Config.Get(i => i.Key == "LinkInsta").SingleOrDefault().Value;
                 ViewBag.Telegram = db.Config.Get(i => i.Key == "LinkTelegram").SingleOrDefault().Value;
+                ViewBag.Email = db.Config.Get(i => i.Key == "Email").SingleOrDefault().Value;
+                ViewBag.Whatsapp = db.Config.Get(i => i.Key == "Whatsapp").SingleOrDefault().Value;
                 return await Task.FromResult(View());
             }
             catch
@@ -136,7 +138,29 @@ namespace GhasreMobile.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
-
+        [HttpPost]
+        [Route("TamasBaMaForm")]
+        public async Task<IActionResult> TamasBaMaForm(ContactUsVm contactUs)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    TblContactUs addContactUs = new TblContactUs();
+                    addContactUs.Name = contactUs.Name;
+                    addContactUs.TellNo = contactUs.TellNo;
+                    addContactUs.Message = contactUs.Message;
+                    db.ContactUs.Add(addContactUs);
+                    db.ContactUs.Save();
+                    return await Task.FromResult(PartialView(contactUs));
+                }
+                return await Task.FromResult(PartialView(contactUs));
+            }
+            catch
+            {
+                return await Task.FromResult(Redirect("404.html"));
+            }
+        }
         [HttpPost]
         [PermissionChecker("user,employee,admin")]
         public async Task<IActionResult> CommentReplay(CommentReplay comment)

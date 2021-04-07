@@ -73,9 +73,9 @@ backdrop-filter: saturate(80%);
 
 .affiliates ul li a {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  grid-template-areas: "tel h" "label label";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "h" "label" "tel ";
   grid-row-gap: 8px;
   padding: 8px 12px;
   cursor: pointer;
@@ -98,6 +98,7 @@ backdrop-filter: saturate(80%);
     padding-top: 4px; }
     .affiliates ul li a .tel span {
       margin: auto;
+      margin-right: 0;
       color: #333;
       font-size: 16px;
       margin-left: 6px; }

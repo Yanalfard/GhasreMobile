@@ -16,67 +16,46 @@
 
     <div class="left">
         <!-- #region Contact -->
-        <form class="request mat-card">
-            <h3 class="uk-margin-bottom">تماس با ما</h3>
-            <p class="text-3">در صورت داشتن هر گونه پیشنهاد، سوال و یا راهنمایی، با ما در تماس باشید</p>
-            <div class="fg-col">
-                <label for="TelNo" class="fg-label">شماره تلفن</label>
-                <input id="TelNo" name="TelNo" type="tel" class="entry" value="" />
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col">
-                <label for="Name" class="fg-label">نام و نام خانوادگی</label>
-                <input id="Name" name="Name" type="text" class="entry" value="" />
-                <span class="text-danger"></span>
-            </div>
-            <div class="fg-col">
-                <label for="Message" class="fg-label">پیغام شما</label>
-                <textarea id="Message" name="Message" class="entry"></textarea>
-                <span class="text-danger"></span>
-            </div>
-            <div class="rowr">
-                <button class="btn btn-primary">ارسال پیام</button>
-            </div>
-        </form>
+        @await Component.InvokeAsync("TamasBaMaFormInContactView")
+       
         <!-- #endregion -->
         <!-- #region Sellers -->
-
-        <a href="@ViewBag.Telegram" class="telegram">
+        @*<a href="@ViewBag.Telegram" class="telegram">
             <img src="~/st/r/Telegram.png" alt="قصر موبایل" />
         </a>
         <a href="@ViewBag.Instagram" class="instagram">
             <img src="~/st/r/Instagram.png" alt="قصر موبایل" />
-        </a>
+        </a>*@
 
         @*<div class="sellers mat-card">
-                <h3>مدیران فروش</h3>
-                <ul>
-                    <li>
-                        <label>نام و نام خانوادگی</label>
-                        <div class="rowr">
-                            <span>33860896</span>
-                        </div>
-                    </li>
-                    <li>
-                        <label>نام و نام خانوادگی</label>
-                        <div class="rowr">
-                            <span>33860896</span>
-                        </div>
-                    </li>
-                    <li>
-                        <label>نام و نام خانوادگی</label>
-                        <div class="rowr">
-                            <span>33860896</span>
-                        </div>
-                    </li>
-                    <li>
-                        <label>نام و نام خانوادگی</label>
-                        <div class="rowr">
-                            <span>33860896</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>*@
+            <h3>مدیران فروش</h3>
+            <ul>
+                <li>
+                    <label>نام و نام خانوادگی</label>
+                    <div class="rowr">
+                        <span>33860896</span>
+                    </div>
+                </li>
+                <li>
+                    <label>نام و نام خانوادگی</label>
+                    <div class="rowr">
+                        <span>33860896</span>
+                    </div>
+                </li>
+                <li>
+                    <label>نام و نام خانوادگی</label>
+                    <div class="rowr">
+                        <span>33860896</span>
+                    </div>
+                </li>
+                <li>
+                    <label>نام و نام خانوادگی</label>
+                    <div class="rowr">
+                        <span>33860896</span>
+                    </div>
+                </li>
+            </ul>
+        </div>*@
 
         <!-- #endregion -->
 
@@ -88,6 +67,22 @@
         @await Component.InvokeAsync("DeliveryInContactView")
         <!-- #endregion -->
 
+    </div>
+
+    <div class="bottom">
+        <a href="mailto:@(ViewBag.Email)" target="_blank">
+            <img src="~/st/v/Gmail.svg" width="124" height="124" alt="" />
+        </a>
+        <a href="https://api.whatsapp.com/send?phone=@(ViewBag.Whatsapp)"target="_blank">
+            <img src="~/st/v/Whatsapp.svg" width="124" height="124" alt="" />
+        </a>
+
+        <a href="@ViewBag.Telegram"target="_blank">
+            <img src="~/st/v/Telegram.svg" width="124" height="124" alt="" />
+        </a>
+        <a href="@ViewBag.Instagram"target="_blank">
+            <img src="~/st/v/InstagramLong.svg" height="124" alt="" />
+        </a>
     </div>
 
 </div>

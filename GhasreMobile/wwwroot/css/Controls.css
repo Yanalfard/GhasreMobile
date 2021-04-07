@@ -1265,7 +1265,8 @@ textarea {
     display: flex;
     flex-direction: row; }
     .navigation li a {
-      border: 1px #333 solid;
+      content: "•";
+      border: 1px #333 solid !important;
       background-color: transparent;
       margin: auto;
       -moz-transition: all ease 0.3s;
@@ -1276,8 +1277,8 @@ textarea {
     margin: auto;
     width: 16px;
     height: 16px;
-    border-color: #96027E;
-    background-color: #96027E; }
+    border-color: #96027E !important;
+    background-color: #96027E !important; }
 
 .product-slider {
   background-color: #fff;
