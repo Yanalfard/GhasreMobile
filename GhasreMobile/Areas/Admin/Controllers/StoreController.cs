@@ -65,6 +65,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             await item.CopyToAsync(stream);
                         }
                         _core.Image.Add(image);
+                        _core.Image.Save();
                         TblStoreImageRel imageRel = new TblStoreImageRel();
                         imageRel.StoreId = store.StoreId;
                         imageRel.ImageId = image.ImageId;
@@ -111,6 +112,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             await item.CopyToAsync(stream);
                         }
                         _core.Image.Add(image);
+                        _core.Image.Save();
                         TblStoreImageRel imageRel = new TblStoreImageRel();
                         imageRel.StoreId = store.StoreId;
                         imageRel.ImageId = image.ImageId;
@@ -132,17 +134,46 @@ namespace GhasreMobile.Areas.Admin.Controllers
         public void Delete(int id)
         {
             TblStore store = _core.Store.GetById(id);
-            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Store", store.MainImage);
+            if (store.TblStoreImageRel.Count() > 0)
+            {
+                foreach (var item in store.TblStoreImageRel)
+                {
+                    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Store", item.Image.Image);
+
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                    _core.StoreImageRel.Delete(item);
+                }
+                _core.StoreImageRel.Save();
+
+            }
+            _core.Store.Delete(store);
+            _core.Store.Save();
+
+
+
+
+        }
+
+        [HttpPost]
+        public IActionResult DeleteImage(int id)
+        {
+            TblStoreImageRel image = _core.StoreImageRel.GetById(id);
+            TblImage tblImage = _core.Image.GetById(image.ImageId);
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Store", image.Image.Image);
 
             if (System.IO.File.Exists(imagePath))
             {
                 System.IO.File.Delete(imagePath);
             }
-
-            _core.Store.Delete(store);
-            _core.Store.Save();
+            _core.StoreImageRel.Delete(image);
+            _core.StoreImageRel.Save();
+            _core.Image.Delete(tblImage);
+            _core.Image.Save();
+            return Redirect("/Admin/Album");
         }
-
 
         protected override void Dispose(bool disposing)
         {

@@ -39,11 +39,23 @@
         &nbsp;<span onclick="SetNewInputGallery()" class="text-success" uk-icon="add-circle-outline"></span>
         &nbsp;<span onclick="RemoveInputGallery()" class="text-danger" uk-icon="remove-circle-outline"></span>
 
-        <div id="GalleryPanel"></div>
+              <div id="GalleryPanel">
+                  @foreach (var item in Model.TblStoreImageRel)
+                  {
+                      <div class="custom-file col-md-7 mt-3" id="ImageId-@item.StoreImageRel">
+                          <input type="file" class="custom-file-input form-control form-control-sm" disabled accept="image/x-png,image/gif,image/jpeg,video/mp4,video/x-m4v,video/*" />
+                          <label class="custom-file-label" data-browse="انتخاب">
+                              @item.Image.Image
+                          </label>
+                          <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
+                              <a onclick="DeleteImage(@item.StoreImageRel)"  class="text-danger" uk-icon="trash-outline"></a>
+                          </span>
+                      </div>
+                  }
+              </div>
         <br />
         <span class="text-success">لطفا اندازه تصویر انتخابی 360*800 باشد</span>
         <br />
-        <span class="text-danger" asp-validation-for="MainImage"></span>
         <hr />
         <div class="form-row">
             <div class="form-group col-md-7">
@@ -86,6 +98,11 @@
 
     function RemoveInputGallery() {
         $("#GalleryPanel div").last().remove();
+    }
+    function DeleteImage(id) {
+        $.post("/Admin/Store/DeleteImage/" + id, function () {
+            $("#ImageId-" + id).remove();
+        });
     }
 </script>
 <script>
