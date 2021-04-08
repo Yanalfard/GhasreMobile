@@ -63,15 +63,25 @@ namespace GhasreMobile.Controllers
                 if (q != null)
                 {
                     ViewData["q"] = q;
-                    string qName = q.Split(" ")[0];
-                    string qCat = q.Split(" ")[1];
-                    list = list.Where(i => i.SearchText.ToLower().Contains(qName.ToLower()) || i.Name.ToLower().Contains(qName.ToLower()) || i.Brand.Name.ToLower().Contains(qName.ToLower()) || i.Catagory.Name.ToLower().Contains(qName.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(qName.ToLower())).ToList();
-                    list = list.Where(i => i.SearchText.ToLower().Contains(qCat.ToLower()) || i.Name.ToLower().Contains(qCat.ToLower()) || i.Brand.Name.ToLower().Contains(qCat.ToLower()) || i.Catagory.Name.ToLower().Contains(qCat.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(qCat.ToLower())).ToList();
+                    List<string> qlist = q.Split(" ").ToList();
+                    if (qlist.Count > 0)
+                    {
+                        if (qlist[0] != null)
+                        {
+                            string qName = q.Split(" ")[0];
+                            list = list.Where(i => i.SearchText.ToLower().Contains(qName.ToLower()) || i.Name.ToLower().Contains(qName.ToLower()) || i.Brand.Name.ToLower().Contains(qName.ToLower()) || i.Catagory.Name.ToLower().Contains(qName.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(qName.ToLower())).ToList();
+                        }
+                        if (qlist.Count > 1)
+                        {
+                            string qCat = q.Split(" ")[1];
+                            list = list.Where(i => i.SearchText.ToLower().Contains(qCat.ToLower()) || i.Name.ToLower().Contains(qCat.ToLower()) || i.Brand.Name.ToLower().Contains(qCat.ToLower()) || i.Catagory.Name.ToLower().Contains(qCat.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(qCat.ToLower())).ToList();
+                        }
+                    }
                 }
                 if (name != null)
                 {
                     ViewData["name"] = name;
-                    list = list.Where(i => i.Name.ToLower().Contains(name.ToLower())).ToList();
+                    list = list.Where(i => i.SearchText.ToLower().Contains(name.ToLower()) || i.Name.ToLower().Contains(name.ToLower()) || i.Brand.Name.ToLower().Contains(name.ToLower()) || i.Catagory.Name.ToLower().Contains(name.ToLower())).ToList();
                 }
                 if (cat != null)
                 {
@@ -199,17 +209,29 @@ namespace GhasreMobile.Controllers
                 if (q != null)
                 {
                     ViewData["q"] = q;
-                    string qName = q.Split(" ")[0];
-                    string qCat = q.Split(" ")[1];
-                    list = list.Where(i => i.SearchText.ToLower().Contains(qName.ToLower()) || i.Name.ToLower().Contains(qName.ToLower()) || i.Brand.Name.ToLower().Contains(qName.ToLower()) || i.Catagory.Name.ToLower().Contains(qName.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(qName.ToLower())).ToList();
-                    list = list.Where(i => i.SearchText.ToLower().Contains(qCat.ToLower()) || i.Name.ToLower().Contains(qCat.ToLower()) || i.Brand.Name.ToLower().Contains(qCat.ToLower()) || i.Catagory.Name.ToLower().Contains(qCat.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(qCat.ToLower())).ToList();
+                    List<string> qlist = q.Split(" ").ToList();
+                    if (qlist.Count > 0)
+                    {
+                        if (qlist[0] != null)
+                        {
+                            string qName = q.Split(" ")[0];
+                            list = list.Where(i => i.SearchText.ToLower().Contains(qName.ToLower()) || i.Name.ToLower().Contains(qName.ToLower()) || i.Brand.Name.ToLower().Contains(qName.ToLower()) || i.Catagory.Name.ToLower().Contains(qName.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(qName.ToLower())).ToList();
+                        }
+                        if (qlist.Count > 1)
+                        {
+                            string qCat = q.Split(" ")[1];
+                            list = list.Where(i => i.SearchText.ToLower().Contains(qCat.ToLower()) || i.Name.ToLower().Contains(qCat.ToLower()) || i.Brand.Name.ToLower().Contains(qCat.ToLower()) || i.Catagory.Name.ToLower().Contains(qCat.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(qCat.ToLower())).ToList();
+                        }
+                    }
                 }
                 if (name != null)
                 {
-                    list = list.Where(i => i.Name.ToLower().Contains(name.ToLower())).ToList();
+                    ViewData["name"] = name;
+                    list = list.Where(i => i.SearchText.ToLower().Contains(name.ToLower()) || i.Name.ToLower().Contains(name.ToLower()) || i.Brand.Name.ToLower().Contains(name.ToLower()) || i.Catagory.Name.ToLower().Contains(name.ToLower())).ToList();
                 }
                 if (cat != null)
                 {
+                    ViewData["cat"] = cat;
                     list = list.Where(i => i.Catagory.Name.ToLower().Contains(cat.ToLower())).ToList();
                 }
                 if (catId != 0)
@@ -308,7 +330,7 @@ namespace GhasreMobile.Controllers
         {
             if (key.Length <= 2) return Ok("Invalid Key");
             List<TblProduct> list = db.Product.Get(i => i.IsDeleted == false).ToList();
-            List<string> dbFake = list.Select(i => i.Name.ToLower() +" "+ i.Catagory.Name.ToLower()).ToList();
+            List<string> dbFake = list.Select(i => i.Name.ToLower() + " " + i.Catagory.Name.ToLower()).ToList();
             return Json(dbFake.ToList().Where(i => i.Contains(key)));
         }
 
