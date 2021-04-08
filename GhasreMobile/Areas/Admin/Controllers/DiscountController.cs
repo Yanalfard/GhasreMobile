@@ -62,7 +62,20 @@ namespace GhasreMobile.Areas.Admin.Controllers
             return View(Editdiscount);
         }
 
-
+        public string Delete(int id)
+        {
+            TblDiscount product = _core.Discount.GetById(id);
+            if (product.TblOrder.Any())
+            {
+                return "سفارشی برای این  تخفیف وجود دارد";
+            }
+            else
+            {
+                _core.Discount.Delete(product);
+                _core.Discount.Save();
+                return "true";
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

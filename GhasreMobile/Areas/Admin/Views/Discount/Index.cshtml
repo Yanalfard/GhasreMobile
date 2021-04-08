@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<DataLayer.Models.TblDiscount>
+@using GhasreMobile.Utilities
 @{
     ViewData["Title"] = "تخفیفات";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -30,14 +31,17 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
+                                <tr id="discountId_@item.DiscountId">
                                     <td>@item.Name</td>
-                                    <td>@item.ValidTill</td>
+                                    <td>@item.ValidTill.DateToShamsi()</td>
                                     <td>@item.Discount%</td>
                                     <td>@item.Count</td>
                                     <td>
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
                                             <a onclick="Edit(@item.DiscountId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                        </span>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
+                                            <a onclick="Delete(@item.DiscountId)" class="text-danger" uk-icon="trash-outline"></a>
                                         </span>
                                     </td>
                                 </tr>
@@ -72,6 +76,22 @@
             $.get("/Admin/Discount/Edit/" + Id, function (result) {
                 $(".modal-content").html(result);
             });
+        }
+        function Delete(id) {
+            if (confirm('آیا از حذف تخفیف  مورد نظر مطمئن هستید؟')) {
+                $.post("/Admin/Discount/Delete/" + id, function (result) {
+                    if (result == "true") {
+                        $('#discountId_' + id).addClass('text-danger');
+                        $("#discountId_" + id).hide('slow');
+                        //window.location.reload();
+                    } else {
+                        UIkit.notification({ message: result });
+                    }
+                });
+            } else {
+                // Do nothing!
+            }
+
         }
     </script>
 

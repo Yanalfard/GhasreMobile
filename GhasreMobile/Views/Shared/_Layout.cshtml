@@ -324,7 +324,7 @@
 
                     i.forEach(b => {
                         list.innerHTML +=
-                            `<a href="/Search?q=${val}">${b.replace(val, `<strong>${val}</strong>`)}</a>`;
+                            `<a href="/Search?q=${b}">${b.replace(val, `<strong>${val}</strong>`)}</a>`;
                     })
 
                     if (list.innerHTML !== "")

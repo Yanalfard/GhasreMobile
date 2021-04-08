@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<DataLayer.Models.TblSpecialOffer>
+@using GhasreMobile.Utilities
 
 @{
     ViewData["Title"] = "پیشنهاد ویژه";
@@ -28,7 +29,7 @@
                             {
                                 <tr>
                                     <td>@item.Product.Name</td>
-                                    <td>@item.ValidTill</td>
+                                    <td>@item.ValidTill.DateToShamsi()</td>
                                     <td>@item.Discount٪</td>
                                     <td>
 

@@ -63,7 +63,10 @@ namespace GhasreMobile.Controllers
                 if (q != null)
                 {
                     ViewData["q"] = q;
-                    list = list.Where(i => i.SearchText.ToLower().Contains(q.ToLower()) || i.Name.ToLower().Contains(q.ToLower()) || i.Brand.Name.ToLower().Contains(q.ToLower()) || i.Catagory.Name.ToLower().Contains(q.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(q.ToLower())).ToList();
+                    string qName = q.Split(" ")[0];
+                    string qCat = q.Split(" ")[1];
+                    list = list.Where(i => i.SearchText.ToLower().Contains(qName.ToLower()) || i.Name.ToLower().Contains(qName.ToLower()) || i.Brand.Name.ToLower().Contains(qName.ToLower()) || i.Catagory.Name.ToLower().Contains(qName.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(qName.ToLower())).ToList();
+                    list = list.Where(i => i.SearchText.ToLower().Contains(qCat.ToLower()) || i.Name.ToLower().Contains(qCat.ToLower()) || i.Brand.Name.ToLower().Contains(qCat.ToLower()) || i.Catagory.Name.ToLower().Contains(qCat.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(qCat.ToLower())).ToList();
                 }
                 if (name != null)
                 {
@@ -196,7 +199,10 @@ namespace GhasreMobile.Controllers
                 if (q != null)
                 {
                     ViewData["q"] = q;
-                    list = list.Where(i => i.SearchText.ToLower().Contains(q.ToLower()) || i.Name.ToLower().Contains(q.ToLower()) || i.Brand.Name.ToLower().Contains(q.ToLower()) || i.Catagory.Name.ToLower().Contains(q.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(q.ToLower())).ToList();
+                    string qName = q.Split(" ")[0];
+                    string qCat = q.Split(" ")[1];
+                    list = list.Where(i => i.SearchText.ToLower().Contains(qName.ToLower()) || i.Name.ToLower().Contains(qName.ToLower()) || i.Brand.Name.ToLower().Contains(qName.ToLower()) || i.Catagory.Name.ToLower().Contains(qName.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(qName.ToLower())).ToList();
+                    list = list.Where(i => i.SearchText.ToLower().Contains(qCat.ToLower()) || i.Name.ToLower().Contains(qCat.ToLower()) || i.Brand.Name.ToLower().Contains(qCat.ToLower()) || i.Catagory.Name.ToLower().Contains(qCat.ToLower()) || i.DescriptionShortHtml.ToLower().Contains(qCat.ToLower())).ToList();
                 }
                 if (name != null)
                 {
