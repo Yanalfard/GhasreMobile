@@ -16,11 +16,11 @@ namespace GhasreMobile.ViewComponents.View.Product
             List<TblBrand> list = new List<TblBrand>();
             if (id == 0)
             {
-                list = db.Brand.Get().OrderByDescending(i => i.TblProduct.Count()).Skip(1).ToList();
+                list = db.Brand.Get(i => i.TblProduct.Any()).OrderBy(i => i.TblProduct.Count()).Skip(1).OrderByDescending(i => i.TblProduct.Count()).ToList();
             }
             else
             {
-                list = db.Brand.Get().OrderByDescending(i => i.TblProduct.Count()).Take(1).ToList();
+                list = db.Brand.Get(i=>i.TblProduct.Any()).OrderBy(i => i.TblProduct.Count()).Take(1).OrderByDescending(i => i.TblProduct.Count()).ToList();
             }
             return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/ProductView/ProductView.cshtml", list));
         }

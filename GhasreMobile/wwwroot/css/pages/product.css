@@ -1,4 +1,5 @@
-﻿/*Star*/
+﻿@charset "UTF-8";
+/*Star*/
 /*#region Material  */
 /*#endregion */
 /*
@@ -176,6 +177,16 @@ backdrop-filter: saturate(80%);
     @media only screen and (max-device-width: 420px) {
       .pr-title {
         padding: 8px; } }
+  .pr-title::after {
+    content: " ";
+    height: 1px;
+    width: calc(100% + 24px);
+    border-bottom: 2px dashed #e9e9e9;
+    margin-top: 14px;
+    margin-bottom: -12px;
+    margin-left: -12px;
+    margin-right: -12px;
+    position: relative; }
   .pr-content {
     grid-area: content;
     min-height: 150px;
@@ -220,14 +231,21 @@ backdrop-filter: saturate(80%);
       font-size: 24px;
       display: flex;
       flex-direction: row-reverse; }
+      .pr-content .price .discount .t {
+        color: #FF5A64;
+        font-size: 11px !important;
+        text-decoration: none !important;
+        margin-top: auto;
+        margin-bottom: 5px;
+        margin-right: 4px; }
     .pr-content .price .actual {
       display: flex;
       flex-direction: row-reverse;
-      color: #333;
+      color: #273693;
       font-size: 24px;
       margin-top: 0px; }
       .pr-content .price .actual .t {
-        color: #333;
+        color: #273693;
         font-size: 13px;
         margin-top: auto;
         margin-bottom: 5px;
@@ -247,7 +265,7 @@ backdrop-filter: saturate(80%);
     padding-right: 30px; }
     .pr-specs li {
       direction: rtl;
-      min-height: 32px;
+      min-height: 42px;
       vertical-align: middle;
       list-style: disc !important; }
 

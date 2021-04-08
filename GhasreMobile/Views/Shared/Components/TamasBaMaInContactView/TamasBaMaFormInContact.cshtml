@@ -18,12 +18,23 @@
         <span class="text-danger" asp-validation-for="Name"></span>
     </div>
     <div class="fg-col">
+        <label for="Message" class="fg-label">موضوع </label>
+        <textarea id="Title" name="Title" class="entry" asp-for="Title"></textarea>
+        <span class="text-danger" asp-validation-for="Title"></span>
+    </div>
+
+    <div class="fg-col">
         <label for="Message" class="fg-label">پیغام شما</label>
         <textarea id="Message" name="Message" class="entry" asp-for="Message"></textarea>
         <span class="text-danger" asp-validation-for="Message"></span>
     </div>
+    @*<div class="fg-col opacity-0">
+            <label for="Message" class="fg-label">موضوع </label>
+            <textarea id="Message" name="Message" class="entry" asp-for="Message"></textarea>
+            <span class="text-danger" asp-validation-for="Message"></span>
+        </div>*@
     <div class="rowr">
-        <button class="btn btn-primary" onclick="LoadingRun('#TamasBaMaFormInContact')">ارسال پیام</button>
+        <button class="btn btn-primary-gradient" onclick="LoadingRun('#TamasBaMaFormInContact')">ارسال پیام</button>
     </div>
 </form>
 

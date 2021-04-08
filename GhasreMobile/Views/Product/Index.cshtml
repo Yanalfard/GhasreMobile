@@ -144,7 +144,7 @@
         <div class="body col">
             @Html.Raw(Model.DescriptionShortHtml)
         </div>
-        <div class="price g-2 rowr-at-l rowr-at-m col-at-s col-at-xs">
+        <div class="price g-3 rowr-at-l rowr-at-m col-at-s col-at-xs">
             @if (Model.TblColor.Sum(i => i.Count) > 0 && Model.IsDeleted == false)
             {
                 @if (Model.TblSpecialOffer.Count > 0 && Model.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now)
@@ -155,6 +155,7 @@
                         var BeforeSumWithDiscount = Model.PriceBeforeDiscount - (long)(Math.Floor((double)(Model.PriceBeforeDiscount * Model.TblSpecialOffer.SingleOrDefault().Discount / 100)));
                         <h4 class="discount">
                             @Model.PriceBeforeDiscount.Value.ToString("#,0")
+                            @*<span class="t">تومان</span>*@
                         </h4>
                         <h3 class="actual">
                             @BeforeSumWithDiscount.Value.ToString("#,0")
@@ -166,6 +167,7 @@
                         var AfterSumWithDiscount = Model.PriceAfterDiscount - (long)(Math.Floor((double)(Model.PriceAfterDiscount * Model.TblSpecialOffer.SingleOrDefault().Discount / 100)));
                         <h4 class="discount">
                             @Model.PriceAfterDiscount.Value.ToString("#,0")
+                            @*<span class="t">تومان</span>*@
                         </h4>
                         <h3 class="actual">
                             @AfterSumWithDiscount.Value.ToString("#,0")
@@ -186,6 +188,7 @@
                     {
                         <h4 class="discount">
                             @Model.PriceBeforeDiscount.Value.ToString("#,0")
+                            @*<span class="t">تومان</span>*@
                         </h4>
                         <h3 class="actual">
                             @Model.PriceAfterDiscount.Value.ToString("#,0")
@@ -197,29 +200,33 @@
             }
 
         </div>
-        <div class="colours">
-            <h4>رنگ بندی</h4>
-            <ul class="grid uk-margin-small-top">
+        @{
+            var colors = Model.TblColor.Where(i => i.Count > 0).ToList();
 
-                @{
-                    var colors = Model.TblColor.Where(i => i.Count > 0).ToList();
-                }
 
-                @foreach (var item in colors)
-                {
-                    System.Drawing.Color col = System.Drawing.ColorTranslator.FromHtml(item.ColorCode);
-                    bool isLight = col.R * 0.2126 + col.G * 0.7152 + col.B * 0.0722 > 255 / 2;
-                    <li>
-                        <input type="hidden" name="ProductColorId" id="ProductColorId" value="@item.ColorId" />
-                        <div class="clr @(colors.IndexOf(item)==0?"active":"")" onclick="selectColour(this)">
-                            <span>@item.Name</span>
-                            <strong style="background-color: @item.ColorCode; @(isLight ? "border:1px solid #333;" : "border:1px solid #ddd;")"></strong>
-                            <input type="hidden" name="ColorId" value="@item.ColorId" />
-                        </div>
-                    </li>
-                }
-            </ul>
-        </div>
+        }
+        @if (colors.Count > 0)
+        {
+            <div class="colours">
+                <h4>رنگ بندی</h4>
+                <ul class="grid uk-margin-small-top">
+                    @foreach (var item in colors)
+                    {
+                        System.Drawing.Color col = System.Drawing.ColorTranslator.FromHtml(item.ColorCode);
+                        bool isLight = col.R * 0.2126 + col.G * 0.7152 + col.B * 0.0722 > 255 / 2;
+                        <li>
+                            <input type="hidden" name="ProductColorId" id="ProductColorId" value="@item.ColorId" />
+                            <div class="clr @(colors.IndexOf(item)==0?"active":"")" onclick="selectColour(this)">
+                                <span>@item.Name</span>
+                                <strong style="background-color: @item.ColorCode; @(isLight ? "border:1px solid #333;" : "border:1px solid #ddd;")"></strong>
+                                <input type="hidden" name="ColorId" value="@item.ColorId" />
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+
         <div class="cart uk-margin-top">
 
 

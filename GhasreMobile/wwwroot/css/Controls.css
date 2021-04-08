@@ -2043,3 +2043,23 @@ div[role=none][id] {
         margin-top: auto;
         margin-right: 5px;
         margin-bottom: 7px; }
+
+.text-primary {
+  color: #96027E !important; }
+
+.btn-primary-gradient {
+  -moz-box-shadow: rgba(150, 2, 126, 0.28) 0 6px 16px;
+  -webkit-box-shadow: rgba(150, 2, 126, 0.28) 0 6px 16px;
+  box-shadow: rgba(150, 2, 126, 0.28) 0 6px 16px;
+  color: #fff;
+  background: #b31488;
+  background: -moz-linear-gradient(0deg, #b31488 0%, #820181 100%);
+  background: -webkit-linear-gradient(0deg, #b31488 0%, #820181 100%);
+  background: linear-gradient(0deg, #b31488 0%, #820181 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b31488",endColorstr="#820181",GradientType=1);
+  -moz-border-radius: 8px 8px 8px 8px;
+  -webkit-border-radius: 8px 8px 8px 8px;
+  border-radius: 8px 8px 8px 8px; }
+
+.opacity-0 {
+  opacity: 0; }

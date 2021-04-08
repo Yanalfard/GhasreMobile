@@ -3,7 +3,7 @@
     Random r = new Random();
 }
 
-<a  href="/ViewBlog/@Model.BlogId/@Model.Title.Replace(" ","-")" class="blog-block col mat-card">
+<a href="/ViewBlog/@Model.BlogId/@Model.Title.Replace(" ","-")" class="blog-block col mat-card">
     <img src="~/Images/Blogs/@Model.MainImage" width="200" height="160" alt="اخبار" />
     <h3>@Model.Title</h3>
     <p dir="rtl">
@@ -11,6 +11,6 @@
     </p>
     <div class="row gap-t">
         <label>@Model.DateCreated.DateToShamsi()</label>
-        <span href="/ViewBlog/@Model.BlogId/@Model.Title.Replace(" ","-")" dir="rtl">بیشتر...</span>
+        <span class="text-primary" href="/ViewBlog/@Model.BlogId/@Model.Title.Replace(" ","-")" dir="rtl">بیشتر...</span>
     </div>
 </a>

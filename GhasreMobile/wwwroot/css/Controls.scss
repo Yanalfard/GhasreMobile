@@ -1219,7 +1219,7 @@ $background-highlight: #eee;
 
         a {
             content: "•";
-            border: 1px $Text solid!important;
+            border: 1px $Text solid !important;
             background-color: transparent;
             margin: auto;
             @include trans(.3s);
@@ -1231,8 +1231,8 @@ $background-highlight: #eee;
             margin: auto;
             width: 16px;
             height: 16px;
-            border-color: $primary!important;
-            background-color: $primary!important;
+            border-color: $primary !important;
+            background-color: $primary !important;
         }
     }
 }
@@ -2257,4 +2257,23 @@ div[role=none][id] {
             }
         }
     }
+}
+
+.text-primary {
+    color: $primary !important;
+}
+
+.btn-primary-gradient {
+    @include subtle-glow(transparentize($primary,.72));
+    color: #fff;
+    background: rgb(179,20,136);
+    background: -moz-linear-gradient(0deg, rgba(179,20,136,1) 0%, rgba(130,1,129,1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(179,20,136,1) 0%, rgba(130,1,129,1) 100%);
+    background: linear-gradient(0deg, rgba(179,20,136,1) 0%, rgba(130,1,129,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b31488",endColorstr="#820181",GradientType=1);
+    @include border-radius(8px,8px,8px,8px);
+}
+
+.opacity-0 {
+    opacity: 0;
 }
