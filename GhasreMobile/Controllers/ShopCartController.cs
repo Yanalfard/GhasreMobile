@@ -445,7 +445,7 @@ namespace GhasreMobile.Controllers
                                             addWallet.Description = "خرید";
                                             addWallet.IsDeposit = false;
                                             addWallet.IsFinaly = true;
-                                            addWallet.ClientId = SelectUser().ClientId;
+                                            addWallet.ClientId = wallet.ClientId;
                                             addWallet.OrderId = wallet.OrderId;
                                             db.Wallet.Add(addWallet);
                                             if (selectedOrder.DiscountId != null)
