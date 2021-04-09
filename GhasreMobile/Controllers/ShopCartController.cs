@@ -333,6 +333,10 @@ namespace GhasreMobile.Controllers
                             db.Client.Update(selectedClient);
                             db.Order.Update(selectedOrder);
                             db.Client.Save();
+                            DiscountVm emptydiscount = new DiscountVm();
+                            HttpContext.Session.SetComplexData("Discount", emptydiscount);
+                            List<ShopCartItem> emptyShopCartItem = new List<ShopCartItem>();
+                            HttpContext.Session.SetComplexData("ShopCart", emptyShopCartItem);
                             HttpContext.Session.Clear();
                             int message = selectedOrder.OrdeId;
                             await Sms.SendSms(selectedClient.TellNo, message.ToString(), "GhasrMobileDoneSefaresh");
@@ -342,7 +346,7 @@ namespace GhasreMobile.Controllers
                                 TblColor colors = db.Color.GetById(item.ColorId);
                                 if (colors.Count > 0 && colors.Count >= item.Count)
                                 {
-                                    colors.Count -= colors.Count;
+                                    colors.Count -= item.Count;
                                     db.Color.Update(colors);
                                 }
                             }
@@ -352,9 +356,9 @@ namespace GhasreMobile.Controllers
                         else
                         {
                             long SumBalance = selectedDiscount.SumWithDiscount;
-                            if (SumBalance < 1000)
+                            if (SumBalance < 100)
                             {
-                                SumBalance = 1000;
+                                SumBalance = 100;
                             }
                             ChargeWalletVm charge = new ChargeWalletVm();
                             int Amount = (int)SumBalance;
@@ -460,16 +464,18 @@ namespace GhasreMobile.Controllers
                                                 TblColor colors = db.Color.GetById(item.ColorId);
                                                 if (colors.Count > 0 && colors.Count >= item.Count)
                                                 {
-                                                    colors.Count -= colors.Count;
+                                                    colors.Count -= item.Count;
                                                     db.Color.Update(colors);
                                                 }
                                             }
                                             db.Wallet.Save();
-                                            List<ShopCartItem> sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
-                                            DiscountVm discount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
+                                            DiscountVm emptydiscount = new DiscountVm();
+                                            HttpContext.Session.SetComplexData("Discount", emptydiscount);
+                                            List<ShopCartItem> emptyShopCartItem = new List<ShopCartItem>();
+                                            HttpContext.Session.SetComplexData("ShopCart", emptyShopCartItem);
+                                            HttpContext.Session.Clear();
                                             int message = selectedOrder.OrdeId;
                                             await Sms.SendSms(selectedClient.TellNo, message.ToString(), "GhasrMobileDoneSefaresh");
-                                            HttpContext.Session.Clear();
                                         }
                                     }
                                     else
