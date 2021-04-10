@@ -330,10 +330,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
                                 {
                                     propertyRel.Value = "";
                                 }
-
                                 propertyRel.ProductId = NewProduct.ProductId;
-                                _core.ProductPropertyRel.Add(propertyRel);
-                                _core.ProductPropertyRel.Save();
+                                if (!_core.ProductPropertyRel.Get().Any(i => i.ProductId == NewProduct.ProductId && i.PropertyId == propertyRel.PropertyId))
+                                {
+                                    _core.ProductPropertyRel.Add(propertyRel);
+                                    _core.ProductPropertyRel.Save();
+                                }
                             }
                         }
 
@@ -528,74 +530,75 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     }
                 }
 
-                if (_core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId).Count() > 0)
+                //if (_core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId).Count() > 0)
+                //{
+                IEnumerable<TblProductKeywordRel> keywordRels = _core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId);
+                if (keywordRels.Count() > 0)
                 {
-                    IEnumerable<TblProductKeywordRel> keywordRels = _core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId);
-
                     foreach (var item in keywordRels)
                     {
-                        _core.Keyword.Delete(item.Keyword);
+                        _core.ProductKeywordRel.Delete(item);
                     }
-                    _core.Keyword.Save();
-
-                    if (Keywords.Count > 0)
-                    {
-                        foreach (var item in Keywords)
-                        {
-                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace("                                       ", "")))
-                            {
-                                TblKeyword keyword = _core.Keyword.Get(k => k.Name == item.Replace("                                       ", "")).SingleOrDefault();
-                                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
-                                tblProductKeywordRel.ProductId = product.ProductId;
-                                tblProductKeywordRel.KeywordId = keyword.KeywordId;
-                                _core.ProductKeywordRel.Add(tblProductKeywordRel);
-                                _core.ProductKeywordRel.Save();
-                            }
-                            else
-                            {
-                                TblKeyword keyword = new TblKeyword();
-                                keyword.Name = item.Replace("                                       ", "");
-                                _core.Keyword.Add(keyword);
-                                _core.Keyword.Save();
-                                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
-                                tblProductKeywordRel.KeywordId = keyword.KeywordId;
-                                tblProductKeywordRel.ProductId = product.ProductId;
-                                _core.ProductKeywordRel.Add(tblProductKeywordRel);
-                                _core.ProductKeywordRel.Save();
-                            }
-                        }
-                    }
+                    _core.ProductKeywordRel.Save();
                 }
-                else
+                if (Keywords.Count > 0)
                 {
-                    if (Keywords.Count > 0)
+                    foreach (var item in Keywords)
                     {
-                        foreach (var item in Keywords)
+                        if (_core.Keyword.Get().Any(k => k.Name == item.Replace(" ", "")))
                         {
-                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace("                                       ", "")))
-                            {
-                                TblKeyword keyword = _core.Keyword.Get(k => k.Name == item.Replace("                                       ", "")).SingleOrDefault();
-                                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
-                                tblProductKeywordRel.ProductId = product.ProductId;
-                                tblProductKeywordRel.KeywordId = keyword.KeywordId;
-                                _core.ProductKeywordRel.Add(tblProductKeywordRel);
-                                _core.ProductKeywordRel.Save();
-                            }
-                            else
-                            {
-                                TblKeyword keyword = new TblKeyword();
-                                keyword.Name = item.Replace("                                       ", "");
-                                _core.Keyword.Add(keyword);
-                                _core.Keyword.Save();
-                                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
-                                tblProductKeywordRel.KeywordId = keyword.KeywordId;
-                                tblProductKeywordRel.ProductId = product.ProductId;
-                                _core.ProductKeywordRel.Add(tblProductKeywordRel);
-                                _core.ProductKeywordRel.Save();
-                            }
+                            TblKeyword keyword = _core.Keyword.Get().Where(k => k.Name == item.Replace(" ", "")).SingleOrDefault();
+                            TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
+                            tblProductKeywordRel.ProductId = product.ProductId;
+                            tblProductKeywordRel.KeywordId = keyword.KeywordId;
+                            _core.ProductKeywordRel.Add(tblProductKeywordRel);
+                            _core.ProductKeywordRel.Save();
+                        }
+                        else
+                        {
+                            TblKeyword keyword = new TblKeyword();
+                            keyword.Name = item.Replace(" ", "");
+                            _core.Keyword.Add(keyword);
+                            _core.Keyword.Save();
+                            TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
+                            tblProductKeywordRel.KeywordId = keyword.KeywordId;
+                            tblProductKeywordRel.ProductId = product.ProductId;
+                            _core.ProductKeywordRel.Add(tblProductKeywordRel);
+                            _core.ProductKeywordRel.Save();
                         }
                     }
                 }
+                //}
+                //else
+                //{
+                //    if (Keywords.Count > 0)
+                //    {
+                //        foreach (var item in Keywords)
+                //        {
+                //            if (_core.Keyword.Get().Any(k => k.Name == item.Replace("                                       ", "")))
+                //            {
+                //                TblKeyword keyword = _core.Keyword.Get(k => k.Name == item.Replace(" ", "")).SingleOrDefault();
+                //                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
+                //                tblProductKeywordRel.ProductId = product.ProductId;
+                //                tblProductKeywordRel.KeywordId = keyword.KeywordId;
+                //                _core.ProductKeywordRel.Add(tblProductKeywordRel);
+                //                _core.ProductKeywordRel.Save();
+                //            }
+                //            else
+                //            {
+                //                TblKeyword keyword = new TblKeyword();
+                //                keyword.Name = item.Replace("                                       ", "");
+                //                _core.Keyword.Add(keyword);
+                //                _core.Keyword.Save();
+                //                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
+                //                tblProductKeywordRel.KeywordId = keyword.KeywordId;
+                //                tblProductKeywordRel.ProductId = product.ProductId;
+                //                _core.ProductKeywordRel.Add(tblProductKeywordRel);
+                //                _core.ProductKeywordRel.Save();
+                //            }
+                //        }
+                //    }
+                //}
                 if (GalleryFile.Count > 0)
                 {
                     IEnumerable<TblProductImageRel> tblProductImageRel = _core.ProductImageRel.Get(p => p.ProductId == product.ProductId);
@@ -658,6 +661,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     TblProductPropertyRel propertyRel = new TblProductPropertyRel();
                     propertyRel.ProductId = EditProduct.ProductId;
+
                     if (Value[i] == null)
                     {
                         propertyRel.PropertyId = PropertyId[i].Value;
@@ -692,8 +696,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.ProductPropertyRel.Save();
                 foreach (var item in pros)
                 {
-                    _core.ProductPropertyRel.Add(item);
-                    _core.ProductPropertyRel.Save();
+                    if (!_core.ProductPropertyRel.Get().Any(i => i.ProductId == EditProduct.ProductId && i.PropertyId == item.PropertyId))
+                    {
+                        _core.ProductPropertyRel.Add(item);
+                        _core.ProductPropertyRel.Save();
+                    }
                 }
                 return await Task.FromResult(Redirect("/Admin/Product"));
             }
@@ -750,7 +757,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     _core.ProductKeywordRel.Save();
                 }
                 IEnumerable<TblProductImageRel> imageRels = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId);
-               
+
                 if (imageRels.Count() > 0)
                 {
                     TblAlbum selectedAlbum = imageRels.First().Image.Album;
