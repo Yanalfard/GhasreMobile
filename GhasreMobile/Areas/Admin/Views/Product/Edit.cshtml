@@ -103,7 +103,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <input type="text" value="
-
+                          
                                        @foreach (var item in Model.TblProductKeywordRel)
                                         {
                                         @item.Keyword.Name@:,
@@ -189,7 +189,7 @@
     <script>
 
         function RemoveTagInput(NameInput) {
-            var id = `#${NameInput}`.replace(" ", "");
+            var id = `#${NameInput}`.replace(/\s/g, '');
             $(id).remove();
         }
 
@@ -217,11 +217,11 @@
         function SetNewInputGallery() {
             $("#GalleryPanel").append(
                 `<div class="custom-file col-md-7 mt-3">
-                                                                           <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
-                                                                           <label class="custom-file-label" data-browse="انتخاب">
-                                                                                انتخاب فایل
-                                                                           </label>
-                                                                         </div>`
+                                                                                           <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
+                                                                                           <label class="custom-file-label" data-browse="انتخاب">
+                                                                                                انتخاب فایل
+                                                                                           </label>
+                                                                                         </div>`
             );
 
             //$("#GalleryPanel").append("<div><input type='file' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/></div>");
@@ -240,10 +240,15 @@
             $('#DescriptionShortHtml').ckeditor();
             $('#DescriptionLongHtml').ckeditor();
         });
-
+        if (CatagoryId != null || CatagoryId != "") {
+            var Id = $("#CatagoryId").val();
+            $("#Cat-" + Id).css('color', '#3E9731');
+            $("#Cat-" + Id).css('font-weight', 'bold');
+        }
         function SelectCatagory(Id) {
-            $(".Cat").css('color', '');
-            $(".Cat").css('font-weight', 'normal');
+            var idSelect = $("#CatagoryId").val();
+            $("#Cat-" + idSelect).css('color', '#666');
+            $("#Cat-" + idSelect).css('font-weight', 'normal');
             $("#Cat-" + Id).css('color', '#3E9731');
             $("#Cat-" + Id).css('font-weight', 'bold');
             $("#CatagoryId").val(Id);

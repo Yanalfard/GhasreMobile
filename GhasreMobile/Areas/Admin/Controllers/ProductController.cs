@@ -534,9 +534,9 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                     foreach (var item in keywordRels)
                     {
-                        _core.ProductKeywordRel.Delete(item);
+                        _core.Keyword.Delete(item.Keyword);
                     }
-                    _core.ProductKeywordRel.Save();
+                    _core.Keyword.Save();
 
                     if (Keywords.Count > 0)
                     {
@@ -611,7 +611,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             }
                             _core.Album.Delete(item.Image.Album);
                             _core.Image.Delete(item.Image);
-                            _core.Image.Save();
                             _core.Image.Save();
 
                         }

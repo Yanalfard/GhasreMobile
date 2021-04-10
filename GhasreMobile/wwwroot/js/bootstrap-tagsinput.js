@@ -500,7 +500,9 @@
             // Only add existing value as tags when using strings as tags
             if (self.options.itemValue === defaultOptions.itemValue) {
                 if (self.$element[0].tagName === 'INPUT') {
-                    self.add(self.$element.val());
+                    //self.add(self.$element.val());
+                    var namekey = self.$element.val();
+                    self.add(namekey.replace(/\s/g, ''));
                 } else {
                     $('option', self.$element).each(function () {
                         self.add($(this).attr('value'), true);

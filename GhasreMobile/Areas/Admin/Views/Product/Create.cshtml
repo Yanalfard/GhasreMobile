@@ -215,8 +215,9 @@
 
 
         function SelectCatagory(Id) {
-            $(".Cat").css('color', '');
-            $(".Cat").css('font-weight', 'normal');
+            var idSelect = $("#CatagoryId").val();
+            $("#Cat-" + idSelect).css('color', '#666');
+            $("#Cat-" + idSelect).css('font-weight', 'normal');
             $("#Cat-" + Id).css('color', '#3E9731');
             $("#Cat-" + Id).css('font-weight', 'bold');
             $("#CatagoryId").val(Id);
