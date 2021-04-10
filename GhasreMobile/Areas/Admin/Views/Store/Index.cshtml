@@ -87,9 +87,15 @@
         }
 
         function Remove(id) {
-            $.post("/Admin/Store/Delete/" + id, function () {
-                window.location.reload();
-            });
+            if (confirm('آیا از حذف شعبه  مورد نظر مطمئن هستید؟')) {
+
+                $.post("/Admin/Store/Delete/" + id, function () {
+                    window.location.reload();
+                });
+
+            } else {
+                // Do nothing!
+            }
         }
 
         function BtnSearch() {

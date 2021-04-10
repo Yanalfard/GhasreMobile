@@ -18,7 +18,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1, int OrderId = 0, string TellNo = null, string StartDate = null, string EndDate = null)
         {
-            IEnumerable<TblOrder> data = _core.Order.Get();
+            IEnumerable<TblOrder> data = _core.Order.Get(i => i.IsFractional == true);
             if (!string.IsNullOrEmpty(TellNo))
             {
                 data = data.Where(o => o.Client.TellNo.Contains(TellNo));

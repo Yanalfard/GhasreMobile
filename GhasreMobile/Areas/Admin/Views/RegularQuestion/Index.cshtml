@@ -83,9 +83,15 @@
         }
 
         function Delete(id) {
-            $.post("/Admin/RegularQuestion/Delete/" + id, function () {
-                window.location.reload();
-            });
+            if (confirm('آیا از حذف سوال  مورد نظر مطمئن هستید؟')) {
+                $.post("/Admin/RegularQuestion/Delete/" + id, function () {
+                    window.location.reload();
+                });
+            } else {
+                // Do nothing!
+            }
+
+           
         }
 
     </script>

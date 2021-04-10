@@ -25,7 +25,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             ViewBag.TellNo = ordersInAdmin.TellNo;
             ViewBag.StartDate = ordersInAdmin.StartDate;
             ViewBag.EndDate = ordersInAdmin.EndDate;
-            List<TblOrder> orders = _core.Order.Get().ToList();
+            List<TblOrder> orders = _core.Order.Get(i => i.IsFractional == false).ToList();
             int count = orders.Count;
             if (ordersInAdmin.InPageCount == 0)
             {
@@ -36,7 +36,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 if (ordersInAdmin.TellNo != null)
                 {
                     orders = orders.Where(i => i.Client.TellNo.Contains(ordersInAdmin.TellNo)).ToList();
-                   
+
                 }
                 if (ordersInAdmin.StartDate != null)
                 {
@@ -70,19 +70,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                 var skip = (ordersInAdmin.PageId - 1) * 18;
 
-                return View(orders.OrderByDescending(o=>o.OrdeId).Skip(skip).Take(18));
+                return View(orders.OrderByDescending(o => o.OrdeId).Skip(skip).Take(18));
             }
             else
             {
                 if (ordersInAdmin.OrderId != 0)
                 {
                     orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
-                    
+
                 }
                 if (ordersInAdmin.TellNo != null)
                 {
                     orders = orders.Where(i => i.Client.TellNo.Contains(ordersInAdmin.TellNo)).ToList();
-                    
+
                 }
                 if (ordersInAdmin.StartDate != null)
                 {
@@ -90,7 +90,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     string[] Start = ordersInAdmin.StartDate.Split('/');
                     DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
                     orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
-                    
+
                 }
                 if (ordersInAdmin.EndDate != null)
                 {
@@ -98,7 +98,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     string[] Start = ordersInAdmin.EndDate.Split('/');
                     DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
                     orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
-                    
+
                 }
 
                 count = orders.Count();

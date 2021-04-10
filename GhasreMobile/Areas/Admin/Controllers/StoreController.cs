@@ -73,7 +73,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         _core.StoreImageRel.Save();
                     }
                 }
-
+               
                 return await Task.FromResult(Redirect("/Admin/Store"));
 
             }

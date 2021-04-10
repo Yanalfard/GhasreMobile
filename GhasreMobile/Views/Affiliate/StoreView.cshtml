@@ -51,8 +51,10 @@
                 {
                     @if (item.Image.Image != null)
                     {
-                        <li class="uk-margin-auto" uk-grid >
-                            <img src="~/Images/Store/@item.Image.Image" alt="">
+                        <li class="uk-margin-auto" uk-grid uk-lightbox>
+                            <a href="~/Images/Store/@item.Image.Image" data-caption="@Model.Name">
+                                <img src="~/Images/Store/@item.Image.Image" alt="@Model.Name">
+                            </a>
                             <div class="uk-position-center uk-panel"></div>
                         </li>
                     }

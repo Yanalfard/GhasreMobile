@@ -57,9 +57,14 @@
 @section Script{
     <script>
         function Delete(id) {
-            $.post("/Admin/SpecialOffer/Delete/" + id, function () {
-                window.location.reload();
-            });
+            if (confirm('آیا از حذف   مورد نظر مطمئن هستید؟')) {
+                $.post("/Admin/SpecialOffer/Delete/" + id, function () {
+                    window.location.reload();
+                });
+            } else {
+                // Do nothing!
+            }
+
         }
     </script>
 }

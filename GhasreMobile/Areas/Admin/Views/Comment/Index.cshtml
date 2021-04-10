@@ -4,7 +4,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-
+@using GhasreMobile.Utilities;
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
         <div class="card flex-div border-0 main-shadow">
@@ -24,7 +24,7 @@
                             {
                                 <tr>
                                     <td>@item.Client.Name</td>
-                                    <td>@item.DateCreated</td>
+                                    <td>@item.DateCreated.Value.AllToShamsi()</td>
                                     <td>
                                         @if (item.IsValid)
                                         {
