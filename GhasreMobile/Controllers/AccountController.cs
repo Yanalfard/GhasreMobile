@@ -58,7 +58,7 @@ namespace GhasreMobile.Controllers
             {
                 if (!await _captchaValidator.IsCaptchaPassedAsync(login.Captcha))
                 {
-                    ModelState.AddModelError("TellNo", "ورود غیر مجاز");
+                    ModelState.AddModelError("TellNo", "لطفا دوباره امتحان کنید");
                     return View(login);
                 }
                 if (ModelState.IsValid)
@@ -136,7 +136,7 @@ namespace GhasreMobile.Controllers
             {
                 if (!await _captchaValidator.IsCaptchaPassedAsync(register.Captcha))
                 {
-                    ModelState.AddModelError("TellNo", "ورود غیر مجاز");
+                    ModelState.AddModelError("TellNo", "لطفا دوباره امتحان کنید");
                     return View(register);
                 }
                 if (ModelState.IsValid)
@@ -194,7 +194,7 @@ namespace GhasreMobile.Controllers
             {
                 if (!await _captchaValidator.IsCaptchaPassedAsync(forget.Captcha))
                 {
-                    ModelState.AddModelError("TellNo", "ورود غیر مجاز");
+                    ModelState.AddModelError("TellNo", "لطفا دوباره امتحان کنید");
                     return View(forget);
                 }
                 if (ModelState.IsValid)

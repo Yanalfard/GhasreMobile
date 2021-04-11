@@ -473,11 +473,17 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 System.IO.File.Delete(imagePath);
             }
 
-
             TblProductImageRel tblProductImageRel = _core.ProductImageRel.Get().Where(i => i.ImageId == id).SingleOrDefault();
             _core.ProductImageRel.Delete(tblProductImageRel);
             _core.Image.DeleteById(id);
             _core.Image.Save();
+            if (!_core.Image.Get().Any(i => i.AlbumId == tblProductImageRel.Image.AlbumId))
+            {
+                TblAlbum selectedAlbum= _core.Album.GetById(tblProductImageRel.Image.AlbumId);
+
+                _core.Album.Delete(selectedAlbum);
+                _core.Album.Save();
+            }
             return "true";
         }
 
@@ -601,23 +607,28 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 //}
                 if (GalleryFile.Count > 0)
                 {
-                    IEnumerable<TblProductImageRel> tblProductImageRel = _core.ProductImageRel.Get(p => p.ProductId == product.ProductId);
+                    //IEnumerable<TblProductImageRel> tblProductImageRel = _core.ProductImageRel.Get(p => p.ProductId == product.ProductId);
 
-                    if (tblProductImageRel.Count() > 0)
-                    {
-                        foreach (var item in tblProductImageRel)
-                        {
-                            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", item.Image.Image);
-                            if (System.IO.File.Exists(imagePath))
-                            {
-                                System.IO.File.Delete(imagePath);
-                            }
-                            _core.Album.Delete(item.Image.Album);
-                            _core.Image.Delete(item.Image);
-                            _core.Image.Save();
+                    //if (tblProductImageRel.Count() > 0)
+                    //{
+                    //    foreach (var item in tblProductImageRel)
+                    //    {
+                    //        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", item.Image.Image);
+                    //        if (System.IO.File.Exists(imagePath))
+                    //        {
+                    //            System.IO.File.Delete(imagePath);
+                    //        }
+                    //        _core.Image.Delete(item.Image);
+                    //        if (!_core.Image.Get().Any(i => i.AlbumId == item.Image.AlbumId))
+                    //        {
+                    //            _core.Album.Delete(item.Image.Album);
+                    //            _core.Album.Save();
 
-                        }
-                    }
+                    //        }
+                    //        _core.Image.Save();
+
+                    //    }
+                    //}
 
                     foreach (var galleryimage in GalleryFile)
                     {
