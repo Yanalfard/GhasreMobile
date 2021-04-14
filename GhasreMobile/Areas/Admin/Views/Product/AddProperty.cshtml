@@ -1,43 +1,63 @@
-﻿@model IEnumerable<DataLayer.Models.TblProperty>
+﻿@model DataLayer.Models.TblProduct
 @{
     ViewData["Title"] = "افزودن ویژگی";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+<div class="form-row mt-3">
+    <div class="form-group col-md-5">
+        <label class="uk-text-bold">افزودن ویژگی</label>
+        <a onclick="CreateProperty()" data-toggle="modal" data-target="#modalSave" class="btn btn-info btn-sm text-white">افزودن</a>
+        <a onclick="saveProperty()"  class="btn btn-info btn-sm text-white">ذخیره</a>
+        <a href="/Admin/Product" class="btn btn-primary btn-sm text-white pull-right ml-4 LoadingDiv">انصراف</a>
 
-<div class="modal-header">
-    <h6 class="modal-title" id="modalCenterTitle">
-        جزئیات
-    </h6>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
+    </div>
+    <div class="form-group col-md-2 mt-md-4 pt-2">
+    </div>
 </div>
-<div class="modal-body overflow-auto container-fluid">
-    <ul class="row">
-        @foreach (var item in Model)
+<form id="myFormProperty" action="AddProperty" method="post">
+    <aside id="PropertyPanel">
+        @foreach (var item in Model.TblProductPropertyRel.OrderBy(i => i.ProductPropertyRelId))
         {
-            <li class="col-4" id="Property-@item.PropertyId">
-                <div class="form-check">
-                    <span class="icon-holder uk-margin-small-right text-succses" uk-icon="add-circle-outline" onclick="SetInNewProduct('@item.PropertyId','@item.Name')"></span>
-                    <label class="form-check-label">
-                        @item.Name
-                    </label>
-                </div>
-            </li>
+            <input id="id" name="id" type="hidden" value="@ViewBag.id" />
+            <div id="PropertyInCreate-@item.PropertyId" class="form-inline col-md-7 mt-2">
+                <label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">@item.Property.Name:</label>
+                <input id="PropetryNameId" name="PropertyId" type="hidden" value="@item.PropertyId" />
+                <input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3 col-9" value="@item.Value">
+                @*<a onclick="DeleteProperty(@item.PropertyId,@item.ProductPropertyRelId)" class="text-danger col-2 mr-1" uk-icon="close-circle">
+                </a>*@
+                <a onclick="DeleteProperty(@item.PropertyId)" class="text-danger col-2 mr-1" uk-icon="close-circle">
+                </a>
+            </div>
         }
-    </ul>
-</div>
-<div class="modal-footer justify-content-end">
-</div>
+    </aside>
+</form>
 
-<script>
-    function SetInNewProduct(id, Name) {
-        $("#PropertyPanel").append(`<div id="PropertyInCreate-${id}" class="form-inline col-md-7 mt-2"><label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">${Name}:</label><input id="PropetryNameId" name="PropertyId" type="hidden" value="${id}" /><input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3 col-9"><a onclick="DeleteProperty('${id}')" class="text-danger mr-1" uk-icon="close-circle"></a></div>`);
-        $("#Property-" + id).remove();
-    }
 
-    function DeleteProperty(id) {
-        $("#PropertyInCreate-" + id).remove();
-    }
-</script>
+@section Script{
+    <script src="~/js/bootstrap-tagsinput.js"></script>
+    <script src="~/js/Auto_Formatting_Currency.js"></script>
+    <script>
+        function saveProperty() {
+            $("#overlay").fadeIn(300);
+            document.getElementById("myFormProperty").submit();
+        }
+        function CreateProperty() {
+            $.get("/Admin/Product/PropertyList", function (result) {
+                $(".modal-content").html(result);
+            });
+        }
+
+
+        function DeleteProperty(id, mainId) {
+            $("#PropertyInCreate-" + id).remove();
+            //$("#overlay").fadeIn(300);
+            //var isDeleted = Bjax('/Admin/Product/DeleteProperty?id=', mainId, 'SP');
+            //if (isDeleted) {
+            //    $("#PropertyInCreate-" + id).remove();
+            //    $("#overlay").fadeOut(300);
+            //}
+        }
+    </script>
+
+}

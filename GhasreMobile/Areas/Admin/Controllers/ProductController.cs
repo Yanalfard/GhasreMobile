@@ -400,8 +400,43 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
         public IActionResult AddProperty(int id)
         {
+            ViewBag.id = id;
             List<TblProperty> list = _core.ProductPropertyRel.Get(i => i.ProductId == id).Select(i => i.Property).ToList();
-            return View(list);
+            return View(_core.Product.GetById(id));
+        }
+        [HttpPost]
+        public IActionResult AddProperty(int id, List<int?> PropertyId, List<string> Value)
+        {
+            List<TblProductPropertyRel> pros = new List<TblProductPropertyRel>();
+            for (int i = 0; i < PropertyId.Count; i++)
+            {
+                TblProductPropertyRel propertyRel = new TblProductPropertyRel();
+                propertyRel.ProductId = id;
+
+                if (Value[i] == null)
+                {
+                    propertyRel.PropertyId = PropertyId[i].Value;
+                    propertyRel.Value = "";
+                }
+                else
+                {
+                    propertyRel.PropertyId = PropertyId[i].Value;
+                    propertyRel.Value = Value[i];
+                }
+                pros.Add(propertyRel);
+            }
+            _core.ProductPropertyRel.Get(i => i.ProductId == id).ToList().ForEach(j => _core.ProductPropertyRel.Delete(j));
+            _core.ProductPropertyRel.Save();
+            foreach (var item in pros)
+            {
+                if (!_core.ProductPropertyRel.Get().Any(i => i.ProductId == id && i.PropertyId == item.PropertyId))
+                {
+                    _core.ProductPropertyRel.Add(item);
+                    _core.ProductPropertyRel.Save();
+                }
+            }
+
+            return RedirectToAction("Index");
         }
         public IActionResult Stock(int id)
         {
