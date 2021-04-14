@@ -31,7 +31,6 @@ namespace DataLayer.Models
         [Required(ErrorMessage = "لطفا قیمت محصول را وارد کنید")]
         public long? PriceBeforeDiscount { get; set; }
         [Required(ErrorMessage = "لطفا توضیحات کوتاه محصول را وارد کنید")]
-        [MaxLength(600, ErrorMessage = "نهایتا 600 کارکتر وارد کنید")]
         public string DescriptionShortHtml { get; set; }
         [Required(ErrorMessage = "لطفا توضیحات کامل محصول را وارد کنید")]
         public string DescriptionLongHtml { get; set; }

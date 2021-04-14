@@ -26,42 +26,24 @@ namespace GhasreMobile.Areas.Admin.Controllers
             {
                 if (string.IsNullOrEmpty(productsInAdmin.Search))
                 {
+                    IEnumerable<TblProduct> products = _core.Product.Get(c => c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
+                    int count = products.Count();
+                    var skip = 0;
+                    ViewBag.pageid = productsInAdmin.PageId;
+                    ViewBag.InPageCount = productsInAdmin.InPageCount;
+                    ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+                    ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                    ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
                     if (productsInAdmin.InPageCount == 0)
                     {
-                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
-                        int count = products.Count();
-
-                        var skip = (productsInAdmin.PageId - 1) * 18;
-
-                        ViewBag.pageid = productsInAdmin.PageId;
-
+                        skip = (productsInAdmin.PageId - 1) * 18;
                         ViewBag.PageCount = count / 18;
-
-                        ViewBag.InPageCount = productsInAdmin.InPageCount;
-
-                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
-
-                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
-                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
                         return View(products.Skip(skip).Take(18));
                     }
                     else
                     {
-                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
-                        int count = products.Count();
-
-                        var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
-
-                        ViewBag.pageid = productsInAdmin.PageId;
-
+                        skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
                         ViewBag.PageCount = count / productsInAdmin.InPageCount;
-
-                        ViewBag.InPageCount = productsInAdmin.InPageCount;
-
-                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
-
-                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
-                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
                         return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
                     }
                 }
@@ -118,7 +100,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     if (productsInAdmin.InPageCount == 0)
                     {
-                        IEnumerable<TblProduct> products = _core.Product.Get().OrderByDescending(p => p.CatagoryId);
+                        IEnumerable<TblProduct> products = _core.Product.Get().OrderByDescending(p => p.ProductId);
                         int count = products.Count();
 
                         var skip = (productsInAdmin.PageId - 1) * 18;
@@ -137,7 +119,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     }
                     else
                     {
-                        IEnumerable<TblProduct> products = _core.Product.Get().OrderByDescending(p => p.CatagoryId);
+                        IEnumerable<TblProduct> products = _core.Product.Get().OrderByDescending(p => p.ProductId);
                         int count = products.Count();
 
                         var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
@@ -161,7 +143,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     if (productsInAdmin.InPageCount == 0)
                     {
-                        IEnumerable<TblProduct> products = _core.Product.Get(p => p.Name.Contains(productsInAdmin.Search)).OrderByDescending(p => p.CatagoryId);
+                        IEnumerable<TblProduct> products = _core.Product.Get(p => p.Name.Contains(productsInAdmin.Search)).OrderByDescending(p => p.ProductId);
                         int count = products.Count();
 
                         var skip = (productsInAdmin.PageId - 1) * 18;
@@ -178,7 +160,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     }
                     else
                     {
-                        IEnumerable<TblProduct> products = _core.Product.Get(p => p.Name.Contains(productsInAdmin.Search)).OrderByDescending(p => p.CatagoryId);
+                        IEnumerable<TblProduct> products = _core.Product.Get(p => p.Name.Contains(productsInAdmin.Search)).OrderByDescending(p => p.ProductId);
                         int count = products.Count();
 
                         var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
@@ -416,7 +398,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             return ViewComponent("PropertyListAdmin");
         }
-
+        public IActionResult AddProperty(int id)
+        {
+            List<TblProperty> list = _core.ProductPropertyRel.Get(i => i.ProductId == id).Select(i => i.Property).ToList();
+            return View(list);
+        }
         public IActionResult Stock(int id)
         {
             return ViewComponent("EditStokeAdmin", new { Id = id });
@@ -479,7 +465,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             _core.Image.Save();
             if (!_core.Image.Get().Any(i => i.AlbumId == tblProductImageRel.Image.AlbumId))
             {
-                TblAlbum selectedAlbum= _core.Album.GetById(tblProductImageRel.Image.AlbumId);
+                TblAlbum selectedAlbum = _core.Album.GetById(tblProductImageRel.Image.AlbumId);
 
                 _core.Album.Delete(selectedAlbum);
                 _core.Album.Save();
