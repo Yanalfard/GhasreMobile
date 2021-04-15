@@ -47,9 +47,13 @@
             </div>
             <div class="form-group col-md-4">
                 <label>وضعیت پرداخت: </label>
-                @if (Model.IsPayed)
+                @if (Model.IsPayed && Model.IsFractional == false)
                 {
                     <span class="text-success">پرداخت شده</span>
+                }
+                else if (Model.IsPayed == false && Model.IsFractional == true)
+                {
+                    <span class="text-success">خرید اقساطی </span>
                 }
                 else
                 {
@@ -58,19 +62,19 @@
             </div>
             <div class="form-group col-md-4">
                 <label>نحوه پرداخت: </label>
-
-                @if (Model.PaymentStatus == 0)
+                @if (Model.IsPayed && Model.IsFractional == false)
                 {
                     <span>پرداخت آنلاین</span>
                 }
-                else if (Model.PaymentStatus == 1)
+                else if (Model.IsPayed == false && Model.IsFractional == true)
                 {
-                    <span>کارت به کارت و ارسال رسید پرداخت</span>
+                    <span>خرید اقساطی</span>
                 }
-                else if (Model.PaymentStatus == 2)
+                else
                 {
-                    <span>پرداخت درب منزل یا در محل فروشگاه</span>
+                    <span>پرداخت نشده </span>
                 }
+
             </div>
             <div class="form-group col-md-4">
                 <label>وضعیت ارسال: </label>
