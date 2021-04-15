@@ -4,34 +4,60 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<div class="form-row mt-3">
-    <div class="form-group col-md-5">
-        <label class="uk-text-bold">افزودن ویژگی</label>
-        <a onclick="CreateProperty()" data-toggle="modal" data-target="#modalSave" class="btn btn-info btn-sm text-white">افزودن</a>
-        <a onclick="saveProperty()"  class="btn btn-info btn-sm text-white">ذخیره</a>
-        <a href="/Admin/Product" class="btn btn-primary btn-sm text-white pull-right ml-4 LoadingDiv">انصراف</a>
+<div class="row flex-div">
+    <div class="col-md-12 flex-div pb-3 pt-3">
+        <div class="card flex-div border-0 main-shadow">
+
+            <div class="form-row mt-3">
+                <div class="form-group col-md-5">
+                    <label class="uk-text-bold">افزودن ویژگی</label>
+                    <a onclick="CreateProperty()" data-toggle="modal" data-target="#modalSave" class="btn btn-info btn-sm text-white">افزودن</a>
+                    <a onclick="saveProperty()" class="btn btn-info btn-sm text-white">ذخیره</a>
+                    <a href="/Admin/Product" class="btn btn-primary btn-sm text-white pull-right ml-4 LoadingDiv">انصراف</a>
+
+                </div>
+                <div class="form-group col-md-2 mt-md-4 pt-2">
+                </div>
+            </div>
+            <form id="myFormProperty" action="AddProperty" method="post">
+                <aside id="PropertyPanel">
+                    @foreach (var item in Model.TblProductPropertyRel.OrderBy(i => i.ProductPropertyRelId))
+                    {
+                        <input id="id" name="id" type="hidden" value="@ViewBag.id" />
+                        <div id="PropertyInCreate-@item.PropertyId" class="form-inline col-md-7 mt-2">
+                            <label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">@item.Property.Name:</label>
+                            <input id="PropetryNameId" name="PropertyId" type="hidden" value="@item.PropertyId" />
+                            <input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3 col-9" value="@item.Value">
+                            @*<a onclick="DeleteProperty(@item.PropertyId,@item.ProductPropertyRelId)" class="text-danger col-2 mr-1" uk-icon="close-circle">
+                                </a>*@
+                            <a onclick="DeleteProperty(@item.PropertyId)" class="text-danger col-2 mr-1" uk-icon="close-circle">
+                            </a>
+                        </div>
+                    }
+                </aside>
+            </form>
+        </div>
 
     </div>
-    <div class="form-group col-md-2 mt-md-4 pt-2">
-    </div>
 </div>
-<form id="myFormProperty" action="AddProperty" method="post">
-    <aside id="PropertyPanel">
-        @foreach (var item in Model.TblProductPropertyRel.OrderBy(i => i.ProductPropertyRelId))
-        {
-            <input id="id" name="id" type="hidden" value="@ViewBag.id" />
-            <div id="PropertyInCreate-@item.PropertyId" class="form-inline col-md-7 mt-2">
-                <label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">@item.Property.Name:</label>
-                <input id="PropetryNameId" name="PropertyId" type="hidden" value="@item.PropertyId" />
-                <input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3 col-9" value="@item.Value">
-                @*<a onclick="DeleteProperty(@item.PropertyId,@item.ProductPropertyRelId)" class="text-danger col-2 mr-1" uk-icon="close-circle">
-                </a>*@
-                <a onclick="DeleteProperty(@item.PropertyId)" class="text-danger col-2 mr-1" uk-icon="close-circle">
-                </a>
-            </div>
-        }
-    </aside>
-</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @section Script{
