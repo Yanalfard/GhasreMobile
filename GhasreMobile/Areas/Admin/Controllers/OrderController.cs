@@ -25,7 +25,102 @@ namespace GhasreMobile.Areas.Admin.Controllers
             ViewBag.TellNo = ordersInAdmin.TellNo;
             ViewBag.StartDate = ordersInAdmin.StartDate;
             ViewBag.EndDate = ordersInAdmin.EndDate;
-            List<TblOrder> orders = _core.Order.Get(i => i.IsFractional == false).ToList();
+            List<TblOrder> orders = _core.Order.Get(i => i.IsFractional == false && i.IsPayed).ToList();
+            int count = orders.Count;
+            if (ordersInAdmin.InPageCount == 0)
+            {
+                if (ordersInAdmin.OrderId != 0)
+                {
+                    orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
+                }
+                if (ordersInAdmin.TellNo != null)
+                {
+                    orders = orders.Where(i => i.Client.TellNo.Contains(ordersInAdmin.TellNo)).ToList();
+
+                }
+                if (ordersInAdmin.StartDate != null)
+                {
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] Start = ordersInAdmin.StartDate.Split('/');
+                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                    orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
+                }
+                if (ordersInAdmin.EndDate != null)
+                {
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] Start = ordersInAdmin.EndDate.Split('/');
+                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                    orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
+                }
+
+
+                count = orders.Count();
+
+
+                ViewBag.pageid = ordersInAdmin.PageId;
+
+                ViewBag.PageCount = count / 18;
+
+                ViewBag.InPageCount = ordersInAdmin.InPageCount;
+
+                ViewBag.OrderId = ordersInAdmin.OrderId;
+                ViewBag.TellNo = ordersInAdmin.TellNo;
+                ViewBag.StartDate = ordersInAdmin.StartDate;
+                ViewBag.EndDate = ordersInAdmin.EndDate;
+
+                var skip = (ordersInAdmin.PageId - 1) * 18;
+
+                return View(orders.OrderByDescending(o => o.OrdeId).Skip(skip).Take(18));
+            }
+            else
+            {
+                if (ordersInAdmin.OrderId != 0)
+                {
+                    orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
+
+                }
+                if (ordersInAdmin.TellNo != null)
+                {
+                    orders = orders.Where(i => i.Client.TellNo.Contains(ordersInAdmin.TellNo)).ToList();
+
+                }
+                if (ordersInAdmin.StartDate != null)
+                {
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] Start = ordersInAdmin.StartDate.Split('/');
+                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                    orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
+
+                }
+                if (ordersInAdmin.EndDate != null)
+                {
+                    PersianCalendar pc = new PersianCalendar();
+                    string[] Start = ordersInAdmin.EndDate.Split('/');
+                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                    orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
+
+                }
+
+                count = orders.Count();
+
+                ViewBag.pageid = ordersInAdmin.PageId;
+
+                ViewBag.PageCount = count / ordersInAdmin.InPageCount;
+
+                ViewBag.InPageCount = ordersInAdmin.InPageCount;
+                var skip = (ordersInAdmin.PageId - 1) * ordersInAdmin.InPageCount;
+                return View(orders.Skip(skip).Take(ordersInAdmin.InPageCount));
+            }
+
+
+        }
+        public IActionResult AllOrder(OrdersInAdminVm ordersInAdmin)
+        {
+            ViewBag.OrderId = ordersInAdmin.OrderId;
+            ViewBag.TellNo = ordersInAdmin.TellNo;
+            ViewBag.StartDate = ordersInAdmin.StartDate;
+            ViewBag.EndDate = ordersInAdmin.EndDate;
+            List<TblOrder> orders = _core.Order.Get().ToList();
             int count = orders.Count;
             if (ordersInAdmin.InPageCount == 0)
             {

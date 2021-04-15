@@ -20,10 +20,10 @@
                 </div>
             </div>
             <form id="myFormProperty" action="AddProperty" method="post">
+                <input id="id" name="id" type="hidden" value="@ViewBag.id" />
                 <aside id="PropertyPanel">
                     @foreach (var item in Model.TblProductPropertyRel.OrderBy(i => i.ProductPropertyRelId))
                     {
-                        <input id="id" name="id" type="hidden" value="@ViewBag.id" />
                         <div id="PropertyInCreate-@item.PropertyId" class="form-inline col-md-7 mt-2">
                             <label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">@item.Property.Name:</label>
                             <input id="PropetryNameId" name="PropertyId" type="hidden" value="@item.PropertyId" />

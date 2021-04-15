@@ -412,18 +412,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
             {
                 TblProductPropertyRel propertyRel = new TblProductPropertyRel();
                 propertyRel.ProductId = id;
-
-                if (Value[i] == null)
+                if (Value[i] != null)
                 {
-                    propertyRel.PropertyId = PropertyId[i].Value;
-                    propertyRel.Value = "";
-                }
-                else
-                {
+                    //propertyRel.PropertyId = PropertyId[i].Value;
+                    //propertyRel.Value = "";
                     propertyRel.PropertyId = PropertyId[i].Value;
                     propertyRel.Value = Value[i];
+                    pros.Add(propertyRel);
                 }
-                pros.Add(propertyRel);
+                //else
+                //{
+                //    propertyRel.PropertyId = PropertyId[i].Value;
+                //    propertyRel.Value = Value[i];
+                //}
             }
             _core.ProductPropertyRel.Get(i => i.ProductId == id).ToList().ForEach(j => _core.ProductPropertyRel.Delete(j));
             _core.ProductPropertyRel.Save();

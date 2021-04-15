@@ -31,8 +31,15 @@
 
 <script>
     function SetInNewProduct(id, Name) {
-        $("#PropertyPanel").append(`<div id="PropertyInCreate-${id}" class="form-inline col-md-7 mt-2"><label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">${Name}:</label><input id="PropetryNameId" name="PropertyId" type="hidden" value="${id}" /><input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3 col-9"><a onclick="DeleteProperty('${id}')" class="text-danger mr-1" uk-icon="close-circle"></a></div>`);
-        $("#Property-" + id).remove();
+        const doesExist = document.querySelector('#PropertyPanel').querySelectorAll("#PropertyInCreate-" + id).length !== 0;
+        if (!doesExist) {
+            // Add
+            $("#PropertyPanel").append(`<div id="PropertyInCreate-${id}" class="form-inline col-md-7 mt-2"><label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">${Name}:</label><input id="PropetryNameId" name="PropertyId" type="hidden" value="${id}" /><input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3 col-9"><a onclick="DeleteProperty('${id}')" class="text-danger mr-1" uk-icon="close-circle"></a></div>`);
+            $("#Property-" + id).remove();
+        }
+        else if (doesExist) {
+            UIkit.notification('ویژگی مورد نظر قبلا اضافه شده است');
+        }
     }
 
     function DeleteProperty(id) {

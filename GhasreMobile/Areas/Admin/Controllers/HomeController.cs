@@ -29,7 +29,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 BrandsCount = _core.Brand.Get().Count(),
                 AllOrderCount = orders.Count(),
                 OrderSucssesCount = orders.Where(o => o.IsPayed).Count(),
-                OrderCancelCount = orders.Where(o => !o.IsPayed).Count(),
+                OrderCancelCount = orders.Where(o => !o.IsPayed && o.IsFractional == false).Count(),
                 OnlineOrderCount = _core.OnlineOrder.Get().Count(),
                 allTicketCount = tickets.Count(),
                 AllNotificationCount = _core.Notification.Get().Count(),
