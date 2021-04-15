@@ -438,6 +438,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult AddGallery(int id)
+        {
+            ViewBag.id = id;
+            List<TblProperty> list = _core.ProductPropertyRel.Get(i => i.ProductId == id).Select(i => i.Property).ToList();
+            return View(_core.Product.GetById(id));
+        }
         public IActionResult Stock(int id)
         {
             return ViewComponent("EditStokeAdmin", new { Id = id });
