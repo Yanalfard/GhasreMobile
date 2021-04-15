@@ -1,4 +1,4 @@
-﻿@model DataLayer.Models.TblProduct
+﻿@model IEnumerable<DataLayer.Models.TblProductImageRel>
 @{
     ViewData["Title"] = "افزودن گالری";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -11,28 +11,83 @@
             <div class="form-row mt-3">
                 <div class="form-group col-md-5 ">
                     <label class="uk-text-bold mr-2">افزودن گالری</label>
-                    <a onclick="saveProperty()" class="btn btn-success btn-sm text-white">ذخیره</a>
+                    <a onclick="saveGallery()" class="btn btn-success btn-sm text-white">ذخیره</a>
                     <a href="/Admin/Product" class="btn btn-primary btn-sm text-white  LoadingDiv">انصراف</a>
                 </div>
                 <div class="form-group col-md-2 mt-md-4 pt-2">
                 </div>
             </div>
-            <hr class="uk-margin-remove"/>
-            <form id="myFormProperty" action="AddProperty" method="post" class="overflow-auto mr-2 mb-2">
+            <hr class="uk-margin-remove" />
+            <div class="overflow-auto mr-2 mb-2">
                 <label class="mt-3 uk-text-bold">افزودن عکس به گالری تصاویر</label>
                 &nbsp;<span onclick="SetNewInputGallery()" class="text-success" uk-icon="add-circle-outline"></span>
                 &nbsp;<span onclick="RemoveInputGallery()" class="text-danger" uk-icon="remove-circle-outline"></span>
                 <br />
                 <span class="text-success mb-2">لطفا اندازه تصویر انتخابی 420*368 باشد</span>
                 <br />
-                <div class="mb-2" id="GalleryPanel"></div>
+                <form id="myFormGallery" action="AddGallery" method="post" enctype="multipart/form-data">
+                    <input id="id" name="id" type="hidden" value="@ViewBag.id" />
+                    <div class="mb-2" id="GalleryPanel">
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <div id="Img-@item.ImageId">
 
-            </form>
+                                    <div style="margin:70px;height:150px;" class="custom-file col-10 col-md-7 mt-3">
+                                        <img src="~/Images/ProductAlbum/@item.Image.Image" style="max-height: 150px !important;display:block; margin: 0 auto" alt="Alternate Text" />
+                                    </div>
+                                    <div class="custom-file col-10 col-md-7 mt-3">
+                                        <input type="file" value="@item.Image" class="custom-file-input form-control form-control-sm">
+                                        <label class="custom-file-label" for="Image" data-browse="انتخاب" id="FileName">@item.Image.Image</label>
+                                    </div><span id="RemoveGallery-@item.ImageId" onclick="RemoveImageGallery(@item.ImageId)" class="text-danger cursor-pointer mr-md-2 mr-1" uk-icon="remove-circle-outline" title="" data-placement="top" data-toggle="tooltip" data-original-title="حذف کامل تصویر "></span>
+                                </div>
+                            }
+
+
+                        }
+                    </div>
+                    <br />
+                    <span class="text-success">لطفا اندازه تصویر انتخابی 420*368 باشد</span>
+                    <br />
+                    <label class="col-md-12 mt-4 mb-4 bg-light uk-border-rounded pt-3 pb-3 pl-3"><span class="text-primary" uk-icon="information-circle"></span>نمونه تصاویر انتخابی برای محصولات</label>
+                    <div class="form-row col-10">
+                        <div class="uk-child-width-1-4-at-m" uk-grid uk-lightbox="animation: slide">
+                            <div>
+                                <a class="uk-inline" href="~/st/r/template_single.png" data-caption="اندازه تصاویر">
+                                    <img src="~/st/r/template_single.png" alt="">
+                                </a>
+                            </div>
+                            <div>
+                                <a class="uk-inline" href="~/st/r/phones/p2.jpg" data-caption="نمونه 1">
+                                    <img src="~/st/r/phones/p2.jpg" alt="">
+                                </a>
+                            </div>
+                            <div>
+                                <a class="uk-inline" href="~/st/r/template_double.png" data-caption="اندازه تصاویر">
+                                    <img src="~/st/r/template_double.png" alt="">
+                                </a>
+                            </div>
+                            <div>
+                                <a class="uk-inline" href="~/st/r/phones/p15.jpg" data-caption="نمونه 2">
+                                    <img src="~/st/r/phones/p15.jpg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
         </div>
 
     </div>
 </div>
 <script>
+    function saveGallery() {
+        $("#overlay").fadeIn(300);
+        document.getElementById("myFormGallery").submit();
+    }
     function SetNewInputGallery() {
         //$("#GalleryPanel").append("<div class='custom-file col-md-7 mt-3'><input type='file' class='custom-file-input form-control form-control-sm' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile' /><label class='custom-file-label'></label></div>");
         $("#GalleryPanel").append(
@@ -53,6 +108,18 @@
 
     function RemoveInputGallery() {
         $("#GalleryPanel div").last().remove();
+    }
+
+
+    function RemoveImageGallery(imageId) {
+        $("#overlay").fadeIn(300);
+        $.post("/Admin/Product/RemoveAlbumImage/" + imageId, function (result) {
+            if (result == "true") {
+                $("#overlay").fadeOut(300);
+                $("#Img-" + imageId).remove();
+                $("#RemoveGallery-" + imageId).remove();
+            }
+        });
     }
 
 </script>
@@ -78,26 +145,16 @@
     <script src="~/js/bootstrap-tagsinput.js"></script>
     <script src="~/js/Auto_Formatting_Currency.js"></script>
     <script>
-        function saveProperty() {
-            $("#overlay").fadeIn(300);
-            document.getElementById("myFormProperty").submit();
-        }
-        function CreateProperty() {
-            $.get("/Admin/Product/PropertyList", function (result) {
-                $(".modal-content").html(result);
-            });
-        }
 
-
-        function DeleteProperty(id, mainId) {
-            $("#PropertyInCreate-" + id).remove();
-            //$("#overlay").fadeIn(300);
-            //var isDeleted = Bjax('/Admin/Product/DeleteProperty?id=', mainId, 'SP');
-            //if (isDeleted) {
-            //    $("#PropertyInCreate-" + id).remove();
-            //    $("#overlay").fadeOut(300);
-            //}
-        }
+                                //function DeleteProperty(id, mainId) {
+                                //    $("#PropertyInCreate-" + id).remove();
+                                //    //$("#overlay").fadeIn(300);
+                                //    //var isDeleted = Bjax('/Admin/Product/DeleteProperty?id=', mainId, 'SP');
+                                //    //if (isDeleted) {
+                                //    //    $("#PropertyInCreate-" + id).remove();
+                                //    //    $("#overlay").fadeOut(300);
+                                //    //}
+                                //}
     </script>
 
 }

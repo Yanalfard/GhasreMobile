@@ -1872,3 +1872,7 @@ table.hot-download td {
     top: 1vh;
     border-radius: 50% !important;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}

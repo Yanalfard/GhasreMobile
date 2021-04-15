@@ -247,6 +247,7 @@
 
         function SendOrder(id) {
             $(".modal-content").html("");
+            $("#overlay").fadeIn(300);
             $.get("/Admin/Order/SendOrder/" + id, function () {
                 window.location.reload();
             });
@@ -254,8 +255,10 @@
 
         function DoneOrder(id) {
             $(".modal-content").html("");
+            $("#overlay").fadeIn(300);
             $.get("/Admin/Order/DoneOrder/" + id, function () {
                 window.location.reload();
+
             });
         }
 

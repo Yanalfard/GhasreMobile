@@ -5,6 +5,12 @@
         <div class="form-header">
             <label class="date">شماره فاکتور #@item.OrdeId  </label>
         </div>
+        @if (item.SentNo != null)
+        {
+            <div class="form-header">
+                <label class="date">شماره مرسوله  #@item.SentNo  </label>
+            </div>
+        }
         <div class="procedure form-body">
             <div class="circles">
                 <div class="step @((item.Status == 0) ? "doing" : (item.Status == 1) ? "done" : (item.Status == 2) ? "done" : "")">

@@ -29,10 +29,13 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
+                                <tr  id="sliderId_@item.BannerAndSlideId">
                                     <td>@item.Name</td>
                                     <td>@item.ActiveTill.AllToShamsi()</td>
                                     <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
+                                            <a onclick="Edit(@item.BannerAndSlideId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="create-outline"></a>
+                                        </span>
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="حذف">
                                             <a onclick="RemoveSlider(@item.BannerAndSlideId)" class="text-danger" uk-icon="trash"></a>
                                         </span>
@@ -61,12 +64,19 @@
                 $(".modal-content").html(result);
             });
         });
-
+        function Edit(id) {
+            $(".modal-content").html("");
+            $.get("/Admin/Slider/Edit/" + id, function (result) {
+                $(".modal-content").html(result);
+            });
+        }
         function RemoveSlider(Id) {
             if (confirm('آیا از حذف اسلایدر مورد نظر مطمئن هستید؟')) {
                 $.post("/Admin/Slider/RemoveSlider/" + Id, function (result) {
                     if (result == "true") {
-                        window.location.reload();
+                        /* window.location.reload();*/
+                        $('#sliderId_' + Id).addClass('text-danger');
+                        $("#sliderId_" + Id).hide('slow');
                     }
                 });
             } else {

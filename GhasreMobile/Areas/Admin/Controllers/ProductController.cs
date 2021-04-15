@@ -195,10 +195,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                                                 List<string> Colors,
                                                 List<string> ColorName,
                                                 List<int> ColorsCounts,
-                                                List<int?> PropertyId,
-                                                List<string> Value,
-                                                IFormFile MainImage,
-                                                List<IFormFile> GalleryFile
+                                                IFormFile MainImage
             )
         {
             if (ModelState.IsValid)
@@ -267,59 +264,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         album.IsProduct = true;
                         _core.Album.Add(album);
                         _core.Album.Save();
-                        if (GalleryFile.Count() > 0)
-                        {
-                            foreach (var item in GalleryFile)
-                            {
-                                TblImage image = new TblImage();
-                                image.AlbumId = album.AlbumId;
-                                image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
-                                string saveDirectory = Path.Combine(
-                                                    Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum");
-                                string savePathAlbum = Path.Combine(
-                                                    Directory.GetCurrentDirectory(), saveDirectory, image.Image);
-
-                                if (!Directory.Exists(saveDirectory))
-                                {
-                                    Directory.CreateDirectory(saveDirectory);
-                                }
-
-                                using (var stream = new FileStream(savePathAlbum, FileMode.Create))
-                                {
-                                    await item.CopyToAsync(stream);
-                                }
-                                _core.Image.Add(image);
-                                _core.Image.Save();
-                                TblProductImageRel tblProductImageRel = new TblProductImageRel();
-                                tblProductImageRel.ImageId = image.ImageId;
-                                tblProductImageRel.ProductId = NewProduct.ProductId;
-                                _core.ProductImageRel.Add(tblProductImageRel);
-                                _core.ProductImageRel.Save();
-                            }
-                        }
-
-                        if (PropertyId != null)
-                        {
-                            for (int i = 0; i < PropertyId.Count; i++)
-                            {
-                                TblProductPropertyRel propertyRel = new TblProductPropertyRel();
-                                propertyRel.PropertyId = PropertyId[i].Value;
-                                if (Value[i] != null)
-                                {
-                                    propertyRel.Value = Value[i];
-                                }
-                                else
-                                {
-                                    propertyRel.Value = "";
-                                }
-                                propertyRel.ProductId = NewProduct.ProductId;
-                                if (!_core.ProductPropertyRel.Get().Any(i => i.ProductId == NewProduct.ProductId && i.PropertyId == propertyRel.PropertyId))
-                                {
-                                    _core.ProductPropertyRel.Add(propertyRel);
-                                    _core.ProductPropertyRel.Save();
-                                }
-                            }
-                        }
 
                         for (int i = 0; i < Colors.Count; i++)
                         {
@@ -443,8 +387,54 @@ namespace GhasreMobile.Areas.Admin.Controllers
         public IActionResult AddGallery(int id)
         {
             ViewBag.id = id;
-            List<TblProperty> list = _core.ProductPropertyRel.Get(i => i.ProductId == id).Select(i => i.Property).ToList();
-            return View(_core.Product.GetById(id));
+            List<TblProductImageRel> list = _core.ProductImageRel.Get(i => i.ProductId == id).ToList();
+            return View(list);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddGallery(int id, List<IFormFile> GalleryFile)
+        {
+            if (GalleryFile.Count > 0)
+            {
+                TblProduct product = _core.Product.GetById(id);
+                foreach (var galleryimage in GalleryFile)
+                {
+
+                    TblImage NewImage = new TblImage();
+                    if (_core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).Count() == 0)
+                    {
+                        TblAlbum album = new TblAlbum();
+                        album.Name = product.Name;
+                        album.IsProduct = true;
+                        _core.Album.Add(album);
+                        _core.Album.Save();
+                        NewImage.AlbumId = album.AlbumId;
+
+                    }
+                    else
+                    {
+                        NewImage.AlbumId = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).First().Image.AlbumId;
+                    }
+                    NewImage.Image = Guid.NewGuid().ToString() + Path.GetExtension(galleryimage.FileName);
+                    string savePathAlbum = Path.Combine(
+                                        Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", NewImage.Image
+                                    );
+
+                    using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                    {
+                        await galleryimage.CopyToAsync(stream);
+                    }
+                    _core.Image.Add(NewImage);
+                    _core.Image.Save();
+                    TblProductImageRel imageRel = new TblProductImageRel();
+                    imageRel.ProductId = product.ProductId;
+                    imageRel.ImageId = NewImage.ImageId;
+
+                    _core.ProductImageRel.Add(imageRel);
+                    _core.ProductImageRel.Save();
+                }
+            }
+
+            return RedirectToAction("Index");
         }
         public IActionResult Stock(int id)
         {
@@ -537,10 +527,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(TblProduct product,
                                                 List<string> Keywords,
-                                                List<int?> PropertyId,
-                                                List<string> Value,
-                                                IFormFile MainImage,
-                                                List<IFormFile> GalleryFile
+                                                IFormFile MainImage
             )
         {
             if (ModelState.IsValid)
@@ -564,9 +551,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         await MainImage.CopyToAsync(stream);
                     }
                 }
-
-                //if (_core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId).Count() > 0)
-                //{
                 IEnumerable<TblProductKeywordRel> keywordRels = _core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId);
                 if (keywordRels.Count() > 0)
                 {
@@ -603,117 +587,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         }
                     }
                 }
-                //}
-                //else
-                //{
-                //    if (Keywords.Count > 0)
-                //    {
-                //        foreach (var item in Keywords)
-                //        {
-                //            if (_core.Keyword.Get().Any(k => k.Name == item.Replace("                                       ", "")))
-                //            {
-                //                TblKeyword keyword = _core.Keyword.Get(k => k.Name == item.Replace(" ", "")).SingleOrDefault();
-                //                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
-                //                tblProductKeywordRel.ProductId = product.ProductId;
-                //                tblProductKeywordRel.KeywordId = keyword.KeywordId;
-                //                _core.ProductKeywordRel.Add(tblProductKeywordRel);
-                //                _core.ProductKeywordRel.Save();
-                //            }
-                //            else
-                //            {
-                //                TblKeyword keyword = new TblKeyword();
-                //                keyword.Name = item.Replace("                                       ", "");
-                //                _core.Keyword.Add(keyword);
-                //                _core.Keyword.Save();
-                //                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
-                //                tblProductKeywordRel.KeywordId = keyword.KeywordId;
-                //                tblProductKeywordRel.ProductId = product.ProductId;
-                //                _core.ProductKeywordRel.Add(tblProductKeywordRel);
-                //                _core.ProductKeywordRel.Save();
-                //            }
-                //        }
-                //    }
-                //}
-                if (GalleryFile.Count > 0)
-                {
-                    //IEnumerable<TblProductImageRel> tblProductImageRel = _core.ProductImageRel.Get(p => p.ProductId == product.ProductId);
-
-                    //if (tblProductImageRel.Count() > 0)
-                    //{
-                    //    foreach (var item in tblProductImageRel)
-                    //    {
-                    //        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", item.Image.Image);
-                    //        if (System.IO.File.Exists(imagePath))
-                    //        {
-                    //            System.IO.File.Delete(imagePath);
-                    //        }
-                    //        _core.Image.Delete(item.Image);
-                    //        if (!_core.Image.Get().Any(i => i.AlbumId == item.Image.AlbumId))
-                    //        {
-                    //            _core.Album.Delete(item.Image.Album);
-                    //            _core.Album.Save();
-
-                    //        }
-                    //        _core.Image.Save();
-
-                    //    }
-                    //}
-
-                    foreach (var galleryimage in GalleryFile)
-                    {
-
-                        TblImage NewImage = new TblImage();
-                        if (_core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).Count() == 0)
-                        {
-                            TblAlbum album = new TblAlbum();
-                            album.Name = product.Name;
-                            album.IsProduct = true;
-                            _core.Album.Add(album);
-                            _core.Album.Save();
-                            NewImage.AlbumId = album.AlbumId;
-
-                        }
-                        else
-                        {
-                            NewImage.AlbumId = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).First().Image.AlbumId;
-                        }
-                        NewImage.Image = Guid.NewGuid().ToString() + Path.GetExtension(galleryimage.FileName);
-                        string savePathAlbum = Path.Combine(
-                                            Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", NewImage.Image
-                                        );
-
-                        using (var stream = new FileStream(savePathAlbum, FileMode.Create))
-                        {
-                            await galleryimage.CopyToAsync(stream);
-                        }
-                        _core.Image.Add(NewImage);
-                        _core.Image.Save();
-                        TblProductImageRel imageRel = new TblProductImageRel();
-                        imageRel.ProductId = EditProduct.ProductId;
-                        imageRel.ImageId = NewImage.ImageId;
-
-                        _core.ProductImageRel.Add(imageRel);
-                        _core.ProductImageRel.Save();
-                    }
-                }
-                List<TblProductPropertyRel> pros = new List<TblProductPropertyRel>();
-                for (int i = 0; i < PropertyId.Count; i++)
-                {
-                    TblProductPropertyRel propertyRel = new TblProductPropertyRel();
-                    propertyRel.ProductId = EditProduct.ProductId;
-
-                    if (Value[i] == null)
-                    {
-                        propertyRel.PropertyId = PropertyId[i].Value;
-                        propertyRel.Value = "";
-                    }
-                    else
-                    {
-                        propertyRel.PropertyId = PropertyId[i].Value;
-                        propertyRel.Value = Value[i];
-                    }
-                    pros.Add(propertyRel);
-                }
                 EditProduct.Name = product.Name;
                 EditProduct.PriceBeforeDiscount = product.PriceBeforeDiscount;
                 if (product.PriceAfterDiscount != null)
@@ -732,16 +605,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 EditProduct.DescriptionLongHtml = product.DescriptionLongHtml;
                 _core.Product.Update(EditProduct);
                 _core.Product.Save();
-                _core.ProductPropertyRel.Get(i => i.ProductId == EditProduct.ProductId).ToList().ForEach(j => _core.ProductPropertyRel.Delete(j));
-                _core.ProductPropertyRel.Save();
-                foreach (var item in pros)
-                {
-                    if (!_core.ProductPropertyRel.Get().Any(i => i.ProductId == EditProduct.ProductId && i.PropertyId == item.PropertyId))
-                    {
-                        _core.ProductPropertyRel.Add(item);
-                        _core.ProductPropertyRel.Save();
-                    }
-                }
                 return await Task.FromResult(Redirect("/Admin/Product"));
             }
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
@@ -770,78 +633,51 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
         public string Delete(int id)
         {
-            TblProduct product = _core.Product.GetById(id);
-            if (product.TblOrderDetail.Count() > 0)
+            try
             {
-                return "سفارشی برای این کالا وجود دارد";
-            }
-            else
-            {
-                IEnumerable<TblProductPropertyRel> propertyRels = _core.ProductPropertyRel.Get(pr => pr.ProductId == product.ProductId);
-                if (propertyRels != null)
+                TblProduct product = _core.Product.GetById(id);
+                if (product.TblOrderDetail.Count() > 0)
                 {
-                    foreach (var item in propertyRels)
-                    {
-                        _core.ProductPropertyRel.Delete(item);
-
-                    }
-                    _core.ProductPropertyRel.Save();
+                    return "سفارشی برای این کالا وجود دارد";
                 }
-                IEnumerable<TblProductKeywordRel> keywordRels = _core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId);
-                if (keywordRels != null)
+                else
                 {
-                    foreach (var item in keywordRels)
+                    IEnumerable<TblProductImageRel> imageRels = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId);
+                    if (imageRels.Count() > 0)
                     {
-                        _core.ProductKeywordRel.Delete(item);
-                    }
-                    _core.ProductKeywordRel.Save();
-                }
-                IEnumerable<TblProductImageRel> imageRels = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId);
-
-                if (imageRels.Count() > 0)
-                {
-                    TblAlbum selectedAlbum = imageRels.First().Image.Album;
-                    foreach (var item in imageRels)
-                    {
-                        var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", item.Image.Image);
-                        if (System.IO.File.Exists(deleteImagePath))
+                        TblAlbum selectedAlbum = imageRels.First().Image.Album;
+                        foreach (var item in imageRels)
                         {
-                            System.IO.File.Delete(deleteImagePath);
+                            var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", item.Image.Image);
+                            if (System.IO.File.Exists(deleteImagePath))
+                            {
+                                System.IO.File.Delete(deleteImagePath);
+                            }
+                            _core.Image.Delete(item.Image);
+                            _core.Image.Save();
                         }
-                        _core.Image.Delete(item.Image);
-                        _core.Image.Save();
+                        if (selectedAlbum != null)
+                        {
+                            _core.Album.Delete(selectedAlbum);
+                            _core.Album.Save();
+                        }
+                        _core.ProductImageRel.Save();
                     }
-                    if (selectedAlbum != null)
+                    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", product.MainImage);
+                    if (System.IO.File.Exists(imagePath))
                     {
-                        _core.Album.Delete(selectedAlbum);
-                        _core.Album.Save();
+                        System.IO.File.Delete(imagePath);
                     }
-                    _core.ProductImageRel.Save();
+                    _core.Product.Delete(product);
+                    _core.Product.Save();
+                    return "true";
                 }
-
-                IEnumerable<TblSpecialOffer> specialOffers = _core.SpecialOffer.Get(s => s.ProductId == product.ProductId);
-                if (specialOffers != null)
-                {
-                    foreach (var item in specialOffers)
-                    {
-                        _core.SpecialOffer.Delete(item);
-                    }
-                    _core.SpecialOffer.Save();
-                }
-
-                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", product.MainImage);
-
-                if (System.IO.File.Exists(imagePath))
-                {
-                    System.IO.File.Delete(imagePath);
-                }
-
-
-                _core.Product.Delete(product);
-                _core.Product.Save();
-
-                return "true";
             }
+            catch
+            {
+                return "خطا در حذف";
+            }
+           
         }
 
         public void Selling(int id)

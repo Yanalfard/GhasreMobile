@@ -29,6 +29,8 @@ namespace DataLayer.Models
         public int SendStatus { get; set; }
         public int? SendPrice { get; set; }
         public int PaymentStatus { get; set; }
+        [StringLength(50)]
+        public string SentNo { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime DateSubmited { get; set; }
         public bool? IsFractional { get; set; }

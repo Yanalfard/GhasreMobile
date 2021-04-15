@@ -13,6 +13,7 @@ namespace DataLayer.ViewModels
         public int AllOrderCount { get; set; }
         public int OrderSucssesCount { get; set; }
         public int OrderCancelCount { get; set; }
+        public int AllOrderFractionalCount { get; set; }
         public int OnlineOrderCount { get; set; }
         public int allTicketCount { get; set; }
         public int IsSeenTicketCount { get; set; }
