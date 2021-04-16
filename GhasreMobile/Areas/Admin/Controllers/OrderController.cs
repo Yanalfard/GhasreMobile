@@ -214,7 +214,26 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             return ViewComponent("OrderInfoAdmin", new { id = id });
         }
-
+        public IActionResult CodeMarsole(int id)
+        {
+            return ViewComponent("CodeMarsoleAdmin", new { id = id });
+        }
+        [HttpPost]
+        public IActionResult CodeMarsole(CodeMarsoleVm code)
+        {
+            if (ModelState.IsValid)
+            {
+                TblOrder selectedOrder = _core.Order.GetById(code.OrdeId);
+                if (selectedOrder != null)
+                {
+                    selectedOrder.SentNo = code.SentNo;
+                    _core.Order.Update(selectedOrder);
+                    _core.Order.Save();
+                    return Redirect(code.ReturnUrl);
+                }
+            }
+            return PartialView("CodeMarsole", code);
+        }
         public async Task SendOrderAsync(int id)
         {
             TblOrder order = _core.Order.GetById(id);

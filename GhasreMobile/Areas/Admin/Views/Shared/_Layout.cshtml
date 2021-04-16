@@ -33,16 +33,29 @@
                         </div>
                     </div>
                     <ul class="side-nav-menu scrollable">
+                        <li class="nav-item active">
+                            <a href="/Admin" class="LoadingDiv">
+                                <span class="icon-holder">
+                                    <i uk-icon="home"></i>
+                                </span>
+                                <span class="title">داشبورد</span>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i uk-icon="eye"></i>
+                                </span>
+                                <span class="title">بازدید سایت</span>
+                                <span class="arrow" uk-icon="chevron-forward">
+                                </span>
+                            </a>
+                            @await Component.InvokeAsync("VisitSiteAdmin")
+
+                        </li>
                         @if (User.Claims.Last().Value == "admin")
                         {
-                            <li class="nav-item active">
-                                <a href="/Admin" class="LoadingDiv">
-                                    <span class="icon-holder">
-                                        <i uk-icon="home"></i>
-                                    </span>
-                                    <span class="title">داشبورد</span>
-                                </a>
-                            </li>
+
                             <li class="nav-item dropdown">
                                 <a class="dropdown-toggle" href="javascript:void(0);">
                                     <span class="icon-holder">
@@ -330,14 +343,6 @@
                         }
                         else if (User.Claims.Last().Value == "employee")
                         {
-                            <li class="nav-item active">
-                                <a href="/Admin" class="LoadingDiv">
-                                    <span class="icon-holder">
-                                        <i uk-icon="home"></i>
-                                    </span>
-                                    <span class="title">داشبورد</span>
-                                </a>
-                            </li>
                             <li class="nav-item dropdown">
                                 <a class="dropdown-toggle" href="javascript:void(0);">
                                     <span class="icon-holder">
@@ -503,7 +508,10 @@
                                     </li>
                                 </ul>
                             </li>
+
+
                         }
+
                     </ul>
                 </div>
             </div>
@@ -524,6 +532,7 @@
 
                     </div>
                 </div>
+
                 <div class="sub-header">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb rounded-0 m-0 bg-white">

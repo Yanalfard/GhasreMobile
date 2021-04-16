@@ -223,7 +223,7 @@ namespace GhasreMobile.Areas.User.Controllers
                 {
                     ViewBag.message = "در حال حاظر امکان اتصال به این درگاه وجود ندارد ";
                 }
-                return await Task.FromResult(RedirectToAction("Charge"));
+                return await Task.FromResult(RedirectToAction("Charg"));
             }
             catch (Exception)
             {

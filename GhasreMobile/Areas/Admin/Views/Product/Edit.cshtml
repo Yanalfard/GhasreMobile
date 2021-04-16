@@ -40,8 +40,8 @@
                         </div>
                     </li>
                 </ul>
-                <input type="hidden" asp-for="CatagoryId" />
-                <small class="text-success">دسته بندی انتخاب شده @Model.Catagory.Name</small>
+                <input type="hidden" asp-for="CatagoryId"  value="@Model.CatagoryId"/>
+                <small class="text-success">دسته بندی انتخاب شده @ViewBag.CatagoryName</small>
                 <span id="CatagoryIdErorr" asp-validation-for="CatagoryId" class="text-danger"></span>
                 <hr />
                 <div class="form-row">

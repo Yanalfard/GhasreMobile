@@ -76,22 +76,15 @@
                 }
 
             </div>
-            <div class="form-group col-md-4">
-                <label>وضعیت ارسال: </label>
+            @if (Model.Sent != null)
+            {
+                <div class="form-group col-md-4">
+                    <label>وضعیت ارسال: </label>
 
-                @if (Model.SendStatus == 0)
-                {
-                    <span>ارسال از طریق پست</span>
-                }
-                else if (Model.SendStatus == 1)
-                {
-                    <span>تحویل حضوری به خریدار</span>
-                }
-                else
-                {
-                    <span>ارسال از طریق تیپاکس یا چاپار</span>
-                }
-            </div>
+                    <span>@Model.Sent.Name </span>
+
+                </div>
+            }
             <div class="form-group col-md-4">
                 <label>هزینه ارسال:</label>
                 <span>@Model.SendPrice</span>
@@ -110,10 +103,6 @@
             <div class="form-group col-md-4">
                 <label>آدرس خریدار:</label>
                 <span>@Model.Address</span>
-            </div>
-            <div class="form-group col-md-4">
-                <label>کدپستی:</label>
-                <span>@Model.PostalCode</span>
             </div>
             <div class="form-group col-md-4">
                 <label>مبلغ کل سفارش:</label>

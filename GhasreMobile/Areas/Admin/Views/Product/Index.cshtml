@@ -52,7 +52,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.OrderByDescending(i=>i.DateCreated))
+                            @foreach (var item in Model.OrderByDescending(i => i.DateCreated))
                             {
                                 <tr id="productId_@item.ProductId">
                                     <td>@item.ProductId</td>
@@ -91,6 +91,12 @@
                                         </span>
                                     </td>
                                     <td>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن ویژگی">
+                                            <a href="/Admin/Product/AddProperty/@item.ProductId" class="text-info" uk-icon="add-circle"></a>
+                                        </span>
+                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="گالری ">
+                                            <a href="/Admin/Product/AddGallery/@item.ProductId" class="text-primary" uk-icon="images"></a>
+                                        </span>
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="ویرایش">
                                             <a href="/Admin/Product/Edit/@item.ProductId" class="text-primary" uk-icon="create-outline"></a>
                                         </span>
@@ -112,12 +118,7 @@
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن رنگ">
                                             <a onclick="AddColor(@item.ProductId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="add-circle-outline"></a>
                                         </span>
-                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن ویژگی">
-                                            <a href="/Admin/Product/AddProperty/@item.ProductId" class="text-info" uk-icon="add-circle"></a>
-                                        </span>
-                                        <span data-placement="top" data-toggle="tooltip" title="" data-original-title="گالری ">
-                                            <a href="/Admin/Product/AddGallery/@item.ProductId" class="text-primary" uk-icon="images"></a>
-                                        </span>
+
                                     </td>
 
                                 </tr>
@@ -295,7 +296,7 @@
                 window.location.reload();
             });
         }
-       
+
         function Delete(id) {
             if (confirm('آیا از حذف کالای  مورد نظر مطمئن هستید؟')) {
                 $.post("/Admin/Product/Delete/" + id, function (result) {

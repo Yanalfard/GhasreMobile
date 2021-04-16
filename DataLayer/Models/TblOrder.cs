@@ -34,15 +34,23 @@ namespace DataLayer.Models
         [Column(TypeName = "datetime")]
         public DateTime DateSubmited { get; set; }
         public bool? IsFractional { get; set; }
+        public int? SentId { get; set; }
         [ForeignKey(nameof(ClientId))]
         [InverseProperty(nameof(TblClient.TblOrder))]
         public virtual TblClient Client { get; set; }
         [ForeignKey(nameof(DiscountId))]
         [InverseProperty(nameof(TblDiscount.TblOrder))]
         public virtual TblDiscount Discount { get; set; }
-        [InverseProperty("FinalOrder")]
-        public virtual ICollection<TblOrderDetail> TblOrderDetail { get; set; }
+
         [InverseProperty("Order")]
         public virtual ICollection<TblWallet> TblWallet { get; set; }
+
+        [ForeignKey(nameof(SentId))]
+        [InverseProperty(nameof(TblPostOption.TblOrder))]
+        public virtual TblPostOption Sent { get; set; }
+        [InverseProperty("FinalOrder")]
+        public virtual ICollection<TblOrderDetail> TblOrderDetail { get; set; }
+
+
     }
 }

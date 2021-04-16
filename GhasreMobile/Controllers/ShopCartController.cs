@@ -255,6 +255,7 @@ namespace GhasreMobile.Controllers
                     addOrder.SendStatus = selectedDiscount.PostPriceId;
                     addOrder.ClientId = SelectUser().ClientId;
                     addOrder.IsFractional = fractional;
+                    addOrder.SentId = selectedDiscount.PostPriceId;
                     db.Order.Add(addOrder);
                     db.Order.Save();
                     foreach (var item in sessions)

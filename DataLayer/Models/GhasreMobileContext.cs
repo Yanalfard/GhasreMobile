@@ -54,7 +54,7 @@ namespace DataLayer.Models
         public virtual DbSet<TblTopic> TblTopic { get; set; }
         public virtual DbSet<TblTopicCommentRel> TblTopicCommentRel { get; set; }
         public virtual DbSet<TblWallet> TblWallet { get; set; }
-
+        public virtual DbSet<TblVisit> TblVisit { get; set; }
         public virtual DbSet<TblContactUs> TblContactUs { get; set; }
 
         public virtual DbSet<TblStoreImageRel> TblStoreImageRel { get; set; }
@@ -238,6 +238,11 @@ namespace DataLayer.Models
                     .WithMany(p => p.TblOrder)
                     .HasForeignKey(d => d.DiscountId)
                     .HasConstraintName("FK_TblOrder_TblDiscount");
+
+                entity.HasOne(d => d.Sent)
+                    .WithMany(p => p.TblOrder)
+                    .HasForeignKey(d => d.SentId)
+                    .HasConstraintName("FK_TblOrder_TblPostOption");
             });
 
             modelBuilder.Entity<TblOrderDetail>(entity =>
@@ -410,6 +415,11 @@ namespace DataLayer.Models
                     .HasForeignKey(d => d.TopicId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TblTopicCommentRel_TblTopic");
+            });
+
+            modelBuilder.Entity<TblVisit>(entity =>
+            {
+                entity.Property(e => e.Date).HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<TblWallet>(entity =>

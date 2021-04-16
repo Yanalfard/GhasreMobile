@@ -23,6 +23,16 @@ namespace GhasreMobile.Controllers
         {
             try
             {
+                var ipUser = Request.HttpContext.Connection.RemoteIpAddress;
+                if (!db.Visit.Get().Any(i => i.Date.ToShortDateString() == DateTime.Now.ToShortDateString() && i.Ip == ipUser.ToString()))
+                {
+                    TblVisit addVisit = new TblVisit();
+                    addVisit.Ip = ipUser.ToString();
+                    addVisit.Date = DateTime.Now;
+                    db.Visit.Add(addVisit);
+                    db.Visit.Save();
+                }
+
                 ViewData["ListIdAd"] = db.Ad.Get().Select(i => i.AdId).ToList();
                 ViewData["ListIdSpecial"] = db.SpecialOffer.Get(i => i.ValidTill > DateTime.Now && i.Product.IsDeleted == false && i.Product.TblColor.Sum(i => i.Count) > 0).Select(i => i.SpecialOfferId).ToList();
                 return await Task.FromResult(View());
@@ -54,7 +64,7 @@ namespace GhasreMobile.Controllers
         {
             try
             {
-               return await Task.FromResult(View(db.Config.Get(i => i.Key == "SharayeteAghsati").SingleOrDefault()));
+                return await Task.FromResult(View(db.Config.Get(i => i.Key == "SharayeteAghsati").SingleOrDefault()));
             }
             catch
             {

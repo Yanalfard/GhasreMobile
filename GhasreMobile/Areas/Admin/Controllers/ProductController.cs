@@ -511,6 +511,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
             ViewBag.Brands = _core.Brand.Get();
+             ViewBag.CatagoryName = _core.Product.GetById(id).Catagory.Name;
             return View(_core.Product.GetById(id));
         }
 
@@ -603,10 +604,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 EditProduct.BrandId = product.BrandId;
                 EditProduct.DescriptionShortHtml = product.DescriptionShortHtml;
                 EditProduct.DescriptionLongHtml = product.DescriptionLongHtml;
+                EditProduct.CatagoryId = product.CatagoryId;
                 _core.Product.Update(EditProduct);
                 _core.Product.Save();
                 return await Task.FromResult(Redirect("/Admin/Product"));
             }
+            ViewBag.CatagoryName = _core.Catagory.GetById(product.CatagoryId).Name;
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
             ViewBag.Brands = _core.Brand.Get();
             return View(product);

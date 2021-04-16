@@ -1,0 +1,37 @@
+﻿@model DataLayer.ViewModels.CodeMarsoleVm
+
+<div class="modal-header">
+    <h6 class="modal-title" id="modalCenterTitle">
+        ثبت کد مرسوله
+    </h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form asp-action="CodeMarsole" asp-controller="Order" asp-area="Admin"
+      data-ajax="true"
+      data-ajax-method="POST"
+      data-ajax-mode="replace"
+      data-ajax-complete="EndCatagoryCreate()"
+      data-ajax-update="#ajaxresultCodeMarsole">
+    <input type="hidden" asp-for="OrdeId" />
+    <input type="hidden" name="ReturnUrl" id="ReturnUrl" asp-for="ReturnUrl" />
+    <div class="modal-body">
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label>کد مرسوله</label>
+                <input asp-for="SentNo" class="form-control form-control-sm" placeholder="مثال: 123456">
+                <span asp-validation-for="SentNo" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-end">
+        <button type="submit" class="btn btn-success btn-sm text-white">ثبت<span class="icon-holder uk-margin-small-right" uk-icon="add-circle-outline"></span></button>
+    </div>
+</form>
+<script src="~/Validate/jquery.validate.min.js"></script>
+<script src="~/Validate/jquery.validate.unobtrusive.js"></script>
+
+<script>
+    $('#ReturnUrl').val(window.location.href);
+</script>
