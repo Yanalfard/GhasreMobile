@@ -36,11 +36,11 @@ namespace GhasreMobile.Controllers
                 TblCatagory selectedCatagory = db.Catagory.GetById(id);
                 if (selectedCatagory != null)
                 {
-                    list = selectedCatagory.TblProduct.ToList();
+                    list = selectedCatagory.TblProduct.Where(i => i.IsDeleted == false).ToList();
                 }
                 else
                 {
-                    list = db.Product.Get().ToList();
+                    list = db.Product.Get(i => i.IsDeleted == false).ToList();
                 }
                 int take = GlobalTake;
                 int skip = (pageId - 1) * take;

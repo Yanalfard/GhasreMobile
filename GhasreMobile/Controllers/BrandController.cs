@@ -35,11 +35,11 @@ namespace GhasreMobile.Controllers
                 TblBrand selectedBrand = db.Brand.GetById(id);
                 if (selectedBrand != null)
                 {
-                    list = selectedBrand.TblProduct.ToList();
+                    list = selectedBrand.TblProduct.Where(i=>i.IsDeleted==false).ToList();
                 }
                 else
                 {
-                    list = db.Product.Get().ToList();
+                    list = db.Product.Get(i => i.IsDeleted == false).ToList();
                 }
                 int take = GlobalTake;
                 int skip = (pageId - 1) * take;
