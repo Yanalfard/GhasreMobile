@@ -185,6 +185,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
             ViewBag.Brands = _core.Brand.Get();
+            List<string> keywords = new List<string>();
+            ViewBag.keywords = keywords;
             return View();
         }
 
@@ -311,6 +313,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
             ViewBag.Brands = _core.Brand.Get();
+            ViewBag.keywords = Keywords;
             return await Task.FromResult(View(product));
         }
 
@@ -511,7 +514,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
             ViewBag.Brands = _core.Brand.Get();
-             ViewBag.CatagoryName = _core.Product.GetById(id).Catagory.Name;
+            ViewBag.CatagoryName = _core.Product.GetById(id).Catagory.Name;
+            ViewBag.keywords = _core.Product.GetById(id).TblProductKeywordRel;
             return View(_core.Product.GetById(id));
         }
 
@@ -612,6 +616,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             ViewBag.CatagoryName = _core.Catagory.GetById(product.CatagoryId).Name;
             ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
             ViewBag.Brands = _core.Brand.Get();
+            ViewBag.keywords = _core.Product.GetById(product.ProductId).TblProductKeywordRel;
             return View(product);
         }
 
@@ -680,7 +685,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             {
                 return "خطا در حذف";
             }
-           
+
         }
 
         public void Selling(int id)

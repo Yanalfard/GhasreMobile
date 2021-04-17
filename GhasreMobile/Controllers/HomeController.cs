@@ -26,6 +26,8 @@ namespace GhasreMobile.Controllers
                 var ipUser = Request.HttpContext.Connection.RemoteIpAddress;
                 if (!db.Visit.Get().Any(i => i.Date.ToShortDateString() == DateTime.Now.ToShortDateString() && i.Ip == ipUser.ToString()))
                 {
+                    ViewBag.showModelMessage = "true";
+                    ViewBag.TextModelMessage = db.Config.Get(i => i.Key == "TextModelMessage").SingleOrDefault().Value;
                     TblVisit addVisit = new TblVisit();
                     addVisit.Ip = ipUser.ToString();
                     addVisit.Date = DateTime.Now;

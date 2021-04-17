@@ -35,6 +35,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             config.ShortTamasBaMa = configs.Where(c => c.Key == "ShortTamasBaMa").Single().Value;
             config.KharidAgsady = configs.Where(c => c.Key == "KharidAgsady").Single().Value;
             config.SharayeteAghsati = configs.Where(c => c.Key == "SharayeteAghsati").Single().Value;
+            config.TextModelMessage = configs.Where(c => c.Key == "TextModelMessage").Single().Value;
 
             return View(config);
         }
@@ -60,6 +61,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 TblConfig ConfigShortTamasBaMa = configs.Where(c => c.Key == "ShortTamasBaMa").Single();
                 TblConfig ConfigKharidAgsady = configs.Where(c => c.Key == "KharidAgsady").Single();
                 TblConfig ConfigSharayeteAghsati = configs.Where(c => c.Key == "SharayeteAghsati").Single();
+                TblConfig TextModelMessage = configs.Where(c => c.Key == "TextModelMessage").Single();
 
                 ConfigDarbareyeMa.Value = configVm.DarbareyeMa;
                 ConfigTamasBaMa.Value = configVm.TamasBaMa;
@@ -75,6 +77,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 ConfigShortTamasBaMa.Value = configVm.ShortTamasBaMa;
                 ConfigKharidAgsady.Value = configVm.KharidAgsady;
                 ConfigSharayeteAghsati.Value = configVm.SharayeteAghsati;
+                TextModelMessage.Value = configVm.TextModelMessage;
 
                 _core.Config.Update(ConfigDarbareyeMa);
                 _core.Config.Update(ConfigTamasBaMa);
@@ -90,6 +93,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.Config.Update(ConfigSharayeteAghsati);
                 _core.Config.Update(ConfigLinkEmail);
                 _core.Config.Update(ConfigLinkwhatsapp);
+                _core.Config.Update(TextModelMessage);
 
                 _core.Config.Save();
             }

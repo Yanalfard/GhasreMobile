@@ -95,8 +95,18 @@
                     </div>
                 </div>
                 <div class="form-row">
+                    @{
+                        IEnumerable<string> keywordsList = ViewBag.keywords;
+                    }
                     <div class="form-group col-md-6">
-                        <input type="text" value="" data-role="tagsinput" id="tags" class="form-control" placeholder="کلمات کلیدی">
+                        <input type="text" value="
+
+                                       @foreach (var item in keywordsList)
+                                        {
+                                        @item@:,
+                                        }
+
+                                       " data-role="tagsinput" id="tags" class="form-control" placeholder="کلمات کلیدی">
                     </div>
                     <span class="text-danger" asp-validation-for="TblProductKeywordRel"></span>
                 </div>
@@ -208,11 +218,11 @@
             //$("#GalleryPanel").append("<div class='custom-file col-md-7 mt-3'><input type='file' class='custom-file-input form-control form-control-sm' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/><label class='custom-file-label'></label></div>");
             $("#GalleryPanel").append(
                 `<div class="custom-file col-md-7 mt-3">
-                                                       <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
-                                                       <label class="custom-file-label" data-browse="انتخاب">
-                                                            انتخاب فایل
-                                                       </label>
-                                                     </div>`
+                                                               <input type="file" class="custom-file-input form-control form-control-sm" accept="image/x-png,image/gif,image/jpeg" name="GalleryFile" onchange="inputChanged(this)"/>
+                                                               <label class="custom-file-label" data-browse="انتخاب">
+                                                                    انتخاب فایل
+                                                               </label>
+                                                             </div>`
             );
             //$("#GalleryPanel").append("<div><input type='file' accept='image/x-png,image/gif,image/jpeg' name='GalleryFile'/></div>");
         }

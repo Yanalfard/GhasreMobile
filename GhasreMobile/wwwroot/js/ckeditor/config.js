@@ -1,38 +1,36 @@
-/**
- * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
+﻿/**
+ * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
 CKEDITOR.editorConfig = function( config ) {
-	// Define changes to default configuration here.
-	// For complete reference see:
-	// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
-	config.language = 'fa';
-	// The toolbar groups arrangement, optimized for two toolbar rows.
-	config.toolbarGroups = [
-		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
-		{ name: 'links' },
-		{ name: 'insert' },
-		{ name: 'forms' },
-		{ name: 'tools' },
-		{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
-		{ name: 'others' },
-		'/',
-		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-		{ name: 'styles' },
-		{ name: 'colors' },
-		{ name: 'about' }
-	];
+	// Define changes to default configuration here. For example:
+	// config.language = 'fr';
+    // config.uiColor = '#AADC6E';
+    config.contentsLangDirection = 'rtl';
+    config.language = 'fa';
 
-	// Remove some buttons provided by the standard plugins, which are
-	// not needed in the Standard(s) toolbar.
-	config.removeButtons = 'Underline,Subscript,Superscript';
+    config.filebrowserImageUploadUrl = '/UploadImage/UploadImages';
 
-	// Set the most common block elements.
-	config.format_tags = 'p;h1;h2;h3;pre';
+ //   config.toolbar =
+ //[
+ //  [
+ //    'SourceBold',
+ //    'Italic',
+ //    'Underline',
+ //    'Strike',
+ //    '-',
+ //    'Subscript',
+ //    'SuperscriptNumberedList',
+ //    'BulletedList',
+ //    '-',
+ //    'Outdent',
+ //    'Indent/Styles',
+ //    'Format',
+ //    'Font',
+ //    'FontSize',
+ //    'Image'
 
-	// Simplify the dialog windows.
-	config.removeDialogTabs = 'image:advanced;link:advanced';
+ //  ]
+ //];
 };

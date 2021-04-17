@@ -97,7 +97,6 @@
                                                 <a onclick="OrderInfo(@item.OrdeId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="information-circle-outline"></a>
                                             </span>
                                         }
-
                                     </td>
                                     <td>
                                         @if ((item.IsPayed == true) || (item.IsPayed == false && item.IsFractional == true))
@@ -121,7 +120,8 @@
                                             }
 
                                             <span data-placement="top" data-toggle="tooltip" data-original-title="کد مرسوله محصول">
-                                                <a onclick="SabteCodeMarsole(@item.OrdeId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="checkmark-done-outline"></a>
+                                                <a onclick="SabteCodeMarsole(@item.OrdeId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="cube"></a>
+
                                             </span>
                                         }
                                     </td>

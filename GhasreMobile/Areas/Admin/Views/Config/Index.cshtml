@@ -34,6 +34,11 @@
                         <br /><span class="text-danger" asp-validation-for="ShortTamasBaMa"></span>
                     </div>
                     <div class="form-group col-lg-12 mt-lg-3">
+                        <label>متن خوش آمد گویی(موقع ورود به سایت نشان داده میشود)</label>
+                        <textarea asp-for="TextModelMessage" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
+                        <br /><span class="text-danger" asp-validation-for="TextModelMessage"></span>
+                    </div>
+                    <div class="form-group col-lg-12 mt-lg-3">
                         <label>قوانین سایت:</label>
                         <textarea asp-for="Gavanin" class="form-control form-control-sm d-inline-block d-sm-block col-lg-12" placeholder="..."></textarea>
                         <br /><span class="text-danger" asp-validation-for="Gavanin"></span>
@@ -111,6 +116,7 @@
             $('#StoreDescription').ckeditor();
             $('#Gavanin').ckeditor();
             $('#SharayeteAghsati').ckeditor();
+            $('#TextModelMessage').ckeditor();
 
         });
         $(".PriceInput").change(function () {

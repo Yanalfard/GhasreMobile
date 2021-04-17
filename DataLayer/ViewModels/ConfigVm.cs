@@ -48,6 +48,7 @@ namespace DataLayer.ViewModels
         
         [Required(ErrorMessage = "لطفا توضیح خرید اقساطی را وارد کنید")]
         public string SharayeteAghsati { get; set; }
+        public string TextModelMessage { get; set; }
 
     }
 }
