@@ -25,17 +25,19 @@ namespace GhasreMobile.Controllers
         {
             try
             {
-                string strHostName = "";
-                strHostName = System.Net.Dns.GetHostName();
+                //string strHostName = "";
+                //strHostName = System.Net.Dns.GetHostName();
 
-                IPHostEntry ipEntry = System.Net.Dns.GetHostEntry(strHostName);
+                //IPHostEntry ipEntry = System.Net.Dns.GetHostEntry(strHostName);
 
-                IPAddress[] addr = ipEntry.AddressList;
+                //IPAddress[] addr = ipEntry.AddressList;
 
-                var ipUser = addr[addr.Length - 1].ToString();
+                //var ipUser = addr[addr.Length - 1].ToString();
 
-                // var ipUser = Request.HttpContext.Connection.RemoteIpAddress;
-                if (!db.Visit.Get().Any(i => i.Date.ToShortDateString() == DateTime.Now.ToShortDateString() && i.Ip == ipUser))
+                 var ipUser = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                string dt = DateTime.Now.ToShortDateString();
+                List<TblVisit> visits = db.Visit.Get().ToList();
+                if (!visits.Any(i => i.Date.ToShortDateString() == dt))
                 {
                     ViewBag.showModelMessage = "true";
                     ViewBag.TextModelMessage = db.Config.Get(i => i.Key == "TextModelMessage").SingleOrDefault().Value;
@@ -44,6 +46,19 @@ namespace GhasreMobile.Controllers
                     addVisit.Date = DateTime.Now;
                     db.Visit.Add(addVisit);
                     db.Visit.Save();
+                }
+                else
+                {
+                    if (!visits.Any(j => j.Ip == ipUser))
+                    {
+                        ViewBag.showModelMessage = "true";
+                        ViewBag.TextModelMessage = db.Config.Get(i => i.Key == "TextModelMessage").SingleOrDefault().Value;
+                        TblVisit addVisit = new TblVisit();
+                        addVisit.Ip = ipUser.ToString();
+                        addVisit.Date = DateTime.Now;
+                        db.Visit.Add(addVisit);
+                        db.Visit.Save();
+                    }
                 }
 
                 ViewData["ListIdAd"] = db.Ad.Get().Select(i => i.AdId).ToList();
