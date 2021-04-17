@@ -6,6 +6,7 @@ using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace GhasreMobile.Controllers
@@ -19,10 +20,21 @@ namespace GhasreMobile.Controllers
             TblClient selectUser = db.Client.GetById(userId);
             return selectUser;
         }
+
         public async Task<IActionResult> Index()
         {
             try
             {
+                //string strHostName = "";
+                //strHostName = System.Net.Dns.GetHostName();
+
+                //IPHostEntry ipEntry = System.Net.Dns.GetHostEntry(strHostName);
+
+                //IPAddress[] addr = ipEntry.AddressList;
+
+                //var st = addr[addr.Length - 1].ToString();
+
+
                 var ipUser = Request.HttpContext.Connection.RemoteIpAddress;
                 if (!db.Visit.Get().Any(i => i.Date.ToShortDateString() == DateTime.Now.ToShortDateString() && i.Ip == ipUser.ToString()))
                 {
