@@ -198,7 +198,10 @@
 @media only screen and (max-width: 724px) {
 
     .main-contact {
-        grid-template-columns: 1fr;
+        display: flex;
+        -ms-flex-direction: column;
+        -webkit-flex-direction: column;
+        flex-direction: column;
     }
 }
 
