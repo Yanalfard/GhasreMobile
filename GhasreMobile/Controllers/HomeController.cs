@@ -25,18 +25,17 @@ namespace GhasreMobile.Controllers
         {
             try
             {
-                //string strHostName = "";
-                //strHostName = System.Net.Dns.GetHostName();
+                string strHostName = "";
+                strHostName = System.Net.Dns.GetHostName();
 
-                //IPHostEntry ipEntry = System.Net.Dns.GetHostEntry(strHostName);
+                IPHostEntry ipEntry = System.Net.Dns.GetHostEntry(strHostName);
 
-                //IPAddress[] addr = ipEntry.AddressList;
+                IPAddress[] addr = ipEntry.AddressList;
 
-                //var st = addr[addr.Length - 1].ToString();
+                var ipUser = addr[addr.Length - 1].ToString();
 
-
-                var ipUser = Request.HttpContext.Connection.RemoteIpAddress;
-                if (!db.Visit.Get().Any(i => i.Date.ToShortDateString() == DateTime.Now.ToShortDateString() && i.Ip == ipUser.ToString()))
+                // var ipUser = Request.HttpContext.Connection.RemoteIpAddress;
+                if (!db.Visit.Get().Any(i => i.Date.ToShortDateString() == DateTime.Now.ToShortDateString() && i.Ip == ipUser))
                 {
                     ViewBag.showModelMessage = "true";
                     ViewBag.TextModelMessage = db.Config.Get(i => i.Key == "TextModelMessage").SingleOrDefault().Value;
