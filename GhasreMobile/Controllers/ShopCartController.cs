@@ -300,17 +300,17 @@ namespace GhasreMobile.Controllers
                     db.OrderDetail.Save();
                     if (fractional)
                     {
-                        List<TblOrderDetail> list = db.OrderDetail.Get(i => i.FinalOrderId == addOrder.OrdeId).ToList();
-                        foreach (var item in list)
-                        {
-                            TblColor colors = db.Color.GetById(item.ColorId);
-                            if (colors.Count > 0 && colors.Count >= item.Count)
-                            {
-                                colors.Count -= colors.Count;
-                                db.Color.Update(colors);
-                            }
-                        }
-                        db.Color.Save();
+                        //List<TblOrderDetail> list = db.OrderDetail.Get(i => i.FinalOrderId == addOrder.OrdeId).ToList();
+                        //foreach (var item in list)
+                        //{
+                        //    TblColor colors = db.Color.GetById(item.ColorId);
+                        //    if (colors.Count > 0 && colors.Count >= item.Count)
+                        //    {
+                        //        colors.Count -= colors.Count;
+                        //        db.Color.Update(colors);
+                        //    }
+                        //}
+                        //db.Color.Save();
                         return await Task.FromResult(Redirect("/User/Order/Fractional/" + addOrder.OrdeId));
                     }
                     else

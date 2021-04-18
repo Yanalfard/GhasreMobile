@@ -26,7 +26,7 @@ namespace GhasreMobile.Areas.User.Controllers
         {
             try
             {
-                return await Task.FromResult(View(db.Order.Get(i => i.IsPayed && i.IsFractional == false).OrderByDescending(i => i.DateSubmited)));
+                return await Task.FromResult(View(db.Order.Get(i => i.ClientId == SelectUser().ClientId && i.IsPayed && i.IsFractional == false).OrderByDescending(i => i.DateSubmited)));
             }
             catch
             {
@@ -38,7 +38,7 @@ namespace GhasreMobile.Areas.User.Controllers
         {
             try
             {
-                return await Task.FromResult(View(db.Order.Get(i => i.IsFractional == true).OrderByDescending(i => i.DateSubmited)));
+                return await Task.FromResult(View(db.Order.Get(i => i.IsFractional == true && i.IsPayed == false && i.ClientId == SelectUser().ClientId).OrderByDescending(i => i.DateSubmited)));
             }
             catch
             {

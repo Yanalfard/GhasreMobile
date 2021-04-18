@@ -19,7 +19,14 @@
                         <th></th>
                         <th></th>
                         <th>
-                            <label class="text-3">شماره فاکتور @item.OrdeId#  </label>
+                            @if (item.IsPayed && item.Status != -1)
+                            {
+                                <label class="text-3 ">شماره فاکتور @item.OrdeId#  </label>
+                            }
+                            else if (item.Status == -1)
+                            {
+                                <label class="text-3 uk-text-danger">   پیش فاکتور @item.OrdeId# توسط مدیر لغو شده است  </label>
+                            }
                         </th>
                     </tr>
                     <tr>

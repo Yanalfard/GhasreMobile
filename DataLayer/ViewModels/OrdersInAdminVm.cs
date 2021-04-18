@@ -12,5 +12,6 @@ namespace DataLayer.ViewModels
         public string TellNo { get; set; } = null;
         public string StartDate { get; set; } = null;
         public string EndDate { get; set; } = null;
+        public int StatusSelected { get; set; } = -2;
     }
 }

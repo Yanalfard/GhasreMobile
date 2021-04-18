@@ -25,6 +25,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             ViewBag.TellNo = ordersInAdmin.TellNo;
             ViewBag.StartDate = ordersInAdmin.StartDate;
             ViewBag.EndDate = ordersInAdmin.EndDate;
+            ViewBag.StatusSelected = ordersInAdmin.StatusSelected;
             List<TblOrder> orders = _core.Order.Get(i => i.IsFractional == false && i.IsPayed).ToList();
             int count = orders.Count;
             if (ordersInAdmin.InPageCount == 0)
@@ -32,6 +33,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 if (ordersInAdmin.OrderId != 0)
                 {
                     orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
+                }
+                if (ordersInAdmin.StatusSelected != -2)
+                {
+                    orders = orders.Where(i => i.Status == ordersInAdmin.StatusSelected).ToList();
                 }
                 if (ordersInAdmin.TellNo != null)
                 {
@@ -42,15 +47,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     PersianCalendar pc = new PersianCalendar();
                     string[] Start = ordersInAdmin.StartDate.Split('/');
-                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                    orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
+                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                    orders = orders.Where(i => i.DateSubmited.Date >= startTime.Date).ToList();
                 }
                 if (ordersInAdmin.EndDate != null)
                 {
                     PersianCalendar pc = new PersianCalendar();
                     string[] Start = ordersInAdmin.EndDate.Split('/');
-                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                    orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
+                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                    orders = orders.Where(i => i.DateSubmited.Date <= endTime.Date).ToList();
                 }
 
 
@@ -67,7 +72,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 ViewBag.TellNo = ordersInAdmin.TellNo;
                 ViewBag.StartDate = ordersInAdmin.StartDate;
                 ViewBag.EndDate = ordersInAdmin.EndDate;
-
+                ViewBag.StatusSelected = ordersInAdmin.StatusSelected;
                 var skip = (ordersInAdmin.PageId - 1) * 18;
 
                 return View(orders.OrderByDescending(o => o.OrdeId).Skip(skip).Take(18));
@@ -79,6 +84,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
 
                 }
+                if (ordersInAdmin.StatusSelected != -2)
+                {
+                    orders = orders.Where(i => i.Status == ordersInAdmin.StatusSelected).ToList();
+                }
                 if (ordersInAdmin.TellNo != null)
                 {
                     orders = orders.Where(i => i.Client.TellNo.Contains(ordersInAdmin.TellNo)).ToList();
@@ -88,16 +97,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     PersianCalendar pc = new PersianCalendar();
                     string[] Start = ordersInAdmin.StartDate.Split('/');
-                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                    orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
-
+                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                    orders = orders.Where(i => i.DateSubmited.Date >= startTime.Date).ToList();
                 }
                 if (ordersInAdmin.EndDate != null)
                 {
                     PersianCalendar pc = new PersianCalendar();
                     string[] Start = ordersInAdmin.EndDate.Split('/');
-                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                    orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
+                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                    orders = orders.Where(i => i.DateSubmited.Date <= endTime.Date).ToList();
 
                 }
 
@@ -120,6 +128,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             ViewBag.TellNo = ordersInAdmin.TellNo;
             ViewBag.StartDate = ordersInAdmin.StartDate;
             ViewBag.EndDate = ordersInAdmin.EndDate;
+            ViewBag.StatusSelected = ordersInAdmin.StatusSelected;
             List<TblOrder> orders = _core.Order.Get().ToList();
             int count = orders.Count;
             if (ordersInAdmin.InPageCount == 0)
@@ -127,6 +136,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 if (ordersInAdmin.OrderId != 0)
                 {
                     orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
+                }
+                if (ordersInAdmin.StatusSelected != -2)
+                {
+                    orders = orders.Where(i => i.Status == ordersInAdmin.StatusSelected).ToList();
                 }
                 if (ordersInAdmin.TellNo != null)
                 {
@@ -137,15 +150,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     PersianCalendar pc = new PersianCalendar();
                     string[] Start = ordersInAdmin.StartDate.Split('/');
-                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                    orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
+                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                    orders = orders.Where(i => i.DateSubmited.Date >= startTime.Date).ToList();
                 }
                 if (ordersInAdmin.EndDate != null)
                 {
                     PersianCalendar pc = new PersianCalendar();
                     string[] Start = ordersInAdmin.EndDate.Split('/');
-                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                    orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
+                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                    orders = orders.Where(i => i.DateSubmited.Date <= endTime.Date).ToList();
                 }
 
 
@@ -162,6 +175,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 ViewBag.TellNo = ordersInAdmin.TellNo;
                 ViewBag.StartDate = ordersInAdmin.StartDate;
                 ViewBag.EndDate = ordersInAdmin.EndDate;
+                ViewBag.StatusSelected = ordersInAdmin.StatusSelected;
 
                 var skip = (ordersInAdmin.PageId - 1) * 18;
 
@@ -174,6 +188,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     orders = orders.Where(i => i.OrdeId == ordersInAdmin.OrderId).ToList();
 
                 }
+                if (ordersInAdmin.StatusSelected != -2)
+                {
+                    orders = orders.Where(i => i.Status == ordersInAdmin.StatusSelected).ToList();
+                }
                 if (ordersInAdmin.TellNo != null)
                 {
                     orders = orders.Where(i => i.Client.TellNo.Contains(ordersInAdmin.TellNo)).ToList();
@@ -183,16 +201,16 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     PersianCalendar pc = new PersianCalendar();
                     string[] Start = ordersInAdmin.StartDate.Split('/');
-                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                    orders = orders.Where(i => i.DateSubmited >= startTime).ToList();
+                    DateTime startTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                    orders = orders.Where(i => i.DateSubmited.Date >= startTime.Date).ToList();
 
                 }
                 if (ordersInAdmin.EndDate != null)
                 {
                     PersianCalendar pc = new PersianCalendar();
                     string[] Start = ordersInAdmin.EndDate.Split('/');
-                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
-                    orders = orders.Where(i => i.DateSubmited <= endTime).ToList();
+                    DateTime endTime = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
+                    orders = orders.Where(i => i.DateSubmited.Date <= endTime.Date).ToList();
 
                 }
 
@@ -275,6 +293,23 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public async Task<string> RedreshFractionalAsync(int id)
+        {
+            TblOrder order = _core.Order.GetById(id);
+            order.Status = 0;
+            _core.Order.Update(order);
+            _core.Order.Save();
+            return await Task.FromResult("true");
+        }
+        public async Task<string> DeleteFractional(int id)
+        {
+            TblOrder order = _core.Order.GetById(id);
+            order.Status = -1;
+            _core.Order.Update(order);
+            _core.Order.Save();
+            return await Task.FromResult("true");
         }
 
     }

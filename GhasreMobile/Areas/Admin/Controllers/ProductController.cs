@@ -22,160 +22,167 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index(ProductsInAdminVm productsInAdmin)
         {
-            if (productsInAdmin.CatagoryId != 0)
+            try
             {
-                if (string.IsNullOrEmpty(productsInAdmin.Search))
+                if (productsInAdmin.CatagoryId != 0)
                 {
-                    IEnumerable<TblProduct> products = _core.Product.Get(c => c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
-                    int count = products.Count();
-                    var skip = 0;
-                    ViewBag.pageid = productsInAdmin.PageId;
-                    ViewBag.InPageCount = productsInAdmin.InPageCount;
-                    ViewBag.CatagoryId = productsInAdmin.CatagoryId;
-                    ViewData["isStop"] = products.Any(i => !i.IsDeleted);
-                    ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
-                    if (productsInAdmin.InPageCount == 0)
+                    if (string.IsNullOrEmpty(productsInAdmin.Search))
                     {
-                        skip = (productsInAdmin.PageId - 1) * 18;
-                        ViewBag.PageCount = count / 18;
-                        return View(products.Skip(skip).Take(18));
+                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
+                        int count = products.Count();
+                        var skip = 0;
+                        ViewBag.pageid = productsInAdmin.PageId;
+                        ViewBag.InPageCount = productsInAdmin.InPageCount;
+                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                        if (productsInAdmin.InPageCount == 0)
+                        {
+                            skip = (productsInAdmin.PageId - 1) * 18;
+                            ViewBag.PageCount = count / 18;
+                            return View(products.Skip(skip).Take(18));
+                        }
+                        else
+                        {
+                            skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
+                            ViewBag.PageCount = count / productsInAdmin.InPageCount;
+                            return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
+                        }
                     }
                     else
                     {
-                        skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
-                        ViewBag.PageCount = count / productsInAdmin.InPageCount;
-                        return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
+                        if (productsInAdmin.InPageCount == 0)
+                        {
+                            IEnumerable<TblProduct> products = _core.Product.Get(c => c.SearchText.Contains(productsInAdmin.Search) && c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
+                            int count = products.Count();
+
+                            var skip = (productsInAdmin.PageId - 1) * 18;
+
+                            ViewBag.PageId = productsInAdmin.PageId;
+
+                            ViewBag.PageCount = count / 18;
+
+                            ViewBag.InPageCount = productsInAdmin.InPageCount;
+
+                            ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+
+                            ViewBag.Search = productsInAdmin.Search;
+
+                            ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                            ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                            return View(products.Skip(skip).Take(18));
+                        }
+                        else
+                        {
+                            IEnumerable<TblProduct> products = _core.Product.Get(c => c.SearchText.Contains(productsInAdmin.Search) && c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
+                            int count = products.Count();
+
+                            var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
+
+                            ViewBag.PageId = productsInAdmin.PageId;
+
+                            ViewBag.PageCount = count / productsInAdmin.InPageCount;
+
+                            ViewBag.InPageCount = productsInAdmin.InPageCount;
+
+                            ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+
+                            ViewBag.Search = productsInAdmin.Search;
+
+                            ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                            ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                            return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
+                        }
                     }
                 }
                 else
                 {
-                    if (productsInAdmin.InPageCount == 0)
+
+                    if (string.IsNullOrEmpty(productsInAdmin.Search))
                     {
-                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.SearchText.Contains(productsInAdmin.Search) && c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
-                        int count = products.Count();
+                        if (productsInAdmin.InPageCount == 0)
+                        {
+                            IEnumerable<TblProduct> products = _core.Product.Get().OrderByDescending(p => p.ProductId);
+                            int count = products.Count();
 
-                        var skip = (productsInAdmin.PageId - 1) * 18;
+                            var skip = (productsInAdmin.PageId - 1) * 18;
 
-                        ViewBag.PageId = productsInAdmin.PageId;
+                            ViewBag.PageId = productsInAdmin.PageId;
 
-                        ViewBag.PageCount = count / 18;
+                            ViewBag.PageCount = count / 18;
 
-                        ViewBag.InPageCount = productsInAdmin.InPageCount;
+                            ViewBag.InPageCount = productsInAdmin.InPageCount;
 
-                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+                            ViewBag.CatagoryId = productsInAdmin.CatagoryId;
 
-                        ViewBag.Search = productsInAdmin.Search;
+                            ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                            ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                            return View(products.Skip(skip).Take(18));
+                        }
+                        else
+                        {
+                            IEnumerable<TblProduct> products = _core.Product.Get().OrderByDescending(p => p.ProductId);
+                            int count = products.Count();
 
-                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
-                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
-                        return View(products.Skip(skip).Take(18));
+                            var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
+
+                            ViewBag.PageId = productsInAdmin.PageId;
+
+                            ViewBag.PageCount = count / productsInAdmin.InPageCount;
+
+                            ViewBag.InPageCount = productsInAdmin.InPageCount;
+
+                            ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+
+                            ViewBag.Search = productsInAdmin.Search;
+
+                            ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                            ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                            return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
+                        }
                     }
                     else
                     {
-                        IEnumerable<TblProduct> products = _core.Product.Get(c => c.SearchText.Contains(productsInAdmin.Search) && c.CatagoryId == productsInAdmin.CatagoryId).OrderByDescending(p => p.ProductId);
-                        int count = products.Count();
+                        if (productsInAdmin.InPageCount == 0)
+                        {
+                            IEnumerable<TblProduct> products = _core.Product.Get(p => p.Name.Contains(productsInAdmin.Search)).OrderByDescending(p => p.ProductId);
+                            int count = products.Count();
 
-                        var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
+                            var skip = (productsInAdmin.PageId - 1) * 18;
 
-                        ViewBag.PageId = productsInAdmin.PageId;
+                            ViewBag.PageId = productsInAdmin.PageId;
 
-                        ViewBag.PageCount = count / productsInAdmin.InPageCount;
+                            ViewBag.PageCount = count / 18;
 
-                        ViewBag.InPageCount = productsInAdmin.InPageCount;
+                            ViewBag.InPageCount = productsInAdmin.InPageCount;
 
-                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
+                            ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                            ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                            return View(products.Skip(skip).Take(18));
+                        }
+                        else
+                        {
+                            IEnumerable<TblProduct> products = _core.Product.Get(p => p.Name.Contains(productsInAdmin.Search)).OrderByDescending(p => p.ProductId);
+                            int count = products.Count();
 
-                        ViewBag.Search = productsInAdmin.Search;
+                            var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
 
-                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
-                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
-                        return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
+                            ViewBag.PageId = productsInAdmin.PageId;
+
+                            ViewBag.PageCount = count / productsInAdmin.InPageCount;
+
+                            ViewBag.InPageCount = productsInAdmin.InPageCount;
+
+                            ViewData["isStop"] = products.Any(i => !i.IsDeleted);
+                            ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
+                            return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
+                        }
                     }
                 }
             }
-            else
+            catch
             {
-
-                if (string.IsNullOrEmpty(productsInAdmin.Search))
-                {
-                    if (productsInAdmin.InPageCount == 0)
-                    {
-                        IEnumerable<TblProduct> products = _core.Product.Get().OrderByDescending(p => p.ProductId);
-                        int count = products.Count();
-
-                        var skip = (productsInAdmin.PageId - 1) * 18;
-
-                        ViewBag.PageId = productsInAdmin.PageId;
-
-                        ViewBag.PageCount = count / 18;
-
-                        ViewBag.InPageCount = productsInAdmin.InPageCount;
-
-                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
-
-                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
-                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
-                        return View(products.Skip(skip).Take(18));
-                    }
-                    else
-                    {
-                        IEnumerable<TblProduct> products = _core.Product.Get().OrderByDescending(p => p.ProductId);
-                        int count = products.Count();
-
-                        var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
-
-                        ViewBag.PageId = productsInAdmin.PageId;
-
-                        ViewBag.PageCount = count / productsInAdmin.InPageCount;
-
-                        ViewBag.InPageCount = productsInAdmin.InPageCount;
-
-                        ViewBag.CatagoryId = productsInAdmin.CatagoryId;
-
-                        ViewBag.Search = productsInAdmin.Search;
-
-                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
-                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
-                        return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
-                    }
-                }
-                else
-                {
-                    if (productsInAdmin.InPageCount == 0)
-                    {
-                        IEnumerable<TblProduct> products = _core.Product.Get(p => p.Name.Contains(productsInAdmin.Search)).OrderByDescending(p => p.ProductId);
-                        int count = products.Count();
-
-                        var skip = (productsInAdmin.PageId - 1) * 18;
-
-                        ViewBag.PageId = productsInAdmin.PageId;
-
-                        ViewBag.PageCount = count / 18;
-
-                        ViewBag.InPageCount = productsInAdmin.InPageCount;
-
-                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
-                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
-                        return View(products.Skip(skip).Take(18));
-                    }
-                    else
-                    {
-                        IEnumerable<TblProduct> products = _core.Product.Get(p => p.Name.Contains(productsInAdmin.Search)).OrderByDescending(p => p.ProductId);
-                        int count = products.Count();
-
-                        var skip = (productsInAdmin.PageId - 1) * productsInAdmin.InPageCount;
-
-                        ViewBag.PageId = productsInAdmin.PageId;
-
-                        ViewBag.PageCount = count / productsInAdmin.InPageCount;
-
-                        ViewBag.InPageCount = productsInAdmin.InPageCount;
-
-                        ViewData["isStop"] = products.Any(i => !i.IsDeleted);
-                        ViewBag.Catagory = _core.Catagory.Get(c => c.ParentId == null);
-                        return View(products.Skip(skip).Take(productsInAdmin.InPageCount));
-                    }
-                }
+                return Redirect("/");
             }
 
         }
@@ -183,11 +190,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
-            ViewBag.Brands = _core.Brand.Get();
-            List<string> keywords = new List<string>();
-            ViewBag.keywords = keywords;
-            return View();
+            try
+            {
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                ViewBag.Brands = _core.Brand.Get();
+                List<string> keywords = new List<string>();
+                ViewBag.keywords = keywords;
+                return View();
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+
         }
 
         [HttpPost]
@@ -200,121 +215,131 @@ namespace GhasreMobile.Areas.Admin.Controllers
                                                 IFormFile MainImage
             )
         {
-            if (ModelState.IsValid)
+
+            try
             {
-                if (MainImage == null)
+
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("MainImage", "تصویر الزامی میباشد . لطفا موارد را بررسی کنید");
-                    ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
-                    ViewBag.Brands = _core.Brand.Get();
-                    return await Task.FromResult(View(product));
-                }
-                else
-                {
-                    if (MainImage.Length > 3000000)
+                    if (MainImage == null)
                     {
-                        ModelState.AddModelError("MainImage", "حجم فایل عکس اصلی بیش از اندازه میباشد");
+                        ModelState.AddModelError("MainImage", "تصویر الزامی میباشد . لطفا موارد را بررسی کنید");
                         ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
                         ViewBag.Brands = _core.Brand.Get();
                         return await Task.FromResult(View(product));
                     }
                     else
                     {
-                        //New Prodcut
-                        TblProduct NewProduct = new TblProduct();
-                        NewProduct.Name = product.Name;
-                        if (MainImage != null)
+                        if (MainImage.Length > 3000000)
                         {
-                            NewProduct.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
-                            string saveDirectory = Path.Combine(
-                                                    Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain");
-                            string savePath = Path.Combine(saveDirectory, NewProduct.MainImage);
-
-                            if (!Directory.Exists(saveDirectory))
-                            {
-                                Directory.CreateDirectory(saveDirectory);
-                            }
-
-                            using (var stream = new FileStream(savePath, FileMode.Create))
-                            {
-                                await MainImage.CopyToAsync(stream);
-                            }
-                        }
-                        NewProduct.PriceBeforeDiscount = product.PriceBeforeDiscount;
-                        NewProduct.DescriptionShortHtml = product.DescriptionShortHtml;
-                        NewProduct.DescriptionLongHtml = product.DescriptionLongHtml;
-                        NewProduct.CatagoryId = product.CatagoryId;
-                        if (product.PriceAfterDiscount != null)
-                        {
-                            NewProduct.PriceAfterDiscount = product.PriceAfterDiscount;
+                            ModelState.AddModelError("MainImage", "حجم فایل عکس اصلی بیش از اندازه میباشد");
+                            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                            ViewBag.Brands = _core.Brand.Get();
+                            return await Task.FromResult(View(product));
                         }
                         else
                         {
-                            NewProduct.PriceAfterDiscount = 0;
-                        }
-                        NewProduct.DateCreated = DateTime.Now;
-                        NewProduct.SearchText = product.SearchText;
-                        NewProduct.IsFractional = product.IsFractional;
-                        NewProduct.BrandId = product.BrandId;
-
-                        _core.Product.Add(NewProduct);
-                        _core.Product.Save();
-                        //New Prodcut
-
-                        TblAlbum album = new TblAlbum();
-                        album.Name = NewProduct.Name;
-                        album.IsProduct = true;
-                        _core.Album.Add(album);
-                        _core.Album.Save();
-
-                        for (int i = 0; i < Colors.Count; i++)
-                        {
-                            TblColor Newcolor = new TblColor();
-                            Newcolor.Name = ColorName[i];
-                            Newcolor.ColorCode = Colors[i];
-                            Newcolor.Count = ColorsCounts[i];
-                            Newcolor.ProductId = NewProduct.ProductId;
-                            _core.Color.Add(Newcolor);
-                        }
-                        _core.Color.Save();
-
-                        foreach (var item in Keywords)
-                        {
-                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace(" ", "-")))
+                            //New Prodcut
+                            TblProduct NewProduct = new TblProduct();
+                            NewProduct.Name = product.Name;
+                            if (MainImage != null)
                             {
-                                TblKeyword keyword = _core.Keyword.Get().Single(k => k.Name == item.Replace(" ", "-"));
-                                TblProductKeywordRel keywordRel = new TblProductKeywordRel();
-                                keywordRel.KeywordId = keyword.KeywordId;
-                                keywordRel.ProductId = NewProduct.ProductId;
-                                _core.ProductKeywordRel.Add(keywordRel);
+                                NewProduct.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
+                                string saveDirectory = Path.Combine(
+                                                        Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain");
+                                string savePath = Path.Combine(saveDirectory, NewProduct.MainImage);
+
+                                if (!Directory.Exists(saveDirectory))
+                                {
+                                    Directory.CreateDirectory(saveDirectory);
+                                }
+
+                                using (var stream = new FileStream(savePath, FileMode.Create))
+                                {
+                                    await MainImage.CopyToAsync(stream);
+                                }
+                            }
+                            NewProduct.PriceBeforeDiscount = product.PriceBeforeDiscount;
+                            NewProduct.DescriptionShortHtml = product.DescriptionShortHtml;
+                            NewProduct.DescriptionLongHtml = product.DescriptionLongHtml;
+                            NewProduct.CatagoryId = product.CatagoryId;
+                            if (product.PriceAfterDiscount != null)
+                            {
+                                NewProduct.PriceAfterDiscount = product.PriceAfterDiscount;
                             }
                             else
                             {
-                                TblKeyword Newkeyword = new TblKeyword();
-                                Newkeyword.Name = item.Replace(" ", "-");
-                                _core.Keyword.Add(Newkeyword);
-                                _core.Keyword.Save();
-                                TblProductKeywordRel keywordRel = new TblProductKeywordRel();
-                                keywordRel.KeywordId = Newkeyword.KeywordId;
-                                keywordRel.ProductId = NewProduct.ProductId;
-                                _core.ProductKeywordRel.Add(keywordRel);
-
+                                NewProduct.PriceAfterDiscount = 0;
                             }
+                            NewProduct.DateCreated = DateTime.Now;
+                            NewProduct.SearchText = product.SearchText;
+                            NewProduct.IsFractional = product.IsFractional;
+                            NewProduct.BrandId = product.BrandId;
+
+                            _core.Product.Add(NewProduct);
+                            _core.Product.Save();
+                            //New Prodcut
+
+                            TblAlbum album = new TblAlbum();
+                            album.Name = NewProduct.Name;
+                            album.IsProduct = true;
+                            _core.Album.Add(album);
+                            _core.Album.Save();
+
+                            for (int i = 0; i < Colors.Count; i++)
+                            {
+                                TblColor Newcolor = new TblColor();
+                                Newcolor.Name = ColorName[i];
+                                Newcolor.ColorCode = Colors[i];
+                                Newcolor.Count = ColorsCounts[i];
+                                Newcolor.ProductId = NewProduct.ProductId;
+                                _core.Color.Add(Newcolor);
+                            }
+                            _core.Color.Save();
+
+                            foreach (var item in Keywords)
+                            {
+                                if (_core.Keyword.Get().Any(k => k.Name == item.Replace(" ", "-")))
+                                {
+                                    TblKeyword keyword = _core.Keyword.Get().Single(k => k.Name == item.Replace(" ", "-"));
+                                    TblProductKeywordRel keywordRel = new TblProductKeywordRel();
+                                    keywordRel.KeywordId = keyword.KeywordId;
+                                    keywordRel.ProductId = NewProduct.ProductId;
+                                    _core.ProductKeywordRel.Add(keywordRel);
+                                }
+                                else
+                                {
+                                    TblKeyword Newkeyword = new TblKeyword();
+                                    Newkeyword.Name = item.Replace(" ", "-");
+                                    _core.Keyword.Add(Newkeyword);
+                                    _core.Keyword.Save();
+                                    TblProductKeywordRel keywordRel = new TblProductKeywordRel();
+                                    keywordRel.KeywordId = Newkeyword.KeywordId;
+                                    keywordRel.ProductId = NewProduct.ProductId;
+                                    _core.ProductKeywordRel.Add(keywordRel);
+
+                                }
+                            }
+                            _core.ProductKeywordRel.Save();
+
+
+
+                            return await Task.FromResult(Redirect("/Admin/Product"));
                         }
-                        _core.ProductKeywordRel.Save();
-
-
-
-                        return await Task.FromResult(Redirect("/Admin/Product"));
                     }
+
+
                 }
-
-
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                ViewBag.Brands = _core.Brand.Get();
+                ViewBag.keywords = Keywords;
+                return await Task.FromResult(View(product));
             }
-            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
-            ViewBag.Brands = _core.Brand.Get();
-            ViewBag.keywords = Keywords;
-            return await Task.FromResult(View(product));
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+
         }
 
 
@@ -326,18 +351,26 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult CreateColor(CreateColorVm createColorVm)
         {
-            if (ModelState.IsValid)
+            try
             {
-                TblColor color = new TblColor();
-                color.ProductId = createColorVm.id;
-                color.Name = createColorVm.Name;
-                color.ColorCode = createColorVm.Code;
-                color.Count = createColorVm.count;
-                _core.Color.Add(color);
-                _core.Color.Save();
-                return Redirect("/Admin/Product");
+                if (ModelState.IsValid)
+                {
+                    TblColor color = new TblColor();
+                    color.ProductId = createColorVm.id;
+                    color.Name = createColorVm.Name;
+                    color.ColorCode = createColorVm.Code;
+                    color.Count = createColorVm.count;
+                    _core.Color.Add(color);
+                    _core.Color.Save();
+                    return Redirect("/Admin/Product");
+                }
+                return View(createColorVm);
             }
-            return View(createColorVm);
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+
         }
 
         [HttpGet]
@@ -347,97 +380,124 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
         public IActionResult AddProperty(int id)
         {
-            ViewBag.id = id;
-            List<TblProperty> list = _core.ProductPropertyRel.Get(i => i.ProductId == id).Select(i => i.Property).ToList();
-            return View(_core.Product.GetById(id));
+            try
+            {
+                ViewBag.id = id;
+                List<TblProperty> list = _core.ProductPropertyRel.Get(i => i.ProductId == id).Select(i => i.Property).ToList();
+                return View(_core.Product.GetById(id));
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+
         }
         [HttpPost]
         public IActionResult AddProperty(int id, List<int?> PropertyId, List<string> Value)
         {
-            List<TblProductPropertyRel> pros = new List<TblProductPropertyRel>();
-            for (int i = 0; i < PropertyId.Count; i++)
+            try
             {
-                TblProductPropertyRel propertyRel = new TblProductPropertyRel();
-                propertyRel.ProductId = id;
-                if (Value[i] != null)
+                List<TblProductPropertyRel> pros = new List<TblProductPropertyRel>();
+                for (int i = 0; i < PropertyId.Count; i++)
                 {
-                    //propertyRel.PropertyId = PropertyId[i].Value;
-                    //propertyRel.Value = "";
-                    propertyRel.PropertyId = PropertyId[i].Value;
-                    propertyRel.Value = Value[i];
-                    pros.Add(propertyRel);
+                    TblProductPropertyRel propertyRel = new TblProductPropertyRel();
+                    propertyRel.ProductId = id;
+                    if (Value[i] != null)
+                    {
+                        //propertyRel.PropertyId = PropertyId[i].Value;
+                        //propertyRel.Value = "";
+                        propertyRel.PropertyId = PropertyId[i].Value;
+                        propertyRel.Value = Value[i];
+                        pros.Add(propertyRel);
+                    }
                 }
-                //else
-                //{
-                //    propertyRel.PropertyId = PropertyId[i].Value;
-                //    propertyRel.Value = Value[i];
-                //}
+                _core.ProductPropertyRel.Get(i => i.ProductId == id).ToList().ForEach(j => _core.ProductPropertyRel.Delete(j));
+                _core.ProductPropertyRel.Save();
+                foreach (var item in pros)
+                {
+                    if (!_core.ProductPropertyRel.Get().Any(i => i.ProductId == id && i.PropertyId == item.PropertyId))
+                    {
+                        _core.ProductPropertyRel.Add(item);
+                        _core.ProductPropertyRel.Save();
+                    }
+                }
+                return RedirectToAction("Index");
             }
-            _core.ProductPropertyRel.Get(i => i.ProductId == id).ToList().ForEach(j => _core.ProductPropertyRel.Delete(j));
-            _core.ProductPropertyRel.Save();
-            foreach (var item in pros)
+            catch
             {
-                if (!_core.ProductPropertyRel.Get().Any(i => i.ProductId == id && i.PropertyId == item.PropertyId))
-                {
-                    _core.ProductPropertyRel.Add(item);
-                    _core.ProductPropertyRel.Save();
-                }
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index");
         }
 
         public IActionResult AddGallery(int id)
         {
-            ViewBag.id = id;
-            List<TblProductImageRel> list = _core.ProductImageRel.Get(i => i.ProductId == id).ToList();
-            return View(list);
+            try
+            {
+                ViewBag.id = id;
+                List<TblProductImageRel> list = _core.ProductImageRel.Get(i => i.ProductId == id).ToList();
+                return View(list);
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+
         }
         [HttpPost]
         public async Task<IActionResult> AddGallery(int id, List<IFormFile> GalleryFile)
         {
-            if (GalleryFile.Count > 0)
+            try
             {
-                TblProduct product = _core.Product.GetById(id);
-                foreach (var galleryimage in GalleryFile)
+
+                if (GalleryFile.Count > 0)
                 {
-
-                    TblImage NewImage = new TblImage();
-                    if (_core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).Count() == 0)
+                    TblProduct product = _core.Product.GetById(id);
+                    foreach (var galleryimage in GalleryFile)
                     {
-                        TblAlbum album = new TblAlbum();
-                        album.Name = product.Name;
-                        album.IsProduct = true;
-                        _core.Album.Add(album);
-                        _core.Album.Save();
-                        NewImage.AlbumId = album.AlbumId;
 
-                    }
-                    else
-                    {
-                        NewImage.AlbumId = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).First().Image.AlbumId;
-                    }
-                    NewImage.Image = Guid.NewGuid().ToString() + Path.GetExtension(galleryimage.FileName);
-                    string savePathAlbum = Path.Combine(
-                                        Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", NewImage.Image
-                                    );
+                        TblImage NewImage = new TblImage();
+                        if (_core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).Count() == 0)
+                        {
+                            TblAlbum album = new TblAlbum();
+                            album.Name = product.Name;
+                            album.IsProduct = true;
+                            _core.Album.Add(album);
+                            _core.Album.Save();
+                            NewImage.AlbumId = album.AlbumId;
 
-                    using (var stream = new FileStream(savePathAlbum, FileMode.Create))
-                    {
-                        await galleryimage.CopyToAsync(stream);
-                    }
-                    _core.Image.Add(NewImage);
-                    _core.Image.Save();
-                    TblProductImageRel imageRel = new TblProductImageRel();
-                    imageRel.ProductId = product.ProductId;
-                    imageRel.ImageId = NewImage.ImageId;
+                        }
+                        else
+                        {
+                            NewImage.AlbumId = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).First().Image.AlbumId;
+                        }
+                        NewImage.Image = Guid.NewGuid().ToString() + Path.GetExtension(galleryimage.FileName);
+                        string savePathAlbum = Path.Combine(
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", NewImage.Image
+                                        );
 
-                    _core.ProductImageRel.Add(imageRel);
-                    _core.ProductImageRel.Save();
+                        using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                        {
+                            await galleryimage.CopyToAsync(stream);
+                        }
+                        _core.Image.Add(NewImage);
+                        _core.Image.Save();
+                        TblProductImageRel imageRel = new TblProductImageRel();
+                        imageRel.ProductId = product.ProductId;
+                        imageRel.ImageId = NewImage.ImageId;
+
+                        _core.ProductImageRel.Add(imageRel);
+                        _core.ProductImageRel.Save();
+                    }
                 }
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index");
         }
         public IActionResult Stock(int id)
         {
@@ -512,11 +572,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
-            ViewBag.Brands = _core.Brand.Get();
-            ViewBag.CatagoryName = _core.Product.GetById(id).Catagory.Name;
-            ViewBag.keywords = _core.Product.GetById(id).TblProductKeywordRel;
-            return View(_core.Product.GetById(id));
+            try
+            {
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                ViewBag.Brands = _core.Brand.Get();
+                ViewBag.CatagoryName = _core.Product.GetById(id).Catagory.Name;
+                ViewBag.keywords = _core.Product.GetById(id).TblProductKeywordRel;
+                return View(_core.Product.GetById(id));
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+
         }
 
         [HttpPost]
@@ -535,89 +603,98 @@ namespace GhasreMobile.Areas.Admin.Controllers
                                                 IFormFile MainImage
             )
         {
-            if (ModelState.IsValid)
+            try
             {
-                TblProduct EditProduct = _core.Product.GetById(product.ProductId);
-                if (MainImage != null)
+                if (ModelState.IsValid)
                 {
-                    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", EditProduct.MainImage);
+                    TblProduct EditProduct = _core.Product.GetById(product.ProductId);
+                    if (MainImage != null)
+                    {
+                        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", EditProduct.MainImage);
 
-                    if (System.IO.File.Exists(imagePath))
-                    {
-                        System.IO.File.Delete(imagePath);
-                    }
-                    EditProduct.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
-                    string savePath = Path.Combine(
-                                            Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", EditProduct.MainImage
-                                        );
-
-                    using (var stream = new FileStream(savePath, FileMode.Create))
-                    {
-                        await MainImage.CopyToAsync(stream);
-                    }
-                }
-                IEnumerable<TblProductKeywordRel> keywordRels = _core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId);
-                if (keywordRels.Count() > 0)
-                {
-                    foreach (var item in keywordRels)
-                    {
-                        _core.ProductKeywordRel.Delete(item);
-                    }
-                    _core.ProductKeywordRel.Save();
-                }
-                if (Keywords.Count > 0)
-                {
-                    foreach (var item in Keywords)
-                    {
-                        if (_core.Keyword.Get().Any(k => k.Name == item.Replace(" ", "")))
+                        if (System.IO.File.Exists(imagePath))
                         {
-                            TblKeyword keyword = _core.Keyword.Get().Where(k => k.Name == item.Replace(" ", "")).SingleOrDefault();
-                            TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
-                            tblProductKeywordRel.ProductId = product.ProductId;
-                            tblProductKeywordRel.KeywordId = keyword.KeywordId;
-                            _core.ProductKeywordRel.Add(tblProductKeywordRel);
-                            _core.ProductKeywordRel.Save();
+                            System.IO.File.Delete(imagePath);
                         }
-                        else
+                        EditProduct.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
+                        string savePath = Path.Combine(
+                                                Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", EditProduct.MainImage
+                                            );
+
+                        using (var stream = new FileStream(savePath, FileMode.Create))
                         {
-                            TblKeyword keyword = new TblKeyword();
-                            keyword.Name = item.Replace(" ", "");
-                            _core.Keyword.Add(keyword);
-                            _core.Keyword.Save();
-                            TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
-                            tblProductKeywordRel.KeywordId = keyword.KeywordId;
-                            tblProductKeywordRel.ProductId = product.ProductId;
-                            _core.ProductKeywordRel.Add(tblProductKeywordRel);
-                            _core.ProductKeywordRel.Save();
+                            await MainImage.CopyToAsync(stream);
                         }
                     }
-                }
-                EditProduct.Name = product.Name;
-                EditProduct.PriceBeforeDiscount = product.PriceBeforeDiscount;
-                if (product.PriceAfterDiscount != null)
-                {
-                    EditProduct.PriceAfterDiscount = product.PriceAfterDiscount;
+                    IEnumerable<TblProductKeywordRel> keywordRels = _core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId);
+                    if (keywordRels.Count() > 0)
+                    {
+                        foreach (var item in keywordRels)
+                        {
+                            _core.ProductKeywordRel.Delete(item);
+                        }
+                        _core.ProductKeywordRel.Save();
+                    }
+                    if (Keywords.Count > 0)
+                    {
+                        foreach (var item in Keywords)
+                        {
+                            if (_core.Keyword.Get().Any(k => k.Name == item.Replace(" ", "")))
+                            {
+                                TblKeyword keyword = _core.Keyword.Get().Where(k => k.Name == item.Replace(" ", "")).SingleOrDefault();
+                                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
+                                tblProductKeywordRel.ProductId = product.ProductId;
+                                tblProductKeywordRel.KeywordId = keyword.KeywordId;
+                                _core.ProductKeywordRel.Add(tblProductKeywordRel);
+                                _core.ProductKeywordRel.Save();
+                            }
+                            else
+                            {
+                                TblKeyword keyword = new TblKeyword();
+                                keyword.Name = item.Replace(" ", "");
+                                _core.Keyword.Add(keyword);
+                                _core.Keyword.Save();
+                                TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
+                                tblProductKeywordRel.KeywordId = keyword.KeywordId;
+                                tblProductKeywordRel.ProductId = product.ProductId;
+                                _core.ProductKeywordRel.Add(tblProductKeywordRel);
+                                _core.ProductKeywordRel.Save();
+                            }
+                        }
+                    }
+                    EditProduct.Name = product.Name;
+                    EditProduct.PriceBeforeDiscount = product.PriceBeforeDiscount;
+                    if (product.PriceAfterDiscount != null)
+                    {
+                        EditProduct.PriceAfterDiscount = product.PriceAfterDiscount;
 
+                    }
+                    else
+                    {
+                        EditProduct.PriceAfterDiscount = 0;
+                    }
+                    EditProduct.SearchText = product.SearchText;
+                    EditProduct.IsFractional = product.IsFractional;
+                    EditProduct.BrandId = product.BrandId;
+                    EditProduct.DescriptionShortHtml = product.DescriptionShortHtml;
+                    EditProduct.DescriptionLongHtml = product.DescriptionLongHtml;
+                    EditProduct.CatagoryId = product.CatagoryId;
+                    _core.Product.Update(EditProduct);
+                    _core.Product.Save();
+                    return await Task.FromResult(Redirect("/Admin/Product"));
                 }
-                else
-                {
-                    EditProduct.PriceAfterDiscount = 0;
-                }
-                EditProduct.SearchText = product.SearchText;
-                EditProduct.IsFractional = product.IsFractional;
-                EditProduct.BrandId = product.BrandId;
-                EditProduct.DescriptionShortHtml = product.DescriptionShortHtml;
-                EditProduct.DescriptionLongHtml = product.DescriptionLongHtml;
-                EditProduct.CatagoryId = product.CatagoryId;
-                _core.Product.Update(EditProduct);
-                _core.Product.Save();
-                return await Task.FromResult(Redirect("/Admin/Product"));
+                ViewBag.CatagoryName = _core.Catagory.GetById(product.CatagoryId).Name;
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                ViewBag.Brands = _core.Brand.Get();
+                ViewBag.keywords = _core.Product.GetById(product.ProductId).TblProductKeywordRel;
+                return View(product);
             }
-            ViewBag.CatagoryName = _core.Catagory.GetById(product.CatagoryId).Name;
-            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
-            ViewBag.Brands = _core.Brand.Get();
-            ViewBag.keywords = _core.Product.GetById(product.ProductId).TblProductKeywordRel;
-            return View(product);
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+
+
         }
 
         [HttpGet]

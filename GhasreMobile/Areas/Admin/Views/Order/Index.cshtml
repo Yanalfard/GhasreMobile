@@ -28,7 +28,11 @@
                                 <div class="form-group mx-sm-1 mb-2">
                                     <input readonly id="endDate" class="form-control uk-text-small" type="text" placeholder="تا تاریخ  " value="">
                                 </div>
-
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <input type="radio" name="orderValue" style="margin:0 10px 0 0" value="0" /> <span class="text-warning">در حال آماده سازی</span>
+                                    <input type="radio" name="orderValue" style="margin:0 10px 0 0" value="1" /> <span class="text-info">ارسال شده</span>
+                                    <input type="radio" name="orderValue" style="margin:0 10px 0 0" value="2" /> <span class="text-success">تکمیل شده</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-toolbar mr-3">
@@ -128,7 +132,7 @@
                             else
                             {
                                 <li class="page-item">
-                                    <a class="page-link" href="/Admin/Order?pageId=@(ViewBag.PageId-1)&InPageCount=@ViewBag.InPageCount&OrderId=@ViewBag.OrderId&TellNo=@ViewBag.TellNo&StartDate=@ViewBag.StartDate&EndDate=@ViewBag.EndDate">قبلی</a>
+                                    <a class="page-link" href="/Admin/Order?pageId=@(ViewBag.PageId-1)&InPageCount=@ViewBag.InPageCount&OrderId=@ViewBag.OrderId&TellNo=@ViewBag.TellNo&StartDate=@ViewBag.StartDate&EndDate=@ViewBag.EndDate&StatusSelected=@ViewBag.StatusSelected">قبلی</a>
                                 </li>
 
                             }
@@ -161,7 +165,7 @@
 
                             {
                                 <li class="page-item">
-                                    <a class="page-link" href="/Admin/Order?pageId=@(ViewBag.PageId+1)&InPageCount=@ViewBag.InPageCount&OrderId=@ViewBag.OrderId&TellNo=@ViewBag.TellNo&StartDate=@ViewBag.StartDate&EndDate=@ViewBag.EndDate">بعدی</a>
+                                    <a class="page-link" href="/Admin/Order?pageId=@(ViewBag.PageId+1)&InPageCount=@ViewBag.InPageCount&OrderId=@ViewBag.OrderId&TellNo=@ViewBag.TellNo&StartDate=@ViewBag.StartDate&EndDate=@ViewBag.EndDate&StatusSelected=@ViewBag.StatusSelected">بعدی</a>
                                 </li>
 
                             }
@@ -211,6 +215,8 @@
     </div>
 </div>
 
+<input type="hidden" id="statusSelected" />
+
 @section Script{
     <script src="~/datePersion/prism.js"></script>
     <script src="~/datePersion/persianDatepicker.js"></script>
@@ -223,6 +229,9 @@
     </script>
 
     <script>
+        $("input[type=radio]").change(function () {
+            $('#statusSelected').val($(this).val());;
+        });
         function SabteCodeMarsole(id) {
             $(".modal-content").html("");
             $.get("/Admin/Order/CodeMarsole/" + id, function (result) {
@@ -258,7 +267,9 @@
             var EndDate = $("#endDate").val();
             var pageId = $("#pageNumber option:selected").val();
             var InPageCount = $("#InPageCount option:selected").val();
-            window.location.href = "/Admin/Order?pageId=" + pageId + "&InPageCount=" + InPageCount + "&OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate;
+            var StatusSelected = $("#statusSelected").val();
+
+            window.location.href = "/Admin/Order/Index?pageId=" + pageId + "&InPageCount=" + InPageCount + "&OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&StatusSelected=" + StatusSelected;
         }
 
 
@@ -271,7 +282,7 @@
             var StartDate = $("#startDate").val();
             var EndDate = $("#endDate").val();
 
-            window.location.href = "/Admin/Order?pageId=" + pageId + "&InPageCount=" + InPageCount + "&OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate;
+            window.location.href = "/Admin/Order/Index?pageId=" + pageId + "&InPageCount=" + InPageCount + "&OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&StatusSelected=" + StatusSelected;
 
         });
 
@@ -285,7 +296,7 @@
             var StartDate = $("#startDate").val();
             var EndDate = $("#endDate").val();
 
-            window.location.href = "/Admin/Order?pageId=" + pageId + "&InPageCount=" + InPageCount + "&OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate;
+            window.location.href = "/Admin/Order/Index?pageId=" + pageId + "&InPageCount=" + InPageCount + "&OrderId=" + OrderId + "&TellNo=" + TellNo + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&StatusSelected=" + StatusSelected;
 
         });
 
