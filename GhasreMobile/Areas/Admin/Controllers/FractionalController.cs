@@ -42,7 +42,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 data = data.Where(i => i.DateSubmited <= endTime).ToList();
             }
 
-            return View(PagingList.Create(data, 40, page));
+            return View(PagingList.Create(data.OrderByDescending(o => o.OrdeId), 40, page));
         }
     }
 }

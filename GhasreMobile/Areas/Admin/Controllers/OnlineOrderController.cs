@@ -19,12 +19,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (!string.IsNullOrEmpty(TelNo))
             {
-                IEnumerable<TblOnlineOrder> onlineOrders = PagingList.Create(_core.OnlineOrder.Get(on => on.Client.TellNo.Contains(TelNo)), 30, page);
+                IEnumerable<TblOnlineOrder> onlineOrders = PagingList.Create(_core.OnlineOrder.Get(on => on.Client.TellNo.Contains(TelNo)).OrderByDescending(i=>i.OnlineOrderId), 30, page);
                 return View(onlineOrders);
             }
             else
             {
-                IEnumerable<TblOnlineOrder> onlineOrders = PagingList.Create(_core.OnlineOrder.Get().OrderByDescending(od=>od.OnlineOrderId), 30, page);
+                IEnumerable<TblOnlineOrder> onlineOrders = PagingList.Create(_core.OnlineOrder.Get().OrderByDescending(od=>od.OnlineOrderId).OrderByDescending(i => i.OnlineOrderId), 30, page);
                 return View(onlineOrders);
             }
 
