@@ -31,7 +31,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _core.PostOption.Add(postOption);
-                _core.PostOption.Save();
+                _core.Save();
                 return Redirect("/Admin/PostOption");
             }
             return View(postOption);
@@ -47,7 +47,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _core.PostOption.Update(postOption);
-                _core.PostOption.Save();
+                _core.Save();
                 return Redirect("/Admin/PostOption");
             }
             return View(postOption);

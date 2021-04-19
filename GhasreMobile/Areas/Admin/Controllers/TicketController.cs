@@ -47,7 +47,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 ticketuser.IsAnswerd = true;
                 _core.Ticket.Update(ticketuser);
             }
-            _core.Ticket.Save();
+            _core.Save();
             TblTicket ticket = new TblTicket();
             ticket.DateSubmited = DateTime.Now;
             ticket.ClientId = ClientId;
@@ -56,7 +56,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             ticket.IsAnswerd = true;
             ticket.Body = Body;
             _core.Ticket.Add(ticket);
-            _core.Ticket.Save();
+            _core.Save();
             return Redirect("/Admin/Ticket/InnerTicket/" + ClientId);
         }
 

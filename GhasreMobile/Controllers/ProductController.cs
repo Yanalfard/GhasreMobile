@@ -69,19 +69,19 @@ namespace GhasreMobile.Controllers
                         }
                     }
                     db.Comment.Add(addComment);
-                    db.Comment.Save();
+                    db.Save();
                     TblProductCommentRel addCommentRel = new TblProductCommentRel();
                     addCommentRel.ProductId = comment.ProductId;
                     addCommentRel.CommentId = addComment.CommentId;
                     db.ProductCommentRel.Add(addCommentRel);
-                    db.ProductCommentRel.Save();
+                    db.Save();
                     TblRate addRate = new TblRate();
                     addRate.ClientId = SelectUser().ClientId;
                     addRate.ProductId = comment.ProductId;
                     addRate.Ip = ipUser.ToString();
                     addRate.Rate = comment.Rate;
                     db.Rate.Add(addRate);
-                    db.Rate.Save();
+                    db.Save();
                     return await Task.FromResult(PartialView());
                 }
                 return await Task.FromResult(PartialView(comment));
@@ -101,7 +101,7 @@ namespace GhasreMobile.Controllers
                 {
                     TblBookMark deleteBookMark = db.BookMark.Get(i => i.ProductId == id && i.ClientId == SelectUser().ClientId).Single();
                     db.BookMark.Delete(deleteBookMark);
-                    db.BookMark.Save();
+                    db.Save();
                     return await Task.FromResult("false");
                 }
                 else
@@ -110,7 +110,7 @@ namespace GhasreMobile.Controllers
                     addBookMark.ClientId = SelectUser().ClientId;
                     addBookMark.ProductId = id;
                     db.BookMark.Add(addBookMark);
-                    db.BookMark.Save();
+                    db.Save();
                     return await Task.FromResult("true");
                 }
             }
@@ -132,7 +132,7 @@ namespace GhasreMobile.Controllers
                     addAlertWhenReady.ClientId = SelectUser().ClientId;
                     addAlertWhenReady.ProductId = id;
                     db.AlertWhenReady.Add(addAlertWhenReady);
-                    db.AlertWhenReady.Save();
+                    db.Save();
                     return await Task.FromResult("true");
                 }
                 return await Task.FromResult("false");

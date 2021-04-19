@@ -66,12 +66,12 @@ namespace GhasreMobile.Controllers
                         }
                     }
                     db.Comment.Add(addComment);
-                    db.Comment.Save();
+                    db.Save();
                     TblBlogCommentRel addCommentRel = new TblBlogCommentRel();
                     addCommentRel.BlogId = comment.BlogId;
                     addCommentRel.CommentId = addComment.CommentId;
                     db.BlogCommentRel.Add(addCommentRel);
-                    db.BlogCommentRel.Save();
+                    db.Save();
                     return await Task.FromResult(PartialView());
                 }
                 return await Task.FromResult(PartialView(comment));

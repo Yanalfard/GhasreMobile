@@ -38,7 +38,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 Newdiscount.Count = discountt.Count;
                 Newdiscount.ValidTill = DateTime.Now.AddDays(Till);
                 _core.Discount.Add(Newdiscount);
-                _core.Discount.Save();
+                _core.Save();
                 return Redirect("/Admin/Discount");
             }
             return View(discountt);
@@ -56,7 +56,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _core.Discount.Update(Editdiscount);
-                _core.Discount.Save();
+                _core.Save();
                 return Redirect("/Admin/Discount");
             }
             return View(Editdiscount);
@@ -72,7 +72,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             else
             {
                 _core.Discount.Delete(product);
-                _core.Discount.Save();
+                _core.Save();
                 return "true";
             }
         }

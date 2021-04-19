@@ -218,14 +218,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
             try
             {
-
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                ViewBag.Brands = _core.Brand.Get();
+                ViewBag.keywords = Keywords;
                 if (ModelState.IsValid)
                 {
                     if (MainImage == null)
                     {
                         ModelState.AddModelError("MainImage", "تصویر الزامی میباشد . لطفا موارد را بررسی کنید");
-                        ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
-                        ViewBag.Brands = _core.Brand.Get();
                         return await Task.FromResult(View(product));
                     }
                     else
@@ -233,8 +233,6 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         if (MainImage.Length > 3000000)
                         {
                             ModelState.AddModelError("MainImage", "حجم فایل عکس اصلی بیش از اندازه میباشد");
-                            ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
-                            ViewBag.Brands = _core.Brand.Get();
                             return await Task.FromResult(View(product));
                         }
                         else
@@ -277,14 +275,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             NewProduct.BrandId = product.BrandId;
 
                             _core.Product.Add(NewProduct);
-                            _core.Product.Save();
+                            _core.Save();
                             //New Prodcut
 
                             TblAlbum album = new TblAlbum();
                             album.Name = NewProduct.Name;
                             album.IsProduct = true;
                             _core.Album.Add(album);
-                            _core.Album.Save();
+                            _core.Save();
 
                             for (int i = 0; i < Colors.Count; i++)
                             {
@@ -295,7 +293,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                                 Newcolor.ProductId = NewProduct.ProductId;
                                 _core.Color.Add(Newcolor);
                             }
-                            _core.Color.Save();
+                            _core.Save();
 
                             foreach (var item in Keywords)
                             {
@@ -312,7 +310,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                                     TblKeyword Newkeyword = new TblKeyword();
                                     Newkeyword.Name = item.Replace(" ", "-");
                                     _core.Keyword.Add(Newkeyword);
-                                    _core.Keyword.Save();
+                                    _core.Save();
                                     TblProductKeywordRel keywordRel = new TblProductKeywordRel();
                                     keywordRel.KeywordId = Newkeyword.KeywordId;
                                     keywordRel.ProductId = NewProduct.ProductId;
@@ -320,7 +318,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                                 }
                             }
-                            _core.ProductKeywordRel.Save();
+                            _core.Save();
 
 
 
@@ -330,9 +328,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
 
                 }
-                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
-                ViewBag.Brands = _core.Brand.Get();
-                ViewBag.keywords = Keywords;
+                
                 return await Task.FromResult(View(product));
             }
             catch
@@ -364,7 +360,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     color.ColorCode = createColorVm.Code;
                     color.Count = createColorVm.count;
                     _core.Color.Add(color);
-                    _core.Color.Save();
+                    _core.Save();
                     return Redirect("/Admin/Product");
                 }
                 return View(createColorVm);
@@ -415,13 +411,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     }
                 }
                 _core.ProductPropertyRel.Get(i => i.ProductId == id).ToList().ForEach(j => _core.ProductPropertyRel.Delete(j));
-                _core.ProductPropertyRel.Save();
+                _core.Save();
                 foreach (var item in pros)
                 {
                     if (!_core.ProductPropertyRel.Get().Any(i => i.ProductId == id && i.PropertyId == item.PropertyId))
                     {
                         _core.ProductPropertyRel.Add(item);
-                        _core.ProductPropertyRel.Save();
+                        _core.Save();
                     }
                 }
                 return RedirectToAction("Index");
@@ -466,7 +462,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             album.Name = product.Name;
                             album.IsProduct = true;
                             _core.Album.Add(album);
-                            _core.Album.Save();
+                            _core.Save();
                             NewImage.AlbumId = album.AlbumId;
 
                         }
@@ -484,13 +480,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             await galleryimage.CopyToAsync(stream);
                         }
                         _core.Image.Add(NewImage);
-                        _core.Image.Save();
+                        _core.Save();
                         TblProductImageRel imageRel = new TblProductImageRel();
                         imageRel.ProductId = product.ProductId;
                         imageRel.ImageId = NewImage.ImageId;
 
                         _core.ProductImageRel.Add(imageRel);
-                        _core.ProductImageRel.Save();
+                        _core.Save();
                     }
                 }
 
@@ -523,14 +519,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         {
                             await Sms.SendSms2(item.Client.TellNo, item.Product.Name, "https://gasremobile2004.com/Product/" + item.ProductId + "/" + item.Product.Name.Replace(" ", "-").Replace("/", "-"), "GhasrMobileAlertWhenReady");
                             _core.AlertWhenReady.Delete(item);
-                            _core.AlertWhenReady.Save();
+                            _core.Save();
                         }
                     }
                 }
             }
             color.Count = count;
             _core.Color.Update(color);
-            _core.Color.Save();
+            _core.Save();
             return "true";
         }
 
@@ -546,7 +542,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 product.PriceBeforeDiscount = Price;
             }
             _core.Product.Update(product);
-            _core.Product.Save();
+            _core.Save();
         }
 
         public string RemoveAlbumImage(int id)
@@ -561,13 +557,13 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblProductImageRel tblProductImageRel = _core.ProductImageRel.Get().Where(i => i.ImageId == id).SingleOrDefault();
             _core.ProductImageRel.Delete(tblProductImageRel);
             _core.Image.DeleteById(id);
-            _core.Image.Save();
+            _core.Save();
             if (!_core.Image.Get().Any(i => i.AlbumId == tblProductImageRel.Image.AlbumId))
             {
                 TblAlbum selectedAlbum = _core.Album.GetById(tblProductImageRel.Image.AlbumId);
 
                 _core.Album.Delete(selectedAlbum);
-                _core.Album.Save();
+                _core.Save();
             }
             return "true";
         }
@@ -595,7 +591,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             TblProductPropertyRel rel = _core.ProductPropertyRel.GetById(id);
             bool isDeleted = _core.ProductPropertyRel.Delete(rel);
-            _core.ProductPropertyRel.Save();
+            _core.Save();
             return Ok(isDeleted);
         }
 
@@ -608,6 +604,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             try
             {
+                ViewBag.CatagoryName = _core.Catagory.GetById(product.CatagoryId).Name;
+                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
+                ViewBag.Brands = _core.Brand.Get();
+                ViewBag.keywords = _core.Product.GetById(product.ProductId).TblProductKeywordRel;
                 if (ModelState.IsValid)
                 {
                     TblProduct EditProduct = _core.Product.GetById(product.ProductId);
@@ -636,7 +636,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         {
                             _core.ProductKeywordRel.Delete(item);
                         }
-                        _core.ProductKeywordRel.Save();
+                        _core.Save();
                     }
                     if (Keywords.Count > 0)
                     {
@@ -649,19 +649,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
                                 tblProductKeywordRel.ProductId = product.ProductId;
                                 tblProductKeywordRel.KeywordId = keyword.KeywordId;
                                 _core.ProductKeywordRel.Add(tblProductKeywordRel);
-                                _core.ProductKeywordRel.Save();
+                                _core.Save();
                             }
                             else
                             {
                                 TblKeyword keyword = new TblKeyword();
                                 keyword.Name = item.Replace(" ", "");
                                 _core.Keyword.Add(keyword);
-                                _core.Keyword.Save();
+                                _core.Save();
                                 TblProductKeywordRel tblProductKeywordRel = new TblProductKeywordRel();
                                 tblProductKeywordRel.KeywordId = keyword.KeywordId;
                                 tblProductKeywordRel.ProductId = product.ProductId;
                                 _core.ProductKeywordRel.Add(tblProductKeywordRel);
-                                _core.ProductKeywordRel.Save();
+                                _core.Save();
                             }
                         }
                     }
@@ -683,13 +683,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     EditProduct.DescriptionLongHtml = product.DescriptionLongHtml;
                     EditProduct.CatagoryId = product.CatagoryId;
                     _core.Product.Update(EditProduct);
-                    _core.Product.Save();
+                    _core.Save();
                     return await Task.FromResult(Redirect("/Admin/Product"));
                 }
-                ViewBag.CatagoryName = _core.Catagory.GetById(product.CatagoryId).Name;
-                ViewBag.Parentcatagories = _core.Catagory.Get(c => c.ParentId == null);
-                ViewBag.Brands = _core.Brand.Get();
-                ViewBag.keywords = _core.Product.GetById(product.ProductId).TblProductKeywordRel;
+               
                 return View(product);
             }
             catch
@@ -710,7 +707,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.Product.Update(i);
             }
 
-            _core.Product.Save();
+            _core.Save();
             return Redirect("/Admin/Product");
         }
 
@@ -742,14 +739,14 @@ namespace GhasreMobile.Areas.Admin.Controllers
                                 System.IO.File.Delete(deleteImagePath);
                             }
                             _core.Image.Delete(item.Image);
-                            _core.Image.Save();
+                            _core.Save();
                         }
                         if (selectedAlbum != null)
                         {
                             _core.Album.Delete(selectedAlbum);
-                            _core.Album.Save();
+                            _core.Save();
                         }
-                        _core.ProductImageRel.Save();
+                        _core.Save();
                     }
                     var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", product.MainImage);
                     if (System.IO.File.Exists(imagePath))
@@ -757,7 +754,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         System.IO.File.Delete(imagePath);
                     }
                     _core.Product.Delete(product);
-                    _core.Product.Save();
+                    _core.Save();
                     return "true";
                 }
             }
@@ -773,7 +770,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblProduct product = _core.Product.GetById(id);
             product.IsDeleted = !product.IsDeleted;
             _core.Product.Update(product);
-            _core.Product.Save();
+            _core.Save();
         }
 
         protected override void Dispose(bool disposing)

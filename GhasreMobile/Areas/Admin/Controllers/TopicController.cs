@@ -40,7 +40,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblTopic topic = _core.Topic.GetById(id);
             topic.IsValid = !topic.IsValid;
             _core.Topic.Update(topic);
-            _core.Topic.Save();
+            _core.Save();
         }
 
         public string Delete(int id)
@@ -52,10 +52,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     _core.TopicCommentRel.Delete(item);
                 }
-                _core.TopicCommentRel.Save();
+                _core.Save();
             }
             _core.Topic.Delete(topic);
-            _core.Topic.Save();
+            _core.Save();
             return "true";
         }
 

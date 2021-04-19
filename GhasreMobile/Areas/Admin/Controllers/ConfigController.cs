@@ -95,7 +95,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.Config.Update(ConfigLinkwhatsapp);
                 _core.Config.Update(TextModelMessage);
 
-                _core.Config.Save();
+                _core.Save();
             }
             return View(configVm);
         }

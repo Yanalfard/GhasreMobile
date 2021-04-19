@@ -63,7 +63,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 }
 
                 _core.Blog.Add(blog);
-                _core.Blog.Save();
+                _core.Save();
 
                 if (Keywords.Count > 0)
                 {
@@ -76,19 +76,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             keywordRel.KeywordId = keyword.KeywordId;
                             keywordRel.BlogId = blog.BlogId;
                             _core.BlogKeywordRel.Add(keywordRel);
-                            _core.BlogKeywordRel.Save();
+                            _core.Save();
                         }
                         else
                         {
                             TblKeyword keyword = new TblKeyword();
                             keyword.Name = item;
                             _core.Keyword.Add(keyword);
-                            _core.Keyword.Save();
+                            _core.Save();
                             TblBlogKeywordRel keywordRel = new TblBlogKeywordRel();
                             keywordRel.KeywordId = keyword.KeywordId;
                             keywordRel.BlogId = blog.BlogId;
                             _core.BlogKeywordRel.Add(keywordRel);
-                            _core.BlogKeywordRel.Save();
+                            _core.Save();
                         }
                     }
                 }
@@ -135,7 +135,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     {
                         _core.BlogKeywordRel.Delete(item);
                     }
-                    _core.BlogKeywordRel.Save();
+                    _core.Save();
 
 
                     foreach (var item in Keywords)
@@ -147,19 +147,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             keywordRel.KeywordId = keyword.KeywordId;
                             keywordRel.BlogId = blog.BlogId;
                             _core.BlogKeywordRel.Add(keywordRel);
-                            _core.BlogKeywordRel.Save();
+                            _core.Save();
                         }
                         else
                         {
                             TblKeyword keyword = new TblKeyword();
                             keyword.Name = item;
                             _core.Keyword.Add(keyword);
-                            _core.Keyword.Save();
+                            _core.Save();
                             TblBlogKeywordRel keywordRel = new TblBlogKeywordRel();
                             keywordRel.KeywordId = keyword.KeywordId;
                             keywordRel.BlogId = blog.BlogId;
                             _core.BlogKeywordRel.Add(keywordRel);
-                            _core.BlogKeywordRel.Save();
+                            _core.Save();
                         }
                     }
                 }
@@ -167,7 +167,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 Editblog.Description = blog.Description;
                 Editblog.BodyHtml = blog.BodyHtml;
                 _core.Blog.Update(Editblog);
-                _core.Blog.Save();
+                _core.Save();
                 return await Task.FromResult(Redirect("/Admin/Blog"));
             }
             return await Task.FromResult(View(blog));
@@ -184,7 +184,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
 
             _core.Blog.Delete(blog);
-            _core.Blog.Save();
+            _core.Save();
         }
 
 

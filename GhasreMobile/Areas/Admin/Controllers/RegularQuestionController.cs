@@ -34,7 +34,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _core.RegularQuestion.Add(regularQuestion);
-                _core.RegularQuestion.Save();
+                _core.Save();
                 return Redirect("/Admin/RegularQuestion");
             }
             return View(regularQuestion);
@@ -52,7 +52,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _core.RegularQuestion.Update(regularQuestion);
-                _core.RegularQuestion.Save();
+                _core.Save();
                 return Redirect("/Admin/RegularQuestion");
             }
 
@@ -69,7 +69,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         public void Delete(int id)
         {
             _core.RegularQuestion.DeleteById(id);
-            _core.RegularQuestion.Save();
+            _core.Save();
         }
 
         protected override void Dispose(bool disposing)

@@ -34,7 +34,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     item.IsSeen = true;
                     db.Notification.Update(item);
                 }
-                db.Notification.Save();
+                db.Save();
                 return await Task.FromResult(View(SelectUser()));
             }
             catch
@@ -72,7 +72,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     {
                         updateUser.Password = PasswordHelper.EncodePasswordMd5(change.Password);
                         db.Client.Update(updateUser);
-                        db.Client.Save();
+                        db.Save();
                         return await Task.FromResult(Redirect("/User/Profile/Index?ResetPass=true"));
                     }
                 }
@@ -98,7 +98,7 @@ namespace GhasreMobile.Areas.User.Controllers
                 TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
                 selectedClient.Name = name;
                 db.Client.Update(selectedClient);
-                db.Client.Save();
+                db.Save();
                 return await Task.FromResult(RedirectToAction("Index"));
             }
             catch
@@ -133,7 +133,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     }
                     selectedClient.MainImage = client.MainImage;
                     db.Client.Update(selectedClient);
-                    db.Client.Save();
+                    db.Save();
                     return await Task.FromResult("true");
                 }
             }

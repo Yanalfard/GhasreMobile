@@ -246,7 +246,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     selectedOrder.SentNo = code.SentNo;
                     _core.Order.Update(selectedOrder);
-                    _core.Order.Save();
+                    _core.Save();
                     return Redirect(code.ReturnUrl);
                 }
             }
@@ -258,7 +258,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             order.Status = 1;
             await Sms.SendSms(order.Client.TellNo, order.OrdeId.ToString(), "GhasrMobileSendOrder");
             _core.Order.Update(order);
-            _core.Order.Save();
+            _core.Save();
         }
 
         public async Task DoneOrder(int id)
@@ -267,7 +267,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             order.Status = 2;
             await Sms.SendSms(order.Client.TellNo, order.OrdeId.ToString(), "GhasrMobileDoneOrder");
             _core.Order.Update(order);
-            _core.Order.Save();
+            _core.Save();
         }
 
         public void ChangeSendOrderStatus(int id)
@@ -275,7 +275,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblOrder Order = _core.Order.GetById(id);
             Order.Status = 0;
             _core.Order.Update(Order);
-            _core.Order.Save();
+            _core.Save();
         }
 
         public void Payed(int id)
@@ -283,7 +283,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblOrder order = _core.Order.GetById(id);
             order.IsPayed = !order.IsPayed;
             _core.Order.Update(order);
-            _core.Order.Save();
+            _core.Save();
         }
 
         protected override void Dispose(bool disposing)
@@ -300,7 +300,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblOrder order = _core.Order.GetById(id);
             order.Status = 0;
             _core.Order.Update(order);
-            _core.Order.Save();
+            _core.Save();
             return await Task.FromResult("true");
         }
         public async Task<string> DeleteFractional(int id)
@@ -308,7 +308,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblOrder order = _core.Order.GetById(id);
             order.Status = -1;
             _core.Order.Update(order);
-            _core.Order.Save();
+            _core.Save();
             return await Task.FromResult("true");
         }
 

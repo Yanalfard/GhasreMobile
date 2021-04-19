@@ -50,7 +50,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblClient client = _core.Client.GetById(id);
             client.IsActive = !client.IsActive;
             _core.Client.Update(client);
-            _core.Client.Save();
+            _core.Save();
             return "true";
         }
 
@@ -70,7 +70,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 wallet.Description = "شارژ حساب توسط مدیر";
                 wallet.IsFinaly = true;
                 _core.Wallet.Add(wallet);
-                _core.Wallet.Save();
+                _core.Save();
             }
             if (client.Balance > Balance)
             {
@@ -82,11 +82,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 wallet.Amount = (int)client.Balance - Balance;
                 wallet.Description = "برداشت از حساب توسط مدیر";
                 _core.Wallet.Add(wallet);
-                _core.Wallet.Save();
+                _core.Save();
             }
             client.Balance = Balance;
             _core.Client.Update(client);
-            _core.Client.Save();
+            _core.Save();
             return Redirect("/Admin/client");
         }
 

@@ -1,6 +1,6 @@
 ﻿@model DataLayer.Models.TblProduct
 @{ ViewData["Title"] = "افزودن ویژگی";
-                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
 
 <div class="row flex-div">
     <div class="col-md-12 flex-div pb-3 pt-3">
@@ -28,8 +28,6 @@
             <label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">@item.Property.Name:</label>
             <input id="PropetryNameId" name="PropertyId" type="hidden" value="@item.PropertyId" />
             <input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3 col-9" value="@item.Value">
-            @*<a onclick="DeleteProperty(@item.PropertyId,@item.ProductPropertyRelId)" class="text-danger col-2 mr-1" uk-icon="close-circle">
-                </a>*@
             <a onclick="DeleteProperty(@item.PropertyId)" class="text-danger mr-1" uk-icon="close-circle">
             </a>
         </div>}

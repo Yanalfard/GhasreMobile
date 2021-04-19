@@ -58,7 +58,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     addTicket.IsAnswerd = false;
                     addTicket.ClientId = SelectUser().ClientId;
                     db.Ticket.Add(addTicket);
-                    db.Ticket.Save();
+                    db.Save();
                     return await Task.FromResult(RedirectToAction("Index"));
 
                 }

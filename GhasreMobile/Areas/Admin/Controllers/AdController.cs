@@ -53,7 +53,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 }
                 ad.PositionId = 0;
                 _core.Ad.Add(ad);
-                _core.Ad.Save();
+                _core.Save();
                 return Redirect("/Admin/Ad");
             }
             return View(ad);
@@ -94,7 +94,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 EditAd.Link = ad.Link;
                 EditAd.PositionId = 0;
                 _core.Ad.Update(EditAd);
-                _core.Ad.Save();
+                _core.Save();
                 return Redirect("/Admin/Ad");
             }
             return View(ad);
@@ -110,7 +110,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 System.IO.File.Delete(imagePath);
             }
             _core.Ad.DeleteById(id);
-            _core.Ad.Save();
+            _core.Save();
         }
 
         protected override void Dispose(bool disposing)

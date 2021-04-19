@@ -155,7 +155,7 @@ namespace GhasreMobile.Controllers
                         addUser.TellNo = register.TellNo;
                         addUser.Name = register.Name;
                         db.Client.Add(addUser);
-                        db.Client.Save();
+                        db.Save();
                         string message = addUser.Auth;
                         await Sms.SendSms(addUser.TellNo, message, "GhasrMobileRegister");
                         return await Task.FromResult(Redirect("/Verify/" + addUser.TellNo));
@@ -309,7 +309,7 @@ namespace GhasreMobile.Controllers
                         string Code = CodeCreator.Substring(CodeCreator.Length - 5);
                         selectedUser.Auth = Code;
                         db.Client.Update(selectedUser);
-                        db.Client.Save();
+                        db.Save();
                         return await Task.FromResult(Redirect("/Login?ChangePassword=true"));
                     }
                     else
@@ -363,7 +363,7 @@ namespace GhasreMobile.Controllers
                             var CodeCreator = Guid.NewGuid().ToString();
                             string Code = CodeCreator.Substring(CodeCreator.Length - 5);
                             selectedUser.Auth = Code;
-                            db.Client.Save();
+                            db.Save();
                             return await Task.FromResult(Redirect("/Login?Active=true"));
                         }
                         else

@@ -30,7 +30,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 NewspecialOffer.ProductId = specialOffer.ProductId;
                 NewspecialOffer.ValidTill = DateTime.Now.AddDays(Till);
                 _core.SpecialOffer.Add(NewspecialOffer);
-                _core.SpecialOffer.Save();
+                _core.Save();
                 return Redirect("/Admin/Product");
             }
             return View(specialOffer);
@@ -40,7 +40,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         public void Delete(int id)
         {
             _core.SpecialOffer.DeleteById(id);
-            _core.SpecialOffer.Save();
+            _core.Save();
         }
 
         public void Remove(int id)
@@ -52,7 +52,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     _core.SpecialOffer.Delete(item);
                 }
-                _core.SpecialOffer.Save();
+                _core.Save();
             }
         }
 

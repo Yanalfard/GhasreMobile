@@ -36,7 +36,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             else
             {
                 _core.Comment.DeleteById(id);
-                _core.Comment.Save();
+                _core.Save();
                 return "true";
             }
         }
@@ -47,7 +47,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblComment comment = _core.Comment.GetById(id);
             comment.IsValid = !comment.IsValid;
             _core.Comment.Update(comment);
-            _core.Comment.Save();
+            _core.Save();
         }
 
         protected override void Dispose(bool disposing)

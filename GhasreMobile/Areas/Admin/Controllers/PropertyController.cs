@@ -32,7 +32,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 TblProperty property = new TblProperty();
                 property.Name = Name;
                 _core.Property.Add(property);
-                _core.Property.Save();
+                _core.Save();
                 return "true";
             }
         }
@@ -43,7 +43,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (property.TblProductPropertyRel.Count() == 0)
             {
                 _core.Property.DeleteById(id);
-                _core.Property.Save();
+                _core.Save();
                 return "true";
                 
             }

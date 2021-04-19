@@ -43,7 +43,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _core.Store.Add(store);
-                _core.Store.Save();
+                _core.Save();
                 if (GalleryFile != null)
                 {
                     foreach (var item in GalleryFile)
@@ -65,12 +65,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             await item.CopyToAsync(stream);
                         }
                         _core.Image.Add(image);
-                        _core.Image.Save();
+                        _core.Save();
                         TblStoreImageRel imageRel = new TblStoreImageRel();
                         imageRel.StoreId = store.StoreId;
                         imageRel.ImageId = image.ImageId;
                         _core.StoreImageRel.Add(imageRel);
-                        _core.StoreImageRel.Save();
+                        _core.Save();
                     }
                 }
                
@@ -112,12 +112,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             await item.CopyToAsync(stream);
                         }
                         _core.Image.Add(image);
-                        _core.Image.Save();
+                        _core.Save();
                         TblStoreImageRel imageRel = new TblStoreImageRel();
                         imageRel.StoreId = store.StoreId;
                         imageRel.ImageId = image.ImageId;
                         _core.StoreImageRel.Add(imageRel);
-                        _core.StoreImageRel.Save();
+                        _core.Save();
                     }
                 }
                 else
@@ -125,7 +125,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                 }
                 _core.Store.Update(store);
-                _core.Store.Save();
+                _core.Save();
                 return await Task.FromResult(Redirect("/Admin/Store"));
             }
             return View(store);
@@ -146,11 +146,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     }
                     _core.StoreImageRel.Delete(item);
                 }
-                _core.StoreImageRel.Save();
+                _core.Save();
 
             }
             _core.Store.Delete(store);
-            _core.Store.Save();
+            _core.Save();
 
 
 
@@ -169,9 +169,9 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 System.IO.File.Delete(imagePath);
             }
             _core.StoreImageRel.Delete(image);
-            _core.StoreImageRel.Save();
+            _core.Save();
             _core.Image.Delete(tblImage);
-            _core.Image.Save();
+            _core.Save();
             return Redirect("/Admin/Album");
         }
 

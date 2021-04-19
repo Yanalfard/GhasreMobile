@@ -31,7 +31,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _core.BankAccounts.Add(bankAccount);
-                _core.BankAccounts.Save();
+                _core.Save();
                 return Redirect("/Admin/Card");
             }
             return View(bankAccount);
@@ -49,7 +49,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _core.BankAccounts.Update(bankAccount);
-                _core.BankAccounts.Save();
+                _core.Save();
                 return Redirect("/Admin/Card");
             }
             return View(bankAccount);
@@ -61,7 +61,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblBankAccounts bankAccounts = _core.BankAccounts.GetById(id);
             bankAccounts.IsActive = !bankAccounts.IsActive;
             _core.BankAccounts.Update(bankAccounts);
-            _core.BankAccounts.Save();
+            _core.Save();
         }
 
         protected override void Dispose(bool disposing)

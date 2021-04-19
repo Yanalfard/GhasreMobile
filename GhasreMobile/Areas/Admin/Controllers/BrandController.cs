@@ -33,7 +33,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _core.Brand.Add(brand);
-                _core.Brand.Save();
+                _core.Save();
                 return Redirect("/Admin/Brand");
             }
             return View(brand);
@@ -50,7 +50,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _core.Brand.Update(brand);
-                _core.Brand.Save();
+                _core.Save();
                 return Redirect("/Admin/Brand");
             }
             return View(brand);
@@ -66,7 +66,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             else
             {
                 _core.Brand.DeleteById(id);
-                _core.Brand.Save();
+                _core.Save();
                 return "true";
             }
         }

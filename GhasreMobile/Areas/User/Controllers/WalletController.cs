@@ -73,7 +73,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     addWallet.ClientId = SelectUser().ClientId;
                     addWallet.OrderId = charg.OrderId;
                     db.Wallet.Add(addWallet);
-                    db.Wallet.Save();
+                    db.Save();
 
                     //توضیحات مورد نیاز پرداخت
                     var description = "قصر موبایل";
@@ -160,7 +160,7 @@ namespace GhasreMobile.Areas.User.Controllers
                 addWallet.ClientId = SelectUser().ClientId;
                 addWallet.OrderId = charge.OrderId;
                 db.Wallet.Add(addWallet);
-                db.Wallet.Save();
+                db.Save();
 
                 //توضیحات مورد نیاز پرداخت
                 var description = "قصر موبایل";

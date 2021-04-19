@@ -51,7 +51,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     await ImageUrl.CopyToAsync(stream);
                 };
                 _core.BannerAndSlide.Add(NewSlider);
-                _core.BannerAndSlide.Save();
+                _core.Save();
                 return Redirect("/Admin/Slider");
             }
             return View(slider);
@@ -92,7 +92,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
 
             _core.BannerAndSlide.Update(FirstSlider);
-            _core.BannerAndSlide.Save();
+            _core.Save();
             return Redirect("/Admin/Slider");
         }
 
@@ -107,7 +107,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 System.IO.File.Delete(imagePath);
             }
             _core.BannerAndSlide.DeleteById(id);
-            _core.BannerAndSlide.Save();
+            _core.Save();
             return "true";
         }
 

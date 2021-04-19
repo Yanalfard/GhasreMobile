@@ -56,7 +56,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         notification.Message = Text;
                         _core.Notification.Add(notification);
                     }
-                    _core.Notification.Save();
+                    _core.Save();
                     return Redirect("/Admin/Notification");
                 }
                 else
@@ -67,7 +67,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     notification.SenderId = Sender.ClientId;
                     notification.Message = Text;
                     _core.Notification.Add(notification);
-                    _core.Notification.Save();
+                    _core.Save();
                     return Redirect("/Admin/Notification");
                 }
             }
@@ -83,7 +83,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     notification.Message = Text;
                     _core.Notification.Add(notification);
                 }
-                _core.Notification.Save();
+                _core.Save();
                 return Redirect("/Admin/Notification");
             }
         }

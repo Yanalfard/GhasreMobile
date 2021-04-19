@@ -38,7 +38,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             album.Name = Name;
             album.IsProduct = false;
             _core.Album.Add(album);
-            _core.Album.Save();
+            _core.Save();
             if (GalleryFile != null)
             {
                 foreach (var item in GalleryFile)
@@ -63,7 +63,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                     _core.Image.Add(image);
                 }
-                _core.Image.Save();
+                _core.Save();
             }
             return Redirect("/Admin/Album");
         }
@@ -103,7 +103,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                     _core.Image.Add(image);
                 }
-                _core.Image.Save();
+                _core.Save();
             }
             return Redirect("/Admin/Album");
         }
@@ -124,10 +124,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     }
                     _core.Image.Delete(item);
                 }
-                _core.Image.Save();
+                _core.Save();
             }
             _core.Album.DeleteById(id);
-            _core.Album.Save();
+            _core.Save();
         }
 
         [HttpPost]
@@ -142,7 +142,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 System.IO.File.Delete(imagePath);
             }
             _core.Image.Delete(image);
-            _core.Image.Save();
+            _core.Save();
             return Redirect("/Admin/Album");
         }
 

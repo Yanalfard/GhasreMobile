@@ -257,7 +257,7 @@ namespace GhasreMobile.Controllers
                     addOrder.IsFractional = fractional;
                     addOrder.SentId = selectedDiscount.PostPriceId;
                     db.Order.Add(addOrder);
-                    db.Order.Save();
+                    db.Save();
                     foreach (var item in sessions)
                     {
                         var product = db.Product.Get().Where(p => p.ProductId == item.ProductID).Select(p => new
@@ -297,7 +297,7 @@ namespace GhasreMobile.Controllers
                         db.OrderDetail.Add(addOrderDetail);
 
                     }
-                    db.OrderDetail.Save();
+                    db.Save();
                     if (fractional)
                     {
                         //List<TblOrderDetail> list = db.OrderDetail.Get(i => i.FinalOrderId == addOrder.OrdeId).ToList();
@@ -333,7 +333,7 @@ namespace GhasreMobile.Controllers
                             selectedOrder.IsPayed = true;
                             db.Client.Update(selectedClient);
                             db.Order.Update(selectedOrder);
-                            db.Client.Save();
+                            db.Save();
                             DiscountVm emptydiscount = new DiscountVm();
                             HttpContext.Session.SetComplexData("Discount", emptydiscount);
                             List<ShopCartItem> emptyShopCartItem = new List<ShopCartItem>();
@@ -351,7 +351,7 @@ namespace GhasreMobile.Controllers
                                     db.Color.Update(colors);
                                 }
                             }
-                            db.Wallet.Save();
+                            db.Save();
                             return View();
                         }
                         else
@@ -435,7 +435,7 @@ namespace GhasreMobile.Controllers
                                         TblClient selectedClient = db.Client.GetById(wallet.ClientId);
                                         selectedClient.Balance += wallet.Amount;
                                         db.Client.Update(selectedClient);
-                                        db.Client.Save();
+                                        db.Save();
                                         if (wallet.OrderId != null)
                                         {
                                             TblOrder selectedOrder = db.Order.GetById(wallet.OrderId);
@@ -443,7 +443,7 @@ namespace GhasreMobile.Controllers
                                             db.Order.Update(selectedOrder);
                                             selectedClient.Balance -= selectedOrder.FinalPrice;
                                             db.Client.Update(selectedClient);
-                                            db.Client.Save();
+                                            db.Save();
                                             TblWallet addWallet = new TblWallet();
                                             addWallet.Amount = selectedOrder.FinalPrice;
                                             addWallet.Date = DateTime.Now;
@@ -469,7 +469,7 @@ namespace GhasreMobile.Controllers
                                                     db.Color.Update(colors);
                                                 }
                                             }
-                                            db.Wallet.Save();
+                                            db.Save();
                                             DiscountVm emptydiscount = new DiscountVm();
                                             HttpContext.Session.SetComplexData("Discount", emptydiscount);
                                             List<ShopCartItem> emptyShopCartItem = new List<ShopCartItem>();

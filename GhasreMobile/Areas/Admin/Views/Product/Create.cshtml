@@ -96,7 +96,7 @@
                 </div>
                 <div class="form-row">
                     @{
-                        IEnumerable<string> keywordsList = ViewBag.keywords;
+                        IEnumerable<string> keywordsList = ViewBag.keywords as IEnumerable<string>;
                     }
                     <div class="form-group col-md-6">
                         <input type="text" value="
@@ -134,7 +134,6 @@
                 <aside id="ColorPanel"></aside>
                 <hr />
 
-                <hr />
                 <div class="mt-3">
                     <label class="ml-5">توضیحات کوتاه :</label>
                     <textarea id="DescriptionShortHtml" asp-for="DescriptionShortHtml"></textarea>

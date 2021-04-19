@@ -74,7 +74,7 @@ namespace GhasreMobile.Controllers
                     TblTopic topic = db.Topic.GetById(id);
                     topic.VoteCount++;
                     bool res = db.Topic.Update(topic);
-                    db.Topic.Save();
+                    db.Save();
                     return Ok(true);
                 }
                 return await Task.FromResult(Ok(false));
@@ -97,7 +97,7 @@ namespace GhasreMobile.Controllers
                     TblTopic topic = db.Topic.GetById(id);
                     topic.VoteCount--;
                     db.Topic.Update(topic);
-                    db.Topic.Save();
+                    db.Save();
                     return await Task.FromResult(Ok(true));
                 }
                 return await Task.FromResult(Ok(false));
@@ -128,12 +128,12 @@ namespace GhasreMobile.Controllers
                         }
                     }
                     db.Comment.Add(addComment);
-                    db.Comment.Save();
+                    db.Save();
                     TblTopicCommentRel addCommentRel = new TblTopicCommentRel();
                     addCommentRel.TopicId = comment.TopicId;
                     addCommentRel.CommentId = addComment.CommentId;
                     db.TopicCommentRel.Add(addCommentRel);
-                    db.TopicCommentRel.Save();
+                    db.Save();
                     return await Task.FromResult(PartialView());
                 }
                 return await Task.FromResult(PartialView(comment));
@@ -177,7 +177,7 @@ namespace GhasreMobile.Controllers
                         }
                     }
                     db.Topic.Add(tblTopic);
-                    db.Topic.Save();
+                    db.Save();
                     return await Task.FromResult(Redirect("/Forum?addForum=true"));
                 }
                 return await Task.FromResult(View(topic));

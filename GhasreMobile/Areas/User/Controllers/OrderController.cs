@@ -295,7 +295,7 @@ namespace GhasreMobile.Areas.User.Controllers
                     AddOnlineOrder.IsRead = false;
                     AddOnlineOrder.Title = online.Title;
                     db.OnlineOrder.Add(AddOnlineOrder);
-                    db.OnlineOrder.Save();
+                    db.Save();
                     var type = "true";
                     return Redirect("/User/Order/OnlineOrder?type=" + type.ToString());
                 }

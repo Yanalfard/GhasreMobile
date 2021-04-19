@@ -39,7 +39,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             TblDelivery delivery = _core.Delivery.GetById(id);
             delivery.IsAccepted = !delivery.IsAccepted;
             _core.Delivery.Update(delivery);
-            _core.Delivery.Save();
+            _core.Save();
         }
 
         protected override void Dispose(bool disposing)

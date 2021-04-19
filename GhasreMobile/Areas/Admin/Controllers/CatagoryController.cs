@@ -37,7 +37,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     catagory.IsOnFirstPage = true;
                     _core.Catagory.Add(catagory);
-                    _core.Catagory.Save();
+                    _core.Save();
                     return Redirect("/Admin/Catagory");
                 }
                 else
@@ -47,7 +47,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     ParentCatagory.IsOnFirstPage = false;
                     _core.Catagory.Update(ParentCatagory);
                     _core.Catagory.Add(catagory);
-                    _core.Catagory.Save();
+                    _core.Save();
                     return Redirect("/Admin/Catagory");
                 }
             }
@@ -67,7 +67,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _core.Catagory.Update(catagory);
-                _core.Catagory.Save();
+                _core.Save();
                 return Redirect("/Admin/Catagory");
             }
             return View(catagory);
@@ -88,7 +88,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             else
             {
                 _core.Catagory.DeleteById(id);
-                _core.Catagory.Save();
+                _core.Save();
                 return "true";
             }
         }

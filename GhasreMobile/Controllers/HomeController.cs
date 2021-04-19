@@ -45,7 +45,7 @@ namespace GhasreMobile.Controllers
                     addVisit.Ip = ipUser.ToString();
                     addVisit.Date = DateTime.Now;
                     db.Visit.Add(addVisit);
-                    db.Visit.Save();
+                    db.Save();
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace GhasreMobile.Controllers
                         addVisit.Ip = ipUser.ToString();
                         addVisit.Date = DateTime.Now;
                         db.Visit.Add(addVisit);
-                        db.Visit.Save();
+                        db.Save();
                     }
                 }
 
@@ -166,7 +166,7 @@ namespace GhasreMobile.Controllers
                     addDelivery.DateCreated = DateTime.Now;
                     addDelivery.IsAccepted = false;
                     db.Delivery.Add(addDelivery);
-                    db.Delivery.Save();
+                    db.Save();
                     return await Task.FromResult(PartialView(delivery));
                 }
                 return await Task.FromResult(PartialView(delivery));
@@ -189,7 +189,7 @@ namespace GhasreMobile.Controllers
                     addContactUs.TellNo = contactUs.TellNo;
                     addContactUs.Message = contactUs.Message;
                     db.ContactUs.Add(addContactUs);
-                    db.ContactUs.Save();
+                    db.Save();
                     return await Task.FromResult(PartialView(contactUs));
                 }
                 return await Task.FromResult(PartialView(contactUs));
@@ -221,7 +221,7 @@ namespace GhasreMobile.Controllers
                         }
                     }
                     db.Comment.Add(addComment);
-                    db.Comment.Save();
+                    db.Save();
                     return await Task.FromResult(PartialView());
                 }
                 return await Task.FromResult(PartialView(comment));
