@@ -11,8 +11,8 @@ namespace Services.Repositories
 {
     public class MainRepo<TEntity> : IMainRepo<TEntity> where TEntity : class
     {
-        private GhasreMobileContext _context;
-        private DbSet<TEntity> _dbSet;
+        private readonly GhasreMobileContext _context;
+        private readonly DbSet<TEntity> _dbSet;
 
         public MainRepo(GhasreMobileContext context)
         {
@@ -75,14 +75,16 @@ namespace Services.Repositories
             return query.ToList();
         }
 
+        public virtual bool Any(Expression<Func<TEntity, bool>> where = null)
+        {
+            if (where != null)
+                return _dbSet.Any(where);
+            return false;
+        }
+
         public virtual TEntity GetById(object id)
         {
             return _dbSet.Find(id);
-        }
-
-        public virtual void Save()
-        {
-            _context.SaveChanges();
         }
     }
 }

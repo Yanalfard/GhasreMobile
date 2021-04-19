@@ -8,7 +8,7 @@ namespace Services.Services
 {
     public class Core : IDisposable
     {
-        private GhasreMobileContext _context = new GhasreMobileContext();
+        private readonly GhasreMobileContext _context = new GhasreMobileContext();
 
         private MainRepo<TblStore> _store;
         private MainRepo<TblConfig> _config;
@@ -96,6 +96,9 @@ namespace Services.Services
         public MainRepo<TblContactUs> ContactUs => _ContactUs ??= new MainRepo<TblContactUs>(_context);
         public MainRepo<TblStoreImageRel> StoreImageRel => _StoreImageRel ??= new MainRepo<TblStoreImageRel>(_context);
         public MainRepo<TblVisit> Visit => _Visit ??= new MainRepo<TblVisit>(_context);
+
+        public void Save() => _context.SaveChanges();
+
         public void Dispose()
         {
             _context.Dispose();
