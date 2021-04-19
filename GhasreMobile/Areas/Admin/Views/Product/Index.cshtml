@@ -325,6 +325,7 @@
         }
 
         function Selling(id) {
+            $("#overlay").fadeIn(300);
             $.post("/Admin/Product/Selling/" + id, function () {
                 window.location.reload();
             });

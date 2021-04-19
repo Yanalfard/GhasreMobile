@@ -29,7 +29,7 @@
                         </div>
                     </td>
                     <td>
-                        <input id="ColorId-@item.ColorId" class="form-control form-control-sm col-md-4" placeholder="مثال:3" value="@item.Count">
+                        <input type="number" id="ColorId-@item.ColorId" class="form-control form-control-sm col-md-4" placeholder="مثال:3" value="@item.Count">
                     </td>
                     <td>
                         <button onclick="EditStoke(@item.ColorId)" class="btn btn-sm btn-success">ثبت</button>
@@ -44,11 +44,12 @@
     <label>قیمت:</label>
     @if (Model.First().Product.PriceAfterDiscount != 0)
     {
-        <input id="Price-@Model.First().Product.ProductId" class="form-control form-control-sm col-md-2 PriceInput" placeholder="مثال:50000 تومان" value="@Model.First().Product.PriceAfterDiscount">
+        <input id="Price-@Model.First().Product.ProductId" class="ProductId form-control form-control-sm col-md-2 PriceInput" placeholder="مثال:50000 تومان" value="@Model.First().Product.PriceAfterDiscount">
     }
     else
     {
-        <input id="Price-@Model.First().ProductId" class="form-control form-control-sm col-md-2 PriceInput" placeholder="مثال:50000" value="@Model.First().Product.PriceBeforeDiscount">
+        <input id="Price-@Model.First().ProductId" class="ProductId form-control form-control-sm col-md-2 PriceInput" placeholder="مثال:50000" value="@Model.First().Product.PriceBeforeDiscount">
+
     }
 
     <button onclick="EditPrice(@Model.First().ProductId)" class="btn btn-sm btn-success ml-md-4">ثبت</button>
@@ -56,12 +57,14 @@
 <script src="~/js/Input_Formatting_Currency.js"></script>
 <script>
     function EditStoke(id) {
-        $.post("/Admin/Product/EditStoke?Id=" + id + "&count=" + document.querySelectorAll('#ColorId-' + id)[1].value, function () {
+        var count = $('#ColorId-' + id).val();
+        $.post("/Admin/Product/EditStoke?Id=" + id + "&count=" + count, function () {
             UIkit.notification("موجودی بروز شد");
         });
     }
     function EditPrice(Id) {
-        $.post("/Admin/Product/EditPrice?Id=" + Id + "&Price=" + document.querySelectorAll("#Price-@Model.First().ProductId")[1].value, function () {
+        var Price = $('.ProductId').val();
+        $.post("/Admin/Product/EditPrice?Id=" + Id + "&Price=" + Price, function () {
             UIkit.notification("قیمت محصول بروز شد");
         });
     }
