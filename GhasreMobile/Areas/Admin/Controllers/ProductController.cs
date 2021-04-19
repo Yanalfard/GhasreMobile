@@ -347,7 +347,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             return ViewComponent("CreateColorAdmin", new { id = id });
         }
-
+        public IActionResult SelectedCategory()
+        {
+            return ViewComponent("SelectedCategoryAdmin");
+        }
         [HttpPost]
         public IActionResult CreateColor(CreateColorVm createColorVm)
         {
