@@ -55,15 +55,22 @@
                                     <td>@item.Amount.ToString("#,0")</td>
                                     <td>@item.Date.AllToShamsi()</td>
                                     <td>
-                                        @if (item.IsDeposit)
+                                        @if (item.IsDeposit && item.IsFinaly)
                                         {
-                                            <span class="text-success">واریز</span>
+                                            <span class="text-success">شارژ حساب</span>
                                         }
-                                        else
+                                        else if (item.IsDeposit && item.IsFinaly == false)
                                         {
-                                            <span class="text-warning">برداشت</span>
+                                            <span class="text-danger">عدم پرداخت در درگاه(شارژ حساب انجام نشده  یا خرید انجام نشده است)</span>
                                         }
-
+                                        else if (item.IsDeposit == false && item.IsFinaly)
+                                        {
+                                            <span class="text-success">خرید </span>
+                                        }
+                                        else if (item.IsDeposit == false && item.IsFinaly == false)
+                                        {
+                                            <span class="text-danger">عدم پرداخت در درگاه</span>
+                                        }
                                     </td>
                                 </tr>
                             }

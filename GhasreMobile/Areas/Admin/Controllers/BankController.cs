@@ -29,15 +29,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 PersianCalendar pc = new PersianCalendar();
                 string[] Start = startDate.Split('/');
 
-                DateTime sdte = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0);
+                DateTime sdte = pc.ToDateTime(Convert.ToInt32(Start[0]), Convert.ToInt32(Start[1]), Convert.ToInt32(Start[2]), 0, 0, 0, 0).Date;
 
                 //////End Date
                 string[] End = endDate.Split('/');
 
-                DateTime edte = pc.ToDateTime(Convert.ToInt32(End[0]), Convert.ToInt32(End[1]), Convert.ToInt32(End[2]), 0, 0, 0, 0);
+                DateTime edte = pc.ToDateTime(Convert.ToInt32(End[0]), Convert.ToInt32(End[1]), Convert.ToInt32(End[2]), 0, 0, 0, 0).Date;
 
                 /////
-                IEnumerable<TblWallet> wallets = PagingList.Create(_core.Wallet.Get(b => b.Date > sdte && b.Date < edte).OrderByDescending(o => o.WalletId), 60, page);
+                IEnumerable<TblWallet> wallets = PagingList.Create(_core.Wallet.Get(b => b.Date.Date >= sdte && b.Date.Date <= edte).OrderByDescending(o => o.WalletId), 60, page);
                 return View(wallets);
             }
             else
