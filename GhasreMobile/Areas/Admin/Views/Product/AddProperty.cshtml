@@ -27,7 +27,7 @@
         <div id="PropertyInCreate-@item.PropertyId" class="form-inline col-md-7 mt-2">
             <label class="ml-5 p-0 col-md-2 uk-text-right justify-content-start">@item.Property.Name:</label>
             <input id="PropetryNameId" name="PropertyId" type="hidden" value="@item.PropertyId" />
-            <input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3 col-9" value="@item.Value">
+            <input id="PropertyValue" name="Value" class="form-control form-control-sm col-md-3 col-9" value="@item.Value" maxlength="110">
             <a onclick="DeleteProperty(@item.PropertyId)" class="text-danger mr-1" uk-icon="close-circle">
             </a>
         </div>}

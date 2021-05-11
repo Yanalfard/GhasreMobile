@@ -74,12 +74,19 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
                 if (file != null)
                 {
-                    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Ad", EditAd.Image);
-
-                    if (System.IO.File.Exists(imagePath))
+                    try
                     {
-                        System.IO.File.Delete(imagePath);
+                        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Ad", EditAd.Image);
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
                     }
+                    catch
+                    {
+
+                    }
+
                     EditAd.Image = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string savePath = Path.Combine(
                                             Directory.GetCurrentDirectory(), "wwwroot/Images/Ad", EditAd.Image

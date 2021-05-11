@@ -8,9 +8,9 @@ using DataLayer.ViewModels;
 using ReflectionIT.Mvc.Paging;
 using Services.Services;
 using Microsoft.AspNetCore.Http;
-using System.IO;
 using GhasreMobile.Utilities;
 using DataLayer.Utilities;
+using System.IO;
 
 namespace GhasreMobile.Areas.Admin.Controllers
 {
@@ -328,7 +328,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
 
 
                 }
-                
+
                 return await Task.FromResult(View(product));
             }
             catch
@@ -410,7 +410,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 _core.Save();
                 foreach (var item in pros)
                 {
-                    if (!_core.ProductPropertyRel.Get().Any(i => i.ProductId == id && i.PropertyId == item.PropertyId))
+                    if (!_core.ProductPropertyRel.Get().Any(i => i.ProductId == item.ProductId && i.PropertyId == item.PropertyId))
                     {
                         _core.ProductPropertyRel.Add(item);
                         _core.Save();
@@ -468,7 +468,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         }
                         NewImage.Image = Guid.NewGuid().ToString() + Path.GetExtension(galleryimage.FileName);
                         string savePathAlbum = Path.Combine(
-                                            Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum", NewImage.Image
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum/", NewImage.Image
                                         );
 
                         using (var stream = new FileStream(savePathAlbum, FileMode.Create))
@@ -609,21 +609,35 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     TblProduct EditProduct = _core.Product.GetById(product.ProductId);
                     if (MainImage != null)
                     {
-                        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", EditProduct.MainImage);
-
-                        if (System.IO.File.Exists(imagePath))
+                        try
                         {
-                            System.IO.File.Delete(imagePath);
+                            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain/", EditProduct.MainImage);
+                            if (System.IO.File.Exists(imagePath))
+                            {
+                                System.IO.File.Delete(imagePath);
+                            }
                         }
+                        catch
+                        {
+
+                        }
+
+
                         EditProduct.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
-                        string savePath = Path.Combine(
-                                                Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain", EditProduct.MainImage
-                                            );
+                        string saveDirectory = Path.Combine(
+                                                Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain/");
+                        string savePath = Path.Combine(saveDirectory, EditProduct.MainImage);
+
+                        if (!Directory.Exists(saveDirectory))
+                        {
+                            Directory.CreateDirectory(saveDirectory);
+                        }
 
                         using (var stream = new FileStream(savePath, FileMode.Create))
                         {
                             await MainImage.CopyToAsync(stream);
                         }
+
                     }
                     IEnumerable<TblProductKeywordRel> keywordRels = _core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId);
                     if (keywordRels.Count() > 0)
@@ -682,7 +696,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     _core.Save();
                     return await Task.FromResult(Redirect("/Admin/Product"));
                 }
-               
+
                 return View(product);
             }
             catch

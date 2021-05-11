@@ -17,17 +17,17 @@ namespace GhasreMobile.Areas.Admin.Controllers
     public class BlogController : Controller
     {
         Core _core = new Core();
-        public IActionResult Index(int page = 1,string Search=null)
+        public IActionResult Index(int page = 1, string Search = null)
         {
             if (!string.IsNullOrEmpty(Search))
             {
-                IEnumerable<TblBlog> blogs = PagingList.Create(_core.Blog.Get(b=>b.Title.Contains(Search)), 30, page);
+                IEnumerable<TblBlog> blogs = PagingList.Create(_core.Blog.Get(b => b.Title.Contains(Search)), 30, page);
 
                 return View(blogs);
             }
             else
             {
-                IEnumerable<TblBlog> blogs = PagingList.Create(_core.Blog.Get().OrderByDescending(b=>b.BlogId), 30, page);
+                IEnumerable<TblBlog> blogs = PagingList.Create(_core.Blog.Get().OrderByDescending(b => b.BlogId), 30, page);
 
                 return View(blogs);
             }
@@ -50,7 +50,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     string saveDirectory = Path.Combine(
                                                     Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs");
                     string savePathAlbum = Path.Combine(
-                                        Directory.GetCurrentDirectory(),saveDirectory, blog.MainImage
+                                        Directory.GetCurrentDirectory(), saveDirectory, blog.MainImage
                                     );
                     if (!Directory.Exists(saveDirectory))
                     {
@@ -110,11 +110,18 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 TblBlog Editblog = _core.Blog.GetById(blog.BlogId);
                 if (MainImage != null)
                 {
-                    var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs", Editblog.MainImage);
-
-                    if (System.IO.File.Exists(imagePath))
+                    try
                     {
-                        System.IO.File.Delete(imagePath);
+                        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs", Editblog.MainImage);
+
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
+                    }
+                    catch
+                    {
+
                     }
 
                     string savePathAlbum = Path.Combine(

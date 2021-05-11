@@ -6103,9 +6103,18 @@ ul.uk-nav-sub {
  * Adopts `uk-icon`
  */
 .uk-slidenav {
-  padding: 5px 10px;
+  padding: 10px 10px !important;
   color: rgba(102, 102, 102, 0.5);
-  transition: color 0.1s ease-in-out; }
+  transition: color 0.1s ease-in-out;
+  margin: 15px !important;
+  background-color: #fff;
+  text-align: center;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  -moz-box-shadow: 0 3px 12px rgba(64, 64, 64, 0.24);
+  -webkit-box-shadow: 0 3px 12px rgba(64, 64, 64, 0.24);
+  box-shadow: 0 3px 12px rgba(64, 64, 64, 0.24); }
 
 /* Hover + Focus */
 .uk-slidenav:hover,

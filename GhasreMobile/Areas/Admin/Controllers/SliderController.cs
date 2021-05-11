@@ -74,10 +74,18 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ImageUrl != null)
             {
 
-                var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Slider", FirstSlider.ImageUrl);
-                if (System.IO.File.Exists(deleteImagePath))
+               
+                try
                 {
-                    System.IO.File.Delete(deleteImagePath);
+                    var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Slider", FirstSlider.ImageUrl);
+                    if (System.IO.File.Exists(deleteImagePath))
+                    {
+                        System.IO.File.Delete(deleteImagePath);
+                    }
+                }
+                catch
+                {
+
                 }
 
                 FirstSlider.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);

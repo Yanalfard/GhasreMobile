@@ -17,7 +17,7 @@
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label>نام رنگ</label>
-                <input asp-for="Name" placeholder="نام رنگ" class="form-control form-control-sm">
+                <input asp-for="Name" placeholder="نام رنگ" class="form-control form-control-sm"  maxlength="110">
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
         </div>
@@ -31,7 +31,7 @@
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label>تعداد</label>
-                <input asp-for="count" class="form-control form-control-sm" placeholder="مثال: 6">
+                <input asp-for="count" class="form-control form-control-sm" placeholder="مثال: 6"  maxlength="10">
                 <span asp-validation-for="count" class="text-danger"></span>
             </div>
         </div>
