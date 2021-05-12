@@ -6389,10 +6389,11 @@ ul.uk-nav-sub {
  * Adopts `uk-icon`
  */
 .uk-slidenav {
-    padding: 10px 10px !important;
+    padding: 7px 7px !important;
     color: rgba(102, 102, 102, 0.5);
     transition: color 0.1s ease-in-out;
-    margin: 15px !important;
+    //
+    margin: 3px !important;
     background-color: #fff;
     text-align: center;
     -moz-border-radius: 50px;
@@ -6401,6 +6402,18 @@ ul.uk-nav-sub {
     -moz-box-shadow: 0 3px 12px rgba(64, 64, 64, 0.24);
     -webkit-box-shadow: 0 3px 12px rgba(64, 64, 64, 0.24);
     box-shadow: 0 3px 12px rgba(64, 64, 64,0.24);
+}
+/* landscape orientation */
+@media only screen and (max-width : 512px) {
+    .uk-slidenav {
+        padding: 2px 2px 0px 2px !important;
+        margin: 2px !important;
+    }
+
+    .sizeinphone svg {
+        width: 8px !important;
+        height: 20px !important;
+    }
 }
 /* Hover + Focus */
 .uk-slidenav:hover,
