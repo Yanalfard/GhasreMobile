@@ -35,37 +35,40 @@ namespace GhasreMobile.Controllers
         public int Get(int id, int colorId)
         {
             TblColor selectedProduct = db.Color.GetById(colorId);
-            if (selectedProduct.Count > 0)
+            TblProduct selectedP = db.Product.GetById(id);
+            if (selectedP.PriceBeforeDiscount > 0)
             {
-
-                List<ShopCartItem> list = new List<ShopCartItem>();
-                var sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
-                if (sessions != null)
+                if (selectedProduct.Count > 0)
                 {
-                    list = sessions as List<ShopCartItem>;
-                }
-                if (list.Any(p => p.ColorID == colorId))
-                {
-                    int index = list.FindIndex(p => p.ColorID == colorId);
-                    if (selectedProduct != null)
+                    List<ShopCartItem> list = new List<ShopCartItem>();
+                    var sessions = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
+                    if (sessions != null)
                     {
-                        int count = selectedProduct.Count - list[index].Count;
-                        if (count > 0 && selectedProduct.ProductId == id && selectedProduct.ColorId == colorId)
+                        list = sessions as List<ShopCartItem>;
+                    }
+                    if (list.Any(p => p.ColorID == colorId))
+                    {
+                        int index = list.FindIndex(p => p.ColorID == colorId);
+                        if (selectedProduct != null)
                         {
-                            list[index].Count += 1;
+                            int count = selectedProduct.Count - list[index].Count;
+                            if (count > 0 && selectedProduct.ProductId == id && selectedProduct.ColorId == colorId)
+                            {
+                                list[index].Count += 1;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    list.Add(new ShopCartItem()
+                    else
                     {
-                        ProductID = id,
-                        ColorID = colorId,
-                        Count = 1
-                    });
+                        list.Add(new ShopCartItem()
+                        {
+                            ProductID = id,
+                            ColorID = colorId,
+                            Count = 1
+                        });
+                    }
+                    HttpContext.Session.SetComplexData("ShopCart", list);
                 }
-                HttpContext.Session.SetComplexData("ShopCart", list);
             }
             return Get();
         }
