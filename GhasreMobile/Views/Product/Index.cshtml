@@ -38,7 +38,7 @@
     </div>
 
     <div class="pr-image">
-        @if (Model.TblColor.Sum(i => i.Count) > 0)
+        @if (Model.TblColor.Sum(i => i.Count) > 0 && Model.PriceBeforeDiscount > 0)
         {
             @if (Model.TblSpecialOffer.Count > 0 && Model.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now)
             {
@@ -145,7 +145,7 @@
             @Html.Raw(Model.DescriptionShortHtml)
         </div>
         <div class="price g-3 rowr-at-l rowr-at-m col-at-s col-at-xs">
-            @if (Model.TblColor.Sum(i => i.Count) > 0 && Model.IsDeleted == false)
+            @if (Model.TblColor.Sum(i => i.Count) > 0 && Model.IsDeleted == false && Model.PriceBeforeDiscount > 0)
             {
                 @if (Model.TblSpecialOffer.Count > 0 && Model.TblSpecialOffer.SingleOrDefault().ValidTill >= DateTime.Now)
                 {
@@ -205,7 +205,7 @@
 
 
         }
-        @if (colors.Count > 0)
+        @if (colors.Count > 0 && Model.PriceBeforeDiscount > 0)
         {
             <div class="colours">
                 <h4>رنگ بندی</h4>
@@ -230,7 +230,7 @@
         <div class="cart uk-margin-top">
 
 
-            @if (Model.TblColor.Sum(i => i.Count) > 0 && Model.IsDeleted == false)
+            @if (Model.TblColor.Sum(i => i.Count) > 0 && Model.IsDeleted == false && Model.PriceBeforeDiscount > 0)
             {
                 <!-- #region BTN ADD -->
                 <div class="counter rowr">
@@ -275,7 +275,7 @@
         </div>
     </div>
     <ul class="pr-specs">
-        @if (Model.TblColor.Sum(i => i.Count) > 0)
+        @if (Model.TblColor.Sum(i => i.Count) > 0 && Model.PriceBeforeDiscount > 0)
         {
             <li>
                 موجود در انبار
