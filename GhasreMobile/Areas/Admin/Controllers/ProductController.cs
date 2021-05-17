@@ -791,5 +791,25 @@ namespace GhasreMobile.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public string DeleteCountProduct(int id)
+        {
+            try
+            {
+                TblProduct product = _core.Product.GetById(id);
+                foreach (var item in product.TblColor)
+                {
+                    item.Count = 0;
+                    _core.Color.Update(item);
+                }
+                _core.Save();
+                return "true";
+            }
+            catch
+            {
+                return "خطا در حذف";
+            }
+
+        }
     }
 }

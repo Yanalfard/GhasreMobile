@@ -25,7 +25,7 @@ namespace GhasreMobile.ViewComponents.View.ShowProductsIn
             //productsResult.AddRange(selectedProduct.Brand.TblProduct);
             //productsResult.AddRange(selectedProduct.Catagory.TblProduct);
             productsResult = productsResult.Distinct().Where(i => i.ProductId != id).ToList();
-            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/ShowProductsInView/ShowProductsInView.cshtml", productsResult));
+            return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/ShowProductsInView/ShowProductsInView.cshtml", productsResult.Take(15)));
         }
     }
 }

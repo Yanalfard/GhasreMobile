@@ -97,6 +97,12 @@
                                         {
                                             <p class="text-danger"> رنگی اضافی نشده است</p>
                                         }
+                                        @if (item.TblColor.Sum(i => i.Count) > 0)
+                                        {
+                                            <span data-placement="top" data-toggle="tooltip" title="" data-original-title="صفر کردن کل موجودی">
+                                                <a onclick="deleteCountProduct(@item.ProductId)" data-toggle="modal" data-target="#modalSave" class="text-primary" uk-icon="add-circle-outline"></a>
+                                            </span>
+                                        }
                                     </td>
                                     <td>
                                         <span data-placement="top" data-toggle="tooltip" title="" data-original-title="افزودن ویژگی">
@@ -268,7 +274,19 @@
 
 
 @section Script{
+
     <script>
+        function deleteCountProduct(id) {
+            if (confirm('آیا از صفر کردن موجودی کالای  مورد نظر مطمئن هستید؟')) {
+                $("#overlay").fadeIn(300);
+                $.post("/Admin/Product/DeleteCountProduct/" + id, function (result) {
+                    window.location.reload();
+                });
+            } else {
+                // Do nothing!
+            }
+
+        }
         function AddColor(id) {
             $("#modalCategory").modal("hide");
             $("#modalSave .modal-dialog .modal-content").html("");
@@ -276,6 +294,7 @@
                 $("#modalSave .modal-dialog .modal-content").html(result);
             });
         }
+
 
 
         function Stock(Id) {

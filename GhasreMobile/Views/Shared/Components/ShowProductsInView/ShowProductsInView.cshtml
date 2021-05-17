@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TblProduct>
 @if (Model.Any())
 {
-    <div class="product-slider gap-t uk-position-relative uk-visible-toggle" tabindex="-1" uk-slider="">
+    <div class="product-slider gap-t uk-position-relative uk-visible-toggle" tabindex="-1"  uk-slider="sets:true;autoplay:true">
         <div class="title">
             <a href="#" class="dot-container">
                 <img src="~/st/v/dot.svg" alt="" class="dot" />
@@ -16,6 +16,10 @@
                 </li>
             }
         </ul>
-        <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
+
+        <a class="uk-position-center-left uk-position-small sizeinphone" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small sizeinphone" href="#" uk-slidenav-next uk-slider-item="next"></a>
+
+        @*<ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>*@
     </div>
 }
