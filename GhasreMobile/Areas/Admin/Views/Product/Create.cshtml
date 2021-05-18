@@ -72,7 +72,9 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label>قیمت بعد از تخفیف</label>
-                        <input asp-for="PriceAfterDiscount" class="form-control form-control-sm" placeholder="مثال : 1,000,000">
+                        <input data-type='currency' class="form-control form-control-sm PriceInputDiscount" placeholder="مثال : 1,000,000">
+                        <input type="hidden" asp-for="PriceAfterDiscount" />
+                        @*<input asp-for="PriceAfterDiscount" class="form-control form-control-sm" placeholder="مثال : 1,000,000">*@
                         <span asp-validation-for="PriceAfterDiscount" class="text-danger"></span>
                     </div>
                 </div>
@@ -294,6 +296,13 @@
                 $(this).val("");
             }
         });
-
+        $(".PriceInputDiscount").change(function () {
+            var price = $(this).val().replaceAll(",", "");
+            if ($.isNumeric(price)) {
+                $("#PriceAfterDiscount").val($(this).val().replaceAll(",", ""));
+            } else {
+                $(this).val("");
+            }
+        });
     </script>
 }

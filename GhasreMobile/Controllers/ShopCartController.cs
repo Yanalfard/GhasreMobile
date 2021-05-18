@@ -88,44 +88,49 @@ namespace GhasreMobile.Controllers
             try
             {
                 TblColor selectedProduct = db.Color.GetById(colorId);
+                TblProduct selectedP = db.Product.GetById(id);
                 var listShop = HttpContext.Session.GetComplexData<List<ShopCartItem>>("ShopCart");
                 var index = listShop.FindIndex(p => p.ColorID == colorId);
-                switch (command)
+                if (selectedP.TblColor.Any(i => i.ProductId == id))
                 {
-                    case "up":
-                        {
-                            if (selectedProduct != null)
+                    switch (command)
+                    {
+                        case "up":
                             {
-                                int count = selectedProduct.Count - listShop[index].Count;
-                                if (count > 0 && selectedProduct.ProductId == id && selectedProduct.ColorId == colorId)
+                                if (selectedProduct != null)
                                 {
-                                    listShop[index].Count += 1;
+                                    int count = selectedProduct.Count - listShop[index].Count;
+                                    if (count > 0 && selectedProduct.ProductId == id && selectedProduct.ColorId == colorId)
+                                    {
+                                        listShop[index].Count += 1;
+                                    }
                                 }
+                                break;
                             }
-                            break;
-                        }
-                    case "down":
-                        {
-                            listShop[index].Count -= 1;
-                            if (listShop[index].Count == 0)
+                        case "down":
                             {
-                                listShop.RemoveAt(index);
+                                listShop[index].Count -= 1;
+                                if (listShop[index].Count == 0)
+                                {
+                                    listShop.RemoveAt(index);
+                                }
+                                break;
                             }
-                            break;
-                        }
-                    case "delete":
-                        {
+                        case "delete":
+                            {
 
-                            listShop.RemoveAt(index);
+                                listShop.RemoveAt(index);
 
-                            break;
-                        }
+                                break;
+                            }
+                    }
+                    HttpContext.Session.SetComplexData("ShopCart", listShop);
+                    if (listShop != null && listShop.Count == 0)
+                    {
+                        return Redirect("/");
+                    }
                 }
-                HttpContext.Session.SetComplexData("ShopCart", listShop);
-                if (listShop != null && listShop.Count == 0)
-                {
-                    return Redirect("/");
-                }
+
                 return await Task.FromResult(Redirect(ReturnUrl));
             }
             catch
@@ -235,6 +240,11 @@ namespace GhasreMobile.Controllers
                 DiscountVm selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
                 if (selectedDiscount != null)
                 {
+                    long sumWithDiscount = selectedDiscount.SumWithDiscount / 3;
+                    if (fractional && sumWithDiscount > SelectUser().Balance)
+                    {
+                        return await Task.FromResult(Redirect("/User/Order/Finalize?fractional=true"));
+                    }
                     TblOrder addOrder = new TblOrder();
                     if (selectedDiscount.DiscountId == 0)
                     {
@@ -298,19 +308,34 @@ namespace GhasreMobile.Controllers
 
                     }
                     db.Save();
-                    if (fractional)
+                    if (fractional && sumWithDiscount <= SelectUser().Balance)
                     {
-                        //List<TblOrderDetail> list = db.OrderDetail.Get(i => i.FinalOrderId == addOrder.OrdeId).ToList();
-                        //foreach (var item in list)
-                        //{
-                        //    TblColor colors = db.Color.GetById(item.ColorId);
-                        //    if (colors.Count > 0 && colors.Count >= item.Count)
-                        //    {
-                        //        colors.Count -= colors.Count;
-                        //        db.Color.Update(colors);
-                        //    }
-                        //}
-                        //db.Color.Save();
+                        TblWallet addWallet = new TblWallet();
+                        addWallet.Amount = (int)sumWithDiscount;
+                        addWallet.Date = DateTime.Now;
+                        addWallet.Description = "پیش پرداخت خرید اقساطی";
+                        addWallet.IsDeposit = false;
+                        addWallet.IsFinaly = true;
+                        addWallet.ClientId = SelectUser().ClientId;
+                        addWallet.OrderId = addOrder.OrdeId;
+                        db.Wallet.Add(addWallet);
+                        //db.Wallet.Save();
+                        TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
+                        selectedClient.Balance -= sumWithDiscount;
+                        TblOrder selectedOrder = db.Order.GetById(addOrder.OrdeId);
+                        selectedOrder.IsPayed = false;
+                        selectedOrder.IsFractional = true;
+                        selectedOrder.FractionalPartPayed = sumWithDiscount;
+                        db.Client.Update(selectedClient);
+                        db.Order.Update(selectedOrder);
+                        db.Save();
+                        DiscountVm emptydiscount = new DiscountVm();
+                        HttpContext.Session.SetComplexData("Discount", emptydiscount);
+                        List<ShopCartItem> emptyShopCartItem = new List<ShopCartItem>();
+                        HttpContext.Session.SetComplexData("ShopCart", emptyShopCartItem);
+                        HttpContext.Session.Clear();
+                        int message = selectedOrder.OrdeId;
+                        await Sms.SendSms(selectedClient.TellNo, message.ToString(), "GhasrMobileFractionalOrder");
                         return await Task.FromResult(Redirect("/User/Order/Fractional/" + addOrder.OrdeId));
                     }
                     else
@@ -352,7 +377,8 @@ namespace GhasreMobile.Controllers
                                 }
                             }
                             db.Save();
-                            return View();
+                            ViewBag.IsSucces = true;
+                            return await Task.FromResult(View());
                         }
                         else
                         {

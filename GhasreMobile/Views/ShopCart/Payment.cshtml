@@ -5,10 +5,18 @@
 }
 <div class="container uk-margin-auto-bottom mat-pad" style="height:50vh">
     <div class="">
-
+        @if (ViewBag?.IsSucce == "true")
+        {
             <div class="uk-alert uk-alert-success">
                 <h2>پرداخت با  کیف پول شما با موفقیت انجام شد</h2>
             </div>
+        }
+        else
+        {
+            <div class="uk-alert uk-alert-danger">
+                <h2>پرداخت انجام نشد</h2>
+            </div>
+        }
 
     </div>
 </div>

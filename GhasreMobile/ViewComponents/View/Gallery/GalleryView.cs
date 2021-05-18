@@ -1,4 +1,5 @@
 ﻿using DataLayer.Models;
+using GhasreMobile.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 using System;
@@ -15,6 +16,7 @@ namespace GhasreMobile.ViewComponents.View.Gallery
         {
             Random rand = new Random();
             List<TblAlbum> images = db.Album.Get(i => i.IsProduct == false).OrderByDescending(i => i.AlbumId).Take(6).ToList();
+            images.ShuffleList();
             return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/GalleryView/GalleryView.cshtml", images));
         }
     }

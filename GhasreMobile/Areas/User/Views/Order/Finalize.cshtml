@@ -9,33 +9,41 @@
     string FinalTextKharid = ViewBag.FinalTextKharid.ToString();
 }
 
+
+
 @if (Model.Any())
 {
-    <div class="col g-3 uk-margin-medium-bottom">
+<div class="col g-3 uk-margin-medium-bottom">
 
-        <div class="mat-card">
-            <div class="rowr uk-margin-small-bottom">
-                <h3 class="uk-h2 uk-margin-auto-left">
-                    تائید خرید
-                </h3>
-                <img src="~/st/r/logo.jpg" height="48" width="48" alt="" />
-            </div>
-            @*@{
-                    TblConfig list = ViewBag.FinalTextKharid as TblConfig;
-                }*@
-            <p class="uk-margin-remove">
-                @Html.Raw(FinalTextKharid)
-            </p>
+    <div class="mat-card">
+        <div class="rowr uk-margin-small-bottom">
+            <h3 class="uk-h2 uk-margin-auto-left">
+                تائید خرید
+            </h3>
+            <img src="~/st/r/logo.jpg" height="48" width="48" alt="" />
         </div>
-
-        <partial name="_Cart" model="Model" />
-
-        @await Component.InvokeAsync("CheckDiscountUser")
-
-        <div id="FinalVerfity">
-
-        </div>
+        @*@{
+                TblConfig list = ViewBag.FinalTextKharid as TblConfig;
+            }*@
+        <p class="uk-margin-remove">
+            @Html.Raw(FinalTextKharid)
+        </p>
     </div>
+
+    <partial name="_Cart" model="Model" />
+
+    @await Component.InvokeAsync("CheckDiscountUser")
+
+    <div id="FinalVerfity">
+
+    </div>
+    @if (Context.Request.Query["fractional"].ToString() == "true")
+    {
+        <div class="uk-alert uk-alert-danger">
+            <p class="help-block">لطفا کیف پول خود را شارژ کنید</p>
+        </div>
+    }
+</div>
     @section Scripts{
         <script>
             $('#FinalVerfity').load('/User/Order/FinalVerfity');

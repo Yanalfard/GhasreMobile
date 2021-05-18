@@ -108,6 +108,18 @@
                 <label>مبلغ کل سفارش:</label>
                 <span>@Model.FinalPrice.ToString("#,0")</span>
             </div>
+            <div class="form-group col-md-4">
+                <label>مبلغ پیش پرداخت:</label>
+                <span>@Model.FractionalPartPayed.Value.ToString("#,0")</span>
+            </div>
+            <div class="form-group col-md-4">
+                @{
+                    var Amount = Model.FinalPrice - Model.FractionalPartPayed;
+                }
+
+                <label>مبلغ مانده:</label>
+                <span>@Amount.Value.ToString("#,0")</span>
+            </div>
         </div>
         <div class="table-responsive flex">
             <hr />

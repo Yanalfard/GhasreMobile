@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TblBlog>
 @if (Model.Any())
 {
-<div class="mat-card uk-position-relative uk-visible-toggle" tabindex="-1" uk-slider="">
+<div class="mat-card uk-position-relative uk-visible-toggle" tabindex="-1" uk-slider="sets:true;autoplay:true">
 
     <div class="title gap-b">
         <a href="/Blog" class="dot-container">
@@ -19,8 +19,11 @@
             </li>
         }
     </ul>
+    <a class="uk-position-center-left uk-position-small sizeinphone" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+    <a class="uk-position-center-right uk-position-small sizeinphone" href="#" uk-slidenav-next uk-slider-item="next"></a>
 
-    <ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin uk-margin-top"></ul>
+
+    @*<ul class="navigation uk-slider-nav uk-dotnav uk-flex-center uk-margin uk-margin-top"></ul>*@
     <div class="row uk-margin-top">
         <a class="btn btn-primary uk-margin-auto" href="/Blog">بیشتر</a>
     </div>

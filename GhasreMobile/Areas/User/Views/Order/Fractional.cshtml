@@ -37,7 +37,7 @@
                 {
                     <tr>
                         <td>
-                            <a href="/Product/@j.ProductId/@j.Product.Name.Replace(" ","-")" class="link-text" target="_blank">@j.Product.Name</a>
+                            <a href="/Product/@j.ProductId/@j.Product.Name.Replace(" ", "-")" class="link-text" target="_blank">@j.Product.Name</a>
                         </td>
                         <td>@j.Count</td>
                         <td>@j.Color.Name</td>
@@ -57,13 +57,40 @@
                         @Model.TblOrderDetail.Sum(i => i.Count)
                     </td>
                     <td dir="rtl">
-                        <span>هزینه ارسال:</span>
+                        <span>هزینه ارسال :</span>
                         @Model.SendPrice.Value.ToString("#,0") تومان
                     </td>
-                    <td></td>
+                    <td>
+                        @*<span>پیش پرداخت :</span>
+                @Model.FractionalPartPayed.Value.ToString("#,0") تومان*@
+                    </td>
                     <td class="uk-text-success">
-                        <span>جمع کل:</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td dir="rtl" class="uk-text-success">
+                        <span>جمع کل :</span>
                         @Model.FinalPrice.ToString("#,0") تومان
+                    </td>
+                    <td dir="rtl"  class="uk-text-success">
+                        <span>پیش پرداخت :</span>
+                        @Model.FractionalPartPayed.Value.ToString("#,0") تومان
+                    </td>
+                    <td dir="rtl"  class="uk-text-success">
+                        @{
+                            var Amount = Model.FinalPrice - Model.FractionalPartPayed;
+                        }
+
+                        <span>مانده حساب:</span>
+
+                        @Amount.Value.ToString("#,0") تومان
+                    </td>
+                    <td>
+
+                    </td>
+                    <td class="uk-text-success">
+
                     </td>
                 </tr>
             </tfoot>

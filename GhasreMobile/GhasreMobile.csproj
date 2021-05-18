@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131" />
     <PackageReference Include="GoogleReCaptcha.V3" Version="1.3.0" />
     <PackageReference Include="MD.BootstrapPersianDateTimePicker" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
@@ -55,7 +56,7 @@
     <Folder Include="wwwroot\Images\Ad\" />
     <Folder Include="wwwroot\Images\Blogs\" />
     <Folder Include="wwwroot\Images\Album\" />
-    <Folder Include="wwwroot\Images\ProductMain\" />
+    <Folder Include="wwwroot\Images\ProductMain\thumb\" />
     <Folder Include="wwwroot\Images\User\" />
     <Folder Include="wwwroot\Images\ProductAlbum\" />
     <Folder Include="wwwroot\lib\" />

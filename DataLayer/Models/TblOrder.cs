@@ -35,6 +35,8 @@ namespace DataLayer.Models
         public DateTime DateSubmited { get; set; }
         public bool? IsFractional { get; set; }
         public int? SentId { get; set; }
+        public long? FractionalPartPayed { get; set; }
+
         [ForeignKey(nameof(ClientId))]
         [InverseProperty(nameof(TblClient.TblOrder))]
         public virtual TblClient Client { get; set; }

@@ -1,4 +1,5 @@
 ﻿using DataLayer.Models;
+using GhasreMobile.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 using System;
@@ -25,6 +26,7 @@ namespace GhasreMobile.ViewComponents.View.ShowProductsIn
             //productsResult.AddRange(selectedProduct.Brand.TblProduct);
             //productsResult.AddRange(selectedProduct.Catagory.TblProduct);
             productsResult = productsResult.Distinct().Where(i => i.ProductId != id).ToList();
+            productsResult.ShuffleList();
             return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/ShowProductsInView/ShowProductsInView.cshtml", productsResult.Take(15)));
         }
     }
