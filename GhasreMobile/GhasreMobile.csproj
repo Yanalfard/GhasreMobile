@@ -54,7 +54,7 @@
     <Folder Include="Areas\User\Data\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="wwwroot\Images\Ad\" />
-    <Folder Include="wwwroot\Images\Album\" />
+    <Folder Include="wwwroot\Images\Album\thumb\" />
     <Folder Include="wwwroot\Images\Blogs\thumb\" />
     <Folder Include="wwwroot\Images\ProductAlbum\thumb\" />
     <Folder Include="wwwroot\Images\ProductMain\thumb\" />
