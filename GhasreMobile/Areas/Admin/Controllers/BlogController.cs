@@ -60,6 +60,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     {
                         await MainImage.CopyToAsync(stream);
                     }
+                    /// #region resize Image
+                    ImageConvertor imgResizer = new ImageConvertor();
+                    string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs/thumb", blog.MainImage);
+                    imgResizer.Image_resize(savePathAlbum, thumbPath, 300);
+                    /// #endregion
                 }
 
                 _core.Blog.Add(blog);
@@ -118,6 +123,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         {
                             System.IO.File.Delete(imagePath);
                         }
+
+
+                        var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs/thumb", Editblog.MainImage);
+
+                        if (System.IO.File.Exists(imagePath2))
+                        {
+                            System.IO.File.Delete(imagePath2);
+                        }
+
                     }
                     catch
                     {
@@ -132,6 +146,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     {
                         await MainImage.CopyToAsync(stream);
                     }
+                    /// #region resize Image
+                    ImageConvertor imgResizer = new ImageConvertor();
+                    string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs/thumb", blog.MainImage);
+                    imgResizer.Image_resize(savePathAlbum, thumbPath, 300);
+                    /// #endregion
                 }
 
                 if (Keywords.Count > 0)
@@ -189,7 +208,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
             {
                 System.IO.File.Delete(imagePath);
             }
+            var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Blogs/thumb", blog.MainImage);
 
+            if (System.IO.File.Exists(imagePath2))
+            {
+                System.IO.File.Delete(imagePath2);
+            }
             _core.Blog.Delete(blog);
             _core.Save();
         }

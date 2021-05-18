@@ -223,7 +223,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 ViewBag.keywords = Keywords;
                 if (ModelState.IsValid)
                 {
-                    if (MainImage == null&& MainImage.IsImages() )
+                    if (MainImage == null && MainImage.IsImages())
                     {
                         ModelState.AddModelError("MainImage", "تصویر الزامی میباشد . لطفا موارد را بررسی کنید");
                         return await Task.FromResult(View(product));
@@ -256,11 +256,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                                 {
                                     await MainImage.CopyToAsync(stream);
                                 }
-                               /// #region resize Image
+                                /// #region resize Image
                                 ImageConvertor imgResizer = new ImageConvertor();
                                 string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain/thumb", NewProduct.MainImage);
                                 imgResizer.Image_resize(savePath, thumbPath, 300);
-                             /// #endregion
+                                /// #endregion
 
                             }
                             NewProduct.PriceBeforeDiscount = product.PriceBeforeDiscount;
@@ -481,6 +481,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         {
                             await galleryimage.CopyToAsync(stream);
                         }
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum/thumb/", NewImage.Image);
+                        imgResizer.Image_resize(savePathAlbum, thumbPath, 300);
+                        /// #endregion
                         _core.Image.Add(NewImage);
                         _core.Save();
                         TblProductImageRel imageRel = new TblProductImageRel();
@@ -762,6 +767,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             if (System.IO.File.Exists(deleteImagePath))
                             {
                                 System.IO.File.Delete(deleteImagePath);
+                            }
+                            var deleteImagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum/thumb/", item.Image.Image);
+                            if (System.IO.File.Exists(deleteImagePath2))
+                            {
+                                System.IO.File.Delete(deleteImagePath2);
                             }
                             _core.Image.Delete(item.Image);
                             _core.Save();

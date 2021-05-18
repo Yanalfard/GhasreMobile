@@ -54,11 +54,12 @@
     <Folder Include="Areas\User\Data\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="wwwroot\Images\Ad\" />
-    <Folder Include="wwwroot\Images\Blogs\" />
     <Folder Include="wwwroot\Images\Album\" />
+    <Folder Include="wwwroot\Images\Blogs\thumb\" />
+    <Folder Include="wwwroot\Images\ProductAlbum\thumb\" />
     <Folder Include="wwwroot\Images\ProductMain\thumb\" />
+    <Folder Include="wwwroot\Images\Store\thumb\" />
     <Folder Include="wwwroot\Images\User\" />
-    <Folder Include="wwwroot\Images\ProductAlbum\" />
     <Folder Include="wwwroot\lib\" />
     <Folder Include="wwwroot\st\m\" />
   </ItemGroup>
