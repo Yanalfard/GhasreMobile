@@ -18,11 +18,13 @@
             <div class="form-group col-md-6">
                 <label>نحوه ارسال</label>
                 <input asp-for="Name" class="form-control form-control-sm" placeholder="مثال: ارسال با تیپاکس">
+                <span id="InputPrice" class="text-danger" asp-validation-for="Name"></span>
+
             </div>
             <div class="form-group col-md-6">
                 <label>قیمت (تومان)</label>
-                <input asp-for="Price" class="form-control form-control-sm" placeholder="مثال: 20000">
-                <span id="InputPrice" class="text-success"></span>
+                <input asp-for="Price" max="10000000" class="form-control form-control-sm" placeholder="مثال: 20000">
+                <span id="InputPrice" class="text-danger" asp-validation-for="Price"></span>
             </div>
         </div>
     </div>

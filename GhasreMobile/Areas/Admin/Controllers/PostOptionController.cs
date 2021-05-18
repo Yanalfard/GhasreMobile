@@ -17,7 +17,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         Core _core = new Core();
         public IActionResult Index(int page = 1)
         {
-            IEnumerable<TblPostOption> postOptions = PagingList.Create(_core.PostOption.Get().OrderByDescending(p=>p.PostOptionId), 30, page);
+            IEnumerable<TblPostOption> postOptions = PagingList.Create(_core.PostOption.Get().OrderByDescending(p => p.PostOptionId), 30, page);
             return View(postOptions);
         }
         [HttpGet]
@@ -28,13 +28,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(TblPostOption postOption)
         {
-            if (ModelState.IsValid)
-            {
-                _core.PostOption.Add(postOption);
-                _core.Save();
-                return Redirect("/Admin/PostOption");
-            }
-            return View(postOption);
+            postOption.IsActive = true;
+            _core.PostOption.Add(postOption);
+            _core.Save();
+            return Redirect("/Admin/PostOption");
         }
         [HttpGet]
         public IActionResult Edit(int id)
@@ -44,15 +41,35 @@ namespace GhasreMobile.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(TblPostOption postOption)
         {
-            if (ModelState.IsValid)
-            {
-                _core.PostOption.Update(postOption);
-                _core.Save();
-                return Redirect("/Admin/PostOption");
-            }
-            return View(postOption);
-        }
+            postOption.IsActive = true;
+            _core.PostOption.Update(postOption);
+            _core.Save();
+            return Redirect("/Admin/PostOption");
 
+        }
+        public string Delete(int id)
+        {
+            try
+            {
+                TblPostOption post = _core.PostOption.GetById(id);
+                if (post.TblOrder.Count() > 0)
+                {
+                    return "سفارشی برای این  وجود دارد";
+                }
+                else
+                {
+
+                    _core.PostOption.Delete(post);
+                    _core.Save();
+                    return "true";
+                }
+            }
+            catch
+            {
+                return "خطا در حذف";
+            }
+
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

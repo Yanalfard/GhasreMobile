@@ -259,7 +259,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
                                /// #region resize Image
                                 ImageConvertor imgResizer = new ImageConvertor();
                                 string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain/thumb", NewProduct.MainImage);
-                                imgResizer.Image_resize(savePath, thumbPath, 250);
+                                imgResizer.Image_resize(savePath, thumbPath, 300);
                              /// #endregion
 
                             }
@@ -622,6 +622,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                             {
                                 System.IO.File.Delete(imagePath);
                             }
+                            var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain/thumb/", EditProduct.MainImage);
+                            if (System.IO.File.Exists(imagePath2))
+                            {
+                                System.IO.File.Delete(imagePath2);
+                            }
                         }
                         catch
                         {
@@ -643,7 +648,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                         {
                             await MainImage.CopyToAsync(stream);
                         }
-
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain/thumb", EditProduct.MainImage);
+                        imgResizer.Image_resize(savePath, thumbPath, 300);
+                        /// #endregion
                     }
                     IEnumerable<TblProductKeywordRel> keywordRels = _core.ProductKeywordRel.Get(k => k.ProductId == product.ProductId);
                     if (keywordRels.Count() > 0)
@@ -768,6 +777,11 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     if (System.IO.File.Exists(imagePath))
                     {
                         System.IO.File.Delete(imagePath);
+                    }
+                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductMain/thumb/", product.MainImage);
+                    if (System.IO.File.Exists(imagePath2))
+                    {
+                        System.IO.File.Delete(imagePath2);
                     }
                     _core.Product.Delete(product);
                     _core.Save();
