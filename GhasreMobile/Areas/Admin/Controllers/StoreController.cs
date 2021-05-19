@@ -48,37 +48,39 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
                     foreach (var item in GalleryFile)
                     {
-                        TblImage image = new TblImage();
-                        image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
-                        string saveDirectory = Path.Combine(
-                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Store");
-                        string savePathAlbum = Path.Combine(
-                                            Directory.GetCurrentDirectory(), saveDirectory, image.Image);
-
-                        if (!Directory.Exists(saveDirectory))
+                        if (item.IsImages() && item.Length < 3000000)
                         {
-                            Directory.CreateDirectory(saveDirectory);
-                        }
+                            TblImage image = new TblImage();
+                            image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
+                            string saveDirectory = Path.Combine(
+                                                Directory.GetCurrentDirectory(), "wwwroot/Images/Store");
+                            string savePathAlbum = Path.Combine(
+                                                Directory.GetCurrentDirectory(), saveDirectory, image.Image);
 
-                        using (var stream = new FileStream(savePathAlbum, FileMode.Create))
-                        {
-                            await item.CopyToAsync(stream);
+                            if (!Directory.Exists(saveDirectory))
+                            {
+                                Directory.CreateDirectory(saveDirectory);
+                            }
+                            using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                            {
+                                await item.CopyToAsync(stream);
+                            }
+                            /// #region resize Image
+                            ImageConvertor imgResizer = new ImageConvertor();
+                            string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Store/thumb", image.Image);
+                            imgResizer.Image_resize(savePathAlbum, thumbPath, 300);
+                            /// #endregion
+                            _core.Image.Add(image);
+                            _core.Save();
+                            TblStoreImageRel imageRel = new TblStoreImageRel();
+                            imageRel.StoreId = store.StoreId;
+                            imageRel.ImageId = image.ImageId;
+                            _core.StoreImageRel.Add(imageRel);
+                            _core.Save();
                         }
-                        /// #region resize Image
-                        ImageConvertor imgResizer = new ImageConvertor();
-                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Store/thumb", image.Image);
-                        imgResizer.Image_resize(savePathAlbum, thumbPath, 300);
-                        /// #endregion
-                        _core.Image.Add(image);
-                        _core.Save();
-                        TblStoreImageRel imageRel = new TblStoreImageRel();
-                        imageRel.StoreId = store.StoreId;
-                        imageRel.ImageId = image.ImageId;
-                        _core.StoreImageRel.Add(imageRel);
-                        _core.Save();
                     }
                 }
-               
+
                 return await Task.FromResult(Redirect("/Admin/Store"));
 
             }

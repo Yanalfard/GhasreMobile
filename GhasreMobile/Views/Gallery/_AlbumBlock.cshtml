@@ -5,7 +5,7 @@
         <a href="/AlbumView/@Model.AlbumId/@Model.Name.Replace(" ","-").Replace("/","-")">
             @foreach (var item in Model.TblImage.Where(i => i.Image.Contains(".jpg") || i.Image.Contains(".jpeg") || i.Image.Contains(".png")))
             {
-                <img src="~/images/Album/@item.Image" alt="" />
+                <img src="~/images/Album/thumb/@item.Image" alt="" />
                 break;
             }
         </a>

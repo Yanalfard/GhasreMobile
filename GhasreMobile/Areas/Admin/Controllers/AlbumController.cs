@@ -43,25 +43,33 @@ namespace GhasreMobile.Areas.Admin.Controllers
             {
                 foreach (var item in GalleryFile)
                 {
-                    TblImage image = new TblImage();
-                    image.AlbumId = album.AlbumId;
-                    image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
-                    string saveDirectory = Path.Combine(
-                                        Directory.GetCurrentDirectory(), "wwwroot/Images/Album");
-                    string savePathAlbum = Path.Combine(
-                                        Directory.GetCurrentDirectory(), saveDirectory, image.Image);
-
-                    if (!Directory.Exists(saveDirectory))
+                    if (item.IsImages() && item.Length < 3000000)
                     {
-                        Directory.CreateDirectory(saveDirectory);
+                        TblImage image = new TblImage();
+                        image.AlbumId = album.AlbumId;
+                        image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
+                        string saveDirectory = Path.Combine(
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Album");
+                        string savePathAlbum = Path.Combine(
+                                            Directory.GetCurrentDirectory(), saveDirectory, image.Image);
+
+                        if (!Directory.Exists(saveDirectory))
+                        {
+                            Directory.CreateDirectory(saveDirectory);
+                        }
+
+                        using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                        {
+                            await item.CopyToAsync(stream);
+                        }
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Album/thumb", image.Image);
+                        imgResizer.Image_resize(savePathAlbum, thumbPath, 300);
+                        /// #endregion
+                        _core.Image.Add(image);
                     }
 
-                    using (var stream = new FileStream(savePathAlbum, FileMode.Create))
-                    {
-                        await item.CopyToAsync(stream);
-                    }
-
-                    _core.Image.Add(image);
                 }
                 _core.Save();
             }
@@ -75,7 +83,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id,string Name, List<IFormFile> GalleryFile)
+        public async Task<IActionResult> Edit(int id, string Name, List<IFormFile> GalleryFile)
         {
             TblAlbum album = _core.Album.GetById(id);
             album.Name = Name;
@@ -83,25 +91,34 @@ namespace GhasreMobile.Areas.Admin.Controllers
             {
                 foreach (var item in GalleryFile)
                 {
-                    TblImage image = new TblImage();
-                    image.AlbumId = album.AlbumId;
-                    image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
-                    string saveDirectory = Path.Combine(
-                                        Directory.GetCurrentDirectory(), "wwwroot/Images/Album");
-                    string savePathAlbum = Path.Combine(
-                                        Directory.GetCurrentDirectory(), saveDirectory, image.Image);
-
-                    if (!Directory.Exists(saveDirectory))
+                    if (item.IsImages() && item.Length < 3000000)
                     {
-                        Directory.CreateDirectory(saveDirectory);
+                        TblImage image = new TblImage();
+                        image.AlbumId = album.AlbumId;
+                        image.Image = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
+                        string saveDirectory = Path.Combine(
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Album");
+                        string savePathAlbum = Path.Combine(
+                                            Directory.GetCurrentDirectory(), saveDirectory, image.Image);
+
+                        if (!Directory.Exists(saveDirectory))
+                        {
+                            Directory.CreateDirectory(saveDirectory);
+                        }
+
+                        using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                        {
+                            await item.CopyToAsync(stream);
+                        }
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Album/thumb", image.Image);
+                        imgResizer.Image_resize(savePathAlbum, thumbPath, 300);
+                        /// #endregion
+                        _core.Image.Add(image);
                     }
 
-                    using (var stream = new FileStream(savePathAlbum, FileMode.Create))
-                    {
-                        await item.CopyToAsync(stream);
-                    }
 
-                    _core.Image.Add(image);
                 }
                 _core.Save();
             }
@@ -122,6 +139,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     {
                         System.IO.File.Delete(imagePath);
                     }
+                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Album/thumb", item.Image);
+
+                    if (System.IO.File.Exists(imagePath2))
+                    {
+                        System.IO.File.Delete(imagePath2);
+                    }
                     _core.Image.Delete(item);
                 }
                 _core.Save();
@@ -140,6 +163,12 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (System.IO.File.Exists(imagePath))
             {
                 System.IO.File.Delete(imagePath);
+            }
+            var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Album/thumb", image.Image);
+
+            if (System.IO.File.Exists(imagePath2))
+            {
+                System.IO.File.Delete(imagePath2);
             }
             _core.Image.Delete(image);
             _core.Save();

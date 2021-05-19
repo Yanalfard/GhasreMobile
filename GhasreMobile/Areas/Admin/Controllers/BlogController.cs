@@ -44,7 +44,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (MainImage != null)
+                if (MainImage != null && MainImage.IsImages() && MainImage.Length < 3000000)
                 {
                     blog.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(MainImage.FileName);
                     string saveDirectory = Path.Combine(
@@ -113,7 +113,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 TblBlog Editblog = _core.Blog.GetById(blog.BlogId);
-                if (MainImage != null)
+                if (MainImage != null && MainImage.IsImages() && MainImage.Length < 3000000)
                 {
                     try
                     {

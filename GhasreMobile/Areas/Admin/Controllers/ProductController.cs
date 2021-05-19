@@ -456,44 +456,46 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     TblProduct product = _core.Product.GetById(id);
                     foreach (var galleryimage in GalleryFile)
                     {
-
-                        TblImage NewImage = new TblImage();
-                        if (_core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).Count() == 0)
+                        if (galleryimage.IsImages() && galleryimage.Length < 3000000)
                         {
-                            TblAlbum album = new TblAlbum();
-                            album.Name = product.Name;
-                            album.IsProduct = true;
-                            _core.Album.Add(album);
+                            TblImage NewImage = new TblImage();
+                            if (_core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).Count() == 0)
+                            {
+                                TblAlbum album = new TblAlbum();
+                                album.Name = product.Name;
+                                album.IsProduct = true;
+                                _core.Album.Add(album);
+                                _core.Save();
+                                NewImage.AlbumId = album.AlbumId;
+
+                            }
+                            else
+                            {
+                                NewImage.AlbumId = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).First().Image.AlbumId;
+                            }
+                            NewImage.Image = Guid.NewGuid().ToString() + Path.GetExtension(galleryimage.FileName);
+                            string savePathAlbum = Path.Combine(
+                                                Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum/", NewImage.Image
+                                            );
+                            using (var stream = new FileStream(savePathAlbum, FileMode.Create))
+                            {
+                                await galleryimage.CopyToAsync(stream);
+                            }
+                            /// #region resize Image
+                            ImageConvertor imgResizer = new ImageConvertor();
+                            string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum/thumb/", NewImage.Image);
+                            imgResizer.Image_resize(savePathAlbum, thumbPath, 300);
+                            /// #endregion
+                            _core.Image.Add(NewImage);
                             _core.Save();
-                            NewImage.AlbumId = album.AlbumId;
+                            TblProductImageRel imageRel = new TblProductImageRel();
+                            imageRel.ProductId = product.ProductId;
+                            imageRel.ImageId = NewImage.ImageId;
 
+                            _core.ProductImageRel.Add(imageRel);
+                            _core.Save();
                         }
-                        else
-                        {
-                            NewImage.AlbumId = _core.ProductImageRel.Get(pi => pi.ProductId == product.ProductId).First().Image.AlbumId;
-                        }
-                        NewImage.Image = Guid.NewGuid().ToString() + Path.GetExtension(galleryimage.FileName);
-                        string savePathAlbum = Path.Combine(
-                                            Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum/", NewImage.Image
-                                        );
 
-                        using (var stream = new FileStream(savePathAlbum, FileMode.Create))
-                        {
-                            await galleryimage.CopyToAsync(stream);
-                        }
-                        /// #region resize Image
-                        ImageConvertor imgResizer = new ImageConvertor();
-                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/ProductAlbum/thumb/", NewImage.Image);
-                        imgResizer.Image_resize(savePathAlbum, thumbPath, 300);
-                        /// #endregion
-                        _core.Image.Add(NewImage);
-                        _core.Save();
-                        TblProductImageRel imageRel = new TblProductImageRel();
-                        imageRel.ProductId = product.ProductId;
-                        imageRel.ImageId = NewImage.ImageId;
-
-                        _core.ProductImageRel.Add(imageRel);
-                        _core.Save();
                     }
                 }
 
@@ -618,7 +620,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     TblProduct EditProduct = _core.Product.GetById(product.ProductId);
-                    if (MainImage != null)
+
+                    if (MainImage != null && MainImage.IsImages() && MainImage.Length < 3000000)
                     {
                         try
                         {

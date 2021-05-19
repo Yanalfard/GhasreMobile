@@ -55,11 +55,9 @@
     <Folder Include="Areas\User\Models\" />
     <Folder Include="wwwroot\Images\Ad\" />
     <Folder Include="wwwroot\Images\Album\thumb\" />
-    <Folder Include="wwwroot\Images\Blogs\thumb\" />
     <Folder Include="wwwroot\Images\ProductAlbum\thumb\" />
     <Folder Include="wwwroot\Images\ProductMain\thumb\" />
-    <Folder Include="wwwroot\Images\Store\thumb\" />
-    <Folder Include="wwwroot\Images\User\" />
+    <Folder Include="wwwroot\Images\User\thumb\" />
     <Folder Include="wwwroot\lib\" />
     <Folder Include="wwwroot\st\m\" />
   </ItemGroup>

@@ -240,8 +240,8 @@ namespace GhasreMobile.Controllers
                 DiscountVm selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
                 if (selectedDiscount != null)
                 {
-                    long sumWithDiscount = selectedDiscount.SumWithDiscount / 3;
-                    if (fractional && sumWithDiscount > SelectUser().Balance)
+                    long sumWithIsFractional = selectedDiscount.Sum / 3;
+                    if (fractional && sumWithIsFractional > SelectUser().Balance)
                     {
                         return await Task.FromResult(Redirect("/User/Order/Finalize?fractional=true"));
                     }
@@ -308,10 +308,10 @@ namespace GhasreMobile.Controllers
 
                     }
                     db.Save();
-                    if (fractional && sumWithDiscount <= SelectUser().Balance)
+                    if (fractional && sumWithIsFractional <= SelectUser().Balance)
                     {
                         TblWallet addWallet = new TblWallet();
-                        addWallet.Amount = (int)sumWithDiscount;
+                        addWallet.Amount = (int)sumWithIsFractional;
                         addWallet.Date = DateTime.Now;
                         addWallet.Description = "پیش پرداخت خرید اقساطی";
                         addWallet.IsDeposit = false;
@@ -321,11 +321,11 @@ namespace GhasreMobile.Controllers
                         db.Wallet.Add(addWallet);
                         //db.Wallet.Save();
                         TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
-                        selectedClient.Balance -= sumWithDiscount;
+                        selectedClient.Balance -= sumWithIsFractional;
                         TblOrder selectedOrder = db.Order.GetById(addOrder.OrdeId);
                         selectedOrder.IsPayed = false;
                         selectedOrder.IsFractional = true;
-                        selectedOrder.FractionalPartPayed = sumWithDiscount;
+                        selectedOrder.FractionalPartPayed = sumWithIsFractional;
                         db.Client.Update(selectedClient);
                         db.Order.Update(selectedOrder);
                         db.Save();

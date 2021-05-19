@@ -79,7 +79,7 @@
                 <div class="slider">
                     <ul class="img uk-slideshow-items" uk-lightbox="animation: slide">
                         <li>
-                            <a href="~/Images/ProductMain/thumb/@Model.MainImage">
+                            <a href="~/Images/ProductMain/@Model.MainImage">
                                 <img src="~/Images/ProductMain/thumb/@Model.MainImage" alt="" uk-cover>
                             </a>
                         </li>
@@ -87,7 +87,7 @@
                         {
                             <li>
                                 <a href="~/Images/ProductAlbum/@item.Image.Image">
-                                    <img src="~/Images/ProductAlbum/@item.Image.Image" alt="" uk-cover>
+                                    <img src="~/Images/ProductAlbum/thumb/@item.Image.Image" alt="" uk-cover>
                                 </a>
                             </li>
                         }
@@ -131,10 +131,10 @@
             </div>
             <div class="thumbnav uk-margin-small-top">
                 <ul class="uk-thumbnav">
-                    <li uk-slideshow-item="0"><a href="#"><img src="~/Images/ProductMain/@Model.MainImage" alt=""></a></li>
+                    <li uk-slideshow-item="0"><a href="#"><img src="~/Images/ProductMain/thumb/@Model.MainImage" alt=""></a></li>
                     @foreach (var item in Model.TblProductImageRel)
                     {
-                        <li uk-slideshow-item="@(Model.TblProductImageRel.ToList().IndexOf(item)+1)"><a href="#"><img src="~/Images/ProductAlbum/@item.Image.Image" alt=""></a></li>
+                        <li uk-slideshow-item="@(Model.TblProductImageRel.ToList().IndexOf(item)+1)"><a href="#"><img src="~/Images/ProductAlbum/thumb/@item.Image.Image" alt=""></a></li>
                     }
                 </ul>
             </div>

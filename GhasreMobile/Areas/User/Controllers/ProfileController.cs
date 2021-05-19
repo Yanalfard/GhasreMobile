@@ -45,7 +45,7 @@ namespace GhasreMobile.Areas.User.Controllers
 
         public async Task<IActionResult> ChangePassword()
         {
-           
+
             try
             {
                 return await Task.FromResult(View());
@@ -82,7 +82,7 @@ namespace GhasreMobile.Areas.User.Controllers
             {
                 return await Task.FromResult(Redirect("404.html"));
             }
-          
+
         }
         public string ShowImage()
         {
@@ -112,16 +112,8 @@ namespace GhasreMobile.Areas.User.Controllers
             try
             {
                 var files = Request.Form.Files.First();
-                if (files != null && files.IsImage() && files.Length < 20485760)
+                if (files != null && files.IsImages() && files.Length < 3000000)
                 {
-                    client.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(files.FileName);
-                    string savePath = Path.Combine(
-                        Directory.GetCurrentDirectory(), "wwwroot/Images/User/", client.MainImage
-                    );
-                    using (var stream = new FileStream(savePath, FileMode.Create))
-                    {
-                        await files.CopyToAsync(stream);
-                    }
                     TblClient selectedClient = db.Client.GetById(SelectUser().ClientId);
                     if (selectedClient.MainImage != null)
                     {
@@ -130,11 +122,29 @@ namespace GhasreMobile.Areas.User.Controllers
                         {
                             System.IO.File.Delete(imagePath);
                         }
+                        var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/User/thumb/", selectedClient.MainImage);
+                        if (System.IO.File.Exists(imagePath2))
+                        {
+                            System.IO.File.Delete(imagePath2);
+                        }
+                        client.MainImage = Guid.NewGuid().ToString() + Path.GetExtension(files.FileName);
+                        string savePath = Path.Combine(
+                            Directory.GetCurrentDirectory(), "wwwroot/Images/User/", client.MainImage
+                        );
+                        using (var stream = new FileStream(savePath, FileMode.Create))
+                        {
+                            await files.CopyToAsync(stream);
+                        }
+                        /// #region resize Image
+                        ImageConvertor imgResizer = new ImageConvertor();
+                        string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/User/thumb", client.MainImage);
+                        imgResizer.Image_resize(savePath, thumbPath, 300);
+                        /// #endregion
+                        selectedClient.MainImage = client.MainImage;
+                        db.Client.Update(selectedClient);
+                        db.Save();
+                        return await Task.FromResult("true");
                     }
-                    selectedClient.MainImage = client.MainImage;
-                    db.Client.Update(selectedClient);
-                    db.Save();
-                    return await Task.FromResult("true");
                 }
             }
             catch
