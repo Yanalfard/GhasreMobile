@@ -41,15 +41,18 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 NewSlider.ActiveTill = DateTime.Now.AddDays(SliderTime);
                 NewSlider.IsActive = true;
                 NewSlider.Link = slider.Link;
-                NewSlider.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
-                string savePath = Path.Combine(
-                                        Directory.GetCurrentDirectory(), "wwwroot/Images/Slider", NewSlider.ImageUrl
-                                    );
-
-                using (var stream = new FileStream(savePath, FileMode.Create))
+                if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
                 {
-                    await ImageUrl.CopyToAsync(stream);
-                };
+                    NewSlider.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
+                    string savePath = Path.Combine(
+                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Slider", NewSlider.ImageUrl
+                                        );
+                    using (var stream = new FileStream(savePath, FileMode.Create))
+                    {
+                        await ImageUrl.CopyToAsync(stream);
+                    };
+                }
+
                 _core.BannerAndSlide.Add(NewSlider);
                 _core.Save();
                 return Redirect("/Admin/Slider");
@@ -71,10 +74,8 @@ namespace GhasreMobile.Areas.Admin.Controllers
             FirstSlider.IsActive = true;
             FirstSlider.Link = slider.Link;
             FirstSlider.ActiveTill = DateTime.Now.AddDays(SliderTime);
-            if (ImageUrl != null)
+            if (ImageUrl != null && ImageUrl.IsImages() && ImageUrl.Length < 3000000)
             {
-
-               
                 try
                 {
                     var deleteImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/Slider", FirstSlider.ImageUrl);
@@ -87,12 +88,10 @@ namespace GhasreMobile.Areas.Admin.Controllers
                 {
 
                 }
-
                 FirstSlider.ImageUrl = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
                 string savePath = Path.Combine(
                                            Directory.GetCurrentDirectory(), "wwwroot/Images/Slider", FirstSlider.ImageUrl
                                        );
-
                 using (var stream = new FileStream(savePath, FileMode.Create))
                 {
                     await ImageUrl.CopyToAsync(stream);

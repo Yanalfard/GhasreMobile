@@ -33,7 +33,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Image != null)
+                if (Image != null && Image.IsImages() && Image.Length < 3000000)
                 {
                     string saveDirectory = Path.Combine(
                                                     Directory.GetCurrentDirectory(), "wwwroot/Images/Ad");
@@ -72,7 +72,7 @@ namespace GhasreMobile.Areas.Admin.Controllers
             {
                 TblAd EditAd = _core.Ad.GetById(ad.AdId);
 
-                if (file != null)
+                if (file != null && file.IsImages() && file.Length < 3000000)
                 {
                     try
                     {
