@@ -28,6 +28,7 @@
             if (Model.PriceAfterDiscount == 0)
             {
                 var BeforeSumWithDiscount = Model.PriceBeforeDiscount - (long)(Math.Floor((double)(Model.PriceBeforeDiscount * Model.TblSpecialOffer.SingleOrDefault().Discount / 100)));
+                BeforeSumWithDiscount = (long)MainUtil.Round((double)BeforeSumWithDiscount, 3);
                 <h4 class="discount">
                     @Model.PriceBeforeDiscount.Value.ToString("#,0")
                 </h4>
@@ -39,11 +40,12 @@
             else
             {
                 var AfterSumWithDiscount = Model.PriceAfterDiscount - (long)(Math.Floor((double)(Model.PriceAfterDiscount * Model.TblSpecialOffer.SingleOrDefault().Discount / 100)));
+                AfterSumWithDiscount = (long)MainUtil.Round((double)AfterSumWithDiscount, 3);
                 <span class="discount">
-                    <span>@Model.PriceBeforeDiscount.Value.ToString("#,0")</span>
+                    <span>@Model.PriceAfterDiscount.Value.ToString("#,0")</span>
                 </span>
                 <span class="price">
-                    <span>@Model.PriceAfterDiscount.Value.ToString("#,0")</span>
+                    <span>@AfterSumWithDiscount.Value.ToString("#,0")</span>
                     <span class="t">تومان</span>
                 </span>
             }

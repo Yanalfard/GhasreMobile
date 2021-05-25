@@ -25,7 +25,7 @@
         </ul>
     </div>
     <div class="body">
-        <a href="/Product/@Model.ProductId/@Model.Product.Name.Replace(" ","-")"  target="_blank" >
+        <a href="/Product/@Model.ProductId/@Model.Product.Name.Replace(" ","-")" target="_blank">
             <img src="~/Images/ProductMain/thumb/@Model.Product.MainImage" alt="" />
         </a>
         <div class="star">
@@ -48,7 +48,7 @@
                 }
             }
         </ul>
-        <a href="/Product/@Model.ProductId/@Model.Product.Name.Replace(" ","-")" class="link-text"  target="_blank" >
+        <a href="/Product/@Model.ProductId/@Model.Product.Name.Replace(" ","-")" class="link-text" target="_blank">
             <h3 class="name" dir="rtl">
                 @Model.Product.Name
             </h3>
@@ -58,6 +58,7 @@
         @if (Model.Product.PriceAfterDiscount == 0)
         {
             var BeforeSumWithDiscount = Model.Product.PriceBeforeDiscount - (long)(Math.Floor((double)(Model.Product.PriceBeforeDiscount * Model.Discount / 100)));
+            BeforeSumWithDiscount = (long)MainUtil.Round((double)BeforeSumWithDiscount, 3);
             <span class="discount">
                 <span>@Model.Product.PriceBeforeDiscount.Value.ToString("#,0")</span>
             </span>
@@ -69,6 +70,8 @@
         else
         {
             var AfterSumWithDiscount = Model.Product.PriceAfterDiscount - (long)(Math.Floor((double)(Model.Product.PriceAfterDiscount * Model.Discount / 100)));
+            AfterSumWithDiscount = (long)MainUtil.Round((double)AfterSumWithDiscount, 3);
+
             <span class="discount">
                 <span>@Model.Product.PriceAfterDiscount.Value.ToString("#,0")</span>
             </span>

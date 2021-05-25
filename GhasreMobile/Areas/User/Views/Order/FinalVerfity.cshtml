@@ -63,6 +63,7 @@
                 </div>
                 @{
                     long amount = Model.Sum / 3;
+                    amount = (long)MainUtil.Round((double)amount, 3);
                     long minitAmount = amount - Model.Balance;
 
                 }

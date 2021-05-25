@@ -44,16 +44,30 @@
     <label>قیمت:</label>
     @if (Model.First().Product.PriceAfterDiscount != 0)
     {
-        <input id="Price-@Model.First().Product.ProductId" class="ProductId form-control form-control-sm col-md-2 PriceInput" placeholder="مثال:50000 تومان" value="@Model.First().Product.PriceAfterDiscount">
+        @*<input id="Price-@Model.First().Product.ProductId" class="ProductId form-control form-control-sm col-md-2 PriceInput" placeholder="مثال:50000 تومان" value="@Model.First().Product.PriceAfterDiscount" maxlength="10">*@
+
+
+        <input type="text" id="Price-@Model.First().ProductId" class="form-control form-control-sm col-md-2 PriceInput" data-type='currency' placeholder="مثال:50000 تومان" value="@Model.First().Product.PriceAfterDiscount" maxlength="15" required />
+        <input type="hidden" class="ProductId" value="@Model.First().Product.PriceAfterDiscount" />
+
     }
     else
     {
-        <input id="Price-@Model.First().ProductId" class="ProductId form-control form-control-sm col-md-2 PriceInput" placeholder="مثال:50000" value="@Model.First().Product.PriceBeforeDiscount">
-
+        @*<input id="Price-@Model.First().ProductId" class="ProductId form-control form-control-sm col-md-2 PriceInput" placeholder="مثال:50000" value="@Model.First().Product.PriceBeforeDiscount" maxlength="10">*@
+        <input type="text" id="Price-@Model.First().ProductId" class="form-control form-control-sm col-md-2 PriceInput" data-type='currency' placeholder="مثال:50000 تومان" value="@Model.First().Product.PriceBeforeDiscount" maxlength="15" required />
+        <input type="hidden" class="ProductId" value="@Model.First().Product.PriceBeforeDiscount" />
     }
 
     <button onclick="EditPrice(@Model.First().ProductId)" class="btn btn-sm btn-success ml-md-4">ثبت</button>
 </div>
+
+<script src="~/js/Auto_Formatting_Currency.js"></script>
+<script>
+    $('.PriceInput').change(function () {
+        var price = $(this).val().replaceAll(',', "");
+        $('.ProductId').val(price);
+    })
+</script>
 <script src="~/js/Input_Formatting_Currency.js"></script>
 <script>
     function EditStoke(id) {
@@ -64,13 +78,18 @@
     }
     function EditPrice(Id) {
         var Price = $('.ProductId').val();
-        $.post("/Admin/Product/EditPrice?Id=" + Id + "&Price=" + Price, function () {
-            UIkit.notification("قیمت محصول بروز شد");
-        });
+        if (Price == "" || Price == "0") {
+            UIkit.notification("قیمت محصول خالی است");
+        }
+        else {
+            $.post("/Admin/Product/EditPrice?Id=" + Id + "&Price=" + Price, function () {
+                UIkit.notification("قیمت محصول بروز شد");
+            });
+        }
     }
 
-    $(".PriceInput").change(function () {
-        $(this).val($(this).val().replaceAll(",", ""));
-    });
+    //$(".PriceInput").change(function () {
+    //    $(this).val($(this).val().replaceAll(",", ""));
+    //});
 
 </script>

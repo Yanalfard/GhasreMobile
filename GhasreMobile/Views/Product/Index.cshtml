@@ -1,4 +1,5 @@
-﻿@model TblProduct
+﻿@using GhasreMobile.Utilities;
+@model TblProduct
 @{
     ViewData["Title"] = Model.Name;
     ViewData["Single"] = true;
@@ -153,6 +154,7 @@
                     if (Model.PriceAfterDiscount == 0)
                     {
                         var BeforeSumWithDiscount = Model.PriceBeforeDiscount - (long)(Math.Floor((double)(Model.PriceBeforeDiscount * Model.TblSpecialOffer.SingleOrDefault().Discount / 100)));
+                        BeforeSumWithDiscount = (long)MainUtil.Round((double)BeforeSumWithDiscount, 3);
                         <h4 class="discount">
                             @Model.PriceBeforeDiscount.Value.ToString("#,0")
                             @*<span class="t">تومان</span>*@
@@ -165,6 +167,7 @@
                     else
                     {
                         var AfterSumWithDiscount = Model.PriceAfterDiscount - (long)(Math.Floor((double)(Model.PriceAfterDiscount * Model.TblSpecialOffer.SingleOrDefault().Discount / 100)));
+                        AfterSumWithDiscount = (long)MainUtil.Round((double)AfterSumWithDiscount, 3);
                         <h4 class="discount">
                             @Model.PriceAfterDiscount.Value.ToString("#,0")
                             @*<span class="t">تومان</span>*@

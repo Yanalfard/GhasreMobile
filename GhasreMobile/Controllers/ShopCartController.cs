@@ -63,7 +63,9 @@ namespace GhasreMobile.Controllers
                             {
                                 var Special = product.PriceAfterDiscount == 0 ? product.PriceBeforeDiscount : product.PriceAfterDiscount;
                                 shop.Special = Special - (long)(Math.Floor((double)(Special * offer.Discount / 100)));
+                                shop.Special = (long)MainUtil.Round((double)shop.Special, 3);
                                 shop.Sum = shop.Sum - (long)(Math.Floor((double)(shop.Sum * offer.Discount / 100)));
+                                shop.Sum = (long)MainUtil.Round((double)shop.Sum, 3);
                             };
                             list.Add(shop);
                         }
@@ -241,6 +243,7 @@ namespace GhasreMobile.Controllers
                 if (selectedDiscount != null)
                 {
                     long sumWithIsFractional = selectedDiscount.Sum / 3;
+                    sumWithIsFractional = (long)MainUtil.Round((double)sumWithIsFractional, 3);
                     if (fractional && sumWithIsFractional > SelectUser().Balance)
                     {
                         return await Task.FromResult(Redirect("/User/Order/Finalize?fractional=true"));
@@ -291,6 +294,7 @@ namespace GhasreMobile.Controllers
                             {
                                 addOrderDetail.Price = (int)product.PriceAfterDiscount - (long)(Math.Floor((double)((int)product.PriceAfterDiscount * offer.Discount / 100)));
                             }
+                            addOrderDetail.Price = (long)MainUtil.Round((double)addOrderDetail.Price, 3);
                         }
                         else
                         {

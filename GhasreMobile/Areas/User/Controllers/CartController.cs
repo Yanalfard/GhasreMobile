@@ -63,7 +63,9 @@ namespace GhasreMobile.Areas.User.Controllers
                             {
                                 var Special = product.PriceAfterDiscount == 0 ? product.PriceBeforeDiscount : product.PriceAfterDiscount;
                                 shop.Special = Special - (long)(Math.Floor((double)(Special * offer.Discount / 100)));
+                                shop.Special = (long)MainUtil.Round((double)shop.Special, 3);
                                 shop.Sum = shop.Sum - (long)(Math.Floor((double)(shop.Sum * offer.Discount / 100)));
+                                shop.Sum = (long)MainUtil.Round((double)shop.Sum, 3);
                             };
                             list.Add(shop);
                         }
