@@ -330,6 +330,7 @@ namespace GhasreMobile.Controllers
                         selectedOrder.IsPayed = false;
                         selectedOrder.IsFractional = true;
                         selectedOrder.FractionalPartPayed = sumWithIsFractional;
+                        selectedOrder.DateSubmited = DateTime.Now;
                         db.Client.Update(selectedClient);
                         db.Order.Update(selectedOrder);
                         db.Save();
@@ -344,7 +345,7 @@ namespace GhasreMobile.Controllers
                     }
                     else
                     {
-                        if (selectedDiscount.SumWithDiscount <= SelectUser().Balance)
+                        if (selectedDiscount.Sum <= SelectUser().Balance)
                         {
                             TblWallet addWallet = new TblWallet();
                             addWallet.Amount = (int)selectedDiscount.Sum;
@@ -360,6 +361,7 @@ namespace GhasreMobile.Controllers
                             selectedClient.Balance -= selectedDiscount.Sum;
                             TblOrder selectedOrder = db.Order.GetById(addOrder.OrdeId);
                             selectedOrder.IsPayed = true;
+                            selectedOrder.DateSubmited = DateTime.Now;
                             db.Client.Update(selectedClient);
                             db.Order.Update(selectedOrder);
                             db.Save();
@@ -461,6 +463,7 @@ namespace GhasreMobile.Controllers
                                         //تراکنش تایید و ستل شده است 
                                         var wallet = db.Wallet.GetById(Convert.ToInt32(SaleOrderId));
                                         wallet.IsFinaly = true;
+                                        wallet.Date = DateTime.Now;
                                         db.Wallet.Update(wallet);
                                         TblClient selectedClient = db.Client.GetById(wallet.ClientId);
                                         selectedClient.Balance += wallet.Amount;
@@ -470,6 +473,7 @@ namespace GhasreMobile.Controllers
                                         {
                                             TblOrder selectedOrder = db.Order.GetById(wallet.OrderId);
                                             selectedOrder.IsPayed = true;
+                                            selectedOrder.DateSubmited = DateTime.Now;
                                             db.Order.Update(selectedOrder);
                                             selectedClient.Balance -= selectedOrder.FinalPrice;
                                             db.Client.Update(selectedClient);
