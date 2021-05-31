@@ -17,8 +17,10 @@ namespace GhasreMobile.ViewComponents.View.TelegramInstaView
             List<TblConfig> list = new List<TblConfig>();
             TblConfig tel = db.Config.Get(i => i.Key == "LinkTelegram").SingleOrDefault();
             TblConfig ins = db.Config.Get(i => i.Key == "LinkInsta").SingleOrDefault();
+            TblConfig Whatsapp = db.Config.Get(i => i.Key == "Whatsapp").SingleOrDefault();
             list.Add(tel);
             list.Add(ins);
+            list.Add(Whatsapp);
             return await Task.FromResult((IViewComponentResult)View("~/Views/Shared/Components/TelegramInstaView/TelegramInstaView.cshtml", list));
         }
     }

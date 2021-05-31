@@ -10,4 +10,8 @@
     {
         <a href="@item.Value"><img src="~/st/v/footer/Telegram.svg" alt="قصر موبایل" /></a>
     }
+    @if (item.Key == "Whatsapp")
+    {
+        <a href="https://api.whatsapp.com/send?phone=@(item.Value)" target="_blank"><img src="~/st/v/footer/whatsapp.svg" alt="قصر موبایل" /></a>
+    }
 }
