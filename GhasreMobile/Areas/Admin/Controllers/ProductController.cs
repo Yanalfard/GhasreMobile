@@ -526,9 +526,15 @@ namespace GhasreMobile.Areas.Admin.Controllers
                     {
                         foreach (var item in whenReadies)
                         {
-                            await Sms.SendSms2(item.Client.TellNo, item.Product.Name, "https://gasremobile2004.com/Product/" + item.ProductId + "/" + item.Product.Name.Replace(" ", "-").Replace("/", "-"), "GhasrMobileAlertWhenReady");
-                            _core.AlertWhenReady.Delete(item);
-                            _core.Save();
+                            try
+                            {
+                                await Sms.SendSms2(item.Client.TellNo, item.Product.Name.Replace(" ", "-").Replace("/", "-"), "https://gasremobile2004.com/Product/" + item.ProductId + "/" + item.Product.Name.Replace(" ", "-").Replace("/", "-"), "GhasrMobileAlertWhenReady");
+                                _core.AlertWhenReady.Delete(item);
+                                _core.Save();
+                            }
+                            catch
+                            {
+                            }
                         }
                     }
                 }
