@@ -36,6 +36,8 @@ namespace DataLayer.Models
         public bool? IsFractional { get; set; }
         public int? SentId { get; set; }
         public long? FractionalPartPayed { get; set; }
+        [StringLength(15)]
+        public string? IpV4 { get; set; }
 
         [ForeignKey(nameof(ClientId))]
         [InverseProperty(nameof(TblClient.TblOrder))]

@@ -11,6 +11,8 @@ using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.HttpOverrides;
+
 
 namespace GhasreMobile.Controllers
 {
@@ -233,6 +235,7 @@ namespace GhasreMobile.Controllers
         {
             try
             {
+                var ip = Request.HttpContext.Connection.RemoteIpAddress;
                 bool fractional = false;
                 if (IsFractional == "1")
                 {
@@ -269,6 +272,7 @@ namespace GhasreMobile.Controllers
                     addOrder.ClientId = SelectUser().ClientId;
                     addOrder.IsFractional = fractional;
                     addOrder.SentId = selectedDiscount.PostPriceId;
+                    addOrder.IpV4 = ip.ToString();
                     db.Order.Add(addOrder);
                     db.Save();
                     foreach (var item in sessions)

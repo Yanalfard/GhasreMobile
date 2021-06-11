@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace GhasreMobile
 {
@@ -86,6 +87,11 @@ namespace GhasreMobile
             #region  404 error
             app.UseStatusCodePagesWithReExecute("/404.html");
             #endregion
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor |
+                                   ForwardedHeaders.XForwardedProto
+            });
             app.UseSession();
             app.UseAuthentication();
             app.UseStaticFiles();
