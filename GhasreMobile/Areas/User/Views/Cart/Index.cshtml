@@ -6,12 +6,15 @@
 
 @if (Model.Any())
 {
+    <div class="mat-card details">
+        لطفا جهت نهایی سازی خرید از IP ایرانی استفاده نمایید.
+    </div>
     <partial name="_Cart" model="Model" />
     <a href="/User/Order/Finalize" class="btn btn-primary uk-margin-auto-left">نهایی سازی خرید</a>
 }
 else
 {
-    <div class="mat-card details">
-        سبد خرید شما خالیست
-    </div>
+<div class="mat-card details">
+    سبد خرید شما خالیست
+</div>
 }

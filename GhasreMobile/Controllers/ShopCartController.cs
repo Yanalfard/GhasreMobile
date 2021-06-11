@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.HttpOverrides;
+using Newtonsoft.Json;
 
 
 namespace GhasreMobile.Controllers
@@ -230,12 +232,14 @@ namespace GhasreMobile.Controllers
                 return await Task.FromResult(Redirect("404.html"));
             }
         }
+
         [PermissionChecker("user,employee,admin")]
         public async Task<IActionResult> Payment(string radio, string address, string IsFractional)
         {
             try
             {
-                var ip = Request.HttpContext.Connection.RemoteIpAddress;
+                IPAddress ip = Request.HttpContext.Connection.RemoteIpAddress;
+
                 bool fractional = false;
                 if (IsFractional == "1")
                 {

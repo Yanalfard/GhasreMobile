@@ -34,7 +34,7 @@ namespace GhasreMobile.Controllers
 
                 //var ipUser = addr[addr.Length - 1].ToString();
 
-                 var ipUser = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                var ipUser = Request.HttpContext.Connection.RemoteIpAddress.ToString();
                 string dt = DateTime.Now.ToShortDateString();
                 List<TblVisit> visits = db.Visit.Get().ToList();
                 if (!visits.Any(i => i.Date.ToShortDateString() == dt))
