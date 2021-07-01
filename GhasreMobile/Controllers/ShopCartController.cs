@@ -249,7 +249,15 @@ namespace GhasreMobile.Controllers
                 DiscountVm selectedDiscount = HttpContext.Session.GetComplexData<DiscountVm>("Discount");
                 if (selectedDiscount != null)
                 {
-                    long sumWithIsFractional = selectedDiscount.Sum / 3;
+                    long sumWithIsFractional;
+                    if (selectedDiscount.Sum > 10000000)
+                    {
+                        sumWithIsFractional = selectedDiscount.Sum / 2;
+                    }
+                    else
+                    {
+                        sumWithIsFractional = selectedDiscount.Sum / 3;
+                    }
                     sumWithIsFractional = (long)MainUtil.Round((double)sumWithIsFractional, 3);
                     if (fractional && sumWithIsFractional > SelectUser().Balance)
                     {
