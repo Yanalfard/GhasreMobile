@@ -232,5 +232,12 @@ namespace GhasreMobile.Controllers
             }
         }
 
+
+        public IActionResult IndexNew()
+        {
+            return View();
+        }
+
+
     }
 }
