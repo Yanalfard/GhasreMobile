@@ -62,7 +62,18 @@
                     }
                 </div>
                 @{
-                    long amount = Model.Sum / 3;
+                    long amount;
+                    bool isBalayeSahMelyon = Model.Sum > 10000000 ? true : false;
+
+                    if (isBalayeSahMelyon)
+                    {
+                        amount = Model.Sum / 2;
+                    }
+                    else
+                    {
+                        amount = Model.Sum / 3;
+                    }
+
                     amount = (long)MainUtil.Round((double)amount, 3);
                     long minitAmount = amount - Model.Balance;
 
@@ -70,19 +81,44 @@
                 @if (Model.Balance == 0)
                 {
                     <div class="uk-alert uk-alert-success">
-                        <p class="help-block">در صورت خرید اقساطی  یک سوم مبلغ کل به <a class="text-danger" href="/User/Wallet/Charg">کیف پول</a> شارژ شود(@amount.ToString("#,0") تومان)</p>
+                        @if (isBalayeSahMelyon)
+                        {
+                            <p class="help-block">در صورت خرید اقساطی  بالای ده میلیون تومان پنجاه درصد مبلغ کل به <a class="text-danger" href="/User/Wallet/Charg">کیف پول</a> شارژ شود(@amount.ToString("#,0") تومان)</p>
+                        }
+                        else
+                        {
+                            <p class="help-block">در صورت خرید اقساطی  زیر ده میلیون تومان یک سوم مبلغ کل به <a class="text-danger" href="/User/Wallet/Charg">کیف پول</a> شارژ شود(@amount.ToString("#,0") تومان)</p>
+                        }
                     </div>
                 }
                 else if (amount <= Model.Balance)
                 {
                     <div class="uk-alert uk-alert-success">
-                        <p class="help-block">در صورت خرید اقساطی  یک سوم مبلغ کل (@amount.ToString("#,0")  تومان  ) از کیف پول شما کسر خواهد شد</p>
+                        @if (isBalayeSahMelyon)
+                        {
+                            <p class="help-block">در صورت خرید اقساطی  بالای ده میلیون تومان پنجاه درصد مبلغ کل (@amount.ToString("#,0")  تومان  ) از کیف پول شما کسر خواهد شد</p>
+
+                        }
+                        else
+                        {
+                            <p class="help-block">در صورت خرید اقساطی  زیر ده میلیون تومان  یک سوم مبلغ کل (@amount.ToString("#,0")  تومان  ) از کیف پول شما کسر خواهد شد</p>
+                        }
+
                     </div>
                 }
                 else if (amount >= Model.Balance && amount > 0)
                 {
                     <div class="uk-alert uk-alert-success">
-                        <p class="help-block">در صورت خرید اقساطی  یک سوم مبلغ کل به <a class="text-danger" href="/User/Wallet/Charg">کیف پول</a> شارژ شود(@amount.ToString("#,0") تومان)</p>
+                        @if (isBalayeSahMelyon)
+                        {
+                            <p class="help-block">در صورت خرید اقساطی  بالای ده میلیون تومان پنجاه درصد مبلغ کل به <a class="text-danger" href="/User/Wallet/Charg">کیف پول</a> شارژ شود(@amount.ToString("#,0") تومان)</p>
+
+                        }
+                        else
+                        {
+                            <p class="help-block">در صورت خرید اقساطی زیر ده میلیون تومان یک سوم مبلغ کل به <a class="text-danger" href="/User/Wallet/Charg">کیف پول</a> شارژ شود(@amount.ToString("#,0") تومان)</p>
+                        }
+
                         <p class="help-block">مبلغ مورد نیاز شما(@minitAmount.ToString("#,0") تومان)</p>
                     </div>
                 }

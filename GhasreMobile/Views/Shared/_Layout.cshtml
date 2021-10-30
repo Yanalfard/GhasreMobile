@@ -186,7 +186,7 @@
                     <h4>مجوز ها</h4>
                     <div class="slideshow mat-border" uk-slideshow="autoplay: true; autoplay-interval: 2500; ratio:1:1.12">
                         <ul class="uk-slideshow-items mat-border">
-                            <li style="background-color:white;height:100%;border-radius:10px" >
+                            <li style="background-color:white;height:100%;border-radius:10px">
                                 <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=209922&amp;Code=5WQXgHkeclrqQsWnl1Wj" style="background-color:white">
                                     <img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=209922&amp;Code=5WQXgHkeclrqQsWnl1Wj" alt="" style="cursor:pointer" id="5WQXgHkeclrqQsWnl1Wj">
                                     @*<img src="~/st/r/enamad.jpg" uk-tooltip="در دست اقدام" alt="" uk-cover>*@
@@ -398,11 +398,11 @@
         }
         function shopCountProduct() {
             var id = $('#ProductColorId').val();
-            $.get("/api/ShopCountProduct/" + id , function (res) {
+            $.get("/api/ShopCountProduct/" + id, function (res) {
                 $("#shopCountProduct").html(res);
             });
         }
-        
+
         function AddToCart(id) {
             var colorId = $('#ProductColorId').val();
             $.get("/api/Shop/" + id + "/" + colorId, function (res) {
@@ -481,7 +481,12 @@
     </script>
 
     <!--BEGIN RAYCHAT CODE-->
-    <script type="text/javascript">!function () { function t() { var t = document.createElement("script"); t.type = "text/javascript", t.async = !0, localStorage.getItem("rayToken") ? t.src = "https://app.raychat.io/scripts/js/" + o + "?rid=" + localStorage.getItem("rayToken") + "&href=" + window.location.href : t.src = "https://app.raychat.io/scripts/js/" + o + "?href=" + window.location.href; var e = document.getElementsByTagName("script")[0]; e.parentNode.insertBefore(t, e) } var e = document, a = window, o = "ed2cbd05-94f9-447e-8556-4bad0cf1ac1c"; "complete" == e.readyState ? t() : a.attachEvent ? a.attachEvent("onload", t) : a.addEventListener("load", t, !1) }();</script> <!--END RAYCHAT CODE-->
+    @*<script type="text/javascript">!function () { function t() { var t = document.createElement("script"); t.type = "text/javascript", t.async = !0, localStorage.getItem("rayToken") ? t.src = "https://app.raychat.io/scripts/js/" + o + "?rid=" + localStorage.getItem("rayToken") + "&href=" + window.location.href : t.src = "https://app.raychat.io/scripts/js/" + o + "?href=" + window.location.href; var e = document.getElementsByTagName("script")[0]; e.parentNode.insertBefore(t, e) } var e = document, a = window, o = "ed2cbd05-94f9-447e-8556-4bad0cf1ac1c"; "complete" == e.readyState ? t() : a.attachEvent ? a.attachEvent("onload", t) : a.addEventListener("load", t, !1) }();</script>*@ <!--END RAYCHAT CODE-->
+    <!--BEGIN crisp CODE-->
+    @*<script type="text/javascript">window.$crisp = []; window.CRISP_WEBSITE_ID = "e198dafe-71e1-41f4-ba5a-d6cc9fe32014"; (function () { d = document; s = d.createElement("script"); s.src = "https://client.crisp.chat/l.js"; s.async = 1; d.getElementsByTagName("head")[0].appendChild(s); })();</script>*@
+
+    <script type="text/javascript">window.$crisp = []; window.CRISP_WEBSITE_ID = "b0439a8b-4e2f-4046-8e9b-510661ff0dba"; (function () { d = document; s = d.createElement("script"); s.src = "https://client.crisp.chat/l.js"; s.async = 1; d.getElementsByTagName("head")[0].appendChild(s); })();</script>
+
     @RenderSection("Scripts", false)
 
 </body>

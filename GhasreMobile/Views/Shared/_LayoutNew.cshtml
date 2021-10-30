@@ -1,0 +1,492 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>قصر موبایل</title>
+
+    <link href="~/css/uikit.min.css" rel="stylesheet" />
+    <link href="~/css/Controls.min.css" rel="stylesheet" />
+    <link href="~/css/leaflet.css" rel="stylesheet" />
+    <link href="~/css/NewIndex.min.css" rel="stylesheet" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <link rel="manifest" type="application/json+oembed" href="~/manifest.json" />
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#810081">
+</head>
+<body>
+
+    <section class="Header navbar-section">
+        <!--header-section-in-desktop size-->
+        <header>
+            <div class="uk-position-relative desktop-header">
+                <img src="~/Images/NewIndex/header-img.png" style="width:100vw;" />
+                <div class="uk-position-top">
+                    <nav id="menu" class="uk-navbar-container uk-navbar-transparent" uk-navbar="dropbar: true">
+
+                        <div class="uk-navbar-left registry uk-margin-medium-left">
+                            <a href="#" class="my-center">
+                                ثبت نام
+                            </a>
+                        </div>
+
+                        <div class="uk-navbar-right uk-margin-right">
+
+                            <ul class="uk-navbar-nav" dir="rtl">
+                                <li>
+                                    <a href="#">
+                                        <img class="logo-in-nav" src="~/st/r/logo.jpg" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">خانه</a>
+                                </li>
+                                <li>
+                                    <a href="#">تالار گفتگو</a>
+                                </li>
+                                <li>
+                                    <a href="#">تماس با ما</a>
+                                </li>
+                                <li>
+                                    <a href="#">وبلاگ ها</a>
+                                </li>
+                                <li>
+                                    <a href="#">شعب ما</a>
+                                </li>
+                                <li>
+                                    <a href="#">گالری</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </nav>
+                    <div class="uk-navbar-dropbar"></div>
+                </div>
+                <div class="Search-info uk-flex uk-flex-center">
+                    <div>
+                        <form class="uk-search uk-search-default">
+                            <a href="#" uk-search-icon></a>
+                            <input class="uk-search-input uk-text-right" type="search" placeholder="جستجو">
+                        </form>
+                    </div>
+                    <div class="">
+                        <span class="serach-menu" uk-icon="icon:reorder-three"></span>
+                        <!--dropdown-->
+                        <div class="menu-dropdown-desktop" uk-dropdown="pos: bottom-justify; boundary: .boundary-align; boundary-align: true;animation: uk-animation-slide-top-small; duration: 500;mode:click" dir="rtl">
+                            <div class="uk-dropdown-grid uk-child-width-1-6-at-l uk-child-width-1-4-at-s" uk-grid>
+                                <div>
+                                    <ul class="uk-nav uk-dropdown-nav">
+                                        <li class="uk-active">گوشی موبایل</li>
+                                        <li class="uk-nav-divider"></li>
+                                        <li><a href="#">اپل</a></li>
+                                        <li><a href="#">سامسونگ</a></li>
+                                        <li><a href="#">هواوی</a></li>
+                                        <li><a href="#">شیائومی</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul class="uk-nav uk-dropdown-nav">
+                                        <li class="uk-active">تبلت</li>
+                                        <li class="uk-nav-divider"></li>
+                                        <li><a href="#">اپل</a></li>
+                                        <li><a href="#">سامسونگ</a></li>
+                                        <li><a href="#">هواوی</a></li>
+                                        <li><a href="#">شیائومی</a></li>
+                                        <li><a href="#">اپل</a></li>
+                                        <li><a href="#">سامسونگ</a></li>
+                                        <li><a href="#">هواوی</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul class="uk-nav uk-dropdown-nav">
+                                        <li class="uk-active">لوازم جانبی</li>
+                                        <li class="uk-nav-divider"></li>
+                                        <li><a href="#">هدفون</a></li>
+                                        <li><a href="#">شارژر</a></li>
+                                        <li><a href="#">محافظ صفحه نمایش</a></li>
+                                        <li><a href="#">پاوربانک (شارژر همراه)</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul class="uk-nav uk-dropdown-nav" style="z-index:1500">
+                                        <li class="uk-active">گوشی موبایل</li>
+                                        <li class="uk-nav-divider"></li>
+                                        <li><a href="#">اپل</a></li>
+                                        <li><a href="#">سامسونگ</a></li>
+                                        <li><a href="#">هواوی</a></li>
+                                        <li><a href="#">شیائومی</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul class="uk-nav uk-dropdown-nav">
+                                        <li class="uk-active">لوازم جانبی</li>
+                                        <li class="uk-nav-divider"></li>
+                                        <li><a href="#">هدفون</a></li>
+                                        <li><a href="#">شارژر</a></li>
+                                        <li><a href="#">محافظ صفحه نمایش</a></li>
+                                        <li><a href="#">پاوربانک (شارژر همراه)</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+        <!---header in mobile size-->
+        <div class="my-column mobile-size-header uk-display-none mobile-header-card" id="menu-mobile" style="position:fixed;width:100%;z-index:100;">
+            <div class="my-row uk-margin-small-top uk-margin-right uk-margin-left" dir="rtl">
+                <div class="uk-width-1-3">
+                    <ul class="uk-iconnav uk-margin-auto-right">
+                        <li><a uk-toggle="target: #offcanvas-flip" href="#" uk-icon="reorder-four"></a></li>
+                        <li>
+                            <a href="#" uk-icon="grid-outline"></a>
+                            <!--dropdown-->
+                            <div class="menu-dropdown-mobile" uk-dropdown="pos: bottom-justify; boundary: .boundary-align; boundary-align: true;animation: uk-animation-slide-top-small; duration: 500">
+                                <div class="uk-dropdown-grid uk-child-width-1-2" uk-grid>
+                                    <div>
+                                        <ul class="uk-nav uk-dropdown-nav">
+                                            <li class="uk-active">گوشی موبایل</li>
+                                            <li class="uk-nav-divider"></li>
+                                            <li><a href="#">اپل</a></li>
+                                            <li><a href="#">سامسونگ</a></li>
+                                            <li><a href="#">هواوی</a></li>
+                                            <li><a href="#">شیائومی</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <ul class="uk-nav uk-dropdown-nav">
+                                            <li class="uk-active">تبلت</li>
+                                            <li class="uk-nav-divider"></li>
+                                            <li><a href="#">اپل</a></li>
+                                            <li><a href="#">سامسونگ</a></li>
+                                            <li><a href="#">هواوی</a></li>
+                                            <li><a href="#">شیائومی</a></li>
+                                            <li><a href="#">اپل</a></li>
+                                            <li><a href="#">سامسونگ</a></li>
+                                            <li><a href="#">هواوی</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <ul class="uk-nav uk-dropdown-nav">
+                                            <li class="uk-active">لوازم جانبی</li>
+                                            <li class="uk-nav-divider"></li>
+                                            <li><a href="#">هدفون</a></li>
+                                            <li><a href="#">شارژر</a></li>
+                                            <li><a href="#">محافظ صفحه نمایش</a></li>
+                                            <li><a href="#">پاوربانک (شارژر همراه)</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <ul class="uk-nav uk-dropdown-nav" style="z-index:1500">
+                                            <li class="uk-active">گوشی موبایل</li>
+                                            <li class="uk-nav-divider"></li>
+                                            <li><a href="#">اپل</a></li>
+                                            <li><a href="#">سامسونگ</a></li>
+                                            <li><a href="#">هواوی</a></li>
+                                            <li><a href="#">شیائومی</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <ul class="uk-nav uk-dropdown-nav">
+                                            <li class="uk-active">لوازم جانبی</li>
+                                            <li class="uk-nav-divider"></li>
+                                            <li><a href="#">هدفون</a></li>
+                                            <li><a href="#">شارژر</a></li>
+                                            <li><a href="#">محافظ صفحه نمایش</a></li>
+                                            <li><a href="#">پاوربانک (شارژر همراه)</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end dropdown-->
+                        </li>
+                    </ul>
+                    <!--offcanvas-->
+                    <div id="offcanvas-flip" uk-offcanvas="flip: true; overlay: true">
+                        <div class="uk-offcanvas-bar">
+                            <button class="uk-offcanvas-close uk-margin-small-right" type="button" uk-close></button>
+                            <a href="#" class="uk-position-absolute profile-icon" uk-icon="person-circle-outline"></a>
+                            <div class="my-column" dir="rtl">
+                                <img class="logo-in-nav my-center uk-margin-top" src="~/st/r/logo.jpg" width="80" />
+                                <div class="mobile-search-info uk-flex uk-flex-center uk-margin-top">
+                                    <div>
+                                        <form class="uk-search">
+                                            <a class="uk-margin-small-left search-icon" href="#" uk-search-icon></a>
+                                            <input class="uk-search-input uk-text-right" type="search" placeholder="جستجو">
+                                        </form>
+                                    </div>
+
+                                </div>
+                                <ul class="uk-margin-remove-top">
+                                    <li>
+                                        <a class="mobile-menu" href="#">
+                                            <span class="" uk-icon="home"></span>
+                                            خانه
+                                        </a>
+
+                                    </li>
+                                    <li>
+                                        <a class="mobile-menu" href="#">
+                                            <span class="" uk-icon="cart"></span>
+                                            سبد خرید
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="mobile-menu" href="#">
+                                            <span class="" uk-icon="grid"></span>
+                                            دسته بندی ها
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="mobile-menu" href="#">
+                                            <span class="" uk-icon="information-circle"></span>
+                                            درباره ما
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="mobile-menu" href="#">
+                                            <span class="" uk-icon="storefront"></span>
+                                            شعب ما
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-margin-auto class=" uk-width-1-3""><img class="logo-in-nav " src="~/st/r/logo.jpg" width="30" /></div>
+                <ul class="uk-iconnav uk-margin-auto-right class=" uk-width-1-3"">
+                    <li><a href="#" uk-icon="person-circle-outline"></a></li>
+                    <li><a href="#" uk-icon="cart-outline"></a></li>
+                </ul>
+            </div>
+
+            <div class="mobile-search-info uk-flex uk-flex-center">
+                <div>
+                    <form class="uk-search">
+                        <a class="uk-margin-small-left" href="#" uk-search-icon></a>
+                        <input class="uk-search-input uk-text-right" type="search" placeholder="جستجو">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--end header in mobile size-->
+    </section>
+
+    <div class="">
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+
+    <section class="footer-section">
+        <footer class="my-column">
+            <div class="footer-contact-section my-row" dir="rtl">
+                <div class="call-info">
+                    <span uk-icon="call-outline" class="call-outline uk-margin-large-right uk-margin-small-left"></span>
+                    <span class="uk-margin-left">تماس با ما</span>
+                    <span>5691636</span>
+                </div>
+
+                <div class="location-info">
+                    <span uk-icon="location-outline" class="uk-margin-large-right uk-margin-small-left"></span>
+                    تبریز-ولیعصر-سربالایی ولیعصر-خیابان حافظ
+                </div>
+                <div class="uk-margin-auto-right uk-margin-large-left social-media">
+                    <a href="#" class="my-center footer-instagram uk-margin-left">
+                        <span uk-icon="logo-instagram"></span>
+                        اینستاگرم
+                    </a>
+                    <a href="#" class="uk-margin-left">
+                        <img src="/st/v/footer/telegram-blue.svg" alt="قصر موبایل">
+                    </a>
+                    <a href="#" class="uk-margin-left">
+                        <img src="~/st/v/footer/linkedin-blue.svg" />
+                    </a>
+                    <a href="#">
+                        <img src="~/st/v/footer/twitter-blue.svg" />
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links my-row uk-margin-top">
+                <div class="map-container uk-margin-auto-right uk-margin-large-left">
+                    <div id="map" class="map-card uk-margin-top uk-box-shadow-medium">
+
+                    </div>
+                    <a class="all-representation">مشاهده تمام نمایندگی ها</a>
+                </div>
+                <div class="my-column etemad-logo uk-margin-medium-right">
+                    <h5>در میان تارنماها</h5>
+                    <img class="uk-margin-top" src="~/st/v/footer/etemad.png" />
+                </div>
+
+                <div class="my-column uk-margin-medium-right link-in-desktop">
+                    <h5>حساب کاربری</h5>
+                    <a href="#">
+                        ورود
+                    </a>
+                    <a href="#">
+                        ثبت نام
+                    </a>
+                    <a href="#">
+                        بازیابی رمز عبور
+                    </a>
+                    <a href="#">
+                        مشاهده سبد خرید
+                    </a>
+                </div>
+                <div class="my-column uk-margin-large-right link-in-desktop">
+                    <h5>قصر موبایل</h5>
+                    <a href="#">
+                        خانه
+                    </a>
+                    <a href="#">
+                        سوالات متداول
+                    </a>
+                    <a href="#">
+                        تماس با ما
+                    </a>
+                    <a href="#">
+                        مشاهده نمایندگی ها
+                    </a>
+                    <a href="#">
+                        پشتیبانی و تیکت
+                    </a>
+                </div>
+            </div>
+            <!--just in mobile size-->
+            <div class="uk-display-none footer-links-mobile my-row  uk-margin-medium-right uk-margin-top" dir="rtl">
+                <div class="my-column">
+                    <h5>قصر موبایل</h5>
+                    <a href="#">
+                        خانه
+                    </a>
+                    <a href="#">
+                        سوالات متداول
+                    </a>
+                    <a href="#">
+                        تماس با ما
+                    </a>
+                    <a href="#">
+                        مشاهده نمایندگی ها
+                    </a>
+                    <a href="#">
+                        پشتیبانی و تیکت
+                    </a>
+                </div>
+                <div class="my-column uk-margin-right">
+                    <h5>حساب کاربری</h5>
+                    <a href="#">
+                        ورود
+                    </a>
+                    <a href="#">
+                        ثبت نام
+                    </a>
+                    <a href="#">
+                        بازیابی رمز عبور
+                    </a>
+                    <a href="#">
+                        مشاهده سبد خرید
+                    </a>
+                </div>
+            </div>
+            <!--end-->
+            <hr />
+            <div class="copy-right">
+                <p class="uk-text-center">
+                    کلیه حقوق این سایت متعلق به قصر موبایل می باشد، طراحی و توسعه توسط
+                    <strong><a href="https://arvintavco.com">ایده پرداز آروین تاو</a></strong>
+                </p>
+            </div>
+        </footer>
+    </section>
+    <!-- Footer -->
+    <!--Pwa-->
+    <script src="~/app.js"></script>
+
+    <script src="~/Jquery/jquery-3.4.1.min.js"></script>
+    <script src="~/Jquery/modal.js"></script>
+    <script src="~/js/uikit.min.js"></script>
+    <script src="~/js/uikit-icons.js"></script>
+    <script src="~/js/main.js"></script>
+
+    <script src="~/Validate/jquery.validate.min.js"></script>
+    <script src="~/Validate/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Validate/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Validate/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/js/leaflet.js"></script>
+    <script>
+        $(window).on("scroll", function () {
+            if ($(window).scrollTop() > 50) {
+                $("#menu").addClass("active-header");
+
+            } else {
+                //remove the background property so it comes transparent again (defined in your css)
+                $("#menu").removeClass("active-header");
+            }
+        });
+    </script>
+    <script>
+        $(window).on("scroll", function () {
+            if ($(window).scrollTop() > 50) {
+                $("#menu-mobile").addClass("active-header");
+
+            } else {
+                //remove the background property so it comes transparent again (defined in your css)
+                $("#menu-mobile").removeClass("active-header");
+            }
+        });
+    </script>
+    <script>
+        var map = L.map('map').setView([38.05674409597339, 46.27700302496196], 12);
+
+        L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+
+        var iconSetting = L.Icon.extend({
+            options: {
+                iconSize: [32, 32],
+                iconAnchor: [16, -8]
+            }
+        });
+
+        var customIcon = new iconSetting({ iconUrl: '/marker.svg' });
+
+        for (var i = 0; i < $("mymap").length; i++) {
+            var theMarker = {};
+
+            theMarker = L.marker(
+                [$("mymap lat")[i].innerHTML, $("mymap lon")[i].innerHTML],
+                { icon: customIcon }
+            )
+                .addTo(map).bindPopup(
+                    `
+                                                                            <div class="aff-marker">
+                                                                                <h4>${$('mymap name')[i].innerHTML}</h4>
+                                                                                <p>
+                                                    ${$('mymap address')[i].innerHTML}
+                                                                                </p>
+                                                                                <a href="/StoreView/${$("mymap storeid")[i].innerHTML}/${$("mymap name")[i].innerHTML}" dir="rtl">
+                                                                                    مشاهده
+                                                                                </a>
+                                                                            </div>
+                                                                            `
+                );
+
+        }
+    </script>
+</body>
+</html>
+
+
+
