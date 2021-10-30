@@ -30,6 +30,7 @@ namespace DataLayer.Models
         public virtual DbSet<TblColor> TblColor { get; set; }
         public virtual DbSet<TblComment> TblComment { get; set; }
         public virtual DbSet<TblConfig> TblConfig { get; set; }
+        public virtual DbSet<TblContactUs> TblContactUs { get; set; }
         public virtual DbSet<TblDelivery> TblDelivery { get; set; }
         public virtual DbSet<TblDiscount> TblDiscount { get; set; }
         public virtual DbSet<TblImage> TblImage { get; set; }
@@ -50,23 +51,31 @@ namespace DataLayer.Models
         public virtual DbSet<TblRole> TblRole { get; set; }
         public virtual DbSet<TblSpecialOffer> TblSpecialOffer { get; set; }
         public virtual DbSet<TblStore> TblStore { get; set; }
+        public virtual DbSet<TblStoreImageRel> TblStoreImageRel { get; set; }
         public virtual DbSet<TblTicket> TblTicket { get; set; }
         public virtual DbSet<TblTopic> TblTopic { get; set; }
         public virtual DbSet<TblTopicCommentRel> TblTopicCommentRel { get; set; }
-        public virtual DbSet<TblWallet> TblWallet { get; set; }
         public virtual DbSet<TblVisit> TblVisit { get; set; }
-        public virtual DbSet<TblContactUs> TblContactUs { get; set; }
-
-        public virtual DbSet<TblStoreImageRel> TblStoreImageRel { get; set; }
+        public virtual DbSet<TblWallet> TblWallet { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-           => optionsBuilder
-          .UseLazyLoadingProxies()
-          .UseSqlServer("Data Source=103.216.62.27;Initial Catalog=GhasreMobile;User ID=Yanal;Password=1710ahmad.fard");
-
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Data Source=185.55.224.183;Initial Catalog=asamedc1_gasremobile;User ID=asamedc1_Yanal3;Password=2fjS9CYVYkgS5V8");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("Relational:DefaultSchema", "asamedc1_Yanal3");
+
+            modelBuilder.Entity<TblAlbum>(entity =>
+            {
+                entity.Property(e => e.IsProduct).HasDefaultValueSql("((1))");
+            });
+
             modelBuilder.Entity<TblAlertWhenReady>(entity =>
             {
                 entity.HasOne(d => d.Client)
@@ -252,10 +261,10 @@ namespace DataLayer.Models
 
                 entity.Property(e => e.Count).HasDefaultValueSql("((1))");
 
-                //entity.HasOne(d => d.Color)
-                //    .WithMany(p => p.TblOrderDetail)
-                //    .HasForeignKey(d => d.ColorId)
-                //    .HasConstraintName("FK_TblOrderDetail_TblColor");
+                entity.HasOne(d => d.Color)
+                    .WithMany(p => p.TblOrderDetail)
+                    .HasForeignKey(d => d.ColorId)
+                    .HasConstraintName("FK_TblOrderDetail_TblColor");
 
                 entity.HasOne(d => d.FinalOrder)
                     .WithMany(p => p.TblOrderDetail)
@@ -267,6 +276,11 @@ namespace DataLayer.Models
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TblOrderDetail_TblProduct");
+            });
+
+            modelBuilder.Entity<TblPostOption>(entity =>
+            {
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
             });
 
             modelBuilder.Entity<TblProduct>(entity =>
@@ -309,19 +323,6 @@ namespace DataLayer.Models
                     .WithMany(p => p.TblProductImageRel)
                     .HasForeignKey(d => d.ProductId)
                     .HasConstraintName("FK_TblProductImageRel_TblProduct");
-            });
-
-            modelBuilder.Entity<TblStoreImageRel>(entity =>
-            {
-                entity.HasOne(d => d.Image)
-                    .WithMany(p => p.TblStoreImageRel)
-                    .HasForeignKey(d => d.ImageId)
-                    .HasConstraintName("FK_TblStoreImageRel_TblImage");
-
-                entity.HasOne(d => d.Store)
-                    .WithMany(p => p.TblStoreImageRel)
-                    .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK_TblStoreImageRel_TblStore");
             });
 
             modelBuilder.Entity<TblProductKeywordRel>(entity =>
@@ -377,6 +378,19 @@ namespace DataLayer.Models
                     .WithMany(p => p.TblSpecialOffer)
                     .HasForeignKey(d => d.ProductId)
                     .HasConstraintName("FK_TblSpecialOffer_TblProduct");
+            });
+
+            modelBuilder.Entity<TblStoreImageRel>(entity =>
+            {
+                entity.HasOne(d => d.Image)
+                    .WithMany(p => p.TblStoreImageRel)
+                    .HasForeignKey(d => d.ImageId)
+                    .HasConstraintName("FK_TblStoreImageRel_TblImage");
+
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.TblStoreImageRel)
+                    .HasForeignKey(d => d.StoreId)
+                    .HasConstraintName("FK_TblStoreImageRel_TblStore");
             });
 
             modelBuilder.Entity<TblTicket>(entity =>

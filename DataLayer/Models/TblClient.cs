@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Models
 {
+    [Table("TblClient", Schema = "dbo")]
     public partial class TblClient
     {
         public TblClient()

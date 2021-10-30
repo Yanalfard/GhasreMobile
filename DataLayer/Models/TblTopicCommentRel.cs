@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Models
 {
+    [Table("TblTopicCommentRel", Schema = "dbo")]
     public partial class TblTopicCommentRel
     {
         [Key]

@@ -6,6 +6,7 @@ using System.Text;
 
 namespace DataLayer.Models
 {
+    [Table("TblStoreImageRel", Schema = "dbo")]
     public partial class TblStoreImageRel
     {
         [Key]

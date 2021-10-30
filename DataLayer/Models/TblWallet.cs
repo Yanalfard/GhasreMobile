@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Models
 {
+    [Table("TblWallet", Schema = "dbo")]
     public partial class TblWallet
     {
         [Key]

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Models
 {
+    [Table("TblAlertWhenReady", Schema = "dbo")]
     public partial class TblAlertWhenReady
     {
         [Key]

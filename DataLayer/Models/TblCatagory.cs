@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Models
 {
+    [Table("TblCatagory", Schema = "dbo")]
     public partial class TblCatagory
     {
         public TblCatagory()

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Models
 {
+    [Table("TblPostOption", Schema = "dbo")]
     public partial class TblPostOption
     {
         public TblPostOption()
