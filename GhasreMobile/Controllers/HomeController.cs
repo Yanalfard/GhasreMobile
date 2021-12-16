@@ -23,8 +23,8 @@ namespace GhasreMobile.Controllers
 
         public async Task<IActionResult> Index()
         {
-            try
-            {
+            //try
+            //{
                 //string strHostName = "";
                 //strHostName = System.Net.Dns.GetHostName();
 
@@ -64,11 +64,11 @@ namespace GhasreMobile.Controllers
                 ViewData["ListIdAd"] = db.Ad.Get().Select(i => i.AdId).ToList();
                 ViewData["ListIdSpecial"] = db.SpecialOffer.Get(i => i.ValidTill > DateTime.Now && i.Product.IsDeleted == false && i.Product.TblColor.Sum(i => i.Count) > 0).Select(i => i.SpecialOfferId).ToList();
                 return await Task.FromResult(View());
-            }
-            catch
-            {
-                return await Task.FromResult(Redirect("404.html"));
-            }
+            //}
+            //catch
+            //{
+            //    return await Task.FromResult(Redirect("404.html"));
+            //}
         }
         [Route("Contact")]
         public async Task<IActionResult> Contact()
