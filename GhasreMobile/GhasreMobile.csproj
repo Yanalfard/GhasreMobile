@@ -11,12 +11,16 @@
 
   <ItemGroup>
     <Compile Remove="Models\**" />
+    <Compile Remove="NewFolder\**" />
     <Compile Remove="wwwroot\dy\**" />
     <Content Remove="Models\**" />
+    <Content Remove="NewFolder\**" />
     <Content Remove="wwwroot\dy\**" />
     <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\dy\**" />
     <None Remove="Models\**" />
+    <None Remove="NewFolder\**" />
     <None Remove="wwwroot\dy\**" />
   </ItemGroup>
 
@@ -53,7 +57,6 @@
   <ItemGroup>
     <Folder Include="Areas\User\Data\" />
     <Folder Include="Areas\User\Models\" />
-    <Folder Include="NewFolder\" />
     <Folder Include="wwwroot\Images\Ad\" />
     <Folder Include="wwwroot\Images\Album\thumb\" />
     <Folder Include="wwwroot\Images\ProductAlbum\thumb\" />
