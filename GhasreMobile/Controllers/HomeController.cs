@@ -237,6 +237,10 @@ namespace GhasreMobile.Controllers
         {
             return View();
         }
+        public IActionResult IndexNew2()
+        {
+            return View();
+        }
 
 
     }
